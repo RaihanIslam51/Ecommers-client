@@ -54,26 +54,29 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900`}
       >
-        {/* Main App Wrapper */}
-        <div className="flex min-h-screen flex-col">
+        {/* App Wrapper */}
+        <div className="flex flex-col min-h-screen">
+
           {/* Navbar */}
-          <header className="sticky top-0 z-50 bg-white shadow-sm">
-            <Navbar></Navbar>
+          <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
+            <Navbar />
           </header>
 
-          {/* Main Content Area */}
-          <main className="flex-1  pt-[132px] md:pt-[140px]">
-            <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
-              {children}
-            </div>
-          </main>
+         {/* Main Content */}
+       <main className="flex-1 pt-18 md:pt-[140px] w-full">
+         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          {children}
+         </div>
+        </main>
+
 
           {/* Footer */}
-          <footer className=" bg-white shadow-sm">
-            <div className=" mx-auto ">
-            <Footer></Footer>
+          <footer className="bg-white w-full shadow-sm mt-auto">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <Footer />
             </div>
           </footer>
+
         </div>
       </body>
     </html>
