@@ -15,18 +15,18 @@ const Navbar = () => {
     >
       {/* Full Navbar Wrapper */}
       <div className="w-full flex flex-col">
-        {/* Top Section */}
-        <div className="h-6 md:h-8 flex items-center justify-center bg-gray-900 text-xs sm:text-sm">
+        {/* Top Section (hidden on mobile) */}
+        <div className="hidden md:flex h-6 md:h-8 items-center justify-center bg-gray-900 text-xs sm:text-sm">
           <Navbarfirst />
         </div>
 
-        {/* Middle Section (Main Navigation) */}
+        {/* Middle Section (always visible) */}
         <div className="h-12 md:h-16 bg-gray-900 text-xs sm:text-sm">
           <Navbarsecond />
         </div>
 
-        {/* Bottom Section (Menu Links / Categories) */}
-        <div className="h-10 md:h-7 flex  bg-gray-900 text-xs sm:text-sm">
+        {/* Bottom Section (hidden on mobile) */}
+        <div className="hidden md:flex h-10 md:h-7 bg-gray-900 text-xs sm:text-sm">
           <div className="w-full">
             <Navbarthrid />
           </div>

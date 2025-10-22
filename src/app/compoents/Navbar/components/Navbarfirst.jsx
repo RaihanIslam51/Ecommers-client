@@ -9,7 +9,7 @@ import { IoStorefrontSharp } from "react-icons/io5";
 
 const Navbarfirst = () => {
   return (
-    <div className="w-full bg-gray-900 text-gray-200 text-sm">
+    <div className="hidden md:flex items-center justify-center w-full bg-gray-900 text-gray-200 text-sm">
       <div
         className="
           flex flex-wrap items-center justify-center gap-x-6 gap-y-2 
