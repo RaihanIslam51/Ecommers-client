@@ -28,7 +28,7 @@ const Navbarsecond = () => {
           <div className="flex items-center gap-4">
             <Link
               href="/"
-              className="hidden md:block text-2xl md:text-3xl font-bold text-blue-500 tracking-wide"
+              className="hidden  md:block text-2xl md:text-3xl font-bold text-blue-500 tracking-wide"
             >
               BDMart
             </Link>
@@ -42,7 +42,7 @@ const Navbarsecond = () => {
 
           {/* CENTER: Search Bar */}
           <div className="flex-1 mx-4">
-            <form className="relative w-full">
+            <form className="relative w-full md:w-1/2 md:pb-4  md:left-40">
               <input
                 type="text"
                 placeholder="Search for products..."
@@ -50,7 +50,7 @@ const Navbarsecond = () => {
               />
               <button
                 type="submit"
-                className="absolute top-1/2 right-0 -translate-y-1/2 px-3 md:px-4 py-2 text-black"
+                className="absolute  top-2/5 right-0 -translate-y-1/2 px-3 md:px-4 py-2 text-black"
               >
                 <IoMdSearch size={20} />
               </button>

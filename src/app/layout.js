@@ -58,7 +58,7 @@ export default function RootLayout({ children }) {
         <div className="flex flex-col min-h-screen">
 
           {/* Navbar */}
-          <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
+          <header className="w-full bg-white shadow-sm">
             <Navbar />
           </header>
 
@@ -71,7 +71,7 @@ export default function RootLayout({ children }) {
 
 
           {/* Footer */}
-          <footer className="bg-white w-full shadow-sm mt-auto">
+          <footer className=" w-full shadow-sm mt-auto">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <Footer />
             </div>
