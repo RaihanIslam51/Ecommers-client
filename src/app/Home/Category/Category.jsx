@@ -38,7 +38,7 @@ const Category = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         {/* Left: Top Category */}
-        <h2 className="text-xl md:text-2xl font-semibold bg-black text-white px-5 py-1 rounded-md shadow">
+        <h2 className="text-xl md:text-2xl font-semibold bg-blue-600 text-white px-5 py-1 rounded-md shadow">
           Top Category
         </h2>
 

@@ -2,14 +2,12 @@
 import Image from "next/image";
 import React from "react";
 
-
-
 const RightBanner = () => {
   return (
     <div className="relative text-black w-full h-64 md:h-96 bg-white rounded-lg overflow-hidden shadow-lg">
       {/* Background image */}
       <Image
-        src="/public/imageRight.webp"
+        src="https://i.ibb.co/b5NrY9ZS/image-Right.jpg"
         alt="Right Banner"
         fill
         className="object-cover"

@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import LeftBanner from './Components/RightBanner.jsx/LeftBanner';
 import RightBanner from './Components/RightBanner.jsx/RightBanner';
