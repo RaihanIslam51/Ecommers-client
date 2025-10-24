@@ -9,37 +9,67 @@ import { IoStorefrontSharp } from "react-icons/io5";
 
 const Navbarfirst = () => {
   return (
-    <div className="hidden md:flex items-center justify-center w-full text-gray-200 text-sm">
-      <div className="flex items-center justify-center w-full max-w-7xl mx-auto gap-6 py-2 px-2 text-center">
-        {/* Phone */}
-        <Link href="tel:01956486761" className="flex items-center gap-2 hover:text-white transition">
-          <FaPhoneAlt className="text-sky-400" />
-          <span className="opacity-90">+8801956-486761</span>
-        </Link>
+    <div className="hidden lg:flex items-center justify-center w-full text-white">
+      <div className="flex items-center justify-between w-full py-1.5">
+        {/* Left Side - Contact Info */}
+        <div className="flex items-center gap-5 xl:gap-6">
+          {/* Phone */}
+          <Link 
+            href="tel:01956486761" 
+            className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors duration-200"
+          >
+            <FaPhoneAlt size={10} />
+            <span className="text-xs">+880 1956-486761</span>
+          </Link>
 
-        {/* Email */}
-        <Link href="mailto:info@bdmart.com" className="flex items-center gap-2 hover:text-white transition">
-          <MdEmail className="text-amber-400" />
-          <span className="opacity-90">info@bdmart.com</span>
-        </Link>
+          {/* Separator */}
+          <span className="text-gray-800">|</span>
 
-        {/* Customer Service */}
-        <Link href="/customer-service" className="flex items-center gap-2 hover:text-white transition">
-          <RiCustomerService2Fill className="text-emerald-400" />
-          <span className="opacity-90">Customer Service</span>
-        </Link>
+          {/* Email */}
+          <Link 
+            href="mailto:info@bdmart.com" 
+            className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors duration-200"
+          >
+            <MdEmail size={11} />
+            <span className="text-xs">info@bdmart.com</span>
+          </Link>
+        </div>
 
-        {/* New Arrival */}
-        <Link href="/new-arrivals" className="flex items-center gap-2 hover:text-white transition">
-          <AiFillStar className="text-amber-500" />
-          <span className="opacity-90">New Arrival</span>
-        </Link>
+        {/* Right Side - Quick Links */}
+        <div className="flex items-center gap-4 xl:gap-5">
+          {/* Customer Service */}
+          <Link 
+            href="/customer-service" 
+            className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors duration-200"
+          >
+            <RiCustomerService2Fill size={11} />
+            <span className="text-xs">Support</span>
+          </Link>
 
-        {/* Store */}
-        <Link href="/store" className="flex items-center gap-2 hover:text-white transition">
-          <IoStorefrontSharp className="text-rose-400" />
-          <span className="opacity-90">Store</span>
-        </Link>
+          {/* Separator */}
+          <span className="text-gray-800">|</span>
+
+          {/* New Arrival */}
+          <Link 
+            href="/new-arrivals" 
+            className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors duration-200"
+          >
+            <AiFillStar size={11} />
+            <span className="text-xs">New</span>
+          </Link>
+
+          {/* Separator */}
+          <span className="text-gray-800">|</span>
+
+          {/* Store */}
+          <Link 
+            href="/store" 
+            className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors duration-200"
+          >
+            <IoStorefrontSharp size={11} />
+            <span className="text-xs">Store</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

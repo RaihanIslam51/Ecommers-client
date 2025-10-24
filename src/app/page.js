@@ -6,7 +6,7 @@ import Collection from "./Home/Collection/Collection";
 
 export default function Home() {
   return (
- <div>
+ <div className="bg-linear-to-b from-gray-50 via-white to-gray-50 min-h-screen">
  <Banner></Banner>
  <Category></Category>
  <Topsales></Topsales>

@@ -29,34 +29,34 @@ const Navbar = () => {
   }, [lastScrollY]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full backdrop-blur-sm bg-black/90 text-white shadow-lg border-b border-gray-800 transition-all duration-500">
-      <div className="w-full flex flex-col">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full bg-white transition-all duration-300">
+      <div className="w-full flex flex-col shadow-sm">
 
         {/* === Top Section (Navbarfirst) === */}
         <div
-          className={`hidden md:flex items-center justify-center bg-transparent text-xs sm:text-sm transition-all duration-500 ${
+          className={`hidden lg:flex items-center justify-center bg-black text-xs transition-all duration-300 ${
             hideTopBottom ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-8"
           }`}
         >
-          <div className="max-w-7xl w-full mx-auto px-4">
+          <div className="max-w-[1400px] w-full mx-auto px-6 xl:px-8">
             <Navbarfirst />
           </div>
         </div>
 
         {/* === Middle Section (Navbarsecond) === */}
-        <div className="h-14 md:h-20 bg-transparent text-xs sm:text-sm transition-all duration-500">
-          <div className="max-w-7xl w-full mx-auto px-4">
+        <div className="h-16 md:h-[68px] bg-white text-xs transition-all duration-300">
+          <div className="max-w-[1400px] w-full mx-auto px-4 md:px-6 xl:px-8">
             <Navbarsecond />
           </div>
         </div>
 
         {/* === Bottom Section (Navbarthrid) === */}
         <div
-          className={`hidden md:flex bg-transparent text-xs sm:text-sm transition-all duration-500 ${
-            hideTopBottom ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-8"
+          className={`hidden lg:flex bg-white text-xs transition-all duration-300 border-t border-gray-100 ${
+            hideTopBottom ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-10"
           }`}
         >
-          <div className="max-w-7xl mx-auto w-full px-4">
+          <div className="max-w-[1400px] mx-auto w-full px-6 xl:px-8">
             <Navbarthrid />
           </div>
         </div>

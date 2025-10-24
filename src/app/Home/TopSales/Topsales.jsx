@@ -22,25 +22,31 @@ const Topsales = () => {
   const modalProduct = dummyProducts.find((p) => p.id === modalProductId);
 
   // Slice products: show first 6 if showAll is false
-  const displayedProducts = showAll ? dummyProducts : dummyProducts.slice(0, 6);
+  const displayedProducts = showAll ? dummyProducts : dummyProducts.slice(0, 5);
 
   return (
-    <section className="max-w-7xl mx-auto relative py-8 px-4">
+    <section className="max-w-[1400px] mx-auto relative py-12 px-4 md:px-6 lg:px-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900">Top Selling Products</h2>
-          <p className="text-sm text-slate-500 mt-1">Best sellers handpicked from across our global marketplace.</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">Top Selling Products</h2>
+          <p className="text-sm text-gray-600">Discover our best-selling items loved by customers worldwide</p>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="hidden sm:inline-block text-sm text-slate-600">Showing {displayedProducts.length} of {dummyProducts.length}</span>
+          <span className="hidden sm:inline-block text-sm text-gray-500">
+            {displayedProducts.length} of {dummyProducts.length} items
+          </span>
           <button
             onClick={() => setShowAll(!showAll)}
-            className="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-md shadow-sm hover:shadow-md transition-transform duration-150 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-black border border-gray-300 rounded-lg hover:border-black hover:bg-gray-50 transition-all duration-200"
           >
-            <span className="font-medium text-sm">{showAll ? 'See Less' : 'See More'}</span>
-            <svg className={`w-4 h-4 transition-transform ${showAll ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <span>{showAll ? 'Show Less' : 'Show More'}</span>
+            <svg 
+              className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} 
+              viewBox="0 0 20 20" 
+              fill="currentColor"
+            >
               <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
             </svg>
           </button>
@@ -48,7 +54,7 @@ const Topsales = () => {
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-5">
         {displayedProducts.map((product) => (
           <ProductCard
             key={product.id}
@@ -61,40 +67,80 @@ const Topsales = () => {
 
       {/* Quick View Modal */}
       {modalProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-50 px-4">
-          <div className="bg-white rounded-xl p-6 w-full max-w-4xl relative shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6 animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4 animate-fade-in">
+          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-4xl relative shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 animate-slide-up">
+            {/* Close Button */}
             <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-black hover:text-white text-gray-600 transition-all duration-200 z-10"
               onClick={() => setModalProductId(null)}
               aria-label="Close quick view"
             >
-              ✕
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
 
             {/* Left: Image preview */}
-            <div className="w-full h-64 md:h-auto bg-gray-100 rounded-lg overflow-hidden relative">
-              <Image src={modalProduct.image} alt={modalProduct.name} fill className="object-contain" />
+            <div className="w-full h-64 md:h-full bg-gray-50 rounded-xl overflow-hidden relative border border-gray-200">
+              <Image 
+                src={modalProduct.image} 
+                alt={modalProduct.name} 
+                fill 
+                className="object-contain p-4" 
+              />
             </div>
 
             {/* Right: Details */}
             <div className="flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl font-bold text-slate-900">{modalProduct.name}</h3>
-                <p className="text-sm text-slate-600 mt-2">{modalProduct.feature}</p>
+                <h3 className="text-2xl md:text-3xl font-bold text-black mb-2">
+                  {modalProduct.name}
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">{modalProduct.feature}</p>
 
-                <div className="mt-4 flex items-center gap-4">
-                  <div className="text-green-600 font-bold text-2xl">{modalProduct.discountPrice}</div>
-                  <div className="text-gray-400 line-through">{modalProduct.actualPrice}</div>
+                {/* Rating */}
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="text-sm text-gray-600">(4.5)</span>
                 </div>
 
-                <div className="mt-3 text-sm text-slate-600">{modalProduct.salesCount} sold</div>
+                {/* Pricing */}
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-3xl font-bold text-black">
+                    {modalProduct.discountPrice}
+                  </span>
+                  <span className="text-lg text-gray-400 line-through">
+                    {modalProduct.actualPrice}
+                  </span>
+                </div>
 
-                <p className="mt-4 text-gray-700">{modalProduct.description}</p>
+                {/* Sales Count */}
+                <div className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full mb-4">
+                  <span className="text-sm text-gray-700">
+                    <span className="font-bold text-black">{modalProduct.salesCount}</span> sold
+                  </span>
+                </div>
+
+                {/* Description */}
+                <p className="text-gray-700 leading-relaxed">{modalProduct.description}</p>
               </div>
 
+              {/* Actions */}
               <div className="mt-6 flex items-center gap-3">
-                <button className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition">Add to cart</button>
-                <button className="bg-white border border-slate-200 px-4 py-2 rounded-md">Wishlist</button>
+                <button className="flex-1 px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-200">
+                  Add to Cart
+                </button>
+                <button className="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-black hover:bg-gray-50 transition-all duration-200">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>

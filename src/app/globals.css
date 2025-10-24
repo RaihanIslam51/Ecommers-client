@@ -1,30 +1,167 @@
 @import "tailwindcss";
 
-/* Global color variables (Professional Global Color Palette) */
+/* ========================================
+   PROFESSIONAL E-COMMERCE COLOR SYSTEM
+   World-Class Design Palette
+   ======================================== */
+
 :root {
-  /* Primary Colors */
-  --color-primary: #2563EB;    /* Bright Indigo Blue */
-  --color-primary-600: #1E40AF; /* Darker variant for hover/focus */
+  /* ============= PRIMARY COLORS ============= */
+  /* Modern Deep Blue - Trust, Reliability, Professional */
+  --color-primary-50: #EFF6FF;
+  --color-primary-100: #DBEAFE;
+  --color-primary-200: #BFDBFE;
+  --color-primary-300: #93C5FD;
+  --color-primary-400: #60A5FA;
+  --color-primary-500: #3B82F6;    /* Main Primary */
+  --color-primary-600: #2563EB;    /* Primary Hover */
+  --color-primary-700: #1D4ED8;
+  --color-primary-800: #1E40AF;
+  --color-primary-900: #1E3A8A;
+  --color-primary: var(--color-primary-500);
+  
+  /* ============= SECONDARY COLORS ============= */
+  /* Vibrant Orange - Energy, Action, CTA */
+  --color-secondary-50: #FFF7ED;
+  --color-secondary-100: #FFEDD5;
+  --color-secondary-200: #FED7AA;
+  --color-secondary-300: #FDBA74;
+  --color-secondary-400: #FB923C;
+  --color-secondary-500: #F97316;   /* Main Secondary */
+  --color-secondary-600: #EA580C;   /* Secondary Hover */
+  --color-secondary-700: #C2410C;
+  --color-secondary-800: #9A3412;
+  --color-secondary-900: #7C2D12;
+  --color-secondary: var(--color-secondary-500);
 
-  /* Secondary Colors */
-  --color-secondary: #10B981;   /* Emerald Green */
-  --color-secondary-600: #059669; /* Hover variant */
+  /* ============= ACCENT COLORS ============= */
+  /* Emerald Green - Success, Deals, Eco-friendly */
+  --color-accent-50: #ECFDF5;
+  --color-accent-100: #D1FAE5;
+  --color-accent-200: #A7F3D0;
+  --color-accent-300: #6EE7B7;
+  --color-accent-400: #34D399;
+  --color-accent-500: #10B981;
+  --color-accent-600: #059669;
+  --color-accent-700: #047857;
+  --color-accent-800: #065F46;
+  --color-accent-900: #064E3B;
+  --color-accent: var(--color-accent-500);
 
-  /* Semantic aliases */
-  --color-accent: var(--color-primary);
-  --color-success: var(--color-secondary);
+  /* ============= SEMANTIC COLORS ============= */
+  --color-success: #10B981;        /* Green - Success, In Stock */
+  --color-success-light: #D1FAE5;
+  --color-success-dark: #065F46;
+  
+  --color-warning: #F59E0B;        /* Amber - Warnings, Limited Stock */
+  --color-warning-light: #FEF3C7;
+  --color-warning-dark: #92400E;
+  
+  --color-error: #EF4444;          /* Red - Errors, Out of Stock */
+  --color-error-light: #FEE2E2;
+  --color-error-dark: #991B1B;
+  
+  --color-info: #3B82F6;           /* Blue - Information */
+  --color-info-light: #DBEAFE;
+  --color-info-dark: #1E3A8A;
 
-  /* Utility shades for backgrounds and text (optional) */
-  --bg-default: #ffffff;
-  --text-default: #0f172a; /* slate-900 like */
+  /* ============= NEUTRAL COLORS ============= */
+  /* Sophisticated Grays - Professional & Clean */
+  --color-gray-50: #F9FAFB;
+  --color-gray-100: #F3F4F6;
+  --color-gray-200: #E5E7EB;
+  --color-gray-300: #D1D5DB;
+  --color-gray-400: #9CA3AF;
+  --color-gray-500: #6B7280;
+  --color-gray-600: #4B5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1F2937;
+  --color-gray-900: #111827;
+
+  /* ============= BACKGROUND COLORS ============= */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F9FAFB;
+  --bg-tertiary: #F3F4F6;
+  --bg-dark: #111827;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+  --bg-gradient-primary: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+  --bg-gradient-secondary: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+  --bg-gradient-accent: linear-gradient(135deg, #10B981 0%, #059669 100%);
+
+  /* ============= TEXT COLORS ============= */
+  --text-primary: #111827;         /* Main text */
+  --text-secondary: #6B7280;       /* Secondary text */
+  --text-tertiary: #9CA3AF;        /* Muted text */
+  --text-inverse: #FFFFFF;         /* Text on dark backgrounds */
+  --text-link: #3B82F6;            /* Links */
+  --text-link-hover: #2563EB;      /* Link hover */
+
+  /* ============= BORDER COLORS ============= */
+  --border-light: #E5E7EB;
+  --border-medium: #D1D5DB;
+  --border-dark: #9CA3AF;
+  --border-primary: #3B82F6;
+  --border-focus: #60A5FA;
+
+  /* ============= SHADOW COLORS ============= */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-primary: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+  --shadow-secondary: 0 10px 15px -3px rgba(249, 115, 22, 0.3);
+
+  /* ============= E-COMMERCE SPECIFIC ============= */
+  --color-sale: #DC2626;           /* Sale/Discount Red */
+  --color-new: #8B5CF6;            /* New Arrivals Purple */
+  --color-featured: #F59E0B;       /* Featured Products Amber */
+  --color-rating: #FBBF24;         /* Star Rating Yellow */
+  --color-price: #111827;          /* Price Text */
+  --color-old-price: #9CA3AF;      /* Strikethrough Price */
+  
+  /* ============= UTILITY VARIABLES ============= */
+  --bg-default: var(--bg-primary);
+  --text-default: var(--text-primary);
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --border-radius-xl: 1rem;
+  --border-radius-2xl: 1.5rem;
+  --border-radius-full: 9999px;
 }
 
-/* Example usage: body uses semantic variables — you can remove or adapt */
+/* ============= DARK MODE SUPPORT ============= */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #111827;
+    --bg-secondary: #1F2937;
+    --bg-tertiary: #374151;
+    --text-primary: #F9FAFB;
+    --text-secondary: #D1D5DB;
+    --text-tertiary: #9CA3AF;
+    --border-light: #374151;
+    --border-medium: #4B5563;
+    --border-dark: #6B7280;
+  }
+}
+
+
+/* ============= GLOBAL STYLES ============= */
 body {
   background-color: var(--bg-default);
   color: var(--text-default);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
+/* ============= SCROLLBAR STYLES ============= */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -33,25 +170,282 @@ body {
   scrollbar-width: none;
 }
 
-/* Small, reusable button utilities using the palette */
+/* Custom Scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-400);
+  border-radius: var(--border-radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-500);
+}
+
+/* ============= BUTTON UTILITIES ============= */
 .btn-primary {
   background-color: var(--color-primary);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  color: var(--text-inverse);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
 }
 .btn-primary:hover,
 .btn-primary:focus {
   background-color: var(--color-primary-600);
+  box-shadow: var(--shadow-primary);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .btn-secondary {
   background-color: var(--color-secondary);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  color: var(--text-inverse);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
 }
 .btn-secondary:hover,
 .btn-secondary:focus {
   background-color: var(--color-secondary-600);
+  box-shadow: var(--shadow-secondary);
+  transform: translateY(-1px);
+}
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-outline-primary {
+  background-color: transparent;
+  color: var(--color-primary);
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--color-primary);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-primary);
+}
+
+.btn-outline-secondary {
+  background-color: transparent;
+  color: var(--color-secondary);
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--color-secondary);
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  background-color: var(--color-secondary);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-secondary);
+}
+
+/* ============= BADGE UTILITIES ============= */
+.badge-sale {
+  background-color: var(--color-sale);
+  color: var(--text-inverse);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--border-radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-new {
+  background-color: var(--color-new);
+  color: var(--text-inverse);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--border-radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-featured {
+  background-color: var(--color-featured);
+  color: var(--text-inverse);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--border-radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ============= CARD UTILITIES ============= */
+.card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.card-product {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+.card-product:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+  border-color: var(--color-primary-200);
+}
+
+/* ============= PRICE UTILITIES ============= */
+.price-current {
+  color: var(--color-price);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.price-old {
+  color: var(--color-old-price);
+  text-decoration: line-through;
+  font-size: 1rem;
+}
+
+.price-discount {
+  color: var(--color-sale);
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+/* ============= RATING UTILITIES ============= */
+.rating-star {
+  color: var(--color-rating);
+}
+
+.rating-star-empty {
+  color: var(--color-gray-300);
+}
+
+/* ============= INPUT UTILITIES ============= */
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border-light);
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+.input-field:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+.input-field::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* ============= GRADIENT UTILITIES ============= */
+.gradient-primary {
+  background: var(--bg-gradient-primary);
+}
+
+.gradient-secondary {
+  background: var(--bg-gradient-secondary);
+}
+
+.gradient-accent {
+  background: var(--bg-gradient-accent);
+}
+
+/* ============= TEXT UTILITIES ============= */
+.text-gradient-primary {
+  background: var(--bg-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============= LINK UTILITIES ============= */
+a {
+  color: var(--text-link);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover {
+  color: var(--text-link-hover);
+}
+
+/* ============= SELECTION STYLING ============= */
+::selection {
+  background-color: var(--color-primary-200);
+  color: var(--color-primary-900);
+}
+
+/* ============= FOCUS VISIBLE ============= */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ============= ANIMATION UTILITIES ============= */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal);
+}
+
+.animate-slide-up {
+  animation: slideUp var(--transition-normal);
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

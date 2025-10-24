@@ -11,24 +11,24 @@ import {
 } from "react-icons/fa";
 
 const categories = [
-  { id: 1, name: "Electronics", icon: <FaLaptop size={40} /> },
-  { id: 2, name: "Mobiles", icon: <FaMobileAlt size={40} /> },
-  { id: 3, name: "Fashion", icon: <FaTshirt size={40} /> },
-  { id: 4, name: "Home", icon: <FaCouch size={40} /> },
-  { id: 5, name: "Books", icon: <FaBook size={40} /> },
-  { id: 6, name: "Gifts", icon: <FaGift size={40} /> },
-  { id: 7, name: "More", icon: <FaLaptop size={40} /> },
-  { id: 8, name: "Sports", icon: <FaTshirt size={40} /> },
-  { id: 9, name: "Appliances", icon: <FaCouch size={40} /> },
-  { id: 10, name: "Toys", icon: <FaGift size={40} /> },
-  { id: 11, name: "Fitness", icon: <FaTshirt size={40} /> },
-  { id: 12, name: "Furniture", icon: <FaCouch size={40} /> },
-    { id: 7, name: "More", icon: <FaLaptop size={40} /> },
-  { id: 8, name: "Sports", icon: <FaTshirt size={40} /> },
-  { id: 9, name: "Appliances", icon: <FaCouch size={40} /> },
-  { id: 10, name: "Toys", icon: <FaGift size={40} /> },
-  { id: 11, name: "Fitness", icon: <FaTshirt size={40} /> },
-  { id: 12, name: "Furniture", icon: <FaCouch size={40} /> },
+  { id: 1, name: "Electronics", icon: <FaLaptop size={40} />, color: "blue" },
+  { id: 2, name: "Mobiles", icon: <FaMobileAlt size={40} />, color: "purple" },
+  { id: 3, name: "Fashion", icon: <FaTshirt size={40} />, color: "pink" },
+  { id: 4, name: "Home", icon: <FaCouch size={40} />, color: "green" },
+  { id: 5, name: "Books", icon: <FaBook size={40} />, color: "orange" },
+  { id: 6, name: "Gifts", icon: <FaGift size={40} />, color: "red" },
+  { id: 7, name: "More", icon: <FaLaptop size={40} />, color: "blue" },
+  { id: 8, name: "Sports", icon: <FaTshirt size={40} />, color: "teal" },
+  { id: 9, name: "Appliances", icon: <FaCouch size={40} />, color: "indigo" },
+  { id: 10, name: "Toys", icon: <FaGift size={40} />, color: "yellow" },
+  { id: 11, name: "Fitness", icon: <FaTshirt size={40} />, color: "cyan" },
+  { id: 12, name: "Furniture", icon: <FaCouch size={40} />, color: "emerald" },
+  { id: 13, name: "More", icon: <FaLaptop size={40} />, color: "violet" },
+  { id: 14, name: "Sports", icon: <FaTshirt size={40} />, color: "lime" },
+  { id: 15, name: "Appliances", icon: <FaCouch size={40} />, color: "amber" },
+  { id: 16, name: "Toys", icon: <FaGift size={40} />, color: "rose" },
+  { id: 17, name: "Fitness", icon: <FaTshirt size={40} />, color: "sky" },
+  { id: 18, name: "Furniture", icon: <FaCouch size={40} />, color: "slate" },
 ];
 
 const Category = () => {
@@ -36,58 +36,103 @@ const Category = () => {
 
   const handleSeeMore = () => setShowAll((prev) => !prev);
 
-  // Default visible on mobile: show 8 (2 rows of 4)
-  // On larger screens the grid expands responsively; clicking "See all" shows the full list
+  // Default visible: show 12 categories
   const visibleCategories = showAll ? categories : categories.slice(0, 12);
 
   return (
-    <div className="max-w-7xl mx-auto md:py-6 py-6 px-4">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-semibold text-slate-900">
-            Top Categories
-          </h2>
-          <p className="text-sm text-slate-500 mt-1">
-            Browse popular categories across our global catalog
-          </p>
+    <section className="w-full bg-white py-12 md:py-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 md:mb-10">
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-1 h-8 bg-gray-900 rounded-full"></div>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-gray-900">
+                Top Categories
+              </h2>
+            </div>
+            <p className="text-sm md:text-base text-gray-600 ml-4">
+              Browse popular categories across our global marketplace
+            </p>
+          </div>
+
+          {/* See All Button */}
+          <button
+            onClick={handleSeeMore}
+            aria-expanded={showAll}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 hover:bg-black text-white rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+          >
+            <span>{showAll ? "Show Less" : "View All Categories"}</span>
+            <FaChevronDown
+              className={`transition-transform duration-300 ${
+                showAll ? "rotate-180" : "rotate-0"
+              }`}
+              size={14}
+            />
+          </button>
         </div>
 
-        {/* Right: See More */}
-        <button
-          onClick={handleSeeMore}
-          aria-expanded={showAll}
-          className="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-md shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
-        >
-          <span className="font-medium text-sm">
-            {showAll ? "Show less" : "See all categories"}
-          </span>
-          <FaChevronDown
-            className={"transition-transform " + (showAll ? "rotate-180" : "rotate-0")}
-          />
-        </button>
-      </div>
+        {/* Category Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
+          {visibleCategories.map((cat, index) => (
+            <div
+              key={`${cat.id}-${index}`}
+              role="button"
+              tabIndex={0}
+              className="group relative bg-white hover:bg-gray-50 border-2 border-gray-100 hover:border-gray-900 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1"
+              aria-label={`Browse ${cat.name} category`}
+            >
+              {/* Icon Container */}
+              <div className="flex flex-col items-center gap-3">
+                <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-2xl bg-gray-100 group-hover:bg-gray-900 transition-all duration-300 shadow-md group-hover:shadow-xl">
+                  <div className="text-gray-700 group-hover:text-white transition-colors duration-300">
+                    {React.cloneElement(cat.icon, {
+                      size: 28,
+                      className: "md:w-8 md:h-8",
+                    })}
+                  </div>
+                </div>
 
-  {/* Category Grid: mobile -> 4 columns (2 rows visible by default = 8 items) */}
-  <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4">
-        {visibleCategories.map((cat) => (
-          <div
-            key={cat.id}
-            role="button"
-            tabIndex={0}
-            className="flex flex-col items-center gap-2 bg-white border border-slate-100 rounded-lg p-3 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
-          >
-            <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-linear-to-tr from-blue-500 to-indigo-500 text-white shadow-md">
-              {React.cloneElement(cat.icon, { size: 24, className: "" })}
+                {/* Category Name */}
+                <span className="text-sm md:text-base font-bold text-gray-900 text-center group-hover:text-gray-900 transition-colors">
+                  {cat.name}
+                </span>
+              </div>
+
+              {/* Hover Arrow Indicator */}
+              <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <svg
+                  className="w-5 h-5 text-gray-900"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </div>
+
+              {/* Decorative Element */}
+              <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-transparent to-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
             </div>
+          ))}
+        </div>
 
-            <span className="text-xs md:text-sm font-medium text-slate-800 text-center truncate w-full">
-              {cat.name}
-            </span>
+        {/* Bottom Info */}
+        {!showAll && categories.length > 12 && (
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-500">
+              Showing {visibleCategories.length} of {categories.length}{" "}
+              categories
+            </p>
           </div>
-        ))}
+        )}
       </div>
-    </div>
+    </section>
   );
 };
 
