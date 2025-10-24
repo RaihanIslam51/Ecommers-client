@@ -4,22 +4,21 @@ import React from "react";
 
 const Navbarthrid = () => {
   return (
-    <div className="w-full mx-8 text-white">
-      {/* Hidden on small screens, flex on medium+ screens */}
-      <div className="hidden md:flex justify-between text-[15px] font-semibold flex-wrap">
-        <Link href="#" className="hover:text-blue-600">Home</Link>
-        <Link href="#" className="hover:text-blue-600">About</Link>
-        <Link href="#" className="hover:text-blue-600">Services</Link>
-        <Link href="#" className="hover:text-blue-600">Products</Link>
-        <Link href="#" className="hover:text-blue-600">Blog</Link>
-        <Link href="#" className="hover:text-blue-600">Contact</Link>
-        <Link href="#" className="hover:text-blue-600">FAQ</Link>
-        <Link href="#" className="hover:text-blue-600">Careers</Link>
-        <Link href="#" className="hover:text-blue-600">Support</Link>
-        <Link href="#" className="hover:text-blue-600">More</Link>
-        <Link href="#" className="hover:text-blue-600">About</Link>
-        <Link href="#" className="hover:text-blue-600">Services</Link>
-        <Link href="#" className="hover:text-blue-600">Products</Link>
+    <div className="w-full text-white">
+      {/* Hidden on small screens, horizontal scrollable nav on medium+ */}
+      <div className="hidden md:flex items-center overflow-x-auto no-scrollbar gap-6 text-[15px] font-semibold py-2">
+        <nav className="flex items-center gap-6 whitespace-nowrap mx-2">
+          <Link href="#" className="hover:text-indigo-300 transition-all tracking-wide uppercase">Home</Link>
+          <Link href="#" className="hover:text-indigo-300 transition-all tracking-wide uppercase">About</Link>
+          <Link href="#" className="hover:text-indigo-300 transition-all tracking-wide uppercase">Services</Link>
+          <Link href="#" className="hover:text-indigo-300 transition-all tracking-wide uppercase">Products</Link>
+          <Link href="#" className="hover:text-indigo-300 transition-all tracking-wide uppercase">Blog</Link>
+          <Link href="#" className="hover:text-indigo-300 transition-all tracking-wide uppercase">Contact</Link>
+          <Link href="#" className="hover:text-indigo-300 transition-all tracking-wide uppercase">FAQ</Link>
+          <Link href="#" className="hover:text-indigo-300 transition-all tracking-wide uppercase">Careers</Link>
+          <Link href="#" className="hover:text-indigo-300 transition-all tracking-wide uppercase">Support</Link>
+          <Link href="#" className="hover:text-indigo-300 transition-all tracking-wide uppercase">More</Link>
+        </nav>
       </div>
     </div>
   );

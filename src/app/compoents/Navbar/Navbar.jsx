@@ -29,30 +29,34 @@ const Navbar = () => {
   }, [lastScrollY]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full bg-black text-white shadow-md border-b border-gray-800 transition-all duration-500">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full backdrop-blur-sm bg-black/90 text-white shadow-lg border-b border-gray-800 transition-all duration-500">
       <div className="w-full flex flex-col">
 
         {/* === Top Section (Navbarfirst) === */}
         <div
-          className={`hidden md:flex items-center justify-center bg-gray-900 text-xs sm:text-sm transition-all duration-500 ${
+          className={`hidden md:flex items-center justify-center bg-transparent text-xs sm:text-sm transition-all duration-500 ${
             hideTopBottom ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-8"
           }`}
         >
-          <Navbarfirst />
+          <div className="max-w-7xl w-full mx-auto px-4">
+            <Navbarfirst />
+          </div>
         </div>
 
         {/* === Middle Section (Navbarsecond) === */}
-        <div className="h-12 md:h-16 bg-gray-900 text-xs sm:text-sm transition-all duration-500">
-          <Navbarsecond />
+        <div className="h-14 md:h-20 bg-transparent text-xs sm:text-sm transition-all duration-500">
+          <div className="max-w-7xl w-full mx-auto px-4">
+            <Navbarsecond />
+          </div>
         </div>
 
         {/* === Bottom Section (Navbarthrid) === */}
         <div
-          className={`hidden md:flex bg-gray-900 text-xs sm:text-sm transition-all duration-500 ${
-            hideTopBottom ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-7"
+          className={`hidden md:flex bg-transparent text-xs sm:text-sm transition-all duration-500 ${
+            hideTopBottom ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-8"
           }`}
         >
-          <div className="max-w-7xl mx-auto w-full">
+          <div className="max-w-7xl mx-auto w-full px-4">
             <Navbarthrid />
           </div>
         </div>

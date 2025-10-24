@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import ProductCard from "../TopSales/components/Productcard";
+import Image from "next/image";
 
 const Collection = () => {
   const [modalProductId, setModalProductId] = useState(null);
@@ -39,22 +40,30 @@ const Collection = () => {
   const displayedProducts = showAll ? dummyProducts : dummyProducts.slice(0, 24);
 
   return (
-    <div className="max-w-7xl mx-auto relative py-6">
-      {/* Title and Toggle Button */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl md:text-2xl font-semibold bg-blue-600 text-white px-5 py-1 rounded-md shadow">
-          Collections
-        </h2>
-        <button
-          className="text-blue-600 font-medium hover:underline"
-          onClick={() => setShowAll(!showAll)}
-        >
-          {showAll ? "See Less" : "See More"}
-        </button>
+    <section className="max-w-7xl mx-auto relative py-8 px-4">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900">Collections</h2>
+          <p className="text-sm text-slate-500 mt-1">Explore curated collections from top categories.</p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <span className="hidden sm:inline-block text-sm text-slate-600">Showing {displayedProducts.length} of {dummyProducts.length}</span>
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-md shadow-sm hover:shadow-md transition-transform duration-150 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          >
+            <span className="font-medium text-sm">{showAll ? 'See Less' : 'See More'}</span>
+            <svg className={`w-4 h-4 transition-transform ${showAll ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
         {displayedProducts.map((product) => (
           <ProductCard
             key={product.id}
@@ -67,26 +76,46 @@ const Collection = () => {
 
       {/* Quick View Modal */}
       {modalProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 w-11/12 max-w-md relative shadow-lg animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-50 px-4">
+          <div className="bg-white rounded-xl p-6 w-full max-w-4xl relative shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6 animate-fadeIn">
             <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl font-bold"
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold"
               onClick={() => setModalProductId(null)}
+              aria-label="Close quick view"
             >
               ✕
             </button>
-            <h2 className="text-xl font-bold mb-2">{modalProduct.name}</h2>
-            <p className="mb-2 text-gray-700">{modalProduct.feature}</p>
-            <div className="mb-2">
-              <span className="text-green-600 font-bold text-lg">{modalProduct.discountPrice}</span>{" "}
-              <span className="text-gray-400 line-through text-sm">{modalProduct.actualPrice}</span>
+
+            {/* Left: Image preview */}
+            <div className="w-full h-64 md:h-auto bg-gray-100 rounded-lg overflow-hidden relative">
+              <Image src={modalProduct.image} alt={modalProduct.name} fill className="object-contain" />
             </div>
-            <div className="text-gray-600 text-sm">{modalProduct.salesCount} sold</div>
-            <p className="mt-2 text-gray-700">{modalProduct.description}</p>
+
+            {/* Right: Details */}
+            <div className="flex flex-col justify-between">
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900">{modalProduct.name}</h3>
+                <p className="text-sm text-slate-600 mt-2">{modalProduct.feature}</p>
+
+                <div className="mt-4 flex items-center gap-4">
+                  <div className="text-green-600 font-bold text-2xl">{modalProduct.discountPrice}</div>
+                  <div className="text-gray-400 line-through">{modalProduct.actualPrice}</div>
+                </div>
+
+                <div className="mt-3 text-sm text-slate-600">{modalProduct.salesCount} sold</div>
+
+                <p className="mt-4 text-gray-700">{modalProduct.description}</p>
+              </div>
+
+              <div className="mt-6 flex items-center gap-3">
+                <button className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition">Add to cart</button>
+                <button className="bg-white border border-slate-200 px-4 py-2 rounded-md">Wishlist</button>
+              </div>
+            </div>
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

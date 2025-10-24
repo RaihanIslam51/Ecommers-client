@@ -58,13 +58,13 @@ export default function RootLayout({ children }) {
         <div className="flex flex-col min-h-screen">
 
           {/* Navbar */}
-          <header className="w-full bg-white shadow-sm">
+          <header className=" w-full bg-white shadow-sm">
             <Navbar />
           </header>
 
          {/* Main Content */}
        <main className="flex-1 pt-18 md:pt-[140px] w-full">
-         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+         <div className=" mx-auto sm:px-6 lg:px-8">
           {children}
          </div>
         </main>
@@ -72,7 +72,7 @@ export default function RootLayout({ children }) {
 
           {/* Footer */}
           <footer className=" w-full shadow-sm mt-auto">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className=" mx-auto">
               <Footer />
             </div>
           </footer>

@@ -7,6 +7,7 @@ import {
   FaCouch,
   FaBook,
   FaGift,
+  FaChevronDown,
 } from "react-icons/fa";
 
 const categories = [
@@ -22,6 +23,12 @@ const categories = [
   { id: 10, name: "Toys", icon: <FaGift size={40} /> },
   { id: 11, name: "Fitness", icon: <FaTshirt size={40} /> },
   { id: 12, name: "Furniture", icon: <FaCouch size={40} /> },
+    { id: 7, name: "More", icon: <FaLaptop size={40} /> },
+  { id: 8, name: "Sports", icon: <FaTshirt size={40} /> },
+  { id: 9, name: "Appliances", icon: <FaCouch size={40} /> },
+  { id: 10, name: "Toys", icon: <FaGift size={40} /> },
+  { id: 11, name: "Fitness", icon: <FaTshirt size={40} /> },
+  { id: 12, name: "Furniture", icon: <FaCouch size={40} /> },
 ];
 
 const Category = () => {
@@ -29,49 +36,52 @@ const Category = () => {
 
   const handleSeeMore = () => setShowAll((prev) => !prev);
 
-  // For desktop -> always show 10 or all
-  // For mobile -> default show 10 (5x2 rows), show all if "See More" clicked
-  const visibleCategories = showAll ? categories : categories.slice(0, 10);
+  // Default visible on mobile: show 8 (2 rows of 4)
+  // On larger screens the grid expands responsively; clicking "See all" shows the full list
+  const visibleCategories = showAll ? categories : categories.slice(0, 12);
 
   return (
-    <div className="max-w-7xl mx-auto md:py-2 py-4">
+    <div className="max-w-7xl mx-auto md:py-6 py-6 px-4">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        {/* Left: Top Category */}
-        <h2 className="text-xl md:text-2xl font-semibold bg-blue-600 text-white px-5 py-1 rounded-md shadow">
-          Top Category
-        </h2>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-semibold text-slate-900">
+            Top Categories
+          </h2>
+          <p className="text-sm text-slate-500 mt-1">
+            Browse popular categories across our global catalog
+          </p>
+        </div>
 
         {/* Right: See More */}
         <button
           onClick={handleSeeMore}
-          className="text-blue-600 pr-2 font-semibold text-lg hover:underline"
+          aria-expanded={showAll}
+          className="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-md shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
         >
-          {showAll ? "Less all categories" : "See all categories"}
+          <span className="font-medium text-sm">
+            {showAll ? "Show less" : "See all categories"}
+          </span>
+          <FaChevronDown
+            className={"transition-transform " + (showAll ? "rotate-180" : "rotate-0")}
+          />
         </button>
       </div>
 
-      {/* Category Grid */}
-      <div
-        className="
-          grid 
-          grid-cols-5            /* mobile: 5 per row */
-          md:grid-cols-5         /* desktop: 10 per row */
-          lg:grid-cols-10 
-          gap-y-6
-          place-items-center
-          px-2
-        "
-      >
+  {/* Category Grid: mobile -> 4 columns (2 rows visible by default = 8 items) */}
+  <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4">
         {visibleCategories.map((cat) => (
           <div
             key={cat.id}
-            className="flex flex-col items-center transition-all duration-300"
+            role="button"
+            tabIndex={0}
+            className="flex flex-col items-center gap-2 bg-white border border-slate-100 rounded-lg p-3 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
           >
-            <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center text-blue-600 mb-2">
-              {cat.icon}
+            <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-linear-to-tr from-blue-500 to-indigo-500 text-white shadow-md">
+              {React.cloneElement(cat.icon, { size: 24, className: "" })}
             </div>
-            <span className="text-sm md:text-base font-medium text-black text-center">
+
+            <span className="text-xs md:text-sm font-medium text-slate-800 text-center truncate w-full">
               {cat.name}
             </span>
           </div>
