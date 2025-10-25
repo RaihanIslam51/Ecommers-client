@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation"; // ✅ Path check করার জন্য
 import Navbarfirst from "./components/Navbarfirst";
 import Navbarsecond from "./components/Navbarsecond";
@@ -7,30 +7,32 @@ import Navbarthrid from "./components/Navbarthrid";
 
 const Navbar = () => {
   const [hideTopBottom, setHideTopBottom] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const pathname = usePathname(); 
-
-  
-  if (pathname.startsWith("/dashboard")) {
-    return null;
-  }
+  // use a ref for lastScrollY so the scroll handler doesn't trigger
+  // effect re-creation on every scroll update (keeps hooks stable)
+  const lastScrollYRef = useRef(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY + 10) {
+      if (currentScrollY > lastScrollYRef.current + 10) {
         setHideTopBottom(true);
-      } else if (currentScrollY < lastScrollY - 10) {
+      } else if (currentScrollY < lastScrollYRef.current - 10) {
         setHideTopBottom(false);
       }
 
-      setLastScrollY(currentScrollY);
+      lastScrollYRef.current = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, []);
+
+  // Guard pathname in case it's undefined during some navigation/hydration
+  if (pathname && pathname.startsWith("/dashboard")) {
+    return null;
+  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 w-full bg-white transition-all duration-300">
