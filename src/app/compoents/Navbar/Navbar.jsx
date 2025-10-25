@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation"; // ✅ Path check করার জন্য
 import Navbarfirst from "./components/Navbarfirst";
 import Navbarsecond from "./components/Navbarsecond";
 import Navbarthrid from "./components/Navbarthrid";
@@ -7,17 +8,20 @@ import Navbarthrid from "./components/Navbarthrid";
 const Navbar = () => {
   const [hideTopBottom, setHideTopBottom] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const pathname = usePathname(); 
+
+  
+  if (pathname.startsWith("/dashboard")) {
+    return null;
+  }
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // নিচে scroll করলে hide হবে
       if (currentScrollY > lastScrollY + 10) {
         setHideTopBottom(true);
-      }
-      // উপরে scroll করলে আবার show হবে
-      else if (currentScrollY < lastScrollY - 10) {
+      } else if (currentScrollY < lastScrollY - 10) {
         setHideTopBottom(false);
       }
 
@@ -31,7 +35,6 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 w-full bg-white transition-all duration-300">
       <div className="w-full flex flex-col shadow-sm">
-
         {/* === Top Section (Navbarfirst) === */}
         <div
           className={`hidden lg:flex items-center justify-center bg-black text-xs transition-all duration-300 ${
@@ -60,7 +63,6 @@ const Navbar = () => {
             <Navbarthrid />
           </div>
         </div>
-
       </div>
     </nav>
   );

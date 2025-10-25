@@ -25,7 +25,7 @@ const Topsales = () => {
   const displayedProducts = showAll ? dummyProducts : dummyProducts.slice(0, 5);
 
   return (
-    <section className="max-w-[1400px] mx-auto relative py-12 px-4 md:px-6 lg:px-8">
+    <section className="max-w-[1400px] mx-auto relative py-1 px-4 md:px-6 lg:px-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>

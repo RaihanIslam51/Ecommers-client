@@ -8,7 +8,7 @@ import Support from './Components/RightBanner.jsx/Support';
 const Banner = () => {
   return (
     <section className="w-full bg-linear-to-b from-gray-50 to-white py-3 md:py-4">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
+      <div className="max-w-7xl mx-auto  md:px-6">
         {/* Hero Banner Grid */}
         <div className="relative">
           <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
