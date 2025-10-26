@@ -10,7 +10,7 @@ const ProductModal = ({ product, onClose }) => {
     <div className="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b sticky top-0 bg-white">
+        <div className="flex items-center justify-between p-6 border-b sticky top-0 bg-">
           <h2 className="text-2xl font-bold text-gray-800">Product Details</h2>
           <button
             onClick={onClose}
@@ -82,7 +82,7 @@ const ProductModal = ({ product, onClose }) => {
                   )}
                 </div>
                 {product.originalPrice && (
-                  <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm">
+                  <span className="bg-red-500 text-black px-3 py-1 rounded-full text-sm">
                     {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
                   </span>
                 )}

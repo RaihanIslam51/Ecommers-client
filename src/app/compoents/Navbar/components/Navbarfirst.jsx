@@ -1,14 +1,23 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { AiFillStar } from "react-icons/ai";
 import { IoStorefrontSharp } from "react-icons/io5";
+import SupportModal from "./SupportModal";
 
 const Navbarfirst = () => {
+  const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
+
   return (
+    <>
+      {/* Support Modal */}
+      <SupportModal 
+        isOpen={isSupportModalOpen} 
+        onClose={() => setIsSupportModalOpen(false)} 
+      />
     <div className="hidden lg:flex items-center justify-center w-full text-white">
       <div className="flex items-center justify-between w-full py-1.5">
         {/* Left Side - Contact Info */}
@@ -37,14 +46,14 @@ const Navbarfirst = () => {
 
         {/* Right Side - Quick Links */}
         <div className="flex items-center gap-4 xl:gap-5">
-          {/* Customer Service */}
-          <Link 
-            href="/customer-service" 
+          {/* Customer Support - Opens Modal */}
+          <button 
+            onClick={() => setIsSupportModalOpen(true)}
             className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors duration-200"
           >
             <RiCustomerService2Fill size={11} />
             <span className="text-xs">Support</span>
-          </Link>
+          </button>
 
           {/* Separator */}
           <span className="text-gray-800">|</span>
@@ -72,6 +81,7 @@ const Navbarfirst = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

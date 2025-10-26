@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from '@/lib/axios';
+import Swal from 'sweetalert2';
 import {
   ShoppingCart,
   Users, CheckCircle ,
@@ -39,104 +41,245 @@ import {
   Stat,
   Table,
   IconBox,
+  Spinner,
 } from './Components';
 
 const DashboardPage = () => {
   const [timeframe, setTimeframe] = useState('today');
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [dashboardData, setDashboardData] = useState(null);
+
+  // Fetch dashboard data
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('/dashboard/stats');
+      
+      if (response.data.success) {
+        setDashboardData(response.data.stats);
+      }
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to fetch dashboard data',
+        icon: 'error',
+        confirmButtonColor: '#3b82f6'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await fetchDashboardData();
+    setTimeout(() => setRefreshing(false), 1000);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="text-center">
+          <Spinner size="lg" />
+          <p className="mt-4 text-gray-600">Loading dashboard data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!dashboardData) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="text-center">
+          <p className="text-gray-600">No dashboard data available</p>
+          <Button onClick={fetchDashboardData} className="mt-4">
+            Retry
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   const stats = [
     {
       title: 'Total Revenue',
-      value: '$45,231.89',
-      change: '+20.1%',
-      trend: 'up',
+      value: `$${dashboardData.totalRevenue.toLocaleString()}`,
+      change: `${dashboardData.revenueChange > 0 ? '+' : ''}${dashboardData.revenueChange}%`,
+      trend: dashboardData.revenueChange >= 0 ? 'up' : 'down',
       icon: DollarSign,
       color: 'from-blue-500 to-cyan-500',
       bgColor: 'from-blue-50 to-cyan-50',
-      description: 'vs last period',
-      target: '$50,000',
-      percentage: 90
+      description: 'vs last month',
+      target: `$${(dashboardData.totalRevenue * 1.2).toLocaleString()}`,
+      percentage: Math.min(100, (dashboardData.thisMonthRevenue / (dashboardData.totalRevenue * 1.2)) * 100)
     },
     {
       title: 'Total Orders',
-      value: '2,345',
-      change: '+15.3%',
-      trend: 'up',
+      value: dashboardData.totalOrders.toLocaleString(),
+      change: `${dashboardData.ordersChange > 0 ? '+' : ''}${dashboardData.ordersChange}%`,
+      trend: dashboardData.ordersChange >= 0 ? 'up' : 'down',
       icon: ShoppingCart,
       color: 'from-purple-500 to-pink-500',
       bgColor: 'from-purple-50 to-pink-50',
-      description: 'new this month',
-      target: '3,000',
-      percentage: 78
+      description: 'this month',
+      target: (dashboardData.totalOrders * 1.2).toFixed(0),
+      percentage: Math.min(100, (dashboardData.thisMonthOrders / (dashboardData.totalOrders * 1.2)) * 100)
     },
     {
       title: 'Total Customers',
-      value: '12,234',
-      change: '+8.2%',
+      value: dashboardData.totalCustomers.toLocaleString(),
+      change: `+${dashboardData.newCustomersThisMonth}`,
       trend: 'up',
       icon: Users,
       color: 'from-green-500 to-emerald-500',
       bgColor: 'from-green-50 to-emerald-50',
-      description: 'active users',
-      target: '15,000',
+      description: 'new this month',
+      target: (dashboardData.totalCustomers * 1.2).toFixed(0),
       percentage: 82
     },
     {
       title: 'Active Products',
-      value: '1,234',
-      change: '-2.4%',
-      trend: 'down',
+      value: dashboardData.activeProducts.toLocaleString(),
+      change: dashboardData.lowStockProducts > 0 ? `-${dashboardData.lowStockProducts}` : '+0',
+      trend: dashboardData.lowStockProducts > 0 ? 'down' : 'up',
       icon: Package,
       color: 'from-orange-500 to-red-500',
       bgColor: 'from-orange-50 to-red-50',
       description: 'in stock',
-      target: '1,500',
+      target: (dashboardData.activeProducts * 1.2).toFixed(0),
       percentage: 82
     }
   ];
 
-  const recentOrders = [
-    { id: '#12345', customer: 'John Doe', product: 'Wireless Headphones', amount: '$299', status: 'Completed', date: '2 min ago', avatar: 'JD' },
-    { id: '#12344', customer: 'Jane Smith', product: 'Smart Watch', amount: '$499', status: 'Processing', date: '15 min ago', avatar: 'JS' },
-    { id: '#12343', customer: 'Bob Johnson', product: 'Laptop Stand', amount: '$79', status: 'Pending', date: '1 hour ago', avatar: 'BJ' },
-    { id: '#12342', customer: 'Alice Brown', product: 'USB-C Hub', amount: '$45', status: 'Completed', date: '2 hours ago', avatar: 'AB' },
-    { id: '#12341', customer: 'Mike Wilson', product: 'Keyboard', amount: '$129', status: 'Shipped', date: '3 hours ago', avatar: 'MW' },
-  ];
-
-  const topProducts = [
-    { name: 'Wireless Earbuds', sales: 1234, revenue: '$45,670', trend: '+12%', stock: 234, rating: 4.8 },
-    { name: 'Smart Watch Pro', sales: 987, revenue: '$39,480', trend: '+8%', stock: 156, rating: 4.9 },
-    { name: 'Laptop Stand', sales: 756, revenue: '$22,680', trend: '+15%', stock: 89, rating: 4.7 },
-    { name: 'USB-C Cable', sales: 654, revenue: '$13,080', trend: '+5%', stock: 523, rating: 4.6 },
-    { name: 'Phone Case', sales: 543, revenue: '$10,860', trend: '+3%', stock: 341, rating: 4.5 },
-  ];
-
-  const recentActivity = [
-    { action: 'New order received', user: 'John Doe', time: '2 minutes ago', icon: ShoppingCart, color: 'blue' },
-    { action: 'Product added to inventory', user: 'Admin', time: '15 minutes ago', icon: Package, color: 'green' },
-    { action: 'Customer review posted', user: 'Jane Smith', time: '1 hour ago', icon: Star, color: 'yellow' },
-    { action: 'Payment processed', user: 'System', time: '2 hours ago', icon: CreditCard, color: 'purple' },
-    { action: 'Shipping notification sent', user: 'System', time: '3 hours ago', icon: Truck, color: 'orange' },
-  ];
-
-  const salesByCategory = [
-    { category: 'Electronics', amount: '$25,430', percentage: 45, color: 'blue' },
-    { category: 'Fashion', amount: '$15,670', percentage: 28, color: 'purple' },
-    { category: 'Home & Garden', amount: '$8,920', percentage: 16, color: 'green' },
-    { category: 'Sports', amount: '$6,210', percentage: 11, color: 'orange' },
-  ];
-
   const alerts = [
-    { type: 'warning', message: 'Low stock alert: 15 products need restock', icon: AlertTriangle },
-    { type: 'success', message: 'Monthly sales target achieved!', icon: CheckCircle },
-    { type: 'info', message: '3 pending customer reviews to moderate', icon: MessageSquare },
+    ...(dashboardData.lowStockProducts > 0 ? [{
+      type: 'warning',
+      message: `Low stock alert: ${dashboardData.lowStockProducts} products need restock`,
+      icon: AlertTriangle
+    }] : []),
+    ...(dashboardData.revenueChange > 10 ? [{
+      type: 'success',
+      message: 'Monthly sales target achieved!',
+      icon: CheckCircle
+    }] : []),
+    ...(dashboardData.ordersByStatus.pending > 0 ? [{
+      type: 'info',
+      message: `${dashboardData.ordersByStatus.pending} pending orders to process`,
+      icon: MessageSquare
+    }] : [])
   ];
 
-  const handleRefresh = () => {
-    setRefreshing(true);
-    setTimeout(() => setRefreshing(false), 1000);
+  // Ensure we have at least 3 alerts
+  if (alerts.length < 3) {
+    alerts.push({
+      type: 'success',
+      message: 'All systems running smoothly!',
+      icon: CheckCircle
+    });
+  }
+
+  // Helper function to get time ago
+  const getTimeAgo = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
+    
+    if (seconds < 60) return 'just now';
+    if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+    return `${Math.floor(seconds / 86400)} days ago`;
   };
+
+  // Helper function to get initials
+  const getInitials = (name) => {
+    if (!name) return 'U';
+    const parts = name.split(' ');
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
+
+  // Format real data for recent orders
+  const recentOrders = (dashboardData.recentOrders || []).map(order => ({
+    id: order.id || 'N/A',
+    customer: order.customer || 'Unknown',
+    product: order.product || 'N/A',
+    amount: `$${(order.amount || 0).toFixed(2)}`,
+    status: order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : 'Pending',
+    date: getTimeAgo(order.date),
+    avatar: getInitials(order.customer || 'U')
+  }));
+
+  // Format real data for top products
+  const topProducts = (dashboardData.topProducts || []).map((product, index) => {
+    const sales = product.sales || 0;
+    const lastMonthSales = sales * 0.9; // Simulate last month
+    const trend = lastMonthSales > 0 ? ((sales - lastMonthSales) / lastMonthSales * 100).toFixed(0) : 0;
+    return {
+      name: product.name || 'Unknown Product',
+      sales: sales,
+      revenue: `$${(product.revenue || 0).toLocaleString()}`,
+      trend: `+${trend}%`,
+      stock: product.stock || 0,
+      rating: product.rating || 0
+    };
+  });
+
+  // Format real data for sales by category
+  const salesByCategory = (dashboardData.salesByCategory || []).map(cat => ({
+    category: cat.category || 'Other',
+    amount: `$${(cat.amount || 0).toLocaleString()}`,
+    percentage: parseInt(cat.percentage || 0),
+    color: (cat.category || '').toLowerCase().includes('electronic') ? 'blue' :
+           (cat.category || '').toLowerCase().includes('fashion') ? 'purple' :
+           (cat.category || '').toLowerCase().includes('home') ? 'green' : 'orange'
+  }));
+
+  // Generate real recent activity from orders
+  const recentActivity = [
+    ...(dashboardData.recentOrders.length > 0 && dashboardData.recentOrders[0].customer ? [{
+      action: 'New order received',
+      user: dashboardData.recentOrders[0].customer,
+      time: getTimeAgo(dashboardData.recentOrders[0].date),
+      icon: ShoppingCart,
+      color: 'blue'
+    }] : []),
+    ...(dashboardData.topProducts.length > 0 ? [{
+      action: 'Product popular in sales',
+      user: 'System',
+      time: 'Today',
+      icon: Package,
+      color: 'green'
+    }] : []),
+    ...(dashboardData.ordersByStatus.delivered > 0 ? [{
+      action: `${dashboardData.ordersByStatus.delivered} orders delivered`,
+      user: 'Shipping',
+      time: 'Today',
+      icon: Truck,
+      color: 'orange'
+    }] : []),
+    ...(dashboardData.recentOrders.length > 1 && dashboardData.recentOrders[1].customer ? [{
+      action: 'Payment processed',
+      user: dashboardData.recentOrders[1].customer,
+      time: getTimeAgo(dashboardData.recentOrders[1].date),
+      icon: CreditCard,
+      color: 'purple'
+    }] : []),
+    {
+      action: 'New customer registered',
+      user: 'System',
+      time: 'Today',
+      icon: Star,
+      color: 'yellow'
+    }
+  ].slice(0, 5);
 
   return (
     <div className="space-y-4 sm:space-y-5 md:space-y-6">
@@ -157,6 +300,7 @@ const DashboardPage = () => {
             size="sm"
             onClick={handleRefresh}
             icon={<RefreshCw className={refreshing ? 'animate-spin' : ''} />}
+            disabled={refreshing}
           >
             Refresh
           </Button>
@@ -416,11 +560,13 @@ const DashboardPage = () => {
           <div className="mt-6 pt-6 border-t border-gray-200">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-gray-500">Total Revenue</span>
-              <span className="text-xl font-bold text-gray-900">$56,230</span>
+              <span className="text-xl font-bold text-gray-900">
+                ${dashboardData.totalRevenue.toLocaleString()}
+              </span>
             </div>
             <div className="mt-2 flex items-center gap-2 text-sm">
-              <Badge variant="success" icon={<TrendingUp className="w-3 h-3" />}>
-                +12.5%
+              <Badge variant={dashboardData.revenueChange >= 0 ? "success" : "danger"} icon={<TrendingUp className="w-3 h-3" />}>
+                {dashboardData.revenueChange > 0 ? '+' : ''}{dashboardData.revenueChange}%
               </Badge>
               <span className="text-gray-500">vs last month</span>
             </div>
@@ -503,14 +649,14 @@ const DashboardPage = () => {
         <Card hoverable className="p-4">
           <div className="flex items-center gap-3">
             <IconBox
-              icon={<Globe className="w-5 h-5" />}
+              icon={<ShoppingCart className="w-5 h-5" />}
               size="sm"
               color="from-blue-500 to-cyan-500"
               bgColor="from-blue-50 to-cyan-50"
             />
             <div>
-              <p className="text-xs text-gray-500">Website Visits</p>
-              <p className="text-lg font-bold text-gray-900">45.2K</p>
+              <p className="text-xs text-gray-500">Today&apos;s Orders</p>
+              <p className="text-lg font-bold text-gray-900">{dashboardData.todayOrders}</p>
             </div>
           </div>
         </Card>
@@ -524,8 +670,10 @@ const DashboardPage = () => {
               bgColor="from-green-50 to-emerald-50"
             />
             <div>
-              <p className="text-xs text-gray-500">Total Paid</p>
-              <p className="text-lg font-bold text-gray-900">$42.3K</p>
+              <p className="text-xs text-gray-500">Today&apos;s Revenue</p>
+              <p className="text-lg font-bold text-gray-900">
+                ${dashboardData.todayRevenue.toLocaleString()}
+              </p>
             </div>
           </div>
         </Card>
@@ -540,7 +688,9 @@ const DashboardPage = () => {
             />
             <div>
               <p className="text-xs text-gray-500">In Shipping</p>
-              <p className="text-lg font-bold text-gray-900">124</p>
+              <p className="text-lg font-bold text-gray-900">
+                {dashboardData.ordersByStatus.shipped}
+              </p>
             </div>
           </div>
         </Card>
@@ -548,14 +698,16 @@ const DashboardPage = () => {
         <Card hoverable className="p-4">
           <div className="flex items-center gap-3">
             <IconBox
-              icon={<Star className="w-5 h-5" />}
+              icon={<CheckCircle className="w-5 h-5" />}
               size="sm"
               color="from-yellow-500 to-orange-500"
               bgColor="from-yellow-50 to-orange-50"
             />
             <div>
-              <p className="text-xs text-gray-500">Avg Rating</p>
-              <p className="text-lg font-bold text-gray-900">4.8/5.0</p>
+              <p className="text-xs text-gray-500">Delivered</p>
+              <p className="text-lg font-bold text-gray-900">
+                {dashboardData.ordersByStatus.delivered}
+              </p>
             </div>
           </div>
         </Card>

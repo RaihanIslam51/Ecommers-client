@@ -1,43 +1,39 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "../TopSales/components/Productcard";
 import Image from "next/image";
+import axiosInstance from "@/lib/axios";
+import { useRouter } from "next/navigation";
 
 const Collection = () => {
+  const router = useRouter();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [modalProductId, setModalProductId] = useState(null);
-  const [showAll, setShowAll] = useState(false); // For "See More / See Less"
+  const [showAll, setShowAll] = useState(false);
 
-  const dummyProducts = [
-    { id: 1, name: "Wireless Headphones", feature: "Noise-cancellation and 20-hour battery life", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "High-quality wireless headphones with clear sound and comfortable fit.", actualPrice: "$79.99", discountPrice: "$49.99", salesCount: 1240 },
-    { id: 2, name: "Smart Watch", feature: "Heart rate monitor and sleep tracking", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "discount", description: "Track your fitness and health metrics with style and accuracy.", actualPrice: "$149.99", discountPrice: "$99.99", salesCount: 980 },
-    { id: 3, name: "Bluetooth Speaker", feature: "Waterproof design and 10-hour playtime", image:"https://i.ibb.co/twGxFqM0/watch.jpg", badge: "save", description: "Take your music anywhere with high-quality sound and durability.", actualPrice: "$49.99", discountPrice: "$29.99", salesCount: 650 },
-    { id: 4, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 5, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 6, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 7, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 8, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 9, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 10, name: "Wireless Headphones", feature: "Noise-cancellation and 20-hour battery life", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "High-quality wireless headphones with clear sound and comfortable fit.", actualPrice: "$79.99", discountPrice: "$49.99", salesCount: 1240 },
-    { id: 11, name: "Smart Watch", feature: "Heart rate monitor and sleep tracking", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "discount", description: "Track your fitness and health metrics with style and accuracy.", actualPrice: "$149.99", discountPrice: "$99.99", salesCount: 980 },
-    { id: 12, name: "Bluetooth Speaker", feature: "Waterproof design and 10-hour playtime", image:"https://i.ibb.co/twGxFqM0/watch.jpg", badge: "save", description: "Take your music anywhere with high-quality sound and durability.", actualPrice: "$49.99", discountPrice: "$29.99", salesCount: 650 },
-    { id: 13, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 14, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 15, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 16, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 17, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 18, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 19, name: "Wireless Headphones", feature: "Noise-cancellation and 20-hour battery life", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "High-quality wireless headphones with clear sound and comfortable fit.", actualPrice: "$79.99", discountPrice: "$49.99", salesCount: 1240 },
-    { id: 20, name: "Smart Watch", feature: "Heart rate monitor and sleep tracking", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "discount", description: "Track your fitness and health metrics with style and accuracy.", actualPrice: "$149.99", discountPrice: "$99.99", salesCount: 980 },
-    { id: 21, name: "Bluetooth Speaker", feature: "Waterproof design and 10-hour playtime", image:"https://i.ibb.co/twGxFqM0/watch.jpg", badge: "save", description: "Take your music anywhere with high-quality sound and durability.", actualPrice: "$49.99", discountPrice: "$29.99", salesCount: 650 },
-    { id: 22, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 23, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 24, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-  ];
+  // Fetch products from API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axiosInstance.get('/products');
+        if (response.data && Array.isArray(response.data)) {
+          setProducts(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const modalProduct = dummyProducts.find((p) => p.id === modalProductId);
+    fetchProducts();
+  }, []);
 
-  // Default: 4 rows = 24 products
-  const displayedProducts = showAll ? dummyProducts : dummyProducts.slice(0, 24);
+  const modalProduct = products.find((p) => (p._id || p.id) === modalProductId);
+
+  // Default: 24 products
+  const displayedProducts = showAll ? products : products.slice(0, 24);
 
   return (
     <section className="max-w-[1400px] mx-auto relative py-12 px-4 md:px-6 lg:px-8 bg-gray-50">
@@ -50,11 +46,12 @@ const Collection = () => {
 
         <div className="flex items-center gap-3">
           <span className="hidden sm:inline-block text-sm text-gray-500">
-            {displayedProducts.length} of {dummyProducts.length} items
+            {displayedProducts.length} of {products.length} items
           </span>
           <button
             onClick={() => setShowAll(!showAll)}
             className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-black border border-gray-300 rounded-lg hover:border-black hover:bg-white transition-all duration-200"
+            disabled={products.length <= 24}
           >
             <span>{showAll ? 'Show Less' : 'Show More'}</span>
             <svg 
@@ -68,17 +65,35 @@ const Collection = () => {
         </div>
       </div>
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5">
-        {displayedProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            isDimmed={modalProductId && modalProductId !== product.id}
-            onQuickView={setModalProductId}
-          />
-        ))}
-      </div>
+      {/* Loading State */}
+      {loading ? (
+        <div className="flex justify-center items-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
+        </div>
+      ) : products.length === 0 ? (
+        <div className="text-center py-20">
+          <p className="text-gray-600">No products available</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5">
+          {displayedProducts.map((product) => (
+            <ProductCard
+              key={product._id || product.id}
+              product={{
+                ...product,
+                id: product._id || product.id,
+                discountPrice: `$${product.price}`,
+                actualPrice: product.originalPrice ? `$${product.originalPrice}` : `$${product.price}`,
+                salesCount: product.stock || 0,
+                feature: product.description?.substring(0, 50) + '...' || 'No description',
+              }}
+              isDimmed={modalProductId && modalProductId !== (product._id || product.id)}
+              onQuickView={setModalProductId}
+              onClick={() => router.push(`/products/${product._id || product.id}`)}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Quick View Modal */}
       {modalProduct && (
@@ -111,7 +126,7 @@ const Collection = () => {
                 <h3 className="text-2xl md:text-3xl font-bold text-black mb-2">
                   {modalProduct.name}
                 </h3>
-                <p className="text-sm text-gray-600 mb-4">{modalProduct.feature}</p>
+                <p className="text-sm text-gray-600 mb-4">{modalProduct.description}</p>
 
                 {/* Rating */}
                 <div className="flex items-center gap-2 mb-4">
@@ -128,34 +143,55 @@ const Collection = () => {
                 {/* Pricing */}
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-3xl font-bold text-black">
-                    {modalProduct.discountPrice}
+                    ${modalProduct.price}
                   </span>
-                  <span className="text-lg text-gray-400 line-through">
-                    {modalProduct.actualPrice}
-                  </span>
+                  {modalProduct.originalPrice && (
+                    <span className="text-lg text-gray-400 line-through">
+                      ${modalProduct.originalPrice}
+                    </span>
+                  )}
                 </div>
 
-                {/* Sales Count */}
+                {/* Stock */}
                 <div className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full mb-4">
                   <span className="text-sm text-gray-700">
-                    <span className="font-bold text-black">{modalProduct.salesCount}</span> sold
+                    <span className="font-bold text-black">{modalProduct.stock}</span> in stock
                   </span>
                 </div>
 
-                {/* Description */}
-                <p className="text-gray-700 leading-relaxed">{modalProduct.description}</p>
+                {/* Category & Brand */}
+                <div className="flex gap-4 mb-4">
+                  <div>
+                    <span className="text-xs text-gray-500">Category:</span>
+                    <p className="font-semibold text-black">{modalProduct.category}</p>
+                  </div>
+                  {modalProduct.brand && (
+                    <div>
+                      <span className="text-xs text-gray-500">Brand:</span>
+                      <p className="font-semibold text-black">{modalProduct.brand}</p>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Actions */}
-              <div className="mt-6 flex items-center gap-3">
-                <button className="flex-1 px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-200">
-                  Add to Cart
+              <div className="mt-6 flex flex-col gap-3">
+                <button 
+                  onClick={() => router.push(`/products/${modalProduct._id || modalProduct.id}`)}
+                  className="w-full px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-200"
+                >
+                  View Details
                 </button>
-                <button className="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-black hover:bg-gray-50 transition-all duration-200">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                  </svg>
-                </button>
+                <div className="flex items-center gap-3">
+                  <button className="flex-1 px-6 py-3 border border-black text-black font-semibold rounded-lg hover:bg-black hover:text-white transition-all duration-200">
+                    Add to Cart
+                  </button>
+                  <button className="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-black hover:bg-gray-50 transition-all duration-200">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

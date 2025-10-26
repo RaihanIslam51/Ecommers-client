@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploader from './ImageUploader';
 
-const ProductForm = ({ product, onSubmit, onCancel }) => {
+const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -22,7 +22,6 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
     returnPolicy: '30 days',
   });
 
-  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -83,21 +82,15 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
     e.preventDefault();
     if (!validate()) return;
 
-    setLoading(true);
-    try {
-      const submitData = {
-        ...formData,
-        price: parseFloat(formData.price),
-        originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : null,
-        stock: parseInt(formData.stock),
-        tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean),
-      };
-      await onSubmit(submitData);
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    } finally {
-      setLoading(false);
-    }
+    const submitData = {
+      ...formData,
+      price: parseFloat(formData.price),
+      originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : null,
+      stock: parseInt(formData.stock),
+      tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean),
+    };
+    
+    await onSubmit(submitData);
   };
 
   return (
@@ -105,7 +98,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Product Name */}
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Product Name *
           </label>
           <input
@@ -113,7 +106,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black ${
               errors.name ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="Enter product name"
@@ -123,14 +116,14 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
 
         {/* Category */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Category *
           </label>
           <select
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black ${
               errors.category ? 'border-red-500' : 'border-gray-300'
             }`}
           >
@@ -149,7 +142,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
 
         {/* Brand */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Brand
           </label>
           <input
@@ -157,14 +150,14 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             name="brand"
             value={formData.brand}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             placeholder="Enter brand name"
           />
         </div>
 
         {/* Price */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Price ($) *
           </label>
           <input
@@ -173,7 +166,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             value={formData.price}
             onChange={handleChange}
             step="0.01"
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black ${
               errors.price ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="0.00"
@@ -183,7 +176,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
 
         {/* Original Price */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Original Price ($)
           </label>
           <input
@@ -192,14 +185,14 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             value={formData.originalPrice}
             onChange={handleChange}
             step="0.01"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             placeholder="0.00"
           />
         </div>
 
         {/* Stock */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Stock Quantity *
           </label>
           <input
@@ -207,7 +200,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             name="stock"
             value={formData.stock}
             onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black ${
               errors.stock ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="0"
@@ -217,7 +210,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
 
         {/* SKU */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             SKU *
           </label>
           <input
@@ -225,7 +218,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             name="sku"
             value={formData.sku}
             onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black ${
               errors.sku ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="PROD-001"
@@ -235,7 +228,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
 
         {/* Weight */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Weight (kg)
           </label>
           <input
@@ -243,14 +236,14 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             name="weight"
             value={formData.weight}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             placeholder="1.5"
           />
         </div>
 
         {/* Dimensions */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Dimensions (L x W x H)
           </label>
           <input
@@ -258,14 +251,14 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             name="dimensions"
             value={formData.dimensions}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             placeholder="10 x 5 x 3 cm"
           />
         </div>
 
         {/* Warranty */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Warranty
           </label>
           <input
@@ -273,21 +266,21 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             name="warranty"
             value={formData.warranty}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             placeholder="1 Year"
           />
         </div>
 
         {/* Return Policy */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Return Policy
           </label>
           <select
             name="returnPolicy"
             value={formData.returnPolicy}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
           >
             <option value="7 days">7 Days</option>
             <option value="15 days">15 Days</option>
@@ -298,7 +291,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
 
         {/* Tags */}
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Tags (comma separated)
           </label>
           <input
@@ -306,14 +299,14 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             name="tags"
             value={formData.tags}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             placeholder="new, trending, sale"
           />
         </div>
 
         {/* Description */}
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Description
           </label>
           <textarea
@@ -321,7 +314,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             value={formData.description}
             onChange={handleChange}
             rows={4}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             placeholder="Enter product description"
           />
         </div>
@@ -343,16 +336,23 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
         <button
           type="button"
           onClick={onCancel}
-          className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+          disabled={isSubmitting}
+          className="px-6 py-2 border border-gray-300 rounded-lg text-black hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Cancel
         </button>
         <button
           type="submit"
-          disabled={loading}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-blue-300"
+          disabled={isSubmitting}
+          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center gap-2"
         >
-          {loading ? 'Saving...' : product ? 'Update Product' : 'Add Product'}
+          {isSubmitting && (
+            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          )}
+          {isSubmitting ? 'Saving...' : product ? 'Update Product' : 'Add Product'}
         </button>
       </div>
     </form>

@@ -3,14 +3,15 @@ import React from "react";
 import Image from "next/image";
 import { FaShoppingCart, FaHeart, FaEye, FaStar } from "react-icons/fa";
 
-const ProductCard = ({ product, isDimmed, onQuickView }) => {
+const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
   return (
     <article
-      className={`relative group w-full bg-white rounded-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:border-gray-900 hover:shadow-xl ${
+      className={`relative group w-full bg-white rounded-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:border-gray-900 hover:shadow-xl cursor-pointer ${
         isDimmed ? "opacity-40 pointer-events-none" : "opacity-100"
       }`}
       tabIndex={0}
       aria-labelledby={`product-${product.id}-name`}
+      onClick={onClick}
     >
       {/* Badge */}
       {product.badge && (
@@ -24,18 +25,23 @@ const ProductCard = ({ product, isDimmed, onQuickView }) => {
         <button 
           className="w-9 h-9 bg-white hover:bg-black text-gray-700 hover:text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center" 
           aria-label="Add to cart"
+          onClick={(e) => e.stopPropagation()}
         >
           <FaShoppingCart className="text-sm" />
         </button>
         <button 
           className="w-9 h-9 bg-white hover:bg-black text-gray-700 hover:text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center" 
           aria-label="Add to wishlist"
+          onClick={(e) => e.stopPropagation()}
         >
           <FaHeart className="text-sm" />
         </button>
         <button
           className="w-9 h-9 bg-white hover:bg-black text-gray-700 hover:text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
-          onClick={() => onQuickView(product.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onQuickView(product.id);
+          }}
           aria-label="Quick view"
         >
           <FaEye className="text-sm" />
@@ -98,7 +104,10 @@ const ProductCard = ({ product, isDimmed, onQuickView }) => {
           </div>
           
           {/* Add to Cart Button - Visible on Hover */}
-          <button className="opacity-0 group-hover:opacity-100 px-4 py-1.5 bg-black text-white text-xs font-semibold rounded-md hover:bg-gray-800 transition-all duration-300">
+          <button 
+            className="opacity-0 group-hover:opacity-100 px-4 py-1.5 bg-black text-white text-xs font-semibold rounded-md hover:bg-gray-800 transition-all duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
             Add to Cart
           </button>
         </div>

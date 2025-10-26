@@ -1,52 +1,94 @@
 'use client';
 import React from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Cell } from 'recharts';
 
-const RevenueChart = () => {
-    const data = [
-        { day: 'Mon', revenue: 4500, orders: 45 },
-        { day: 'Tue', revenue: 5200, orders: 52 },
-        { day: 'Wed', revenue: 4800, orders: 48 },
-        { day: 'Thu', revenue: 6200, orders: 62 },
-        { day: 'Fri', revenue: 7500, orders: 75 },
-        { day: 'Sat', revenue: 8900, orders: 89 },
-        { day: 'Sun', revenue: 7200, orders: 72 }
+const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+                <p className="font-semibold text-gray-800 mb-2">{label}</p>
+                <p className="text-sm text-purple-600">
+                    Revenue: ${payload[0].value.toLocaleString()}
+                </p>
+            </div>
+        );
+    }
+    return null;
+};
+
+const RevenueChart = ({ data = [] }) => {
+    const defaultData = [
+        { day: 'Mon', revenue: 0 },
+        { day: 'Tue', revenue: 0 },
+        { day: 'Wed', revenue: 0 },
+        { day: 'Thu', revenue: 0 },
+        { day: 'Fri', revenue: 0 },
+        { day: 'Sat', revenue: 0 },
+        { day: 'Sun', revenue: 0 }
     ];
 
-    const maxRevenue = Math.max(...data.map(d => d.revenue));
+    const chartData = data.length > 0 ? data : defaultData;
+    const totalRevenue = chartData.reduce((sum, d) => sum + d.revenue, 0);
+    const avgRevenue = Math.round(totalRevenue / chartData.length);
 
     return (
-        <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-gray-800">Weekly Revenue</h3>
-                <div className="flex gap-4">
-                    <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                        <span className="text-xs text-gray-600">Revenue</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        <span className="text-xs text-gray-600">Orders</span>
-                    </div>
+        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+            <div className="flex justify-between items-center mb-6">
+                <div>
+                    <h3 className="text-lg font-bold text-gray-800">Weekly Revenue</h3>
+                    <p className="text-sm text-gray-500 mt-1">Last 7 days breakdown</p>
+                </div>
+                <div className="text-right">
+                    <p className="text-2xl font-bold text-purple-600">
+                        ${totalRevenue.toLocaleString()}
+                    </p>
+                    <p className="text-xs text-gray-500">Total Revenue</p>
                 </div>
             </div>
-            <div className="flex items-end justify-between h-48 gap-3">
-                {data.map((item, index) => (
-                    <div key={index} className="flex-1 flex flex-col items-center gap-2">
-                        <div className="w-full relative flex items-end" style={{ height: '100%' }}>
-                            <div className="w-full flex gap-1">
-                                <div 
-                                    className="flex-1 bg-blue-500 rounded-t hover:bg-blue-600 transition-colors cursor-pointer group relative"
-                                    style={{ height: `${(item.revenue / maxRevenue) * 100}%` }}
-                                >
-                                    <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                        ${item.revenue}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <span className="text-xs text-gray-600 font-medium">{item.day}</span>
-                    </div>
-                ))}
+
+            <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                    <defs>
+                        <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.9}/>
+                            <stop offset="95%" stopColor="#a78bfa" stopOpacity={0.8}/>
+                        </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                    <XAxis 
+                        dataKey="day" 
+                        tick={{ fontSize: 12, fill: '#6b7280' }}
+                        tickLine={false}
+                        axisLine={{ stroke: '#e5e7eb' }}
+                    />
+                    <YAxis 
+                        tick={{ fontSize: 12, fill: '#6b7280' }}
+                        tickLine={false}
+                        axisLine={{ stroke: '#e5e7eb' }}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Bar 
+                        dataKey="revenue" 
+                        fill="url(#colorRevenue)" 
+                        radius={[8, 8, 0, 0]}
+                        maxBarSize={60}
+                    />
+                </BarChart>
+            </ResponsiveContainer>
+
+            <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100">
+                <div className="text-center">
+                    <p className="text-2xl font-bold text-purple-600">
+                        ${avgRevenue.toLocaleString()}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">Avg Daily Revenue</p>
+                </div>
+                <div className="text-center">
+                    <p className="text-2xl font-bold text-green-600">
+                        {chartData.length}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">Days Tracked</p>
+                </div>
             </div>
         </div>
     );

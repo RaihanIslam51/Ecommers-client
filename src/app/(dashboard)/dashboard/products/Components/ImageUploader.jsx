@@ -17,7 +17,7 @@ const ImageUploader = ({
   const multipleFileInputRef = useRef(null);
 
   // ImgBB API Key - Replace with your actual API key
-  const IMGBB_API_KEY = 'your_imgbb_api_key_here';
+  const IMGBB_API_KEY = 'f2682b8754781338badc3f21b66dfce2';
 
   const uploadToImgBB = async (file) => {
     const formData = new FormData();

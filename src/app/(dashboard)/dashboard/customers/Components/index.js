@@ -1,0 +1,10 @@
+export { default as CustomerStats } from './CustomerStats';
+export { default as CustomerTable } from './CustomerTable';
+export { default as CustomerAvatar } from './CustomerAvatar';
+export { default as CustomerStatusBadge } from './CustomerStatusBadge';
+export { default as CustomerFilters } from './CustomerFilters';
+export { default as CustomerDetailsModal } from './CustomerDetailsModal';
+export { default as AddCustomerModal } from './AddCustomerModal';
+export { default as CustomerSegments } from './CustomerSegments';
+export { default as TopCustomers } from './TopCustomers';
+export { default as Pagination } from './Pagination';

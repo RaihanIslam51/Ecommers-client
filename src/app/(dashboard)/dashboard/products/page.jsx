@@ -1,80 +1,54 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import ProductCard from './Components/ProductCard';
 import ProductForm from './Components/ProductForm';
 import ProductFilters from './Components/ProductFilters';
 import ProductStats from './Components/ProductStats';
 import ProductModal from './Components/ProductModal';
+import { usePost, usePut, useDelete } from '@/hooks/useApi';
+import axiosInstance from '@/lib/axios';
+import Swal from 'sweetalert2';
 
-const INITIAL_PRODUCTS = [
-  {
-    id: 1,
-    name: 'Wireless Bluetooth Headphones',
-    description: 'Premium noise-cancelling headphones with 30-hour battery life.',
-    price: 89.99,
-    originalPrice: 129.99,
-    category: 'Electronics',
-    brand: 'AudioTech',
-    stock: 45,
-    sku: 'ELEC-HEAD-001',
-    image: '',
-    images: [],
-    tags: ['wireless', 'bluetooth', 'trending'],
-    weight: '0.3',
-    dimensions: '20 x 18 x 8 cm',
-    warranty: '1 Year',
-    returnPolicy: '30 days',
-  },
-  {
-    id: 2,
-    name: 'Smart Watch Series 5',
-    description: 'Advanced fitness tracking and heart rate monitor.',
-    price: 299.99,
-    originalPrice: 399.99,
-    category: 'Electronics',
-    brand: 'TechWear',
-    stock: 28,
-    sku: 'ELEC-WATCH-002',
-    image: '',
-    images: [],
-    tags: ['smartwatch', 'fitness', 'new'],
-    weight: '0.05',
-    dimensions: '4.5 x 4 x 1.2 cm',
-    warranty: '2 Years',
-    returnPolicy: '30 days',
-  },
-  {
-    id: 3,
-    name: 'Organic Cotton T-Shirt',
-    description: 'Comfortable and eco-friendly cotton t-shirt.',
-    price: 24.99,
-    originalPrice: null,
-    category: 'Clothing',
-    brand: 'EcoWear',
-    stock: 0,
-    sku: 'CLOTH-SHIRT-003',
-    image: '',
-    images: [],
-    tags: ['organic', 'sustainable', 'fashion'],
-    weight: '0.2',
-    dimensions: 'M, L, XL sizes',
-    warranty: 'N/A',
-    returnPolicy: '15 days',
-  },
-];
+
 
 const ProductsPage = () => {
-  const [products, setProducts] = useState(INITIAL_PRODUCTS);
+  const [products, setProducts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [alert, setAlert] = useState({ show: false, message: '', type: '' });
   const [filters, setFilters] = useState({
     search: '',
     category: '',
     stockStatus: '',
     sortBy: '',
   });
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axiosInstance.get('/products');
+      if (response.data && Array.isArray(response.data)) {
+        setProducts(response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      // Keep initial products if fetch fails
+    }
+  };
+
+  const showAlert = (message, type = 'success') => {
+    setAlert({ show: true, message, type });
+    setTimeout(() => {
+      setAlert({ show: false, message: '', type: '' });
+    }, 3000);
+  };
+
+  // Fetch products from API on component mount
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const filteredProducts = useMemo(() => {
     let filtered = [...products];
@@ -134,21 +108,73 @@ const ProductsPage = () => {
     setSelectedProduct(product);
   };
 
-  const handleDeleteProduct = (id) => {
-    if (confirm('Are you sure you want to delete this product?')) {
-      setProducts((prev) => prev.filter((p) => p.id !== id));
+  const handleDeleteProduct = async (product) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: `Do you want to delete "${product.name}"? This action cannot be undone!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true
+    });
+
+    if (result.isConfirmed) {
+      try {
+        // Use _id for MongoDB documents, or id for local products
+        const id = product._id || product.id;
+        await axiosInstance.delete(`/products/${id}`);
+        setProducts((prev) => prev.filter((p) => (p._id || p.id) !== id));
+        
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'Product has been deleted successfully.',
+          icon: 'success',
+          confirmButtonColor: '#3b82f6',
+          timer: 2000
+        });
+      } catch (error) {
+        console.error('Error deleting product:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to delete product. Please try again.',
+          icon: 'error',
+          confirmButtonColor: '#3b82f6'
+        });
+      }
     }
   };
 
   const handleSubmitProduct = async (productData) => {
-    if (editingProduct) {
-      setProducts((prev) => prev.map((p) => p.id === editingProduct.id ? { ...productData, id: p.id } : p));
-    } else {
-      const newProduct = { ...productData, id: Math.max(...products.map((p) => p.id), 0) + 1 };
-      setProducts((prev) => [...prev, newProduct]);
+    setIsSubmitting(true);
+    try {
+      if (editingProduct) {
+        // Update existing product
+        const id = editingProduct._id || editingProduct.id;
+        const response = await axiosInstance.put(`/products/${id}`, productData);
+        setProducts((prev) => prev.map((p) => {
+          const currentId = p._id || p.id;
+          const editId = editingProduct._id || editingProduct.id;
+          return currentId === editId ? response.data : p;
+        }));
+        showAlert('Product updated successfully!', 'success');
+      } else {
+        // Create new product
+        const response = await axiosInstance.post('/products', productData);
+        setProducts((prev) => [...prev, response.data]);
+        showAlert('Product added successfully!', 'success');
+      }
+      setShowForm(false);
+      setEditingProduct(null);
+    } catch (error) {
+      console.error('Error submitting product:', error);
+      const errorMessage = error.response?.data?.message || 'Failed to save product. Please try again.';
+      showAlert(errorMessage, 'error');
+    } finally {
+      setIsSubmitting(false);
     }
-    setShowForm(false);
-    setEditingProduct(null);
   };
 
   const handleCancelForm = () => {
@@ -158,6 +184,30 @@ const ProductsPage = () => {
 
   return (
     <div className="min-h-screen  p-4">
+      {/* Alert Notification */}
+      {alert.show && (
+        <div className="fixed top-4 right-4 z-50 animate-slide-in">
+          <div
+            className={`px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 ${
+              alert.type === 'success'
+                ? 'bg-green-500 text-white'
+                : 'bg-red-500 text-white'
+            }`}
+          >
+            {alert.type === 'success' ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            )}
+            <span className="font-medium">{alert.message}</span>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
@@ -181,8 +231,13 @@ const ProductsPage = () => {
           <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
-                <ProductForm product={editingProduct} onSubmit={handleSubmitProduct} onCancel={handleCancelForm} />
+                <h2 className="text-2xl font-bold text-black mb-6">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
+                <ProductForm 
+                  product={editingProduct} 
+                  onSubmit={handleSubmitProduct} 
+                  onCancel={handleCancelForm}
+                  isSubmitting={isSubmitting}
+                />
               </div>
             </div>
           </div>
@@ -193,7 +248,7 @@ const ProductsPage = () => {
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} onEdit={handleEditProduct} onDelete={handleDeleteProduct} onView={handleViewProduct} />
+              <ProductCard key={product._id || product.id} product={product} onEdit={handleEditProduct} onDelete={handleDeleteProduct} onView={handleViewProduct} />
             ))}
           </div>
         ) : (

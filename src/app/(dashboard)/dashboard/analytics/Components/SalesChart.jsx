@@ -1,43 +1,109 @@
 'use client';
 import React from 'react';
+import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
-const SalesChart = () => {
-    const data = [
-        { month: 'Jan', sales: 45 },
-        { month: 'Feb', sales: 52 },
-        { month: 'Mar', sales: 48 },
-        { month: 'Apr', sales: 68 },
-        { month: 'May', sales: 72 },
-        { month: 'Jun', sales: 85 },
-        { month: 'Jul', sales: 78 },
-        { month: 'Aug', sales: 90 },
-        { month: 'Sep', sales: 82 },
-        { month: 'Oct', sales: 95 },
-        { month: 'Nov', sales: 88 },
-        { month: 'Dec', sales: 100 }
+const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+                <p className="font-semibold text-gray-800 mb-2">{label}</p>
+                <p className="text-sm text-blue-600">
+                    Sales: ${payload[0].value.toLocaleString()}
+                </p>
+                <p className="text-sm text-green-600">
+                    Orders: {payload[1].value}
+                </p>
+            </div>
+        );
+    }
+    return null;
+};
+
+const SalesChart = ({ data = [] }) => {
+    // Fallback data if none provided
+    const defaultData = [
+        { date: 'Jan 1', sales: 0, orders: 0 },
+        { date: 'Jan 2', sales: 0, orders: 0 }
     ];
 
-    const maxValue = Math.max(...data.map(d => d.sales));
+    const chartData = data.length > 0 ? data : defaultData;
 
     return (
-        <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-6">Monthly Sales Overview</h3>
-            <div className="flex items-end justify-between h-64 gap-2">
-                {data.map((item, index) => (
-                    <div key={index} className="flex-1 flex flex-col items-center gap-2">
-                        <div className="w-full bg-gray-100 rounded-t-lg relative flex items-end" style={{ height: '100%' }}>
-                            <div 
-                                className="w-full bg-gradient-to-t from-blue-500 to-blue-400 rounded-t-lg hover:from-blue-600 hover:to-blue-500 transition-all duration-300 cursor-pointer group relative"
-                                style={{ height: `${(item.sales / maxValue) * 100}%` }}
-                            >
-                                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                    {item.sales}k
-                                </div>
-                            </div>
-                        </div>
-                        <span className="text-xs text-gray-600 font-medium">{item.month}</span>
+        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+            <div className="flex justify-between items-center mb-6">
+                <div>
+                    <h3 className="text-lg font-bold text-gray-800">Sales & Orders Trend</h3>
+                    <p className="text-sm text-gray-500 mt-1">Last 30 days performance</p>
+                </div>
+                <div className="flex gap-4 text-sm">
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        <span className="text-gray-600">Sales</span>
                     </div>
-                ))}
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <span className="text-gray-600">Orders</span>
+                    </div>
+                </div>
+            </div>
+            
+            <ResponsiveContainer width="100%" height={300}>
+                <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                    <defs>
+                        <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                        </linearGradient>
+                        <linearGradient id="colorOrders" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                            <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                        </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                    <XAxis 
+                        dataKey="date" 
+                        tick={{ fontSize: 12, fill: '#6b7280' }}
+                        tickLine={false}
+                        axisLine={{ stroke: '#e5e7eb' }}
+                    />
+                    <YAxis 
+                        tick={{ fontSize: 12, fill: '#6b7280' }}
+                        tickLine={false}
+                        axisLine={{ stroke: '#e5e7eb' }}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Area 
+                        type="monotone" 
+                        dataKey="sales" 
+                        stroke="#3b82f6" 
+                        strokeWidth={2}
+                        fillOpacity={1} 
+                        fill="url(#colorSales)" 
+                    />
+                    <Area 
+                        type="monotone" 
+                        dataKey="orders" 
+                        stroke="#10b981" 
+                        strokeWidth={2}
+                        fillOpacity={1} 
+                        fill="url(#colorOrders)" 
+                    />
+                </AreaChart>
+            </ResponsiveContainer>
+
+            <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100">
+                <div className="text-center">
+                    <p className="text-2xl font-bold text-blue-600">
+                        ${chartData.reduce((sum, d) => sum + d.sales, 0).toLocaleString()}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">Total Sales</p>
+                </div>
+                <div className="text-center">
+                    <p className="text-2xl font-bold text-green-600">
+                        {chartData.reduce((sum, d) => sum + d.orders, 0)}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">Total Orders</p>
+                </div>
             </div>
         </div>
     );

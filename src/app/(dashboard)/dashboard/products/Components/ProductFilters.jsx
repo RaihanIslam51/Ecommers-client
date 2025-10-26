@@ -4,7 +4,7 @@ import React from 'react';
 
 const ProductFilters = ({ filters, onFilterChange, onReset }) => {
   return (
-    <div className="bg-white rounded-lg shadow p-6 mb-6">
+    <div className="bg-white text-black rounded-lg shadow p-6 mb-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-800">Filters</h3>
         <button

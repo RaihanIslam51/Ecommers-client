@@ -15,6 +15,10 @@
 // React Core
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 
+// Custom Components
+import NotificationBell from '../dashboard/Components/NotificationBell';
+import MessageBell from '../dashboard/Components/MessageBell';
+
 // Lucide React Icons - UI Elements
 import { 
   Bell,                  // Notification bell icon
@@ -581,111 +585,11 @@ const Topbar = ({
             <Maximize className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
           </button>
 
-          {/* Messages */}
-          <button 
-            className="hidden sm:block relative p-2 sm:p-2.5 rounded-xl hover:bg-linear-to-br hover:from-blue-50 hover:to-indigo-50 transition-all duration-200 group active:scale-95 touch-manipulation"
-            aria-label="Messages"
-            title="Messages & Chat"
-          >
-            <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
-            <span className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-2 h-2 bg-green-500 rounded-full ring-2 ring-white animate-pulse"></span>
-          </button>
+          {/* Messages - WhatsApp Style Component */}
+          <MessageBell />
 
-          {/* Notifications */}
-          <div className="relative" ref={notificationMenuRef}>
-            <button 
-              onClick={() => {
-                setShowNotifications(!showNotifications);
-                setShowProfileMenu(false);
-                setShowLanguageMenu(false);
-              }}
-              className="relative p-2 sm:p-2.5 rounded-xl hover:bg-linear-to-br hover:from-blue-50 hover:to-indigo-50 transition-all duration-200 group active:scale-95 touch-manipulation"
-              aria-label="Notifications"
-              title="Notifications"
-            >
-              <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
-              {unreadCount > 0 && (
-                <>
-                  <span className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
-                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] sm:min-w-5 sm:h-5 flex items-center justify-center 
-                               bg-linear-to-r from-red-500 to-red-600 text-white text-[9px] sm:text-[10px] font-bold rounded-full px-1 shadow-lg">
-                    {unreadCount > 9 ? '9+' : unreadCount}
-                  </span>
-                </>
-              )}
-            </button>
-
-            {/* Notifications Dropdown */}
-            {showNotifications && (
-              <>
-                <div 
-                  className="fixed inset-0 z-30" 
-                  onClick={() => setShowNotifications(false)}
-                ></div>
-                <div className="absolute right-0 mt-2 sm:mt-3 w-[calc(100vw-2rem)] sm:w-96 max-w-md bg-white rounded-2xl shadow-2xl border border-gray-200 
-                            animate-in fade-in slide-in-from-top-5 duration-200 z-40 overflow-hidden">
-                  {/* Notification Header */}
-                  <div className="p-3 sm:p-4 border-b border-gray-100 bg-linear-to-r from-blue-50 to-indigo-50">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="text-sm sm:text-base font-bold text-gray-800">Notifications</h3>
-                        <p className="text-[10px] sm:text-xs text-gray-600 mt-0.5">{unreadCount} unread message{unreadCount !== 1 ? 's' : ''}</p>
-                      </div>
-                      {unreadCount > 0 && (
-                        <button 
-                          onClick={handleMarkAllAsRead}
-                          className="text-[11px] sm:text-xs text-blue-600 font-semibold hover:text-blue-700 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg hover:bg-blue-100 transition-colors active:scale-95"
-                        >
-                          Mark all read
-                        </button>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Notification List */}
-                  <div className="max-h-[50vh] sm:max-h-[400px] overflow-y-auto">
-                    {notifications.map((notif) => {
-                      const IconComponent = notif.icon;
-                      return (
-                        <div 
-                          key={notif.id} 
-                          onClick={() => handleNotificationClick(notif)}
-                          className={`p-3 sm:p-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition-all duration-150 group active:bg-gray-100
-                                    ${notif.unread ? 'bg-blue-50/30' : ''}`}
-                        >
-                          <div className="flex items-start gap-2.5 sm:gap-3">
-                            <div className={`p-1.5 sm:p-2 rounded-lg shrink-0 ${getNotificationBgColor(notif.type)}`}>
-                              <IconComponent className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${getNotificationColor(notif.type)}`} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-xs sm:text-sm text-gray-800 font-medium line-clamp-2">{notif.text}</p>
-                              <div className="flex items-center gap-1.5 sm:gap-2 mt-1">
-                                <Clock className="w-3 h-3 text-gray-400" />
-                                <span className="text-[10px] sm:text-xs text-gray-500">{notif.time}</span>
-                              </div>
-                            </div>
-                            {notif.unread && (
-                              <span className="w-2 h-2 bg-blue-600 rounded-full mt-1 sm:mt-2 shrink-0"></span>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* Notification Footer */}
-                  <div className="p-2.5 sm:p-3 text-center border-t border-gray-100 bg-gray-50">
-                    <button 
-                      onClick={() => setShowNotifications(false)}
-                      className="text-xs sm:text-sm text-blue-600 font-semibold hover:text-blue-700 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-blue-100 transition-colors active:scale-95"
-                    >
-                      View all notifications
-                    </button>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
+          {/* Notifications - New Real-time Component */}
+          <NotificationBell />
 
           {/* Divider */}
           <div className="hidden lg:block w-px h-6 sm:h-8 bg-gray-200 mx-0.5 sm:mx-1"></div>

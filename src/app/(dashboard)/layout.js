@@ -8,7 +8,7 @@ export default function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="max-w-7xl mx-auto min-h-screen -mt-32 bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
+    <div className="max-w-7xl mx-auto min-h-screen -mt-35 bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div

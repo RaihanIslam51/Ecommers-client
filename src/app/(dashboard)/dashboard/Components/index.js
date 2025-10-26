@@ -13,3 +13,5 @@ export { default as Input } from './Input';
 export { default as Spinner } from './Spinner';
 export { default as Dropdown } from './Dropdown';
 export { default as EmptyState } from './EmptyState';
+export { default as NotificationBell } from './NotificationBell';
+export { default as MessageBell } from './MessageBell';

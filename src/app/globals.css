@@ -433,6 +433,17 @@ a:hover {
   }
 }
 
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
@@ -444,6 +455,10 @@ a:hover {
 
 .animate-slide-up {
   animation: slideUp var(--transition-normal);
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
 }
 
 .animate-pulse {
