@@ -4,6 +4,7 @@ import Navbar from "./compoents/Navbar/Navbar";
 import Footer from "./compoents/Footer/Footer";
 import PageLoader from "./components/PageLoader";
 import { CartProvider } from "@/context/CartContext";
+import SessionProvider from "./providers/SessionProvider";
 
 
 const geistSans = Geist({
@@ -74,36 +75,38 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 font-sans`}
       >
-        <CartProvider>
-          {/* ========== INITIAL PAGE LOADER ========== */}
-          <PageLoader />
+        <SessionProvider>
+          <CartProvider>
+            {/* ========== INITIAL PAGE LOADER ========== */}
+            <PageLoader />
 
-          {/* App Wrapper - Professional Layout Structure */}
-          <div className="flex flex-col min-h-screen relative">
+            {/* App Wrapper - Professional Layout Structure */}
+            <div className="flex flex-col min-h-screen relative">
 
-            {/* ========== NAVIGATION HEADER ========== */}
-            <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-sm">
-              <Navbar />
-            </header>
+              {/* ========== NAVIGATION HEADER ========== */}
+              <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-sm">
+                <Navbar />
+              </header>
 
-            {/* ========== MAIN CONTENT AREA ========== */}
-            <main className="flex-1 pt-[120px] md:pt-[140px] w-full">
-              {/* Content Container with Professional Spacing */}
-              <div className="w-full">
-                {children}
-              </div>
-            </main>
+              {/* ========== MAIN CONTENT AREA ========== */}
+              <main className="flex-1 pt-[120px] md:pt-[140px] w-full">
+                {/* Content Container with Professional Spacing */}
+                <div className="w-full">
+                  {children}
+                </div>
+              </main>
 
-            {/* ========== FOOTER SECTION ========== */}
-            <footer className="w-full  text-white mt-auto">
-              <Footer />
-            </footer>
+              {/* ========== FOOTER SECTION ========== */}
+              <footer className="w-full  text-white mt-auto">
+                <Footer />
+              </footer>
 
-            {/* ========== SCROLL TO TOP BUTTON (Optional Enhancement) ========== */}
-            <div id="scroll-to-top-anchor" className="hidden"></div>
+              {/* ========== SCROLL TO TOP BUTTON (Optional Enhancement) ========== */}
+              <div id="scroll-to-top-anchor" className="hidden"></div>
 
-          </div>
-        </CartProvider>
+            </div>
+          </CartProvider>
+        </SessionProvider>
 
         {/* ========== GLOBAL ACCESSIBILITY & SEO ========== */}
         <noscript>

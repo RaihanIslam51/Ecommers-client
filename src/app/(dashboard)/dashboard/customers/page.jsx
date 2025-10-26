@@ -10,7 +10,8 @@ import {
     AddCustomerModal,
     CustomerSegments,
     TopCustomers,
-    Pagination
+    Pagination,
+    SendEmailModal
 } from './Components';
 
 const CustomersPage = () => {
@@ -19,6 +20,8 @@ const CustomersPage = () => {
     const [loading, setLoading] = useState(true);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const [showAddModal, setShowAddModal] = useState(false);
+    const [showEmailModal, setShowEmailModal] = useState(false);
+    const [selectedCustomers, setSelectedCustomers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [filters, setFilters] = useState({
         status: 'all',
@@ -182,6 +185,44 @@ const CustomersPage = () => {
         }));
     };
 
+    // Handle customer selection
+    const handleSelectCustomer = (email) => {
+        setSelectedCustomers(prev => {
+            if (prev.includes(email)) {
+                return prev.filter(e => e !== email);
+            } else {
+                return [...prev, email];
+            }
+        });
+    };
+
+    const handleSelectAll = (checked) => {
+        if (checked) {
+            setSelectedCustomers(paginatedCustomers.map(c => c.email));
+        } else {
+            setSelectedCustomers([]);
+        }
+    };
+
+    const handleSendEmail = () => {
+        if (selectedCustomers.length === 0) {
+            Swal.fire({
+                title: 'No Customers Selected',
+                text: 'Please select at least one customer to send email',
+                icon: 'warning',
+                confirmButtonColor: '#3b82f6'
+            });
+            return;
+        }
+        setShowEmailModal(true);
+    };
+
+    const handleSendToAll = () => {
+        const allEmails = filteredCustomers.map(c => c.email);
+        setSelectedCustomers(allEmails);
+        setShowEmailModal(true);
+    };
+
     // Filter and sort customers
     const filteredCustomers = useMemo(() => {
         let filtered = [...customers];
@@ -281,13 +322,34 @@ const CustomersPage = () => {
                             <span className={loading ? 'animate-spin' : ''}>🔄</span>
                             Refresh
                         </button>
+                        <button 
+                            onClick={handleSendToAll}
+                            disabled={loading || customers.length === 0}
+                            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            <span>📧</span>
+                            Email All
+                        </button>
+                        <button 
+                            onClick={handleSendEmail}
+                            disabled={loading || selectedCustomers.length === 0}
+                            className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed relative"
+                        >
+                            <span>📤</span>
+                            Send Email
+                            {selectedCustomers.length > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">
+                                    {selectedCustomers.length}
+                                </span>
+                            )}
+                        </button>
                         <button className="px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors flex items-center gap-2">
                             <span>📊</span>
                             Export
                         </button>
                         <button 
                             onClick={() => setShowAddModal(true)}
-                            className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2"
+                            className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-2"
                         >
                             <span>➕</span>
                             Add Customer
@@ -322,6 +384,38 @@ const CustomersPage = () => {
                 onSort={handleSort}
             />
 
+            {/* Selection Info */}
+            {selectedCustomers.length > 0 && (
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <span className="text-2xl">✅</span>
+                        <div>
+                            <p className="font-semibold text-blue-900">
+                                {selectedCustomers.length} customer{selectedCustomers.length > 1 ? 's' : ''} selected
+                            </p>
+                            <p className="text-sm text-blue-700">
+                                Ready to send email to selected customers
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={handleSendEmail}
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2"
+                        >
+                            <span>📤</span>
+                            Send Email
+                        </button>
+                        <button
+                            onClick={() => setSelectedCustomers([])}
+                            className="px-4 py-2 bg-white border border-blue-300 text-blue-700 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+                        >
+                            Clear Selection
+                        </button>
+                    </div>
+                </div>
+            )}
+
             {/* Customer Table */}
             <CustomerTable 
                 customers={paginatedCustomers}
@@ -329,6 +423,9 @@ const CustomersPage = () => {
                 onViewDetails={handleViewDetails}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                selectedCustomers={selectedCustomers}
+                onSelectCustomer={handleSelectCustomer}
+                onSelectAll={handleSelectAll}
             />
 
             {/* Pagination */}
@@ -352,6 +449,20 @@ const CustomersPage = () => {
                 <AddCustomerModal
                     onClose={() => setShowAddModal(false)}
                     onSubmit={handleAddCustomer}
+                />
+            )}
+
+            {showEmailModal && (
+                <SendEmailModal
+                    onClose={() => {
+                        setShowEmailModal(false);
+                        setSelectedCustomers([]);
+                    }}
+                    recipients={selectedCustomers}
+                    recipientNames={selectedCustomers.map(email => {
+                        const customer = customers.find(c => c.email === email);
+                        return customer ? customer.name : email;
+                    })}
                 />
             )}
         </div>

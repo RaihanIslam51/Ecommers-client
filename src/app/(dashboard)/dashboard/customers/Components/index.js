@@ -8,3 +8,4 @@ export { default as AddCustomerModal } from './AddCustomerModal';
 export { default as CustomerSegments } from './CustomerSegments';
 export { default as TopCustomers } from './TopCustomers';
 export { default as Pagination } from './Pagination';
+export { default as SendEmailModal } from './SendEmailModal';

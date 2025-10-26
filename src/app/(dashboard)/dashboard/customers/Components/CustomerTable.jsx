@@ -2,7 +2,16 @@ import React from 'react';
 import CustomerAvatar from './CustomerAvatar';
 import CustomerStatusBadge from './CustomerStatusBadge';
 
-const CustomerTable = ({ customers, loading, onViewDetails, onEdit, onDelete }) => {
+const CustomerTable = ({ 
+    customers, 
+    loading, 
+    onViewDetails, 
+    onEdit, 
+    onDelete,
+    selectedCustomers = [],
+    onSelectCustomer,
+    onSelectAll
+}) => {
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', {
@@ -11,6 +20,9 @@ const CustomerTable = ({ customers, loading, onViewDetails, onEdit, onDelete }) 
             day: 'numeric'
         });
     };
+
+    const isAllSelected = customers.length > 0 && selectedCustomers.length === customers.length;
+    const isSomeSelected = selectedCustomers.length > 0 && selectedCustomers.length < customers.length;
 
     if (loading) {
         return (
@@ -41,6 +53,22 @@ const CustomerTable = ({ customers, loading, onViewDetails, onEdit, onDelete }) 
                 <table className="w-full">
                     <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                         <tr>
+                            {onSelectCustomer && (
+                                <th className="px-6 py-4 text-left">
+                                    <input
+                                        type="checkbox"
+                                        checked={isAllSelected}
+                                        ref={input => {
+                                            if (input) {
+                                                input.indeterminate = isSomeSelected;
+                                            }
+                                        }}
+                                        onChange={(e) => onSelectAll(e.target.checked)}
+                                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                                        title={isAllSelected ? "Deselect all" : "Select all"}
+                                    />
+                                </th>
+                            )}
                             <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                 Customer Info
                             </th>
@@ -71,13 +99,26 @@ const CustomerTable = ({ customers, loading, onViewDetails, onEdit, onDelete }) 
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                        {customers.map((customer, index) => (
-                            <tr 
-                                key={customer.id} 
-                                className={`hover:bg-blue-50 transition-all duration-200 ${
-                                    index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
-                                }`}
-                            >
+                        {customers.map((customer, index) => {
+                            const isSelected = selectedCustomers.includes(customer.email);
+                            
+                            return (
+                                <tr 
+                                    key={customer.id} 
+                                    className={`hover:bg-blue-50 transition-all duration-200 ${
+                                        isSelected ? 'bg-blue-50' : index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                                    }`}
+                                >
+                                    {onSelectCustomer && (
+                                        <td className="px-6 py-4">
+                                            <input
+                                                type="checkbox"
+                                                checked={isSelected}
+                                                onChange={() => onSelectCustomer(customer.email)}
+                                                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                                            />
+                                        </td>
+                                    )}
                                 <td className="px-6 py-4">
                                     <div className="flex items-center gap-3">
                                         <CustomerAvatar 
@@ -172,7 +213,8 @@ const CustomerTable = ({ customers, loading, onViewDetails, onEdit, onDelete }) 
                                     </div>
                                 </td>
                             </tr>
-                        ))}
+                        );
+                        })}
                     </tbody>
                 </table>
             </div>
