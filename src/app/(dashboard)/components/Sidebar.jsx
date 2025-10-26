@@ -21,7 +21,8 @@ import {
   X,
   Sparkles,
   TrendingUp,
-  ShoppingBag
+  ShoppingBag,
+  Image
 } from 'lucide-react';
 
 const Sidebar = ({ onClose }) => {
@@ -43,6 +44,7 @@ const Sidebar = ({ onClose }) => {
         { name: 'Orders', href: '/dashboard/orders', icon: ShoppingCart, badge: '45' },
         { name: 'Customers', href: '/dashboard/customers', icon: Users, badge: null },
         { name: 'Categories', href: '/dashboard/categories', icon: Tag, badge: null },
+        { name: 'Banners', href: '/dashboard/banners', icon: Image, badge: null },
         { name: 'Inventory', href: '/dashboard/inventory', icon: ShoppingBag, badge: null },
         { name: 'Shipping', href: '/dashboard/shipping', icon: Truck, badge: null },
       ]

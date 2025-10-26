@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import ProductCard from "../TopSales/components/Productcard";
+import { ProductCardSkeletonGrid } from "../TopSales/components/ProductCardSkeleton";
 import Image from "next/image";
 import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/navigation";
@@ -16,12 +17,28 @@ const Collection = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        console.log('🔄 Fetching products from:', axiosInstance.defaults.baseURL);
         const response = await axiosInstance.get('/products');
+        console.log('✅ Products fetched:', response.data?.length || 0);
         if (response.data && Array.isArray(response.data)) {
-          setProducts(response.data);
+          // Filter products to show only those marked for collection
+          const collectionProducts = response.data.filter(product => product.showInCollection === true);
+          console.log('📦 Collection products:', collectionProducts.length);
+          setProducts(collectionProducts);
         }
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('❌ Error fetching products:', error);
+        console.error('Error details:', {
+          message: error.message,
+          code: error.code,
+          response: error.response?.data,
+          status: error.response?.status
+        });
+        
+        // Show user-friendly error message
+        if (error.code === 'ERR_NETWORK') {
+          console.error('⚠️ Network Error: Cannot connect to server. Is the backend running on port 5000?');
+        }
       } finally {
         setLoading(false);
       }
@@ -37,62 +54,77 @@ const Collection = () => {
 
   return (
     <section className="max-w-[1400px] mx-auto relative py-12 px-4 md:px-6 lg:px-8 bg-gray-50">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">Featured Collections</h2>
-          <p className="text-sm text-gray-600">Explore our handpicked collections from trending categories</p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <span className="hidden sm:inline-block text-sm text-gray-500">
-            {displayedProducts.length} of {products.length} items
-          </span>
-          <button
-            onClick={() => setShowAll(!showAll)}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-black border border-gray-300 rounded-lg hover:border-black hover:bg-white transition-all duration-200"
-            disabled={products.length <= 24}
-          >
-            <span>{showAll ? 'Show Less' : 'Show More'}</span>
-            <svg 
-              className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} 
-              viewBox="0 0 20 20" 
-              fill="currentColor"
-            >
-              <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
       {/* Loading State */}
       {loading ? (
-        <div className="flex justify-center items-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
-        </div>
-      ) : products.length === 0 ? (
-        <div className="text-center py-20">
-          <p className="text-gray-600">No products available</p>
+        <div>
+          {/* Header Skeleton */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+            <div className="space-y-3">
+              <div className="h-8 w-64 bg-gray-200 rounded-lg animate-pulse" />
+              <div className="h-4 w-96 bg-gray-100 rounded animate-pulse animation-delay-100" />
+            </div>
+            <div className="h-10 w-32 bg-gray-200 rounded-lg animate-pulse animation-delay-200" />
+          </div>
+          
+          {/* Product Cards Skeleton */}
+          <ProductCardSkeletonGrid count={24} />
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5">
-          {displayedProducts.map((product) => (
-            <ProductCard
-              key={product._id || product.id}
-              product={{
-                ...product,
-                id: product._id || product.id,
-                discountPrice: `$${product.price}`,
-                actualPrice: product.originalPrice ? `$${product.originalPrice}` : `$${product.price}`,
-                salesCount: product.stock || 0,
-                feature: product.description?.substring(0, 50) + '...' || 'No description',
-              }}
-              isDimmed={modalProductId && modalProductId !== (product._id || product.id)}
-              onQuickView={setModalProductId}
-              onClick={() => router.push(`/products/${product._id || product.id}`)}
-            />
-          ))}
-        </div>
+        <>
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">Featured Collections</h2>
+              <p className="text-sm text-gray-600">Explore our handpicked collections from trending categories</p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <span className="hidden sm:inline-block text-sm text-gray-500">
+                {displayedProducts.length} of {products.length} items
+              </span>
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-black border border-gray-300 rounded-lg hover:border-black hover:bg-white transition-all duration-200"
+                disabled={products.length <= 24}
+              >
+                <span>{showAll ? 'Show Less' : 'Show More'}</span>
+                <svg 
+                  className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} 
+                  viewBox="0 0 20 20" 
+                  fill="currentColor"
+                >
+                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Products Grid or Empty State */}
+          {products.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-gray-600">No products available</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5">
+              {displayedProducts.map((product) => (
+                <ProductCard
+                  key={product._id || product.id}
+                  product={{
+                    ...product,
+                    id: product._id || product.id,
+                    discountPrice: `$${product.price}`,
+                    actualPrice: product.originalPrice ? `$${product.originalPrice}` : `$${product.price}`,
+                    salesCount: product.stock || 0,
+                    feature: product.description?.substring(0, 50) + '...' || 'No description',
+                  }}
+                  isDimmed={modalProductId && modalProductId !== (product._id || product.id)}
+                  onQuickView={setModalProductId}
+                  onClick={() => router.push(`/products/${product._id || product.id}`)}
+                />
+              ))}
+            </div>
+          )}
+        </>
       )}
 
       {/* Quick View Modal */}

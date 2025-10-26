@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./compoents/Navbar/Navbar";
 import Footer from "./compoents/Footer/Footer";
+import PageLoader from "./components/PageLoader";
+import { CartProvider } from "@/context/CartContext";
 
 
 const geistSans = Geist({
@@ -72,31 +74,36 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 font-sans`}
       >
-        {/* App Wrapper - Professional Layout Structure */}
-        <div className="flex flex-col min-h-screen relative">
+        <CartProvider>
+          {/* ========== INITIAL PAGE LOADER ========== */}
+          <PageLoader />
 
-          {/* ========== NAVIGATION HEADER ========== */}
-          <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-sm">
-            <Navbar />
-          </header>
+          {/* App Wrapper - Professional Layout Structure */}
+          <div className="flex flex-col min-h-screen relative">
 
-          {/* ========== MAIN CONTENT AREA ========== */}
-          <main className="flex-1 pt-[120px] md:pt-[140px] w-full">
-            {/* Content Container with Professional Spacing */}
-            <div className="w-full">
-              {children}
-            </div>
-          </main>
+            {/* ========== NAVIGATION HEADER ========== */}
+            <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-sm">
+              <Navbar />
+            </header>
 
-          {/* ========== FOOTER SECTION ========== */}
-          <footer className="w-full  text-white mt-auto">
-            <Footer />
-          </footer>
+            {/* ========== MAIN CONTENT AREA ========== */}
+            <main className="flex-1 pt-[120px] md:pt-[140px] w-full">
+              {/* Content Container with Professional Spacing */}
+              <div className="w-full">
+                {children}
+              </div>
+            </main>
 
-          {/* ========== SCROLL TO TOP BUTTON (Optional Enhancement) ========== */}
-          <div id="scroll-to-top-anchor" className="hidden"></div>
+            {/* ========== FOOTER SECTION ========== */}
+            <footer className="w-full  text-white mt-auto">
+              <Footer />
+            </footer>
 
-        </div>
+            {/* ========== SCROLL TO TOP BUTTON (Optional Enhancement) ========== */}
+            <div id="scroll-to-top-anchor" className="hidden"></div>
+
+          </div>
+        </CartProvider>
 
         {/* ========== GLOBAL ACCESSIBILITY & SEO ========== */}
         <noscript>

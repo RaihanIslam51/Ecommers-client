@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import ImageUploader from './ImageUploader';
+import axiosInstance from '@/lib/axios';
+import Swal from 'sweetalert2';
 
 const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
   const [formData, setFormData] = useState({
@@ -20,9 +22,75 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
     dimensions: '',
     warranty: '',
     returnPolicy: '30 days',
+    showInCollection: true, // Default to true
+    showInTopSelling: false,
+    showInNewArrival: false,
+    showInHotDeals: false,
   });
 
   const [errors, setErrors] = useState({});
+  const [categories, setCategories] = useState([]);
+  const [showAddCategory, setShowAddCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
+
+  // Fetch categories
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axiosInstance.get('/categories');
+      if (response.data && response.data.categories) {
+        setCategories(response.data.categories);
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const handleAddNewCategory = async () => {
+    if (!newCategoryName.trim()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Category name required',
+        text: 'Please enter a category name',
+        confirmButtonColor: '#3b82f6'
+      });
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.post('/categories', {
+        name: newCategoryName.trim(),
+        icon: '📦'
+      });
+
+      if (response.data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Category Added!',
+          text: 'New category has been created',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        
+        // Refresh categories and select the new one
+        await fetchCategories();
+        setFormData(prev => ({ ...prev, category: newCategoryName.trim() }));
+        setNewCategoryName('');
+        setShowAddCategory(false);
+      }
+    } catch (error) {
+      console.error('Error adding category:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed',
+        text: error.response?.data?.message || 'Failed to add category',
+        confirmButtonColor: '#3b82f6'
+      });
+    }
+  };
 
   useEffect(() => {
     if (product) {
@@ -119,24 +187,54 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
           <label className="block text-sm font-medium text-black mb-2">
             Category *
           </label>
-          <select
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black ${
-              errors.category ? 'border-red-500' : 'border-gray-300'
-            }`}
-          >
-            <option value="">Select Category</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Home & Kitchen">Home & Kitchen</option>
-            <option value="Sports">Sports</option>
-            <option value="Books">Books</option>
-            <option value="Toys">Toys</option>
-            <option value="Beauty">Beauty</option>
-            <option value="Health">Health</option>
-          </select>
+          <div className="space-y-2">
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black ${
+                errors.category ? 'border-red-500' : 'border-gray-300'
+              }`}
+            >
+              <option value="">Select Category</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat.name}>
+                  {cat.icon} {cat.name}
+                </option>
+              ))}
+            </select>
+            
+            {/* Add New Category Button */}
+            <button
+              type="button"
+              onClick={() => setShowAddCategory(!showAddCategory)}
+              className="w-full px-4 py-2 border-2 border-dashed border-blue-400 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors flex items-center justify-center gap-2"
+            >
+              <span className="text-xl">+</span>
+              {showAddCategory ? 'Cancel' : 'Add New Category'}
+            </button>
+
+            {/* Add Category Input */}
+            {showAddCategory && (
+              <div className="flex gap-2 p-3 bg-blue-50 rounded-lg">
+                <input
+                  type="text"
+                  value={newCategoryName}
+                  onChange={(e) => setNewCategoryName(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddNewCategory())}
+                  className="flex-1 px-3 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+                  placeholder="Enter new category name"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddNewCategory}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Add
+                </button>
+              </div>
+            )}
+          </div>
           {errors.category && <p className="text-red-500 text-xs mt-1">{errors.category}</p>}
         </div>
 
@@ -328,6 +426,78 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
             additionalImages={formData.images}
             onRemoveImage={removeImage}
           />
+        </div>
+
+        {/* Display Options */}
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-black mb-3">
+            Display Settings
+          </label>
+          <div className="space-y-3 bg-gray-50 p-4 rounded-lg border border-gray-200">
+            {/* Show in Collection */}
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="showInCollection"
+                name="showInCollection"
+                checked={formData.showInCollection}
+                onChange={(e) => setFormData(prev => ({ ...prev, showInCollection: e.target.checked }))}
+                className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              />
+              <label htmlFor="showInCollection" className="flex-1 cursor-pointer">
+                <span className="text-sm font-semibold text-gray-800">1. Show in Collection Page</span>
+                <p className="text-xs text-gray-600">Display this product in the Featured Collections section (Default)</p>
+              </label>
+            </div>
+
+            {/* Show in Top Selling */}
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="showInTopSelling"
+                name="showInTopSelling"
+                checked={formData.showInTopSelling}
+                onChange={(e) => setFormData(prev => ({ ...prev, showInTopSelling: e.target.checked }))}
+                className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-2 focus:ring-green-500"
+              />
+              <label htmlFor="showInTopSelling" className="flex-1 cursor-pointer">
+                <span className="text-sm font-semibold text-gray-800">2. Show in Top Selling</span>
+                <p className="text-xs text-gray-600">Display this product in the Top Sales section</p>
+              </label>
+            </div>
+
+            {/* Show in New Arrival */}
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="showInNewArrival"
+                name="showInNewArrival"
+                checked={formData.showInNewArrival}
+                onChange={(e) => setFormData(prev => ({ ...prev, showInNewArrival: e.target.checked }))}
+                className="w-5 h-5 text-purple-600 border-gray-300 rounded focus:ring-2 focus:ring-purple-500"
+              />
+              <label htmlFor="showInNewArrival" className="flex-1 cursor-pointer">
+                <span className="text-sm font-semibold text-gray-800">3. New Arrival</span>
+                <p className="text-xs text-gray-600">Display this product in the New Arrivals section</p>
+              </label>
+            </div>
+
+            {/* Show in Hot Deals */}
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="showInHotDeals"
+                name="showInHotDeals"
+                checked={formData.showInHotDeals}
+                onChange={(e) => setFormData(prev => ({ ...prev, showInHotDeals: e.target.checked }))}
+                className="w-5 h-5 text-red-600 border-gray-300 rounded focus:ring-2 focus:ring-red-500"
+              />
+              <label htmlFor="showInHotDeals" className="flex-1 cursor-pointer">
+                <span className="text-sm font-semibold text-gray-800">4. Hot Deals</span>
+                <p className="text-xs text-gray-600">Display this product in the Hot Deals section with special pricing</p>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   FaLaptop,
   FaMobileAlt,
@@ -9,32 +10,65 @@ import {
   FaGift,
   FaChevronDown,
 } from "react-icons/fa";
+import axiosInstance from "@/lib/axios";
 
-const categories = [
-  { id: 1, name: "Electronics", icon: <FaLaptop size={40} />, color: "blue" },
-  { id: 2, name: "Mobiles", icon: <FaMobileAlt size={40} />, color: "purple" },
-  { id: 3, name: "Fashion", icon: <FaTshirt size={40} />, color: "pink" },
-  { id: 4, name: "Home", icon: <FaCouch size={40} />, color: "green" },
-  { id: 5, name: "Books", icon: <FaBook size={40} />, color: "orange" },
-  { id: 6, name: "Gifts", icon: <FaGift size={40} />, color: "red" },
-  { id: 7, name: "More", icon: <FaLaptop size={40} />, color: "blue" },
-  { id: 8, name: "Sports", icon: <FaTshirt size={40} />, color: "teal" },
-  { id: 9, name: "Appliances", icon: <FaCouch size={40} />, color: "indigo" },
-  { id: 10, name: "Toys", icon: <FaGift size={40} />, color: "yellow" },
-  { id: 11, name: "Fitness", icon: <FaTshirt size={40} />, color: "cyan" },
-  { id: 12, name: "Furniture", icon: <FaCouch size={40} />, color: "emerald" },
-  { id: 13, name: "More", icon: <FaLaptop size={40} />, color: "violet" },
-  { id: 14, name: "Sports", icon: <FaTshirt size={40} />, color: "lime" },
-  { id: 15, name: "Appliances", icon: <FaCouch size={40} />, color: "amber" },
-  { id: 16, name: "Toys", icon: <FaGift size={40} />, color: "rose" },
-  { id: 17, name: "Fitness", icon: <FaTshirt size={40} />, color: "sky" },
-  { id: 18, name: "Furniture", icon: <FaCouch size={40} />, color: "slate" },
-];
+// Icon mapping for categories
+const iconMap = {
+  "📱": <FaMobileAlt size={40} />,
+  "💻": <FaLaptop size={40} />,
+  "👕": <FaTshirt size={40} />,
+  "🏠": <FaCouch size={40} />,
+  "📚": <FaBook size={40} />,
+  "🎁": <FaGift size={40} />,
+  "📦": <FaLaptop size={40} />, // Default
+};
 
 const Category = () => {
   const [showAll, setShowAll] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch categories from database
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axiosInstance.get('/categories');
+        if (response.data && response.data.categories) {
+          setCategories(response.data.categories);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleSeeMore = () => setShowAll((prev) => !prev);
+
+  if (loading) {
+    return (
+      <section className="w-full bg-white py-12 md:py-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin h-12 w-12 border-b-2 border-gray-900"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (categories.length === 0) {
+    return (
+      <section className="w-full bg-white py-12 md:py-16">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-gray-600">No categories available</p>
+        </div>
+      </section>
+    );
+  }
 
   // Default visible: show 12 categories
   const visibleCategories = showAll ? categories : categories.slice(0, 12);
@@ -73,53 +107,62 @@ const Category = () => {
         </div>
 
         {/* Category Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
-          {visibleCategories.map((cat, index) => (
-            <div
-              key={`${cat.id}-${index}`}
-              role="button"
-              tabIndex={0}
-              className="group relative bg-white hover:bg-gray-50 border-2 border-gray-100 hover:border-gray-900 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1"
-              aria-label={`Browse ${cat.name} category`}
-            >
-              {/* Icon Container */}
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-2xl bg-gray-100 group-hover:bg-gray-900 transition-all duration-300 shadow-md group-hover:shadow-xl">
-                  <div className="text-gray-700 group-hover:text-white transition-colors duration-300">
-                    {React.cloneElement(cat.icon, {
-                      size: 28,
-                      className: "md:w-8 md:h-8",
-                    })}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-2 md:gap-4">
+          {visibleCategories.map((cat, index) => {
+            const categoryIcon = iconMap[cat.icon] || iconMap["📦"];
+            
+            return (
+              <Link
+                href={`/store?category=${encodeURIComponent(cat.name)}`}
+                key={cat._id || `cat-${index}`}
+                role="button"
+                tabIndex={0}
+                className="group relative bg-white hover:bg-gray-50  hover:border-gray-900 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1"
+                aria-label={`Browse ${cat.name} category`}
+              >
+                {/* Icon Container */}
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-13 h-13 md:w-20 md:h-20 flex items-center justify-center rounded-2xl bg-gray-100 group-hover:bg-gray-900 transition-all duration-300 shadow-md group-hover:shadow-xl">
+                    <div className="text-gray-700 group-hover:text-white transition-colors duration-300 text-3xl">
+                      {cat.icon}
+                    </div>
                   </div>
+
+                  {/* Category Name */}
+                  <span className="text-sm md:text-base font-bold text-gray-900 text-center group-hover:text-gray-900 transition-colors">
+                    {cat.name}
+                  </span>
+                  
+                  {/* Product Count */}
+                  {cat.productCount > 0 && (
+                    <span className="text-xs text-gray-500">
+                      {cat.productCount} products
+                    </span>
+                  )}
                 </div>
 
-                {/* Category Name */}
-                <span className="text-sm md:text-base font-bold text-gray-900 text-center group-hover:text-gray-900 transition-colors">
-                  {cat.name}
-                </span>
-              </div>
+                {/* Hover Arrow Indicator */}
+                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <svg
+                    className="w-5 h-5 text-gray-900"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
 
-              {/* Hover Arrow Indicator */}
-              <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <svg
-                  className="w-5 h-5 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </div>
-
-              {/* Decorative Element */}
-              <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-transparent to-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-            </div>
-          ))}
+                {/* Decorative Element */}
+                <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-transparent to-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Bottom Info */}

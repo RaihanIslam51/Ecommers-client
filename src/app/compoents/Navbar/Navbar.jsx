@@ -35,12 +35,12 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full bg-white transition-all duration-300">
-      <div className="w-full flex flex-col shadow-sm">
-        {/* === Top Section (Navbarfirst) === */}
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-md transition-all duration-300">
+      <div className="w-full flex flex-col">
+        {/* Top Bar - Contact Info */}
         <div
-          className={`hidden lg:flex items-center justify-center bg-black text-xs transition-all duration-300 ${
-            hideTopBottom ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-8"
+          className={`hidden lg:flex items-center justify-center bg-gradient-to-r from-gray-900 via-black to-gray-900 text-xs transition-all duration-300 ${
+            hideTopBottom ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-10"
           }`}
         >
           <div className="max-w-[1400px] w-full mx-auto px-6 xl:px-8">
@@ -48,17 +48,17 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* === Middle Section (Navbarsecond) === */}
-        <div className="h-16 md:h-[68px] bg-white text-xs transition-all duration-300">
-          <div className="max-w-[1400px] w-full mx-auto px-4 md:px-6 xl:px-8">
+        {/* Main Navigation Bar */}
+        <div className="h-16 md:h-[72px] bg-white border-b border-gray-100">
+          <div className="max-w-[1400px] w-full mx-auto px-4 md:px-6 xl:px-8 h-full">
             <Navbarsecond />
           </div>
         </div>
 
-        {/* === Bottom Section (Navbarthrid) === */}
+        {/* Bottom Navigation - Categories */}
         <div
-          className={`hidden lg:flex bg-white text-xs transition-all duration-300 border-t border-gray-100 ${
-            hideTopBottom ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-10"
+          className={`hidden lg:flex bg-white transition-all duration-300 border-b border-gray-100 ${
+            hideTopBottom ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-12"
           }`}
         >
           <div className="max-w-[1400px] mx-auto w-full px-6 xl:px-8">

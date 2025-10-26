@@ -1,28 +1,70 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "./components/Productcard";
+import { ProductCardSkeletonGrid } from "./components/ProductCardSkeleton";
 import Image from "next/image";
+import axiosInstance from "@/lib/axios";
 
 const Topsales = () => {
   const [modalProductId, setModalProductId] = useState(null);
-  const [showAll, setShowAll] = useState(false); // For "See More / See Less"
+  const [showAll, setShowAll] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const dummyProducts = [
-    { id: 1, name: "Wireless Headphones", feature: "Noise-cancellation and 20-hour battery life", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "High-quality wireless headphones with clear sound and comfortable fit.", actualPrice: "$79.99", discountPrice: "$49.99", salesCount: 1240 },
-    { id: 2, name: "Smart Watch", feature: "Heart rate monitor and sleep tracking", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "discount", description: "Track your fitness and health metrics with style and accuracy.", actualPrice: "$149.99", discountPrice: "$99.99", salesCount: 980 },
-    { id: 3, name: "Bluetooth Speaker", feature: "Waterproof design and 10-hour playtime", image:"https://i.ibb.co/twGxFqM0/watch.jpg", badge: "save", description: "Take your music anywhere with high-quality sound and durability.", actualPrice: "$49.99", discountPrice: "$29.99", salesCount: 650 },
-    { id: 4, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 5, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 6, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 7, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 8, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-    { id: 9, name: "Gaming Mouse", feature: "Adjustable DPI and programmable buttons", image: "https://i.ibb.co/twGxFqM0/watch.jpg", badge: "hot", description: "Enhance your gaming experience with precision and comfort.", actualPrice: "$59.99", discountPrice: "$39.99", salesCount: 1120 },
-  ];
+  // Fetch products from API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axiosInstance.get('/products');
+        if (response.data && Array.isArray(response.data)) {
+          // Filter products to show only those marked for top selling
+          const topSellingProducts = response.data.filter(product => product.showInTopSelling === true);
+          console.log('🔥 Top Selling products:', topSellingProducts.length);
+          setProducts(topSellingProducts);
+        }
+      } catch (error) {
+        console.error('Error fetching top selling products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const modalProduct = dummyProducts.find((p) => p.id === modalProductId);
+    fetchProducts();
+  }, []);
 
-  // Slice products: show first 6 if showAll is false
-  const displayedProducts = showAll ? dummyProducts : dummyProducts.slice(0, 5);
+  const modalProduct = products.find((p) => (p._id || p.id) === modalProductId);
+
+  // Slice products: show first 5 if showAll is false
+  const displayedProducts = showAll ? products : products.slice(0, 5);
+
+  if (loading) {
+    return (
+      <section className="max-w-[1400px] mx-auto relative py-1 px-4 md:px-6 lg:px-8">
+        {/* Header Skeleton */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div className="space-y-3">
+            <div className="h-8 w-64 bg-gray-200 rounded-lg animate-pulse" />
+            <div className="h-4 w-96 bg-gray-100 rounded animate-pulse animation-delay-100" />
+          </div>
+          <div className="h-10 w-32 bg-gray-200 rounded-lg animate-pulse animation-delay-200" />
+        </div>
+
+        {/* Product Cards Skeleton */}
+        <ProductCardSkeletonGrid count={10} />
+      </section>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <section className="max-w-[1400px] mx-auto relative py-1 px-4 md:px-6 lg:px-8">
+        <div className="text-center py-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">Top Selling Products</h2>
+          <p className="text-gray-600">No top selling products available</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="max-w-[1400px] mx-auto relative py-1 px-4 md:px-6 lg:px-8">
@@ -35,7 +77,7 @@ const Topsales = () => {
 
         <div className="flex items-center gap-3">
           <span className="hidden sm:inline-block text-sm text-gray-500">
-            {displayedProducts.length} of {dummyProducts.length} items
+            {displayedProducts.length} of {products.length} items
           </span>
           <button
             onClick={() => setShowAll(!showAll)}
@@ -57,9 +99,9 @@ const Topsales = () => {
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-5">
         {displayedProducts.map((product) => (
           <ProductCard
-            key={product.id}
+            key={product._id || product.id}
             product={product}
-            isDimmed={modalProductId && modalProductId !== product.id}
+            isDimmed={modalProductId && modalProductId !== (product._id || product.id)}
             onQuickView={setModalProductId}
           />
         ))}

@@ -8,10 +8,12 @@ import { FaStar, FaShoppingCart, FaHeart } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import SocialShare from '@/app/components/SocialShare/SocialShare';
 import FloatingShareButton from '@/app/components/SocialShare/FloatingShareButton';
+import { useCart } from '@/context/CartContext';
 
 const ProductDetailsPage = () => {
   const params = useParams();
   const router = useRouter();
+  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useCart();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -36,40 +38,56 @@ const ProductDetailsPage = () => {
   }, [params.id]);
 
   const handleAddToCart = () => {
-    // Get existing cart from localStorage
-    const existingCart = localStorage.getItem('cart');
-    let cart = existingCart ? JSON.parse(existingCart) : [];
-
-    // Check if product already in cart
-    const existingItemIndex = cart.findIndex(item => (item._id || item.id) === (product._id || product.id));
-
-    if (existingItemIndex > -1) {
-      // Update quantity if already exists
-      cart[existingItemIndex].quantity += quantity;
-    } else {
-      // Add new item to cart
-      cart.push({
-        ...product,
-        quantity: quantity
-      });
+    if (!product) return;
+    
+    // Add product to cart with quantity
+    for (let i = 0; i < quantity; i++) {
+      addToCart(product, 1);
     }
-
-    // Save to localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
 
     // Show success message
     Swal.fire({
       title: 'Added to Cart!',
-      text: `${product.name} has been added to your cart.`,
+      text: `${quantity} ${product.name}(s) has been added to your cart.`,
       icon: 'success',
       confirmButtonColor: '#000',
-      timer: 2000
+      showConfirmButton: true,
+      confirmButtonText: 'Go to Cart',
+      showCancelButton: true,
+      cancelButtonText: 'Continue Shopping'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        router.push('/cart');
+      }
     });
+  };
 
-    // Navigate to cart page
-    setTimeout(() => {
-      router.push('/cart');
-    }, 2000);
+  const handleToggleWishlist = () => {
+    if (!product) return;
+    
+    const productId = product._id || product.id;
+    
+    if (isInWishlist(productId)) {
+      removeFromWishlist(productId);
+      Swal.fire({
+        icon: 'info',
+        title: 'Removed from Wishlist',
+        timer: 1500,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+      });
+    } else {
+      addToWishlist(product);
+      Swal.fire({
+        icon: 'success',
+        title: 'Added to Wishlist!',
+        timer: 1500,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+      });
+    }
   };
 
   const handleBuyNow = async () => {
