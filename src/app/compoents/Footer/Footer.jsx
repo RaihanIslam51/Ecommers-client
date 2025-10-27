@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
+import { usePathname } from "next/navigation";
 import {
   FaFacebookF,
   FaTwitter,
@@ -309,8 +310,16 @@ const MobileNavigation = () => (
 /**
  * Main Footer component
  * Displays desktop footer with company info and mobile bottom navigation
+ * Hidden on dashboard pages
  */
 const Footer = () => {
+  const pathname = usePathname();
+
+  // Don't render footer on dashboard pages
+  if (pathname && pathname.startsWith("/dashboard")) {
+    return null;
+  }
+
   return (
     <footer className="bg-black text-white">
       <DesktopFooter />

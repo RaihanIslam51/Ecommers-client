@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
+import Swal from 'sweetalert2';
 import NotificationBell from '../dashboard/Components/NotificationBell';
 import MessageBell from '../dashboard/Components/MessageBell';
 import { 
@@ -39,6 +41,7 @@ const Topbar = ({
   currentPage = 'Dashboard',
 }) => {
   const router = useRouter();
+  const { data: session, status } = useSession();
   
   // State Management
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -49,13 +52,15 @@ const Topbar = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [isOnline, setIsOnline] = useState(true);
   const [currentLanguage, setCurrentLanguage] = useState('EN');
-  const [user, setUser] = useState({
-    name: 'Admin User',
-    email: 'admin@bdmart.com',
-    role: 'Administrator',
-    avatar: 'AU',
+  
+  // Get user data from session or use defaults
+  const user = {
+    name: session?.user?.name || 'Admin User',
+    email: session?.user?.email || 'admin@bdmart.com',
+    role: session?.user?.role === 'admin' ? 'Administrator' : 'User',
+    avatar: session?.user?.name ? session.user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'AU',
     status: 'online'
-  });
+  };
   
   // Refs for click outside detection
   const profileMenuRef = useRef(null);
@@ -98,9 +103,74 @@ const Topbar = ({
     // Add language change implementation
   };
 
-  const handleLogout = () => {
-    // Add logout logic
-    router.push('/auth/signin');
+  const handleLogout = async () => {
+    // Close the profile menu first
+    setShowProfileMenu(false);
+
+    // Show confirmation dialog
+    const result = await Swal.fire({
+      title: 'Logout Confirmation',
+      text: 'Are you sure you want to logout?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3b82f6',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, Logout',
+      cancelButtonText: 'Cancel',
+      backdrop: true,
+      allowOutsideClick: false,
+    });
+
+    if (result.isConfirmed) {
+      // Show loading state
+      Swal.fire({
+        title: 'Logging out...',
+        html: 'Please wait while we sign you out securely.',
+        icon: 'info',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      try {
+        // Wait a moment for visual feedback
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Sign out without automatic redirect
+        await signOut({ 
+          redirect: false
+        });
+
+        // Show success message
+        await Swal.fire({
+          icon: 'success',
+          title: 'Logged Out Successfully!',
+          text: 'Redirecting to homepage...',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        
+        // Manually redirect to homepage using window.location
+        window.location.href = '/';
+      } catch (error) {
+        console.error('Logout error:', error);
+        
+        // Close loading and show error
+        await Swal.fire({
+          icon: 'error',
+          title: 'Logout Failed',
+          text: 'An error occurred during logout. Redirecting...',
+          timer: 2000,
+          showConfirmButton: false
+        });
+        
+        // Fallback to manual redirect
+        window.location.href = '/';
+      }
+    }
   };
 
   // Effects
@@ -225,77 +295,12 @@ const Topbar = ({
             <Search className="w-5 h-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
           </button>
 
-          {/* Help Button */}
-          <button 
-            className="hidden xl:flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-blue-50 transition-all duration-200 group active:scale-95"
-            aria-label="Help Center"
-            title="Help & Support"
-          >
-            <HelpCircle className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors" />
-            <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600 transition-colors hidden 2xl:inline">
-              Help
-            </span>
-          </button>
+        
 
-          {/* Language Selector */}
-          <div className="relative" ref={languageMenuRef}>
-            <button 
-              onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-              className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-blue-50 transition-all duration-200 group active:scale-95"
-              aria-label="Change language"
-            >
-              <Globe className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors" />
-              <span className="text-sm font-semibold text-gray-700 group-hover:text-blue-600 transition-colors">
-                {currentLanguage}
-              </span>
-              <ChevronDown className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-600 transition-colors" />
-            </button>
+         
 
-            {showLanguageMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-50">
-                <div className="py-2">
-                  {LANGUAGES.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => handleLanguageChange(lang.code)}
-                      className={`w-full px-4 py-2.5 text-left flex items-center gap-3 hover:bg-blue-50 transition-colors ${
-                        currentLanguage === lang.code ? 'bg-blue-50' : ''
-                      }`}
-                    >
-                      <span className="text-xl">{lang.flag}</span>
-                      <span className="text-sm font-medium text-gray-700">{lang.name}</span>
-                      {currentLanguage === lang.code && (
-                        <Check className="w-4 h-4 text-blue-600 ml-auto" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+      
 
-          {/* Connection Status */}
-          <div className="hidden lg:block" title={isOnline ? 'Connected' : 'Offline'}>
-            {isOnline ? (
-              <Wifi className="w-4 h-4 text-green-500" />
-            ) : (
-              <WifiOff className="w-4 h-4 text-red-500 animate-pulse" />
-            )}
-          </div>
-
-          {/* Dark Mode Toggle */}
-          <button 
-            onClick={handleToggleDarkMode}
-            className="p-2.5 rounded-xl hover:bg-blue-50 transition-all duration-200 group relative active:scale-95"
-            aria-label="Toggle dark mode"
-            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          >
-            {isDarkMode ? (
-              <Sun className="w-5 h-5 text-yellow-500 group-hover:rotate-90 transition-transform duration-300" />
-            ) : (
-              <Moon className="w-5 h-5 text-gray-600 group-hover:text-blue-600 group-hover:-rotate-12 transition-all duration-300" />
-            )}
-          </button>
 
           {/* Fullscreen Toggle */}
           <button 
@@ -329,7 +334,7 @@ const Topbar = ({
               aria-label="User menu"
             >
               <div className="relative">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 
+                <div className="w-9 h-9 rounded-full bg-linear-to-br from-blue-600 to-indigo-600 
                               flex items-center justify-center text-white font-bold text-sm
                               ring-2 ring-blue-100 shadow-md group-hover:ring-blue-200 transition-all">
                   {user.avatar}
@@ -349,18 +354,49 @@ const Topbar = ({
 
             {/* Profile Dropdown */}
             {showProfileMenu && (
-              <div className="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-gray-200 
+              <div className="absolute right-0 mt-3 w-72 bg-white rounded-2xl shadow-2xl border border-gray-200 
                           overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                 {/* Profile Header */}
-                <div className="p-4 border-b border-gray-100 bg-gradient-to-br from-blue-50 to-indigo-50">
+                <div className="p-4 border-b border-gray-100 bg-linear-to-br from-blue-50 to-indigo-50">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 
+                    <div className="w-12 h-12 rounded-full bg-linear-to-br from-blue-600 to-indigo-600 
                                   flex items-center justify-center text-white font-bold shadow-lg">
                       {user.avatar}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-bold text-gray-800 truncate">{user.name}</p>
                       <p className="text-xs text-gray-600 truncate">{user.email}</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 rounded-full">
+                          {user.role}
+                        </span>
+                        {status === 'authenticated' && (
+                          <span className={`w-2 h-2 rounded-full ${user.status === 'online' ? 'bg-green-500' : 'bg-gray-400'}`}></span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* User Details Section */}
+                <div className="px-4 py-3 bg-gray-50 border-b border-gray-100">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Account Details</p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-600">User ID</span>
+                      <span className="text-xs font-mono text-gray-800 bg-white px-2 py-1 rounded border border-gray-200">
+                        {session?.user?.id ? `${session.user.id.slice(0, 8)}...` : 'N/A'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-600">Role</span>
+                      <span className="text-xs font-medium text-gray-800">{user.role}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-600">Status</span>
+                      <span className={`text-xs font-medium ${status === 'authenticated' ? 'text-green-600' : 'text-gray-600'}`}>
+                        {status === 'authenticated' ? 'Active' : 'Inactive'}
+                      </span>
                     </div>
                   </div>
                 </div>

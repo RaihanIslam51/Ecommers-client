@@ -43,17 +43,62 @@ import {
   IconBox,
   Spinner,
 } from './Components';
+import ProductForm from './products/Components/ProductForm';
 
 const DashboardPage = () => {
   const [timeframe, setTimeframe] = useState('today');
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [dashboardData, setDashboardData] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Fetch dashboard data
   useEffect(() => {
     fetchDashboardData();
   }, []);
+
+  const handleAddProduct = () => {
+    setEditingProduct(null);
+    setShowForm(true);
+  };
+
+  const handleCancelForm = () => {
+    setShowForm(false);
+    setEditingProduct(null);
+  };
+
+  const handleSubmitProduct = async (productData) => {
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post('/products', productData);
+      
+      if (response.data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Product Added!',
+          text: 'The product has been successfully added.',
+          timer: 2000,
+          showConfirmButton: false
+        });
+        setShowForm(false);
+        setEditingProduct(null);
+        // Optionally refresh dashboard data to show new product
+        fetchDashboardData();
+      }
+    } catch (error) {
+      console.error('Error adding product:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.response?.data?.message || 'Failed to add product. Please try again.',
+        confirmButtonColor: '#3b82f6'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const fetchDashboardData = async () => {
     try {
@@ -106,56 +151,7 @@ const DashboardPage = () => {
     );
   }
 
-  const stats = [
-    {
-      title: 'Total Revenue',
-      value: `$${dashboardData.totalRevenue.toLocaleString()}`,
-      change: `${dashboardData.revenueChange > 0 ? '+' : ''}${dashboardData.revenueChange}%`,
-      trend: dashboardData.revenueChange >= 0 ? 'up' : 'down',
-      icon: DollarSign,
-      color: 'from-blue-500 to-cyan-500',
-      bgColor: 'from-blue-50 to-cyan-50',
-      description: 'vs last month',
-      target: `$${(dashboardData.totalRevenue * 1.2).toLocaleString()}`,
-      percentage: Math.min(100, (dashboardData.thisMonthRevenue / (dashboardData.totalRevenue * 1.2)) * 100)
-    },
-    {
-      title: 'Total Orders',
-      value: dashboardData.totalOrders.toLocaleString(),
-      change: `${dashboardData.ordersChange > 0 ? '+' : ''}${dashboardData.ordersChange}%`,
-      trend: dashboardData.ordersChange >= 0 ? 'up' : 'down',
-      icon: ShoppingCart,
-      color: 'from-purple-500 to-pink-500',
-      bgColor: 'from-purple-50 to-pink-50',
-      description: 'this month',
-      target: (dashboardData.totalOrders * 1.2).toFixed(0),
-      percentage: Math.min(100, (dashboardData.thisMonthOrders / (dashboardData.totalOrders * 1.2)) * 100)
-    },
-    {
-      title: 'Total Customers',
-      value: dashboardData.totalCustomers.toLocaleString(),
-      change: `+${dashboardData.newCustomersThisMonth}`,
-      trend: 'up',
-      icon: Users,
-      color: 'from-green-500 to-emerald-500',
-      bgColor: 'from-green-50 to-emerald-50',
-      description: 'new this month',
-      target: (dashboardData.totalCustomers * 1.2).toFixed(0),
-      percentage: 82
-    },
-    {
-      title: 'Active Products',
-      value: dashboardData.activeProducts.toLocaleString(),
-      change: dashboardData.lowStockProducts > 0 ? `-${dashboardData.lowStockProducts}` : '+0',
-      trend: dashboardData.lowStockProducts > 0 ? 'down' : 'up',
-      icon: Package,
-      color: 'from-orange-500 to-red-500',
-      bgColor: 'from-orange-50 to-red-50',
-      description: 'in stock',
-      target: (dashboardData.activeProducts * 1.2).toFixed(0),
-      percentage: 82
-    }
-  ];
+  
 
   const alerts = [
     ...(dashboardData.lowStockProducts > 0 ? [{
@@ -311,7 +307,7 @@ const DashboardPage = () => {
           >
             Export
           </Button>
-          <Button 
+          <Button onClick={handleAddProduct}
             variant="primary" 
             size="sm"
             icon={<Plus className="w-4 h-4" />}
@@ -333,32 +329,7 @@ const DashboardPage = () => {
         ))}
       </div>
 
-      {/* Enhanced Stats Grid with Progress */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
-        {stats.map((stat, index) => (
-          <div key={index}>
-            <Stat
-              title={stat.title}
-              value={stat.value}
-              change={stat.change}
-              trend={stat.trend}
-              icon={stat.icon}
-              color={stat.color}
-              bgColor={stat.bgColor}
-              description={stat.description}
-            />
-            <ProgressBar
-              value={stat.percentage}
-              color={stat.color.includes('blue') ? 'blue' : 
-                     stat.color.includes('purple') ? 'purple' :
-                     stat.color.includes('green') ? 'green' : 'orange'}
-              showLabel
-              label={`Target: ${stat.target}`}
-              className="mt-3"
-            />
-          </div>
-        ))}
-      </div>
+     
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
@@ -574,75 +545,7 @@ const DashboardPage = () => {
         </Card>
       </div>
 
-      {/* Quick Actions Section */}
-      <Card className="bg-linear-to-br from-blue-600 via-indigo-600 to-purple-700 text-white border-0 shadow-2xl relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full -ml-32 -mt-32"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full -mr-48 -mb-48"></div>
-        </div>
-        
-        <div className="relative">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2 text-white">
-                <Zap className="w-6 h-6" />
-                Quick Actions
-              </h2>
-              <p className="text-blue-100 mt-1 text-sm">Manage your store efficiently</p>
-            </div>
-            <button className="p-2 hover:bg-white/10 rounded-lg transition-colors">
-              <Settings className="w-5 h-5" />
-            </button>
-          </div>
-          
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 active:bg-white/30 border border-white/20 rounded-xl p-4 transition-all duration-200 text-left group touch-manipulation active:scale-95">
-              <IconBox
-                icon={<Package className="w-6 h-6" />}
-                size="lg"
-                bgColor="bg-white/20"
-                className="mb-3 group-hover:scale-110 transition-transform"
-              />
-              <h3 className="font-semibold mb-1 text-white">Add Product</h3>
-              <p className="text-sm text-blue-100">Create new listing</p>
-            </button>
-            
-            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 active:bg-white/30 border border-white/20 rounded-xl p-4 transition-all duration-200 text-left group touch-manipulation active:scale-95">
-              <IconBox
-                icon={<ShoppingCart className="w-6 h-6" />}
-                size="lg"
-                bgColor="bg-white/20"
-                className="mb-3 group-hover:scale-110 transition-transform"
-              />
-              <h3 className="font-semibold mb-1 text-white">View Orders</h3>
-              <p className="text-sm text-blue-100">Manage orders</p>
-            </button>
-            
-            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 active:bg-white/30 border border-white/20 rounded-xl p-4 transition-all duration-200 text-left group touch-manipulation active:scale-95">
-              <IconBox
-                icon={<Users className="w-6 h-6" />}
-                size="lg"
-                bgColor="bg-white/20"
-                className="mb-3 group-hover:scale-110 transition-transform"
-              />
-              <h3 className="font-semibold mb-1 text-white">Customers</h3>
-              <p className="text-sm text-blue-100">View customer list</p>
-            </button>
-            
-            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 active:bg-white/30 border border-white/20 rounded-xl p-4 transition-all duration-200 text-left group touch-manipulation active:scale-95">
-              <IconBox
-                icon={<BarChart3 className="w-6 h-6" />}
-                size="lg"
-                bgColor="bg-white/20"
-                className="mb-3 group-hover:scale-110 transition-transform"
-              />
-              <h3 className="font-semibold mb-1 text-white">Analytics</h3>
-              <p className="text-sm text-blue-100">View reports</p>
-            </button>
-          </div>
-        </div>
-      </Card>
+    
 
       {/* Footer Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -712,6 +615,20 @@ const DashboardPage = () => {
           </div>
         </Card>
       </div>
+
+      {/* Product Form Modal */}
+      {showForm && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
+          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <ProductForm
+              product={editingProduct}
+              onSubmit={handleSubmitProduct}
+              onCancel={handleCancelForm}
+              isSubmitting={isSubmitting}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
