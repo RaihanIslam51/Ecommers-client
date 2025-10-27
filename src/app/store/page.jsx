@@ -54,9 +54,11 @@ const StorePage = () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get('/products');
-      setProducts(response.data);
+      // Server returns: { success: true, message: "...", products: [...] }
+      setProducts(response.data.products || []);
     } catch (error) {
       console.error('Error fetching products:', error);
+      setProducts([]);
     } finally {
       setLoading(false);
     }
@@ -65,8 +67,9 @@ const StorePage = () => {
   const fetchCategories = async () => {
     try {
       const response = await axiosInstance.get('/categories');
+      // Server returns: { success: true, message: "...", categories: [...] }
       if (response.data.success) {
-        setCategories(response.data.categories);
+        setCategories(response.data.categories || []);
         
         // Extract unique brands from products
         const uniqueBrands = [...new Set(products.map(p => p.brand).filter(Boolean))];
@@ -74,6 +77,7 @@ const StorePage = () => {
       }
     } catch (error) {
       console.error('Error fetching categories:', error);
+      setCategories([]);
     }
   };
 

@@ -36,8 +36,9 @@ const BannerManagement = () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get('/banners');
+      // Server returns: { success: true, message: "...", banners: [...] }
       if (response.data.success) {
-        setBanners(response.data.banners);
+        setBanners(response.data.banners || []);
       }
     } catch (error) {
       console.error('Error fetching banners:', error);

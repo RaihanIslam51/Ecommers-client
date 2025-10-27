@@ -33,6 +33,7 @@ const Category = () => {
     const fetchCategories = async () => {
       try {
         const response = await axiosInstance.get('/categories');
+        // Server returns: { success: true, message: "...", categories: [...] }
         if (response.data && response.data.categories) {
           setCategories(response.data.categories);
         }

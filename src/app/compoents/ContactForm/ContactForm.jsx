@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '@/lib/axios';
 import Swal from 'sweetalert2';
 
 const ContactForm = () => {
@@ -25,7 +25,7 @@ const ContactForm = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:5000/messages', formData);
+            const response = await axiosInstance.post('/messages', formData);
             
             if (response.data.success) {
                 Swal.fire({

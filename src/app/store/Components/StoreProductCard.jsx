@@ -2,12 +2,14 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FaStar, FaHeart, FaShoppingCart, FaEye } from 'react-icons/fa';
 import { BsLightningFill } from 'react-icons/bs';
 import { useCart } from '@/context/CartContext';
 import Swal from 'sweetalert2';
 
 const ProductCard = ({ product, viewType = 'grid' }) => {
+  const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useCart();
 
@@ -15,7 +17,8 @@ const ProductCard = ({ product, viewType = 'grid' }) => {
   const productId = product._id || product.id;
   const productImage = product.image || 'https://via.placeholder.com/300';
   const productName = product.name || 'Product Name';
-  const productDescription = product.description || product.feature || '';
+  const productFeature = product.feature || ''; // Feature text
+  const productDescription = product.description || '';
   const actualPrice = product.originalPrice || product.price || 0;
   const discountPrice = product.price || 0;
   const stock = product.stock || 0;
@@ -81,7 +84,7 @@ const ProductCard = ({ product, viewType = 'grid' }) => {
       >
         <div className="flex flex-col sm:flex-row">
           {/* Image Section */}
-          <Link href={`/products/${productId}`} className="relative w-full sm:w-64 h-64 sm:h-auto flex-shrink-0">
+          <Link href={`/products/${productId}`} className="relative w-full sm:w-64 h-64 sm:h-auto shrink-0">
             <Image
               src={productImage}
               alt={productName}
@@ -180,82 +183,61 @@ const ProductCard = ({ product, viewType = 'grid' }) => {
     );
   }
 
-  // Grid View
+  // Grid View (Professional Design)
   return (
     <div
-      className="bg-white border border-gray-200 rounded-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+      className="bg-white border border-gray-200 rounded-xl hover:shadow-2xl hover:border-gray-300 transition-all duration-300 overflow-hidden group cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image Section */}
-      <Link href={`/products/${productId}`} className="relative aspect-square overflow-hidden block">
+      <Link href={`/products/${productId}`} className="relative aspect-square overflow-hidden block bg-gray-100">
         <Image
           src={productImage}
           alt={productName}
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-500"
+          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
         
-        {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
-          {badge && (
-            <span className="px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full shadow-md">
-              {badge}
-            </span>
-          )}
-          {discount > 0 && (
-            <span className="px-3 py-1 bg-black text-white text-xs font-bold rounded-full shadow-md">
-              -{discount}%
-            </span>
-          )}
-        </div>
-
-        {/* Favorite Button */}
-        <button
-          onClick={handleToggleWishlist}
-          className="absolute top-3 right-3 p-2.5 bg-white rounded-full shadow-md hover:bg-gray-100 transition-all z-10 hover:scale-110"
-        >
-          <FaHeart className={isFavorite ? 'text-red-500' : 'text-gray-400'} />
-        </button>
-
-        {/* Quick Actions - Show on Hover */}
-        <div
-          className={`absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent transition-all duration-300 ${
-            isHovered ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
-          }`}
-        >
-          <div className="flex gap-2">
-            <button 
-              onClick={handleAddToCart}
-              className="flex-1 bg-white text-black py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2 text-sm"
-            >
-              <FaShoppingCart />
-              Add to Cart
-            </button>
-            <button className="p-2 bg-white rounded-lg hover:bg-gray-100 transition-colors">
-              <FaEye className="text-black" />
-            </button>
+        {/* Discount Badge */}
+        {discount > 0 && (
+          <div className="absolute top-3 left-3 z-10 bg-red-500 text-white px-2.5 py-1 rounded-lg text-xs font-bold shadow-lg">
+            -{discount}%
           </div>
+        )}
+
+        {/* Quick Action Buttons */}
+        <div className="absolute top-3 right-3 flex flex-col gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button
+            onClick={handleToggleWishlist}
+            className="w-9 h-9 bg-white hover:bg-black text-gray-700 hover:text-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
+            title="Add to Wishlist"
+          >
+            <FaHeart className={`text-sm ${isFavorite ? 'text-red-500' : ''}`} />
+          </button>
         </div>
       </Link>
 
-      {/* Content Section */}
+      {/* Product Info */}
       <div className="p-4">
-        {/* Title */}
+        {/* Product Title */}
         <Link href={`/products/${productId}`}>
-          <h3 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 hover:text-blue-600 cursor-pointer min-h-[40px]">
+          <h3 className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2 min-h-10 hover:text-black transition-colors">
             {productName}
           </h3>
         </Link>
 
-        {/* Description */}
-        <p className="text-xs text-gray-500 mb-3 line-clamp-2 min-h-[32px]">
-          {productDescription}
-        </p>
+        {/* Feature Text */}
+        {productFeature && (
+          <p className="text-xs text-gray-500 mb-3 line-clamp-1 italic">
+            ✨ {productFeature}
+          </p>
+        )}
 
         {/* Rating */}
-        <div className="flex items-center gap-2 mb-3">
-          <div className="flex items-center gap-0.5">
+        <div className="flex items-center gap-1 mb-3">
+          <div className="flex items-center">
             {[...Array(5)].map((_, i) => (
               <FaStar
                 key={i}
@@ -265,27 +247,44 @@ const ProductCard = ({ product, viewType = 'grid' }) => {
               />
             ))}
           </div>
-          <span className="text-xs text-gray-500">({reviewCount})</span>
+          <span className="text-xs text-gray-500 ml-1">({rating})</span>
         </div>
 
         {/* Price */}
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xl font-bold text-black">${discountPrice}</span>
+        <div className="flex items-baseline gap-2 mb-3">
+          <span className="text-xl font-bold text-black">${discountPrice.toFixed(2)}</span>
           {actualPrice > discountPrice && (
-            <span className="text-sm text-gray-400 line-through">${actualPrice}</span>
+            <span className="text-sm text-gray-400 line-through">${actualPrice.toFixed(2)}</span>
           )}
         </div>
 
-        {/* Stock */}
-        <div className="pt-3 border-t border-gray-100">
-          {stock > 0 ? (
-            <span className="text-xs text-green-600 font-medium flex items-center gap-1">
-              <BsLightningFill className="text-xs" />
-              {stock} in stock
-            </span>
-          ) : (
-            <span className="text-xs text-red-600 font-medium">Out of Stock</span>
-          )}
+        {/* Stock Status */}
+        <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+          <div className="flex items-center gap-1">
+            {stock > 0 ? (
+              <>
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span className="text-xs text-gray-600">
+                  <span className="font-semibold text-green-600">{stock}</span> in stock
+                </span>
+              </>
+            ) : (
+              <>
+                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                <span className="text-xs text-red-600 font-semibold">Out of stock</span>
+              </>
+            )}
+          </div>
+          
+          {/* Add to Cart Icon */}
+          <button 
+            className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gray-800"
+            onClick={handleAddToCart}
+            title="Add to Cart"
+            disabled={stock === 0}
+          >
+            <FaShoppingCart className="text-xs" />
+          </button>
         </div>
       </div>
     </div>

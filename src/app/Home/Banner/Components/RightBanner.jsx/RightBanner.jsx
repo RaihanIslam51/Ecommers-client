@@ -117,7 +117,8 @@ const RightBanner = () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get("/banners/position/right");
-      if (response.data.success && response.data.banners.length > 0) {
+      // Server returns: { success: true, message: "...", banners: [...] }
+      if (response.data.success && response.data.banners?.length > 0) {
         setBanner(response.data.banners[0]);
       }
     } catch (error) {

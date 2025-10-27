@@ -40,8 +40,11 @@ const NewArrivalsPage = () => {
       setLoading(true);
       const response = await axiosInstance.get('/products');
       
+      // Server returns: { success: true, message: "...", products: [...] }
+      const productsData = response.data.products || [];
+      
       // Filter products that are marked as New Arrivals
-      const newArrivalProducts = response.data.filter(p => p.showInNewArrival === true);
+      const newArrivalProducts = productsData.filter(p => p.showInNewArrival === true);
       
       // Sort by creation date (newest first) if available
       const sortedProducts = newArrivalProducts.sort((a, b) => {

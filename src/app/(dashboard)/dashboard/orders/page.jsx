@@ -31,8 +31,9 @@ const OrdersPage = () => {
         try {
             setLoading(true);
             const response = await axiosInstance.get('/orders');
-            if (response.data && Array.isArray(response.data)) {
-                setOrders(response.data);
+            // Server returns: { success: true, message: "...", orders: [...] }
+            if (response.data && response.data.orders) {
+                setOrders(response.data.orders);
             }
         } catch (error) {
             console.error('Error fetching orders:', error);

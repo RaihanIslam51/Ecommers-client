@@ -1,49 +1,95 @@
 import axiosInstance from '@/lib/axios';
 
-// Example API service functions
+// API service functions - all paths match server endpoints
 export const api = {
   // Products
   products: {
-    getAll: () => axiosInstance.get('/api/products'),
-    getById: (id) => axiosInstance.get(`/api/products/${id}`),
-    create: (data) => axiosInstance.post('/api/products', data),
-    update: (id, data) => axiosInstance.put(`/api/products/${id}`, data),
-    delete: (id) => axiosInstance.delete(`/api/products/${id}`),
+    getAll: () => axiosInstance.get('/products'),
+    getById: (id) => axiosInstance.get(`/products/${id}`),
+    create: (data) => axiosInstance.post('/products', data),
+    update: (id, data) => axiosInstance.put(`/products/${id}`, data),
+    delete: (id) => axiosInstance.delete(`/products/${id}`),
+    search: (query) => axiosInstance.get(`/products/search/${encodeURIComponent(query)}`),
   },
 
   // Categories
   categories: {
-    getAll: () => axiosInstance.get('/api/categories'),
-    getById: (id) => axiosInstance.get(`/api/categories/${id}`),
-    create: (data) => axiosInstance.post('/api/categories', data),
-    update: (id, data) => axiosInstance.put(`/api/categories/${id}`, data),
-    delete: (id) => axiosInstance.delete(`/api/categories/${id}`),
+    getAll: () => axiosInstance.get('/categories'),
+    getById: (id) => axiosInstance.get(`/categories/${id}`),
+    create: (data) => axiosInstance.post('/categories', data),
+    update: (id, data) => axiosInstance.put(`/categories/${id}`, data),
+    delete: (id) => axiosInstance.delete(`/categories/${id}`),
   },
 
   // Orders
   orders: {
-    getAll: () => axiosInstance.get('/api/orders'),
-    getById: (id) => axiosInstance.get(`/api/orders/${id}`),
-    create: (data) => axiosInstance.post('/api/orders', data),
-    update: (id, data) => axiosInstance.put(`/api/orders/${id}`, data),
-    delete: (id) => axiosInstance.delete(`/api/orders/${id}`),
+    getAll: () => axiosInstance.get('/orders'),
+    getById: (id) => axiosInstance.get(`/orders/${id}`),
+    create: (data) => axiosInstance.post('/orders', data),
+    update: (id, data) => axiosInstance.put(`/orders/${id}`, data),
+    delete: (id) => axiosInstance.delete(`/orders/${id}`),
+    updateStatus: (id, status) => axiosInstance.put(`/orders/${id}`, { status }),
   },
 
-  // Customers
-  customers: {
-    getAll: () => axiosInstance.get('/api/customers'),
-    getById: (id) => axiosInstance.get(`/api/customers/${id}`),
-    create: (data) => axiosInstance.post('/api/customers', data),
-    update: (id, data) => axiosInstance.put(`/api/customers/${id}`, data),
-    delete: (id) => axiosInstance.delete(`/api/customers/${id}`),
+  // Banners
+  banners: {
+    getAll: () => axiosInstance.get('/banners'),
+    getById: (id) => axiosInstance.get(`/banners/${id}`),
+    getByPosition: (position) => axiosInstance.get(`/banners/position/${position}`),
+    create: (data) => axiosInstance.post('/banners', data),
+    update: (id, data) => axiosInstance.put(`/banners/${id}`, data),
+    delete: (id) => axiosInstance.delete(`/banners/${id}`),
+  },
+
+  // Messages
+  messages: {
+    getAll: () => axiosInstance.get('/messages'),
+    getUnread: () => axiosInstance.get('/messages/unread'),
+    create: (data) => axiosInstance.post('/messages', data),
+    markAsRead: (id) => axiosInstance.post(`/messages/${id}/read`),
+    markAllAsRead: () => axiosInstance.post('/messages/read-all'),
+    delete: (id) => axiosInstance.delete(`/messages/${id}`),
+  },
+
+  // Notifications
+  notifications: {
+    getAll: () => axiosInstance.get('/notifications'),
+    getUnread: () => axiosInstance.get('/notifications/unread'),
+    markAsRead: (id) => axiosInstance.post(`/notifications/${id}/read`),
+    markAllAsRead: () => axiosInstance.post('/notifications/read-all'),
+    delete: (id) => axiosInstance.delete(`/notifications/${id}`),
+  },
+
+  // Users
+  users: {
+    getAll: (params) => axiosInstance.get('/users', { params }),
+    getById: (id) => axiosInstance.get(`/users/${id}`),
+    updateRole: (id, role) => axiosInstance.put(`/users/${id}/role`, { role }),
+    delete: (id) => axiosInstance.delete(`/users/${id}`),
   },
 
   // Auth
   auth: {
-    login: (credentials) => axiosInstance.post('/api/auth/login', credentials),
-    register: (userData) => axiosInstance.post('/api/auth/register', userData),
-    logout: () => axiosInstance.post('/api/auth/logout'),
-    getProfile: () => axiosInstance.get('/api/auth/profile'),
+    login: (credentials) => axiosInstance.post('/auth/login', credentials),
+    signup: (userData) => axiosInstance.post('/auth/signup', userData),
+    logout: () => axiosInstance.post('/auth/logout'),
+    getProfile: () => axiosInstance.get('/auth/profile'),
+    updateProfile: (data) => axiosInstance.put('/auth/profile', data),
+    changePassword: (data) => axiosInstance.put('/auth/change-password', data),
+  },
+
+  // Dashboard & Analytics
+  dashboard: {
+    getStats: () => axiosInstance.get('/dashboard/stats'),
+  },
+
+  analytics: {
+    getStats: () => axiosInstance.get('/analytics/stats'),
+  },
+
+  // Email
+  email: {
+    send: (data) => axiosInstance.post('/api/send-email', data),
   },
 };
 

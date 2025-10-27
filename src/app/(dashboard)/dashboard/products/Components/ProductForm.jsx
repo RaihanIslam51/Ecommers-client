@@ -9,6 +9,7 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
+    feature: '', // New field for feature text
     price: '',
     originalPrice: '',
     category: '',
@@ -41,6 +42,7 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
   const fetchCategories = async () => {
     try {
       const response = await axiosInstance.get('/categories');
+      // Server returns: { success: true, message: "...", categories: [...] }
       if (response.data && response.data.categories) {
         setCategories(response.data.categories);
       }
@@ -94,9 +96,31 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
 
   useEffect(() => {
     if (product) {
+      console.log('ProductForm: Initializing with product:', product);
+      console.log('ProductForm: Product ID:', product._id || product.id);
+      
       setFormData({
-        ...product,
+        _id: product._id || product.id, // Preserve the ID
+        name: product.name || '',
+        description: product.description || '',
+        feature: product.feature || '', // Preserve feature field
+        price: product.price || '',
+        originalPrice: product.originalPrice || '',
+        category: product.category || '',
+        brand: product.brand || '',
+        stock: product.stock || '',
+        sku: product.sku || '',
+        image: product.image || '',
+        images: product.images || [],
         tags: product.tags?.join(', ') || '',
+        weight: product.weight || '',
+        dimensions: product.dimensions || '',
+        warranty: product.warranty || '',
+        returnPolicy: product.returnPolicy || '30 days',
+        showInCollection: product.showInCollection !== undefined ? product.showInCollection : true,
+        showInTopSelling: product.showInTopSelling || false,
+        showInNewArrival: product.showInNewArrival || false,
+        showInHotDeals: product.showInHotDeals || false,
       });
     }
   }, [product]);
@@ -121,10 +145,33 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
   };
 
   const handleMultipleImagesUpload = (imageUrls) => {
-    setFormData((prev) => ({
-      ...prev,
-      images: [...(prev.images || []), ...imageUrls],
-    }));
+    setFormData((prev) => {
+      const currentImages = prev.images || [];
+      const totalImages = currentImages.length + imageUrls.length;
+      
+      // Limit to maximum 5 additional images
+      if (totalImages > 5) {
+        const availableSlots = 5 - currentImages.length;
+        const limitedUrls = imageUrls.slice(0, availableSlots);
+        
+        Swal.fire({
+          icon: 'warning',
+          title: 'Image Limit Reached',
+          text: `You can only upload ${availableSlots} more image(s). Maximum 5 additional images allowed.`,
+          confirmButtonColor: '#3b82f6'
+        });
+        
+        return {
+          ...prev,
+          images: [...currentImages, ...limitedUrls]
+        };
+      }
+      
+      return {
+        ...prev,
+        images: [...currentImages, ...imageUrls]
+      };
+    });
   };
 
   const removeImage = (index) => {
@@ -415,6 +462,26 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             placeholder="Enter product description"
           />
+        </div>
+
+        {/* Feature Text */}
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-black mb-2">
+            Feature Text
+            <span className="text-gray-500 text-xs ml-2">(Displayed on product card below title)</span>
+          </label>
+          <input
+            type="text"
+            name="feature"
+            value={formData.feature}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+            placeholder="e.g., Best Quality, Free Shipping, Limited Edition"
+            maxLength={100}
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Short feature text that appears below the product title on homepage cards
+          </p>
         </div>
 
         {/* Image Uploader */}

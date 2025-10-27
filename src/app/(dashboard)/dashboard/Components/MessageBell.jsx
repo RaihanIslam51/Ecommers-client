@@ -37,7 +37,18 @@ const MessageBell = () => {
             }
         } catch (error) {
             console.error('Failed to fetch messages:', error);
-            console.error('Error details:', error.response?.data || error.message);
+            
+            // Enhanced error logging
+            if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
+                console.error('❌ Cannot connect to server. Make sure the server is running on http://localhost:5000');
+                console.error('💡 Run: cd server && npm run dev');
+            } else {
+                console.error('Error details:', error.response?.data || error.message);
+            }
+            
+            // Set empty messages on error to avoid undefined errors
+            setMessages([]);
+            setUnreadCount(0);
         }
     };
 

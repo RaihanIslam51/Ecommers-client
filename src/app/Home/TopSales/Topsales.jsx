@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import ProductCard from "./components/Productcard";
 import { ProductCardSkeletonGrid } from "./components/ProductCardSkeleton";
 import Image from "next/image";
 import axiosInstance from "@/lib/axios";
 
 const Topsales = () => {
+  const router = useRouter();
   const [modalProductId, setModalProductId] = useState(null);
   const [showAll, setShowAll] = useState(false);
   const [products, setProducts] = useState([]);
@@ -16,12 +18,12 @@ const Topsales = () => {
     const fetchProducts = async () => {
       try {
         const response = await axiosInstance.get('/products');
-        if (response.data && Array.isArray(response.data)) {
-          // Filter products to show only those marked for top selling
-          const topSellingProducts = response.data.filter(product => product.showInTopSelling === true);
-          console.log('🔥 Top Selling products:', topSellingProducts.length);
-          setProducts(topSellingProducts);
-        }
+        // Server returns: { success: true, message: "...", products: [...] }
+        const productsData = response.data.products || [];
+        // Filter products to show only those marked for top selling
+        const topSellingProducts = productsData.filter(product => product.showInTopSelling === true);
+        console.log('🔥 Top Selling products:', topSellingProducts.length);
+        setProducts(topSellingProducts);
       } catch (error) {
         console.error('Error fetching top selling products:', error);
       } finally {
@@ -103,6 +105,7 @@ const Topsales = () => {
             product={product}
             isDimmed={modalProductId && modalProductId !== (product._id || product.id)}
             onQuickView={setModalProductId}
+            onClick={() => router.push(`/products/${product._id || product.id}`)}
           />
         ))}
       </div>

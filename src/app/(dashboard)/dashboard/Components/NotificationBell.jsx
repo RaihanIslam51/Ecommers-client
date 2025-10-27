@@ -37,7 +37,18 @@ const NotificationBell = () => {
             }
         } catch (error) {
             console.error('Failed to fetch notifications:', error);
-            console.error('Error details:', error.response?.data || error.message);
+            
+            // Enhanced error logging
+            if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
+                console.error('❌ Cannot connect to server. Make sure the server is running on http://localhost:5000');
+                console.error('💡 Run: cd server && npm run dev');
+            } else {
+                console.error('Error details:', error.response?.data || error.message);
+            }
+            
+            // Set empty notifications on error to avoid undefined errors
+            setNotifications([]);
+            setUnreadCount(0);
         }
     };
 

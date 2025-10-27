@@ -42,13 +42,15 @@ const CustomersPage = () => {
                 axiosInstance.get('/orders')
             ]);
 
-            if (ordersResponse.data && Array.isArray(ordersResponse.data)) {
-                setOrders(ordersResponse.data);
+            // Server returns: { success: true, message: "...", orders: [...] }
+            if (ordersResponse.data && ordersResponse.data.orders) {
+                const ordersData = ordersResponse.data.orders;
+                setOrders(ordersData);
                 
                 // Extract unique customers from orders
                 const customerMap = new Map();
                 
-                ordersResponse.data.forEach(order => {
+                ordersData.forEach(order => {
                     if (order.customerInfo) {
                         const email = order.customerInfo.email;
                         

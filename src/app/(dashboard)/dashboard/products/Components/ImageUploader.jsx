@@ -91,20 +91,33 @@ const ImageUploader = ({
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
 
-    // Limit to 5 images at a time
-    if (files.length > 5) {
-      setError('You can upload maximum 5 images at a time');
+    // Check current number of images
+    const currentImageCount = additionalImages.length;
+    const availableSlots = 5 - currentImageCount;
+
+    // If already at max, show error and return
+    if (availableSlots === 0) {
+      setError('Maximum 5 additional images allowed. Please remove some images first.');
+      setTimeout(() => setError(''), 3000);
+      e.target.value = ''; // Reset input
       return;
     }
 
-    // Validate all files
-    for (const file of files) {
+    // Limit files to available slots
+    const filesToUpload = files.slice(0, availableSlots);
+
+    // Validate all files before upload
+    for (const file of filesToUpload) {
       if (!file.type.startsWith('image/')) {
         setError('All files must be images');
+        setTimeout(() => setError(''), 3000);
+        e.target.value = ''; // Reset input
         return;
       }
       if (file.size > 5 * 1024 * 1024) {
         setError('Each image should be less than 5MB');
+        setTimeout(() => setError(''), 3000);
+        e.target.value = ''; // Reset input
         return;
       }
     }
@@ -114,9 +127,9 @@ const ImageUploader = ({
     setUploadProgress(0);
 
     try {
-      const uploadPromises = files.map((file, index) => {
+      const uploadPromises = filesToUpload.map((file) => {
         return uploadToImgBB(file).then((url) => {
-          setUploadProgress((prev) => prev + (100 / files.length));
+          setUploadProgress((prev) => prev + (100 / filesToUpload.length));
           return url;
         });
       });
@@ -124,13 +137,28 @@ const ImageUploader = ({
       const imageUrls = await Promise.all(uploadPromises);
       onMultipleImagesUpload(imageUrls);
       
+      // Show success message with count
+      if (files.length > availableSlots) {
+        setTimeout(() => {
+          setError(`✅ ${filesToUpload.length} image(s) uploaded successfully. (Maximum 5 total)`);
+          setTimeout(() => setError(''), 3000);
+        }, 500);
+      } else {
+        setTimeout(() => {
+          setError(`✅ ${filesToUpload.length} image(s) uploaded successfully!`);
+          setTimeout(() => setError(''), 2000);
+        }, 500);
+      }
+      
       setTimeout(() => {
         setUploadProgress(0);
       }, 1000);
     } catch (err) {
       setError(err.message);
+      setTimeout(() => setError(''), 3000);
     } finally {
       setUploading(false);
+      e.target.value = ''; // Reset input after upload
     }
   };
 
@@ -196,9 +224,14 @@ const ImageUploader = ({
 
       {/* Additional Images */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Additional Images (Max 5 images)
-        </label>
+        <div className="flex items-center justify-between mb-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Additional Images
+          </label>
+          <span className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+            {additionalImages.length} / 5 images
+          </span>
+        </div>
         <div className="grid grid-cols-5 gap-4 mb-4">
           {additionalImages.map((image, index) => (
             <div key={index} className="relative w-full h-24 border-2 border-gray-300 rounded-lg overflow-hidden">
@@ -238,14 +271,21 @@ const ImageUploader = ({
           onChange={handleMultipleImagesUpload}
           className="hidden"
         />
-        <button
-          type="button"
-          onClick={() => multipleFileInputRef.current?.click()}
-          disabled={uploading || additionalImages.length >= 5}
-          className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-green-300 transition-colors text-sm"
-        >
-          {uploading ? 'Uploading...' : 'Add More Images'}
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => multipleFileInputRef.current?.click()}
+            disabled={uploading || additionalImages.length >= 5}
+            className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+          >
+            {uploading ? 'Uploading...' : additionalImages.length >= 5 ? 'Maximum Reached' : `Add Images (${5 - additionalImages.length} slots left)`}
+          </button>
+          {additionalImages.length >= 5 && (
+            <span className="text-xs text-orange-600 font-medium">
+              ⚠️ Maximum 5 images reached
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Upload Progress */}

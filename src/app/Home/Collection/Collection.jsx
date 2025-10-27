@@ -19,13 +19,13 @@ const Collection = () => {
       try {
         console.log('🔄 Fetching products from:', axiosInstance.defaults.baseURL);
         const response = await axiosInstance.get('/products');
-        console.log('✅ Products fetched:', response.data?.length || 0);
-        if (response.data && Array.isArray(response.data)) {
-          // Filter products to show only those marked for collection
-          const collectionProducts = response.data.filter(product => product.showInCollection === true);
-          console.log('📦 Collection products:', collectionProducts.length);
-          setProducts(collectionProducts);
-        }
+        // Server returns: { success: true, message: "...", products: [...] }
+        const productsData = response.data.products || [];
+        console.log('✅ Products fetched:', productsData.length);
+        // Filter products to show only those marked for collection
+        const collectionProducts = productsData.filter(product => product.showInCollection === true);
+        console.log('📦 Collection products:', collectionProducts.length);
+        setProducts(collectionProducts);
       } catch (error) {
         console.error('❌ Error fetching products:', error);
         console.error('Error details:', {

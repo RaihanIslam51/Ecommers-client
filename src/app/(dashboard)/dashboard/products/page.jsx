@@ -29,9 +29,16 @@ const ProductsPage = () => {
   const fetchProducts = async () => {
     try {
       const response = await axiosInstance.get('/products');
-      if (response.data && Array.isArray(response.data)) {
-        setProducts(response.data);
+      // Server returns: { success: true, message: "...", products: [...] }
+      const productsData = response.data.products || [];
+      
+      console.log('Fetched products:', productsData.length);
+      if (productsData.length > 0) {
+        console.log('First product sample:', productsData[0]);
+        console.log('First product ID:', productsData[0]._id || productsData[0].id);
       }
+      
+      setProducts(productsData);
     } catch (error) {
       console.error('Error fetching products:', error);
       // Keep initial products if fetch fails
@@ -100,6 +107,16 @@ const ProductsPage = () => {
   };
 
   const handleEditProduct = (product) => {
+    console.log('Editing product:', product);
+    console.log('Product ID:', product._id || product.id);
+    
+    // Validate product has an ID
+    if (!product._id && !product.id) {
+      console.error('Cannot edit product: No valid ID found', product);
+      showAlert('Cannot edit product: Product ID is missing', 'error');
+      return;
+    }
+    
     setEditingProduct(product);
     setShowForm(true);
   };
@@ -109,6 +126,11 @@ const ProductsPage = () => {
   };
 
   const handleDeleteProduct = async (product) => {
+    // Debug: Log the product object to see its structure
+    console.log('Product to delete:', product);
+    console.log('Product._id:', product._id);
+    console.log('Product.id:', product.id);
+    
     const result = await Swal.fire({
       title: 'Are you sure?',
       text: `Do you want to delete "${product.name}"? This action cannot be undone!`,
@@ -125,6 +147,13 @@ const ProductsPage = () => {
       try {
         // Use _id for MongoDB documents, or id for local products
         const id = product._id || product.id;
+        
+        if (!id) {
+          console.error('No valid ID found for product:', product);
+          throw new Error('Product ID is missing');
+        }
+        
+        console.log('Deleting product with ID:', id);
         await axiosInstance.delete(`/products/${id}`);
         setProducts((prev) => prev.filter((p) => (p._id || p.id) !== id));
         
@@ -137,9 +166,10 @@ const ProductsPage = () => {
         });
       } catch (error) {
         console.error('Error deleting product:', error);
+        console.error('Error response:', error.response?.data);
         Swal.fire({
           title: 'Error!',
-          text: 'Failed to delete product. Please try again.',
+          text: error.response?.data?.message || error.message || 'Failed to delete product. Please try again.',
           icon: 'error',
           confirmButtonColor: '#3b82f6'
         });
@@ -152,25 +182,50 @@ const ProductsPage = () => {
     try {
       if (editingProduct) {
         // Update existing product
-        const id = editingProduct._id || editingProduct.id;
+        // Use productData._id first (from form), then fallback to editingProduct
+        const id = productData._id || productData.id || editingProduct._id || editingProduct.id;
+        
+        // Validate ID exists
+        if (!id) {
+          console.error('Cannot update product: No valid ID found');
+          console.error('productData:', productData);
+          console.error('editingProduct:', editingProduct);
+          throw new Error('Product ID is missing. Cannot update product.');
+        }
+        
+        console.log('Updating product with ID:', id);
         const response = await axiosInstance.put(`/products/${id}`, productData);
+        
+        // Update the product in the list
         setProducts((prev) => prev.map((p) => {
           const currentId = p._id || p.id;
-          const editId = editingProduct._id || editingProduct.id;
-          return currentId === editId ? response.data : p;
+          return currentId === id ? (response.data.product || response.data) : p;
         }));
+        
         showAlert('Product updated successfully!', 'success');
       } else {
         // Create new product
+        console.log('Creating new product');
         const response = await axiosInstance.post('/products', productData);
-        setProducts((prev) => [...prev, response.data]);
+        
+        // Add the new product to the list
+        const newProduct = response.data.product || response.data;
+        setProducts((prev) => [...prev, newProduct]);
+        
         showAlert('Product added successfully!', 'success');
       }
       setShowForm(false);
       setEditingProduct(null);
     } catch (error) {
       console.error('Error submitting product:', error);
-      const errorMessage = error.response?.data?.message || 'Failed to save product. Please try again.';
+      console.error('Error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        url: error.config?.url
+      });
+      
+      const errorMessage = error.message || error.response?.data?.message || 'Failed to save product. Please try again.';
       showAlert(errorMessage, 'error');
     } finally {
       setIsSubmitting(false);
@@ -247,8 +302,14 @@ const ProductsPage = () => {
 
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product._id || product.id} product={product} onEdit={handleEditProduct} onDelete={handleDeleteProduct} onView={handleViewProduct} />
+            {filteredProducts.map((product, index) => (
+              <ProductCard 
+                key={product._id || product.id || `product-${index}`} 
+                product={product} 
+                onEdit={handleEditProduct} 
+                onDelete={handleDeleteProduct} 
+                onView={handleViewProduct} 
+              />
             ))}
           </div>
         ) : (

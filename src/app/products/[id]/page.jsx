@@ -9,12 +9,14 @@ import Swal from 'sweetalert2';
 import SocialShare from '@/app/components/SocialShare/SocialShare';
 import FloatingShareButton from '@/app/components/SocialShare/FloatingShareButton';
 import { useCart } from '@/context/CartContext';
+import ProductCard from '@/app/Home/TopSales/components/Productcard';
 
 const ProductDetailsPage = () => {
   const params = useParams();
   const router = useRouter();
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useCart();
   const [product, setProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -23,12 +25,36 @@ const ProductDetailsPage = () => {
     const fetchProduct = async () => {
       try {
         const response = await axiosInstance.get(`/products/${params.id}`);
-        setProduct(response.data);
-        setSelectedImage(response.data.image);
+        // Server returns: { success: true, message: "...", product: {...} }
+        const productData = response.data.product || response.data;
+        setProduct(productData);
+        setSelectedImage(productData.image);
+        
+        // Fetch related products based on category
+        fetchRelatedProducts(productData.category, productData._id || productData.id);
       } catch (error) {
         console.error('Error fetching product:', error);
       } finally {
         setLoading(false);
+      }
+    };
+
+    const fetchRelatedProducts = async (category, currentProductId) => {
+      try {
+        const response = await axiosInstance.get('/products');
+        const allProducts = response.data.products || [];
+        
+        // Filter products by same category, excluding current product
+        const related = allProducts
+          .filter(p => {
+            const pId = p._id || p.id;
+            return p.category === category && pId !== currentProductId;
+          })
+          .slice(0, 8); // Show maximum 8 related products
+        
+        setRelatedProducts(related);
+      } catch (error) {
+        console.error('Error fetching related products:', error);
       }
     };
 
@@ -91,68 +117,189 @@ const ProductDetailsPage = () => {
   };
 
   const handleBuyNow = async () => {
-    // Show user information form
+    if (!product) return;
+
+    // First, add product to cart
+    for (let i = 0; i < quantity; i++) {
+      addToCart(product, 1);
+    }
+
+    // Show checkout modal with user information form
     const { value: formValues } = await Swal.fire({
-      title: 'Enter Your Information',
-      html:
-        '<input id="swal-name" class="swal2-input" placeholder="Full Name">' +
-        '<input id="swal-email" class="swal2-input" placeholder="Email" type="email">' +
-        '<input id="swal-phone" class="swal2-input" placeholder="Phone Number">' +
-        '<textarea id="swal-address" class="swal2-textarea" placeholder="Delivery Address"></textarea>',
+      title: '<strong>Checkout - Enter Your Information</strong>',
+      html: `
+        <div style="text-align: left; padding: 10px;">
+          <div style="margin-bottom: 20px; padding: 15px; background: #f3f4f6; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #1f2937;">Order Summary</h4>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+              <span style="color: #6b7280;">Product:</span>
+              <strong>${product.name}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+              <span style="color: #6b7280;">Quantity:</span>
+              <strong>${quantity}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+              <span style="color: #6b7280;">Price:</span>
+              <strong>$${product.price}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-top: 10px; border-top: 2px solid #d1d5db; margin-top: 10px;">
+              <span style="color: #1f2937; font-weight: 600;">Total Amount:</span>
+              <strong style="color: #1f2937; font-size: 18px;">$${(product.price * quantity).toFixed(2)}</strong>
+            </div>
+          </div>
+          <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #374151; font-weight: 500;">Full Name *</label>
+            <input id="swal-name" class="swal2-input" placeholder="Enter your full name" style="margin: 0; width: 100%;">
+          </div>
+          <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #374151; font-weight: 500;">Email Address *</label>
+            <input id="swal-email" class="swal2-input" placeholder="your@email.com" type="email" style="margin: 0; width: 100%;">
+          </div>
+          <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #374151; font-weight: 500;">Phone Number *</label>
+            <input id="swal-phone" class="swal2-input" placeholder="+880 1XXX-XXXXXX" type="tel" style="margin: 0; width: 100%;">
+          </div>
+          <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #374151; font-weight: 500;">Delivery Address *</label>
+            <textarea id="swal-address" class="swal2-textarea" placeholder="Enter your complete delivery address" style="margin: 0; width: 100%; min-height: 80px;"></textarea>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 5px; color: #374151; font-weight: 500;">Special Instructions (Optional)</label>
+            <textarea id="swal-notes" class="swal2-textarea" placeholder="Any special delivery instructions?" style="margin: 0; width: 100%; min-height: 60px;"></textarea>
+          </div>
+        </div>
+      `,
+      width: '600px',
       focusConfirm: false,
       showCancelButton: true,
       confirmButtonColor: '#000',
       cancelButtonColor: '#6b7280',
-      confirmButtonText: 'Place Order',
+      confirmButtonText: '<i class="fa fa-check"></i> Place Order',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        popup: 'checkout-modal',
+        confirmButton: 'checkout-confirm-btn',
+        cancelButton: 'checkout-cancel-btn'
+      },
       preConfirm: () => {
-        const name = document.getElementById('swal-name').value;
-        const email = document.getElementById('swal-email').value;
-        const phone = document.getElementById('swal-phone').value;
-        const address = document.getElementById('swal-address').value;
+        const name = document.getElementById('swal-name').value.trim();
+        const email = document.getElementById('swal-email').value.trim();
+        const phone = document.getElementById('swal-phone').value.trim();
+        const address = document.getElementById('swal-address').value.trim();
+        const notes = document.getElementById('swal-notes').value.trim();
 
+        // Validation
         if (!name || !email || !phone || !address) {
-          Swal.showValidationMessage('Please fill in all fields');
+          Swal.showValidationMessage('Please fill in all required fields (*)');
           return false;
         }
 
-        return { name, email, phone, address };
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          Swal.showValidationMessage('Please enter a valid email address');
+          return false;
+        }
+
+        // Phone validation (basic)
+        if (phone.length < 10) {
+          Swal.showValidationMessage('Please enter a valid phone number');
+          return false;
+        }
+
+        return { name, email, phone, address, notes };
       }
     });
 
     if (formValues) {
       try {
+        // Show processing message
+        Swal.fire({
+          title: 'Processing Order...',
+          html: 'Please wait while we process your order',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          showConfirmButton: false,
+          willOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
         // Prepare order data
         const orderData = {
           customerInfo: formValues,
-          product: {
+          items: [{
             productId: product._id || product.id,
             name: product.name,
             price: product.price,
             quantity: quantity,
             image: product.image
-          },
+          }],
           totalAmount: product.price * quantity,
+          status: 'pending',
           orderDate: new Date().toISOString()
         };
 
-        // Send to database
-        await axiosInstance.post('/orders', orderData);
+        // Send order to backend
+        const response = await axiosInstance.post('/orders', orderData);
 
         // Show success message
-        Swal.fire({
-          title: 'Order Placed!',
-          text: 'Your order has been placed successfully. We will contact you soon!',
+        await Swal.fire({
+          title: '<strong>Order Placed Successfully! 🎉</strong>',
+          html: `
+            <div style="text-align: left; padding: 10px;">
+              <p style="color: #059669; font-weight: 500; margin-bottom: 15px;">
+                Thank you for your order!
+              </p>
+              <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <div style="margin-bottom: 8px;">
+                  <strong>Order ID:</strong> ${response.data.order?._id || 'Processing'}
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <strong>Customer:</strong> ${formValues.name}
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <strong>Total Amount:</strong> $${(product.price * quantity).toFixed(2)}
+                </div>
+              </div>
+              <p style="color: #6b7280; font-size: 14px; margin-bottom: 10px;">
+                📧 A confirmation email has been sent to <strong>${formValues.email}</strong>
+              </p>
+              <p style="color: #6b7280; font-size: 14px;">
+                📱 We will contact you at <strong>${formValues.phone}</strong> to confirm delivery details.
+              </p>
+            </div>
+          `,
           icon: 'success',
-          confirmButtonColor: '#000'
+          confirmButtonColor: '#000',
+          confirmButtonText: 'Continue Shopping',
+          showCancelButton: true,
+          cancelButtonText: 'View Cart',
+          cancelButtonColor: '#059669'
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.cancel) {
+            router.push('/cart');
+          } else {
+            router.push('/');
+          }
         });
 
       } catch (error) {
         console.error('Error placing order:', error);
         Swal.fire({
-          title: 'Error!',
-          text: 'Failed to place order. Please try again.',
+          title: 'Order Failed',
+          html: `
+            <p style="color: #dc2626; margin-bottom: 10px;">
+              ${error.response?.data?.message || 'Failed to place order. Please try again.'}
+            </p>
+            <p style="color: #6b7280; font-size: 14px;">
+              If the problem persists, please contact our support team.
+            </p>
+          `,
           icon: 'error',
-          confirmButtonColor: '#000'
+          confirmButtonColor: '#000',
+          confirmButtonText: 'Try Again'
         });
       }
     }
@@ -341,19 +488,29 @@ const ProductDetailsPage = () => {
                   <FaShoppingCart />
                   Add to Cart
                 </button>
-                <button className="px-6 py-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                  <FaHeart className="text-xl text-gray-600" />
+                <button 
+                  onClick={handleToggleWishlist}
+                  className={`px-6 py-4 border-2 rounded-lg transition-all ${
+                    isInWishlist(product._id || product.id)
+                      ? 'border-red-500 bg-red-50 hover:bg-red-100'
+                      : 'border-gray-300 hover:border-red-500 hover:bg-gray-50'
+                  }`}
+                  title={isInWishlist(product._id || product.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                >
+                  <FaHeart className={`text-xl ${
+                    isInWishlist(product._id || product.id) ? 'text-red-500' : 'text-gray-600'
+                  }`} />
                 </button>
               </div>
 
-              {/* Share Button */}
+              {/* Buy Now and Share Buttons */}
               <div className="flex gap-4">
                 <button
                   onClick={handleBuyNow}
-                  className="flex-1 px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="flex-1 px-6 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
                   disabled={product.stock === 0}
                 >
-                  Buy Now
+                  🛒 Buy Now
                 </button>
                 <SocialShare product={product} />
               </div>
@@ -378,6 +535,27 @@ const ProductDetailsPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Related Products Section */}
+      {relatedProducts.length > 0 && (
+        <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 py-12">
+          <div className="mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">Related Products</h2>
+            <p className="text-sm text-gray-600">You might also like these products</p>
+          </div>
+          
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-5">
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard
+                key={relatedProduct._id || relatedProduct.id}
+                product={relatedProduct}
+                onClick={() => router.push(`/products/${relatedProduct._id || relatedProduct.id}`)}
+                onQuickView={() => {}}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Floating Share Button */}
       {product && <FloatingShareButton product={product} />}

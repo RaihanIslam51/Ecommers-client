@@ -30,8 +30,9 @@ const SearchResults = ({ query, onClose }) => {
       setError(null);
       const response = await axiosInstance.get(`/products/search/${encodeURIComponent(searchQuery)}`);
       
+      // Server returns: { success: true, message: "...", products: [...] }
       if (response.data.success) {
-        setProducts(response.data.products);
+        setProducts(response.data.products || []);
       } else {
         setProducts([]);
       }

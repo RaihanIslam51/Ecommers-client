@@ -83,7 +83,7 @@ const ProductCard = ({ product, onEdit, onDelete, onView }) => {
             Edit
           </button>
           <button
-            onClick={() => onDelete(product._id || product.id)}
+            onClick={() => onDelete(product)}
             className="flex-1 bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md text-sm transition-colors"
           >
             Delete

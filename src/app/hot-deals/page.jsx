@@ -42,8 +42,11 @@ const HotDealsPage = () => {
       setLoading(true);
       const response = await axiosInstance.get('/products');
       
+      // Server returns: { success: true, message: "...", products: [...] }
+      const productsData = response.data.products || [];
+      
       // Filter products that are marked as Hot Deals
-      const hotDealsProducts = response.data.filter(p => p.showInHotDeals === true);
+      const hotDealsProducts = productsData.filter(p => p.showInHotDeals === true);
       
       setProducts(hotDealsProducts);
       
