@@ -11,6 +11,7 @@ const NotificationBell = () => {
     const [selectedNotification, setSelectedNotification] = useState(null);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
     const dropdownRef = useRef(null);
+    const notifiedOrdersRef = useRef(new Set()); // Track which orders have been notified
 
     const fetchNotifications = async () => {
         try {
@@ -24,14 +25,20 @@ const NotificationBell = () => {
                 setUnreadCount(unread);
                 console.log(`Found ${response.data.notifications.length} notifications, ${unread} unread`);
                 
-                // Show browser notification for new orders
+                // Show browser notification for new orders (only once per order)
                 if (unread > 0 && 'Notification' in window && Notification.permission === 'granted') {
                     const latestOrder = response.data.notifications[0];
                     if (!latestOrder.read && latestOrder.type === 'new_order') {
-                        new Notification('New Order Received!', {
-                            body: `Order #${latestOrder.orderId} - $${latestOrder.amount.toFixed(2)}`,
-                            icon: '/favicon.ico'
-                        });
+                        // Check if we haven't notified about this order yet
+                        const orderId = latestOrder.orderId || latestOrder._id;
+                        if (!notifiedOrdersRef.current.has(orderId)) {
+                            new Notification('New Order Received!', {
+                                body: `Order #${orderId} - $${latestOrder.amount.toFixed(2)}`,
+                                icon: '/favicon.ico'
+                            });
+                            // Mark this order as notified
+                            notifiedOrdersRef.current.add(orderId);
+                        }
                     }
                 }
             }

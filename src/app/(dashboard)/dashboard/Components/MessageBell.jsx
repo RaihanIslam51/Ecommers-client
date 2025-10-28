@@ -11,6 +11,7 @@ const MessageBell = () => {
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
     const dropdownRef = useRef(null);
+    const notifiedMessagesRef = useRef(new Set()); // Track which messages have been notified
 
     const fetchMessages = async () => {
         try {
@@ -24,14 +25,20 @@ const MessageBell = () => {
                 setUnreadCount(unread);
                 console.log(`Found ${response.data.messages.length} messages, ${unread} unread`);
                 
-                // Show browser notification for new messages
+                // Show browser notification for new messages (only once per message)
                 if (unread > 0 && 'Notification' in window && Notification.permission === 'granted') {
                     const latestMessage = response.data.messages[0];
                     if (!latestMessage.read && latestMessage.type === 'customer_message') {
-                        new Notification('New Customer Message!', {
-                            body: `${latestMessage.customerName}: ${latestMessage.message.substring(0, 50)}...`,
-                            icon: '/favicon.ico'
-                        });
+                        // Check if we haven't notified about this message yet
+                        const messageId = latestMessage._id || latestMessage.id;
+                        if (!notifiedMessagesRef.current.has(messageId)) {
+                            new Notification('New Customer Message!', {
+                                body: `${latestMessage.customerName}: ${latestMessage.message.substring(0, 50)}...`,
+                                icon: '/favicon.ico'
+                            });
+                            // Mark this message as notified
+                            notifiedMessagesRef.current.add(messageId);
+                        }
                     }
                 }
             }

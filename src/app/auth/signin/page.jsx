@@ -53,9 +53,8 @@ const SignInPage = () => {
           showConfirmButton: false,
         });
 
-        // Redirect to dashboard or home
-        router.push("/dashboard");
-        router.refresh();
+        // Redirect to home page (port 3000)
+        window.location.href = "/";
       }
     } catch (error) {
       console.error("Login error:", error);

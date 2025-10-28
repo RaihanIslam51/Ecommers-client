@@ -1,10 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import { FaWhatsapp, FaComments, FaRobot } from 'react-icons/fa';
+import LiveChatModal from '@/app/components/LiveChat/LiveChatModal';
 
 const Whatsapp = () => {
     const [showMenu, setShowMenu] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
+    const [showLiveChat, setShowLiveChat] = useState(false);
     const phoneNumber = "8801956486761"; // Your WhatsApp number
     const message = "Hello! I'm interested in your products."; // Default message
 
@@ -24,8 +26,8 @@ const Whatsapp = () => {
             color: 'bg-gradient-to-br from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700',
             bgColor: 'bg-blue-500',
             action: () => {
-                // You can integrate with your live chat system here
-                alert('Live Chat feature coming soon!');
+                setShowLiveChat(true);
+                setShowMenu(false);
             }
         },
         {
@@ -156,6 +158,12 @@ const Whatsapp = () => {
                     )}
                 </button>
             </div>
+
+            {/* Live Chat Modal */}
+            <LiveChatModal 
+                isOpen={showLiveChat} 
+                onClose={() => setShowLiveChat(false)} 
+            />
         </div>
     );
 };
