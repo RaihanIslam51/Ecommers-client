@@ -1,12 +1,17 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { FaShoppingCart, FaHeart, FaEye, FaStar } from "react-icons/fa";
+import { FaShoppingCart, FaHeart, FaEye, FaStar, FaTimes } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
+import { useSession } from "next-auth/react";
 import Swal from "sweetalert2";
 
 const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
   const { addToCart, addToWishlist, isInWishlist } = useCart();
+  const { data: session } = useSession();
+  const [showBuyNowModal, setShowBuyNowModal] = useState(false);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [isBuyingNow, setIsBuyingNow] = useState(false);
   const productId = product._id || product.id;
   const productImage = product.image || 'https://via.placeholder.com/300';
   const productName = product.name || 'Product Name';
@@ -22,15 +27,20 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
   
   const handleAddToCart = (e) => {
     e.stopPropagation();
-    addToCart(product);
-    Swal.fire({
-      icon: 'success',
-      title: 'Added to Cart!',
-      timer: 1500,
-      showConfirmButton: false,
-      toast: true,
-      position: 'top-end'
-    });
+    setIsAddingToCart(true);
+    
+    setTimeout(() => {
+      addToCart(product);
+      Swal.fire({
+        icon: 'success',
+        title: 'Added to Cart!',
+        timer: 1500,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+      });
+      setIsAddingToCart(false);
+    }, 500);
   };
 
   const handleAddToWishlist = (e) => {
@@ -53,6 +63,39 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
         showConfirmButton: false,
         toast: true,
         position: 'top-end'
+      });
+    }
+  };
+
+  const handleBuyNow = (e) => {
+    e.stopPropagation();
+    setIsBuyingNow(true);
+    
+    setTimeout(() => {
+      setShowBuyNowModal(true);
+      setIsBuyingNow(false);
+    }, 500);
+  };
+
+  const handleQuickCheckout = async (formData) => {
+    try {
+      // Here you can add API call to create order
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Order Placed!',
+        text: 'Your order has been successfully placed.',
+        confirmButtonColor: '#000',
+      });
+
+      setShowBuyNowModal(false);
+    } catch (error) {
+      console.error('Checkout error:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to place order. Please try again.',
       });
     }
   };
@@ -159,13 +202,275 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
           
           {/* Add to Cart Icon */}
           <button 
-            className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gray-800"
+            className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gray-800 disabled:bg-gray-400"
             onClick={handleAddToCart}
             title="Add to Cart"
-            disabled={stock === 0}
+            disabled={stock === 0 || isAddingToCart}
           >
-            <FaShoppingCart className="text-xs" />
+            {isAddingToCart ? (
+              <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              <FaShoppingCart className="text-xs" />
+            )}
           </button>
+        </div>
+
+        {/* Buy Now Button */}
+        <button
+          onClick={handleBuyNow}
+          disabled={stock === 0 || isBuyingNow}
+          className="w-full mt-3 bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-sm font-semibold flex items-center justify-center gap-2"
+        >
+          {isBuyingNow ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span>Processing...</span>
+            </>
+          ) : (
+            'Buy Now'
+          )}
+        </button>
+      </div>
+
+      {/* Buy Now Modal */}
+      {showBuyNowModal && (
+        <BuyNowModal
+          product={product}
+          onClose={() => setShowBuyNowModal(false)}
+          onSubmit={handleQuickCheckout}
+          session={session}
+        />
+      )}
+    </div>
+  );
+};
+
+// Buy Now Modal Component
+const BuyNowModal = ({ product, onClose, onSubmit, session }) => {
+  const [formData, setFormData] = useState({
+    fullName: session?.user?.name || '',
+    email: session?.user?.email || '',
+    phone: '',
+    address: '',
+    city: '',
+    postalCode: '',
+    paymentMethod: 'cash',
+    quantity: 1,
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    await onSubmit(formData);
+    setLoading(false);
+  };
+
+  const totalPrice = (product.price || 0) * formData.quantity;
+
+  return (
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        {/* Modal Header */}
+        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-900">Quick Checkout</h2>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+          >
+            <FaTimes className="text-gray-500" />
+          </button>
+        </div>
+
+        {/* Modal Content */}
+        <div className="p-6">
+          {/* Product Info */}
+          <div className="flex gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+            <div className="relative w-24 h-24 flex-shrink-0">
+              <Image
+                src={product.image || 'https://via.placeholder.com/96'}
+                alt={product.name}
+                fill
+                className="object-cover rounded-lg"
+              />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-gray-900 mb-2">{product.name}</h3>
+              <p className="text-2xl font-bold text-black">${(product.price || 0).toFixed(2)}</p>
+            </div>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Phone Number *
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Address *
+              </label>
+              <textarea
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                required
+                rows="2"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  City *
+                </label>
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Postal Code *
+                </label>
+                <input
+                  type="text"
+                  name="postalCode"
+                  value={formData.postalCode}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Quantity *
+                </label>
+                <input
+                  type="number"
+                  name="quantity"
+                  value={formData.quantity}
+                  onChange={handleChange}
+                  min="1"
+                  max={product.stock || 1}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Payment Method *
+                </label>
+                <select
+                  name="paymentMethod"
+                  value={formData.paymentMethod}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                >
+                  <option value="cash">Cash on Delivery</option>
+                  <option value="card">Credit/Debit Card</option>
+                  <option value="bKash">bKash</option>
+                  <option value="nagad">Nagad</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Total Price */}
+            <div className="bg-gray-50 rounded-lg p-4 mb-6">
+              <div className="flex justify-between items-center text-lg font-bold">
+                <span>Total:</span>
+                <span className="text-2xl">${totalPrice.toFixed(2)}</span>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  'Confirm Order'
+                )}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

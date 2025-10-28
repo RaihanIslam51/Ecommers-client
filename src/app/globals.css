@@ -373,6 +373,52 @@ body {
   color: var(--text-tertiary);
 }
 
+/* ============= GLOBAL INPUT TEXT COLOR ============= */
+/* All input fields, textareas, and selects will have black text */
+input,
+textarea,
+select {
+  color: #111827 !important; /* Force black text color */
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9CA3AF !important; /* Gray placeholder */
+}
+
+/* Ensure text remains black when focused */
+input:focus,
+textarea:focus,
+select:focus {
+  color: #111827 !important;
+}
+
+/* Autofill text color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #111827 !important;
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  color: #111827 !important;
+}
+
+/* For date, time, and other special inputs */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+input[type="number"] {
+  color: #111827 !important;
+}
+
+/* Select dropdown options */
+select option {
+  color: #111827 !important;
+  background-color: white !important;
+}
+
 /* ============= GRADIENT UTILITIES ============= */
 .gradient-primary {
   background: var(--bg-gradient-primary);
