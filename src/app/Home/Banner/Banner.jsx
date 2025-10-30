@@ -103,11 +103,11 @@ const SupportSkeleton = () => (
  * Complete Banner Skeleton Loader
  */
 const BannerSkeleton = () => (
-  <div className="max-w-7xl mx-auto px-4 md:px-6">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* Hero Banner Container */}
-    <div className="relative mb-6 md:mb-8">
+    <div className="relative mb-6 md:mb-8 lg:mb-10">
       <div className="bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-gray-100">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-6 items-stretch md:h-[420px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-6 items-stretch md:h-[420px] lg:h-[480px]">
           {/* Main Banner Skeleton */}
           <div className="col-span-1 md:col-span-2 w-full h-72 md:h-full">
             <MainBannerSkeleton />
@@ -147,16 +147,16 @@ const Banner = () => {
   }, []);
 
   return (
-    <section className="w-full bg-linear-to-b from-gray-50 via-white to-gray-50 py-4 md:py-6">
+    <section className="w-full bg-linear-to-b from-gray-50 via-white to-gray-50 py-6 md:py-8 lg:py-10">
       {isLoading ? (
         <BannerSkeleton />
       ) : (
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Banner Container */}
-          <div className="relative mb-6 md:mb-8 animate-fade-in">
+          <div className="relative mb-6 md:mb-8 lg:mb-10 animate-fade-in">
             {/* Banner Grid Wrapper */}
             <div className="bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-6 items-stretch md:h-[420px]">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-6 items-stretch md:h-[420px] lg:h-[480px]">
                 {/* Main Featured Banner - 2/3 width on desktop */}
                 <div className="col-span-1 md:col-span-2 w-full h-72 md:h-full">
                   <RightBanner />
@@ -170,8 +170,8 @@ const Banner = () => {
             </div>
 
             {/* Decorative Background Elements */}
-            <div className="absolute -top-20 -left-20 w-40 h-40 bg-purple-200/30 rounded-full blur-3xl -z-10 hidden md:block" />
-            <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-blue-200/30 rounded-full blur-3xl -z-10 hidden md:block" />
+            <div className="absolute -top-20 -left-20 w-40 h-40 bg-purple-200/30 rounded-full blur-3xl -z-10 hidden lg:block" />
+            <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-blue-200/30 rounded-full blur-3xl -z-10 hidden lg:block" />
           </div>
 
           {/* Support Features Section */}

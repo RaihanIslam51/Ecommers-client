@@ -137,8 +137,8 @@ const RightBanner = () => {
   }
 
   return (
-    <div className="relative w-full h-64 md:h-full bg-linear-to-br from-gray-900 via-gray-800 to-black rounded-xl overflow-hidden group">
-      {/* Background Image with Parallax Effect */}
+    <div className="relative w-full h-64 md:h-full rounded-xl overflow-hidden group">
+      {/* Background Image with Parallax Effect - No Overlay */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
           src={displayBanner.image}
@@ -149,16 +149,6 @@ const RightBanner = () => {
           sizes="(max-width: 768px) 100vw, 66vw"
         />
       </div>
-
-      {/* Multi-layer Gradient Overlays for Depth */}
-      <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/50 to-transparent" />
-      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/20" />
-
-      {/* Content Layer */}
-      <BannerContent banner={displayBanner} />
-
-      {/* Decorative Elements */}
-      <DecorativeElements />
     </div>
   );
 };

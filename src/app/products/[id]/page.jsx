@@ -20,6 +20,15 @@ const ProductDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setZoomPosition({ x, y });
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -347,12 +356,23 @@ const ProductDetailsPage = () => {
         <div className="bg-white rounded-lg shadow-lg p-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left: Images */}
           <div className="space-y-4">
-            <div className="relative w-full h-96 bg-gray-100 rounded-lg overflow-hidden">
+            {/* Main Image with Zoom */}
+            <div 
+              className="relative w-full h-[500px] lg:h-[600px] bg-gray-100 rounded-lg overflow-hidden cursor-crosshair"
+              onMouseMove={handleMouseMove}
+              onMouseEnter={() => setIsZoomed(true)}
+              onMouseLeave={() => setIsZoomed(false)}
+            >
               <Image
                 src={selectedImage || product.image}
                 alt={product.name}
                 fill
-                className="object-contain p-4"
+                className="object-cover transition-transform duration-300 ease-out"
+                style={{
+                  transform: isZoomed ? 'scale(2)' : 'scale(1)',
+                  transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`
+                }}
+                priority
               />
             </div>
             
@@ -361,7 +381,7 @@ const ProductDetailsPage = () => {
               <div className="grid grid-cols-4 gap-3">
                 <div
                   onClick={() => setSelectedImage(product.image)}
-                  className={`relative h-20 bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${
+                  className={`relative h-20 bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 transition-all hover:border-gray-400 ${
                     selectedImage === product.image ? 'border-black' : 'border-transparent'
                   }`}
                 >
@@ -371,7 +391,7 @@ const ProductDetailsPage = () => {
                   <div
                     key={index}
                     onClick={() => setSelectedImage(img)}
-                    className={`relative h-20 bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${
+                    className={`relative h-20 bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 transition-all hover:border-gray-400 ${
                       selectedImage === img ? 'border-black' : 'border-transparent'
                     }`}
                   >

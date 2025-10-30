@@ -36,78 +36,87 @@ const Topsales = () => {
 
   const modalProduct = products.find((p) => (p._id || p.id) === modalProductId);
 
-  // Slice products: show first 5 if showAll is false
-  const displayedProducts = showAll ? products : products.slice(0, 5);
+  // Slice products: show first 6 if showAll is false
+  const displayedProducts = showAll ? products : products.slice(0, 6);
 
   if (loading) {
     return (
-      <section className="max-w-[1400px] mx-auto relative py-1 px-4 md:px-6 lg:px-8">
-        {/* Header Skeleton */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-          <div className="space-y-3">
-            <div className="h-8 w-64 bg-gray-200 rounded-lg animate-pulse" />
-            <div className="h-4 w-96 bg-gray-100 rounded animate-pulse animation-delay-100" />
+      <section className="w-full bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header Skeleton */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 md:mb-10">
+            <div className="space-y-3">
+              <div className="h-8 md:h-10 w-64 bg-gray-200 rounded-lg animate-pulse" />
+              <div className="h-4 w-80 md:w-96 bg-gray-100 rounded animate-pulse animation-delay-100" />
+            </div>
+            <div className="h-10 w-32 bg-gray-200 rounded-lg animate-pulse animation-delay-200" />
           </div>
-          <div className="h-10 w-32 bg-gray-200 rounded-lg animate-pulse animation-delay-200" />
-        </div>
 
-        {/* Product Cards Skeleton */}
-        <ProductCardSkeletonGrid count={10} />
+          {/* Product Cards Skeleton */}
+          <ProductCardSkeletonGrid count={10} />
+        </div>
       </section>
     );
   }
 
   if (products.length === 0) {
     return (
-      <section className="max-w-[1400px] mx-auto relative py-1 px-4 md:px-6 lg:px-8">
-        <div className="text-center py-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">Top Selling Products</h2>
-          <p className="text-gray-600">No top selling products available</p>
+      <section className="w-full bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center py-12 md:py-16">
+            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">Top Selling Products</h2>
+            <p className="text-gray-600">No top selling products available</p>
+          </div>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="max-w-[1400px] mx-auto relative py-1 px-4 md:px-6 lg:px-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">Top Selling Products</h2>
-          <p className="text-sm text-gray-600">Discover our best-selling items loved by customers worldwide</p>
-        </div>
+    <section className="w-full bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 md:mb-10 lg:mb-12">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-1 h-8 md:h-10 bg-gray-900 rounded-full"></div>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black">Top Selling Products</h2>
+            </div>
+            <p className="text-sm md:text-base text-gray-600 ml-4 lg:ml-5">Discover our best-selling items loved by customers worldwide</p>
+          </div>
 
-        <div className="flex items-center gap-3">
-          <span className="hidden sm:inline-block text-sm text-gray-500">
-            {displayedProducts.length} of {products.length} items
-          </span>
-          <button
-            onClick={() => setShowAll(!showAll)}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-black border border-gray-300 rounded-lg hover:border-black hover:bg-gray-50 transition-all duration-200"
-          >
-            <span>{showAll ? 'Show Less' : 'Show More'}</span>
-            <svg 
-              className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} 
-              viewBox="0 0 20 20" 
-              fill="currentColor"
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline-block text-sm text-gray-500">
+              {displayedProducts.length} of {products.length} items
+            </span>
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 text-sm font-semibold text-black border border-gray-300 rounded-lg hover:border-black hover:bg-gray-50 transition-all duration-200"
             >
-              <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
-            </svg>
-          </button>
+              <span>{showAll ? 'Show Less' : 'Show More'}</span>
+              <svg 
+                className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} 
+                viewBox="0 0 20 20" 
+                fill="currentColor"
+              >
+                <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-5">
-        {displayedProducts.map((product) => (
-          <ProductCard
-            key={product._id || product.id}
-            product={product}
-            isDimmed={modalProductId && modalProductId !== (product._id || product.id)}
-            onQuickView={setModalProductId}
-            onClick={() => router.push(`/products/${product._id || product.id}`)}
-          />
-        ))}
+        {/* Product Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5 lg:gap-6">
+          {displayedProducts.map((product) => (
+            <ProductCard
+              key={product._id || product.id}
+              product={product}
+              isDimmed={modalProductId && modalProductId !== (product._id || product.id)}
+              onQuickView={setModalProductId}
+              onClick={() => router.push(`/products/${product._id || product.id}`)}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Quick View Modal */}
