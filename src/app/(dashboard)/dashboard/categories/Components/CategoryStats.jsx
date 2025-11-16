@@ -10,8 +10,8 @@ const CategoryStats = ({ stats }) => {
       title: 'Total Categories',
       value: stats?.total || 0,
       icon: Folder,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600'
+      iconBg: 'bg-green-100',
+      iconColor: 'text-green-600'
     },
     {
       title: 'Active Categories',
@@ -24,8 +24,8 @@ const CategoryStats = ({ stats }) => {
       title: 'Total Products',
       value: stats?.totalProducts || 0,
       icon: Package,
-      iconBg: 'bg-purple-100',
-      iconColor: 'text-purple-600'
+      iconBg: 'bg-green-100',
+      iconColor: 'text-green-600'
     },
     {
       title: 'Inactive Categories',

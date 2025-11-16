@@ -8,7 +8,7 @@ const OrderTable = ({ orders = [], loading, onViewDetails, onUpdateStatus, onDel
         return (
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12">
                 <div className="flex justify-center items-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
                 </div>
             </div>
         );
@@ -89,13 +89,13 @@ const OrderTable = ({ orders = [], loading, onViewDetails, onUpdateStatus, onDel
                         {orders.map((order) => (
                             <tr key={order._id || order.id} className="hover:bg-gray-50 transition-colors">
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    <span className="text-sm font-semibold text-blue-600">
+                                    <span className="text-sm font-semibold text-green-600">
                                         #{(order._id || order.id).toString().slice(-8).toUpperCase()}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <div className="flex items-center">
-                                        <div className="w-8 h-8 bg-linear-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold text-sm mr-3">
+                                        <div className="w-8 h-8 bg-linear-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-semibold text-sm mr-3">
                                             {order.customerInfo?.name?.charAt(0) || 'U'}
                                         </div>
                                         <div>
@@ -145,7 +145,7 @@ const OrderTable = ({ orders = [], loading, onViewDetails, onUpdateStatus, onDel
                                     <div className="flex items-center gap-2">
                                         <button
                                             onClick={() => onViewDetails && onViewDetails(order)}
-                                            className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+                                            className="text-green-600 hover:text-green-800 font-medium text-sm transition-colors"
                                             title="View Details"
                                         >
                                             👁️

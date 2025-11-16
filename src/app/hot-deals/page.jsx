@@ -146,9 +146,9 @@ const HotDealsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-red-300 border-t-red-600 rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-green-300 border-t-green-600 rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600 text-lg">Loading hot deals...</p>
         </div>
       </div>
@@ -156,8 +156,8 @@ const HotDealsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <Link 
@@ -171,13 +171,13 @@ const HotDealsPage = () => {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <FaFire className="text-4xl text-red-600 animate-pulse" />
-                <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 bg-clip-text text-transparent">
-                  Hot Deals
+                <FaFire className="text-4xl text-green-600 animate-pulse" />
+                <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-600 via-green-700 to-green-800 bg-clip-text text-transparent">
+                  Fresh Deals
                 </h1>
               </div>
               <p className="text-gray-700 font-medium">
-                🔥 Limited time offers - Save big today! ({filteredProducts.length} deals)
+                🍎 Fresh vegetables & meal kits at great prices! ({filteredProducts.length} deals)
               </p>
             </div>
 
@@ -187,8 +187,8 @@ const HotDealsPage = () => {
                 onClick={() => setViewMode('grid')}
                 className={`p-3 rounded-lg transition-all ${
                   viewMode === 'grid'
-                    ? 'bg-red-600 text-white shadow-lg'
-                    : 'bg-white text-gray-600 hover:bg-gray-100'
+                    ? 'bg-green-600 text-white shadow-lg'
+                    : 'bg-white text-gray-600 hover:bg-green-50'
                 }`}
                 title="Grid View"
               >
@@ -198,8 +198,8 @@ const HotDealsPage = () => {
                 onClick={() => setViewMode('list')}
                 className={`p-3 rounded-lg transition-all ${
                   viewMode === 'list'
-                    ? 'bg-red-600 text-white shadow-lg'
-                    : 'bg-white text-gray-600 hover:bg-gray-100'
+                    ? 'bg-green-600 text-white shadow-lg'
+                    : 'bg-white text-gray-600 hover:bg-green-50'
                 }`}
                 title="List View"
               >
@@ -210,17 +210,17 @@ const HotDealsPage = () => {
         </div>
 
         {/* Deal Timer Banner */}
-        <div className="bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-xl shadow-lg p-6 mb-6">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl shadow-lg p-6 mb-6">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-3">
               <FaClock className="text-3xl animate-pulse" />
               <div>
-                <h3 className="text-xl font-bold">Deals End Soon!</h3>
-                <p className="text-red-100">Don't miss out on these amazing offers</p>
+                <h3 className="text-xl font-bold">Fresh Deals Available!</h3>
+                <p className="text-green-100">Get the best prices on organic vegetables and meal kits</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-sm text-red-100">Average Savings</p>
+              <p className="text-sm text-white">Average Savings</p>
               <p className="text-3xl font-bold">
                 {products.length > 0 
                   ? Math.round(products.reduce((acc, p) => acc + calculateDiscount(p), 0) / products.length)
@@ -242,7 +242,7 @@ const HotDealsPage = () => {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               >
                 <option value="all">All Categories</option>
                 {categories.map((category) => (
@@ -262,7 +262,7 @@ const HotDealsPage = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               >
                 <option value="discount-high">Biggest Discount First</option>
                 <option value="discount-low">Smallest Discount First</option>
@@ -277,12 +277,12 @@ const HotDealsPage = () => {
         {/* Products Grid/List */}
         {filteredProducts.length === 0 ? (
           <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-            <div className="text-6xl mb-4">🔥</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No hot deals available</h3>
-            <p className="text-gray-600 mb-6">Check back later for amazing deals and discounts!</p>
+            <div className="text-6xl mb-4">🍎</div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">No fresh deals available</h3>
+            <p className="text-gray-600 mb-6">Check back later for amazing fresh deals and discounts!</p>
             <Link
               href="/"
-              className="inline-block px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              className="inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
             >
               Browse All Products
             </Link>
@@ -301,7 +301,7 @@ const HotDealsPage = () => {
               if (viewMode === 'list') {
                 // List View
                 return (
-                  <div key={productId} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all border-2 border-red-200">
+                  <div key={productId} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all border-2 border-green-200">
                     <div className="flex flex-col sm:flex-row gap-4 p-4">
                       {/* Image */}
                       <Link 
@@ -316,13 +316,13 @@ const HotDealsPage = () => {
                         />
                         {/* Hot Deal Badge */}
                         <div className="absolute top-2 left-2">
-                          <span className="px-3 py-1 bg-gradient-to-r from-red-600 to-orange-600 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1 animate-pulse">
-                            <FaFire /> HOT DEAL
+                          <span className="px-3 py-1 bg-gradient-to-r from-green-600 to-green-700 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1 animate-pulse">
+                            <FaFire /> FRESH DEAL
                           </span>
                         </div>
                         {discount > 0 && (
                           <div className="absolute top-2 right-2">
-                            <span className="px-3 py-1 bg-red-600 text-white text-lg font-bold rounded-full shadow-lg">
+                            <span className="px-3 py-1 bg-green-600 text-white text-lg font-bold rounded-full shadow-lg">
                               -{discount}%
                             </span>
                           </div>
@@ -334,7 +334,7 @@ const HotDealsPage = () => {
                         <div>
                           <div className="flex items-start justify-between gap-2 mb-2">
                             <Link href={`/products/${productId}`}>
-                              <h3 className="text-lg font-semibold text-gray-900 hover:text-red-600 line-clamp-2 transition-colors">
+                              <h3 className="text-lg font-semibold text-gray-900 hover:text-green-600 line-clamp-2 transition-colors">
                                 {product.name}
                               </h3>
                             </Link>
@@ -346,12 +346,12 @@ const HotDealsPage = () => {
                                 {product.category}
                               </span>
                             )}
-                            {product.brand && (
+                            {/* {product.brand && (
                               <span className="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">
                                 <MdVerified className="text-xs" />
                                 {product.brand}
                               </span>
-                            )}
+                            )} */}
                           </div>
 
                           <p className="text-gray-600 text-sm line-clamp-2 mb-3">
@@ -362,7 +362,7 @@ const HotDealsPage = () => {
                         <div className="flex items-center justify-between">
                           <div>
                             <div className="flex items-center gap-3 mb-1">
-                              <span className="text-2xl font-bold text-red-600">
+                              <span className="text-2xl font-bold text-green-600">
                                 ${parseFloat(product.price || 0).toFixed(2)}
                               </span>
                               {product.originalPrice && product.originalPrice > product.price && (
@@ -383,8 +383,8 @@ const HotDealsPage = () => {
                               onClick={() => handleToggleWishlist(product)}
                               className={`p-3 rounded-lg border-2 transition-all ${
                                 inWishlist
-                                  ? 'border-red-500 text-red-500 bg-red-50'
-                                  : 'border-gray-300 text-gray-600 hover:border-red-500 hover:text-red-500'
+                                  ? 'border-green-500 text-green-500 bg-green-50'
+                                  : 'border-gray-300 text-gray-600 hover:border-green-500 hover:text-green-500'
                               }`}
                             >
                               <FaHeart className={inWishlist ? 'fill-current' : ''} />
@@ -392,7 +392,7 @@ const HotDealsPage = () => {
                             <button
                               onClick={() => handleAddToCart(product)}
                               disabled={product.stock <= 0}
-                              className="px-4 py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-lg hover:from-red-700 hover:to-orange-700 transition-all flex items-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg"
+                              className="px-4 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 transition-all flex items-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg"
                             >
                               <FaShoppingCart />
                               Add to Cart
@@ -407,7 +407,7 @@ const HotDealsPage = () => {
 
               // Grid View
               return (
-                <div key={productId} className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-red-100 hover:border-red-300">
+                <div key={productId} className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-green-100 hover:border-green-300">
                   {/* Image */}
                   <Link href={`/products/${productId}`} className="relative block w-full h-64 bg-gray-100 overflow-hidden">
                     <Image
@@ -419,8 +419,8 @@ const HotDealsPage = () => {
                     
                     {/* Hot Deal Badge */}
                     <div className="absolute top-3 left-3">
-                      <span className="px-3 py-1 bg-gradient-to-r from-red-600 to-orange-600 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1 animate-pulse">
-                        <FaFire /> HOT
+                      <span className="px-3 py-1 bg-gradient-to-r from-green-600 to-green-700 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1 animate-pulse">
+                        <FaFire /> FRESH
                       </span>
                     </div>
                     
@@ -428,7 +428,7 @@ const HotDealsPage = () => {
                     {discount > 0 && (
                       <div className="absolute top-3 right-3">
                         <div className="relative">
-                          <span className="block px-3 py-1 bg-red-600 text-white text-xl font-bold rounded-full shadow-lg animate-bounce">
+                          <span className="block px-3 py-1 bg-green-600 text-white text-xl font-bold rounded-full shadow-lg animate-bounce">
                             -{discount}%
                           </span>
                         </div>
@@ -444,8 +444,8 @@ const HotDealsPage = () => {
                         }}
                         className={`p-2.5 rounded-lg backdrop-blur-sm shadow-lg transition-all ${
                           inWishlist
-                            ? 'bg-red-500 text-white'
-                            : 'bg-white/90 text-gray-700 hover:bg-red-500 hover:text-white'
+                            ? 'bg-green-500 text-white'
+                            : 'bg-white/90 text-gray-700 hover:bg-green-500 hover:text-white'
                         }`}
                       >
                         <FaHeart className={`text-sm ${inWishlist ? 'fill-current' : ''}`} />
@@ -456,7 +456,7 @@ const HotDealsPage = () => {
                           handleAddToCart(product);
                         }}
                         disabled={product.stock <= 0}
-                        className="p-2.5 bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-lg backdrop-blur-sm hover:from-red-700 hover:to-orange-700 shadow-lg transition-all disabled:bg-gray-400"
+                        className="p-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg backdrop-blur-sm hover:from-green-700 hover:to-green-800 shadow-lg transition-all disabled:bg-gray-400"
                       >
                         <FaShoppingCart className="text-sm" />
                       </button>
@@ -480,7 +480,7 @@ const HotDealsPage = () => {
                     </div>
 
                     <Link href={`/products/${productId}`}>
-                      <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-red-600 transition-colors min-h-[3rem]">
+                      <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-green-600 transition-colors min-h-12">
                         {product.name}
                       </h3>
                     </Link>
@@ -496,7 +496,7 @@ const HotDealsPage = () => {
                     {/* Price */}
                     <div className="mb-2">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-2xl font-bold text-red-600">
+                        <span className="text-2xl font-bold text-green-600">
                           ${parseFloat(product.price || 0).toFixed(2)}
                         </span>
                         {product.originalPrice && product.originalPrice > product.price && (
@@ -531,7 +531,7 @@ const HotDealsPage = () => {
                     <button
                       onClick={() => handleAddToCart(product)}
                       disabled={product.stock <= 0}
-                      className="w-full py-2.5 bg-gradient-to-r from-red-600 to-orange-600 text-white text-sm font-semibold rounded-lg hover:from-red-700 hover:to-orange-700 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg"
+                      className="w-full py-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm font-semibold rounded-lg hover:from-green-700 hover:to-green-800 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg"
                     >
                       {product.stock > 0 ? 'Grab This Deal!' : 'Out of Stock'}
                     </button>
@@ -547,7 +547,7 @@ const HotDealsPage = () => {
           <div className="mt-12 text-center">
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="px-6 py-3 bg-white text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all shadow-lg"
+              className="px-6 py-3 bg-white text-green-600 border-2 border-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-all shadow-lg"
             >
               Back to Top ↑
             </button>

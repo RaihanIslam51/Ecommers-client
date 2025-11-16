@@ -55,7 +55,7 @@ const RestockModal = ({ isOpen, onClose, onSubmit, item }) => {
           {/* Content */}
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
             {/* Product Info */}
-            <div className="bg-blue-50 rounded-lg p-4">
+            <div className="bg-green-50 rounded-lg p-4">
               <h3 className="font-semibold text-gray-900 mb-1">{item.name}</h3>
               <p className="text-sm text-gray-600">SKU: {item.sku}</p>
               <div className="mt-3 grid grid-cols-2 gap-4 text-sm">
@@ -89,12 +89,12 @@ const RestockModal = ({ isOpen, onClose, onSubmit, item }) => {
                   onChange={(e) => setQuantity(Math.max(0, parseInt(e.target.value) || 0))}
                   required
                   min="1"
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-center text-2xl font-bold"
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all text-center text-2xl font-bold"
                 />
                 <button
                   type="button"
                   onClick={incrementQuantity}
-                  className="p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                  className="p-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
                 >
                   <Plus className="w-5 h-5" />
                 </button>
@@ -111,7 +111,7 @@ const RestockModal = ({ isOpen, onClose, onSubmit, item }) => {
                 onChange={(e) => setNote(e.target.value)}
                 rows="3"
                 placeholder="Add a note about this restock..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all resize-none"
               />
             </div>
 

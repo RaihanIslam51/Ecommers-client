@@ -1,10 +1,11 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./compoents/Navbar/Navbar";
-import Footer from "./compoents/Footer/Footer";
-import PageLoader from "./components/PageLoader";
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
+import PageLoader from "@/components/PageLoader";
 import { CartProvider } from "@/context/CartContext";
 import SessionProvider from "./providers/SessionProvider";
+import DataPrefetchProvider from "@/components/DataPrefetchProvider";
 
 
 const geistSans = Geist({
@@ -20,46 +21,50 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "BDMart - Global Wholesale & Retail Marketplace | Buy & Sell Online",
+  title: "RannerKaj.com - Fresh Vegetables, Healthy Foods & Ready-to-Cook Meal Kits",
   description:
-    "BDMart is Bangladesh's premier wholesale and retail marketplace connecting verified suppliers and buyers nationwide. Shop authentic products with competitive prices and reliable service.",
+    "Discover fresh, organic vegetables, healthy food items, and ready-to-cook meal packages at KannerKaj.com. Hygienically prepared meal kits, pre-cut vegetables, and healthy food combos delivered fresh to your doorstep.",
   keywords: [
-    "wholesale marketplace",
-    "bdmart",
-    "ecommerce Bangladesh",
-    "online shopping",
-    "supplier directory",
-    "retail marketplace",
-    "wholesale products",
-    "bulk buying",
-    "B2B marketplace",
-    "online retail",
+    "fresh vegetables",
+    "organic food",
+    "meal kits",
+    "ready to cook",
+    "healthy food",
+    "pre-cut vegetables",
+    "meal packages",
+    "organic produce",
+    "fresh food delivery",
+    "healthy eating",
+    "vegetable delivery",
+    "meal prep",
+    "RannerKaj",
+    "fresh food marketplace",
   ],
-  authors: [{ name: "BDMart Team" }],
-  creator: "BDMart",
-  publisher: "BDMart",
+  authors: [{ name: "RannerKaj Team" }],
+  creator: "RannerKaj",
+  publisher: "RannerKaj",
   robots: "index, follow",
   openGraph: {
-    title: "BDMart - Global Wholesale & Retail Marketplace",
+    title: "RannerKaj.com - Fresh Vegetables & Healthy Meal Kits",
     description:
-      "Buy and sell wholesale and retail products in Bangladesh with trust, transparency, and competitive pricing. Join thousands of verified suppliers and buyers.",
-    url: "https://bdmart.com",
-    siteName: "BDMart",
+      "Get fresh, organic vegetables, ready-to-cook meal packages, and healthy food combos delivered fresh. Make healthy cooking easy with hygienically prepared meal kits.",
+    url: "https://Rannerkaj.com",
+    siteName: "RannerKaj.com",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "BDMart - Your Trusted Marketplace",
+        alt: "RannerKaj.com - Fresh & Healthy Foods",
       },
     ],
-    locale: "en_BD",
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BDMart - Global Wholesale & Retail Marketplace",
-    description: "Buy and sell wholesale and retail products with confidence",
+    title: "RannerKaj.com - Fresh Vegetables & Healthy Meal Kits",
+    description: "Fresh, organic vegetables and ready-to-cook meal packages delivered to your doorstep",
     images: ["/og-image.png"],
   },
   viewport: {
@@ -73,45 +78,45 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-green-50 text-gray-900 font-sans`}
       >
         <SessionProvider>
           <CartProvider>
-            {/* ========== INITIAL PAGE LOADER ========== */}
-            <PageLoader />
+            <DataPrefetchProvider>
+              {/* ========== INITIAL PAGE LOADER ========== */}
+              <PageLoader />
 
-            {/* App Wrapper - Professional Layout Structure */}
-            <div className="flex flex-col min-h-screen relative">
+              {/* App Wrapper - Professional Layout Structure */}
+              <div className="flex flex-col min-h-screen relative">
+                {/* ========== NAVIGATION HEADER ========== */}
+                <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-sm">
+                  <Navbar />
+                </header>
 
-              {/* ========== NAVIGATION HEADER ========== */}
-              <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-sm">
-                <Navbar />
-              </header>
+                {/* ========== MAIN CONTENT AREA ========== */}
+                <main className="flex-1 pt-[120px] md:pt-[140px] w-full overflow-hidden">
+                  {/* Content Container with Professional Spacing */}
+                  <div className="w-full  mx-auto ">
+                    {children}
+                  </div>
+                </main>
 
-              {/* ========== MAIN CONTENT AREA ========== */}
-              <main className="flex-1 pt-[120px] md:pt-[140px] w-full">
-                {/* Content Container with Professional Spacing */}
-                <div className="w-full">
-                  {children}
-                </div>
-              </main>
+                {/* ========== FOOTER SECTION ========== */}
+                <footer className="w-full text-white mx-auto">
+                  <Footer />
+                </footer>
 
-              {/* ========== FOOTER SECTION ========== */}
-              <footer className="w-full  text-white mt-auto">
-                <Footer />
-              </footer>
-
-              {/* ========== SCROLL TO TOP BUTTON (Optional Enhancement) ========== */}
-              <div id="scroll-to-top-anchor" className="hidden"></div>
-
-            </div>
+                {/* ========== SCROLL TO TOP BUTTON (Optional Enhancement) ========== */}
+                <div id="scroll-to-top-anchor" className="hidden"></div>
+              </div>
+            </DataPrefetchProvider>
           </CartProvider>
         </SessionProvider>
 
         {/* ========== GLOBAL ACCESSIBILITY & SEO ========== */}
         <noscript>
           <div className="fixed top-0 left-0 right-0 bg-yellow-100 border-b-2 border-yellow-400 text-yellow-900 px-4 py-3 text-center text-sm font-medium z-100">
-            Please enable JavaScript for the best experience on BDMart.
+            Please enable JavaScript for the best experience on RannerKaj.com.
           </div>
         </noscript>
       </body>

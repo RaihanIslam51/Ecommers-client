@@ -12,7 +12,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
     name: '',
     description: '',
     image: '',
-    color: '#3b82f6',
+    color: '#10b981',
     status: 'active'
   });
 
@@ -81,7 +81,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
                 onChange={handleChange}
                 required
                 placeholder="e.g., Electronics, Fashion, Food"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all"
               />
             </div>
 
@@ -96,7 +96,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
                 onChange={handleChange}
                 rows="4"
                 placeholder="Brief description of the category..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all resize-none"
               />
             </div>
 
@@ -122,7 +122,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
 
                 {/* Upload Button */}
                 <div className="flex-1">
-                  <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+                  <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-3 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors">
                     <Upload className="w-5 h-5" />
                     <span className="font-medium">Upload Image</span>
                     <input
@@ -158,7 +158,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
                     type="text"
                     value={formData.color}
                     onChange={(e) => setFormData(prev => ({ ...prev, color: e.target.value }))}
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                   />
                 </div>
               </div>
@@ -172,7 +172,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
                   name="status"
                   value={formData.status}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none bg-white"
                 >
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
@@ -191,7 +191,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
               </button>
               <button
                 type="submit"
-                className="flex-1 px-6 py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 font-medium shadow-lg shadow-blue-500/30 transition-all"
+                className="flex-1 px-6 py-3 bg-linear-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 font-medium shadow-lg shadow-green-500/30 transition-all"
               >
                 {editData ? 'Update Category' : 'Add Category'}
               </button>

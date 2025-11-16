@@ -4,12 +4,12 @@ import React from 'react';
 
 const ProductFilters = ({ filters, onFilterChange, onReset }) => {
   return (
-    <div className="bg-white text-black rounded-lg shadow p-6 mb-6">
+    <div className="bg-white text-black rounded-xl shadow-lg p-6 mb-6 border border-gray-100">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-800">Filters</h3>
         <button
           onClick={onReset}
-          className="text-sm text-blue-600 hover:text-blue-700"
+          className="text-sm text-green-600 hover:text-green-700 font-medium"
         >
           Reset All
         </button>
@@ -27,7 +27,7 @@ const ProductFilters = ({ filters, onFilterChange, onReset }) => {
             value={filters.search || ''}
             onChange={(e) => onFilterChange('search', e.target.value)}
             placeholder="Search products..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
           />
         </div>
 
@@ -40,7 +40,7 @@ const ProductFilters = ({ filters, onFilterChange, onReset }) => {
             name="category"
             value={filters.category || ''}
             onChange={(e) => onFilterChange('category', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
           >
             <option value="">All Categories</option>
             <option value="Electronics">Electronics</option>
@@ -63,7 +63,7 @@ const ProductFilters = ({ filters, onFilterChange, onReset }) => {
             name="stockStatus"
             value={filters.stockStatus || ''}
             onChange={(e) => onFilterChange('stockStatus', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
           >
             <option value="">All</option>
             <option value="inStock">In Stock</option>
@@ -81,7 +81,7 @@ const ProductFilters = ({ filters, onFilterChange, onReset }) => {
             name="sortBy"
             value={filters.sortBy || ''}
             onChange={(e) => onFilterChange('sortBy', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
           >
             <option value="">Default</option>
             <option value="name-asc">Name (A-Z)</option>

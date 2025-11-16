@@ -9,6 +9,7 @@ import { MdRemoveShoppingCart } from 'react-icons/md';
 import { useCart } from '@/context/CartContext';
 import { useSession } from 'next-auth/react';
 import Swal from 'sweetalert2';
+import axiosInstance from '@/lib/axios';
 
 const CartPage = () => {
   const router = useRouter();
@@ -16,6 +17,21 @@ const CartPage = () => {
   const { data: session } = useSession();
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  // Prevent hydration mismatch by ensuring client-side rendering
+  React.useLayoutEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Show loading state until client is ready to prevent hydration mismatch
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
   const handleRemoveItem = (productId, productName) => {
     Swal.fire({
@@ -92,25 +108,59 @@ const CartPage = () => {
 
   const handlePlaceOrder = async (formData) => {
     try {
-      // Here you can add API call to create order
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Calculate total
+      const subtotal = getCartTotal();
+      const shipping = subtotal > 0 ? 50 : 0;
+      const tax = subtotal * 0.1;
+      const total = subtotal + shipping + tax;
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Order Placed Successfully!',
-        text: 'Thank you for your order. We will contact you soon.',
-        confirmButtonColor: '#000',
-      });
+      // Prepare order data
+      const orderData = {
+        customerInfo: {
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          address: `${formData.address}, ${formData.city}, ${formData.postalCode}`
+        },
+        items: cartItems.map(item => ({
+          productId: item._id || item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image
+        })),
+        totalAmount: total,
+        shippingAddress: {
+          address: formData.address,
+          city: formData.city,
+          postalCode: formData.postalCode
+        },
+        paymentMethod: formData.paymentMethod,
+        status: 'pending',
+        orderDate: new Date().toISOString()
+      };
 
-      clearCart();
-      setShowCheckoutModal(false);
-      router.push('/');
+      // Create order via API
+      const response = await axiosInstance.post('/orders', orderData);
+
+      if (response.data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Order Placed Successfully!',
+          text: 'Thank you for your order. Order ID: ' + response.data.order._id,
+          confirmButtonColor: '#000',
+        });
+
+        clearCart();
+        setShowCheckoutModal(false);
+        router.push('/');
+      }
     } catch (error) {
       console.error('Order placement error:', error);
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Failed to place order. Please try again.',
+        text: error.response?.data?.message || 'Failed to place order. Please try again.',
       });
     }
   };
@@ -118,7 +168,7 @@ const CartPage = () => {
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-sm p-12 text-center">
             <MdRemoveShoppingCart className="mx-auto text-gray-300 text-8xl mb-6" />
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Your Cart is Empty</h2>
@@ -140,7 +190,7 @@ const CartPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <Link 
@@ -384,7 +434,7 @@ const CheckoutModal = ({ cartItems, subtotal, shipping, tax, total, onClose, onS
 
   return (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/60 bg-opacity-50 z-50 flex items-center justify-center p-4"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}

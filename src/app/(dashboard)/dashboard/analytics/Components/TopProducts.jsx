@@ -2,14 +2,14 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
-const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#6366f1'];
+const COLORS = ['#10b981', '#059669', '#047857', '#065f46', '#064e3b', '#022c22'];
 
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
                 <p className="font-semibold text-gray-800">{payload[0].name}</p>
-                <p className="text-sm text-blue-600">
+                <p className="text-sm text-green-600">
                     ${payload[0].value.toLocaleString()}
                 </p>
             </div>
@@ -77,8 +77,8 @@ const TopProducts = ({ products = [], categoryData = [] }) => {
                     {topProducts.map((product, index) => (
                         <div key={index} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors border border-gray-100">
                             <div className="flex items-center gap-3 flex-1 min-w-0">
-                                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-linear-to-br from-blue-100 to-indigo-100 shrink-0">
-                                    <span className="text-sm font-bold text-blue-600">#{index + 1}</span>
+                                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-linear-to-br from-green-100 to-emerald-100 shrink-0">
+                                    <span className="text-sm font-bold text-green-600">#{index + 1}</span>
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <h4 className="text-sm font-semibold text-gray-800 truncate">{product.name}</h4>

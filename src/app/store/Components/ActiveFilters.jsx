@@ -12,12 +12,6 @@ const ActiveFilters = ({ filters, onRemoveFilter, onClearAll }) => {
       });
     }
 
-    if (filters.brands && filters.brands.length > 0) {
-      filters.brands.forEach(brand => {
-        active.push({ type: 'brand', value: brand, label: brand });
-      });
-    }
-
     if (filters.priceRange) {
       const { min, max } = filters.priceRange;
       const label = max === Infinity ? `Over $${min}` : `$${min} - $${max}`;

@@ -15,7 +15,7 @@ const InventoryListView = ({ items, onEdit, onRestock, onView }) => {
       return <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-semibold">Low Stock</span>;
     }
     if (currentStock >= maxStock) {
-      return <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Overstock</span>;
+      return <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Overstock</span>;
     }
     return <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">In Stock</span>;
   };
@@ -25,7 +25,7 @@ const InventoryListView = ({ items, onEdit, onRestock, onView }) => {
     
     if (currentStock === 0) return 'bg-red-500';
     if (currentStock <= minStock) return 'bg-orange-500';
-    if (currentStock >= maxStock) return 'bg-blue-500';
+    if (currentStock >= maxStock) return 'bg-green-500';
     return 'bg-green-500';
   };
 
@@ -130,7 +130,7 @@ const InventoryListView = ({ items, onEdit, onRestock, onView }) => {
                     <div className="flex items-center justify-center gap-2">
                       <button
                         onClick={() => onView(item)}
-                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                         title="View Details"
                       >
                         <Eye className="w-4 h-4" />
@@ -144,7 +144,7 @@ const InventoryListView = ({ items, onEdit, onRestock, onView }) => {
                       </button>
                       <button
                         onClick={() => onEdit(item)}
-                        className="p-2 text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
+                        className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                         title="Edit"
                       >
                         <Pencil className="w-4 h-4" />

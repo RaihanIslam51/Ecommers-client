@@ -6,6 +6,18 @@ import axiosInstance from '@/lib/axios';
 import Swal from 'sweetalert2';
 import Image from 'next/image';
 
+const DEFAULT_RIGHT_BANNER = {
+  title: 'Fresh Vegetables & Meal Kits',
+  subtitle: '🍎 Organic & Hygienic',
+  description: 'Discover fresh, organic vegetables and ready-to-cook meal packages. Hygienically prepared for your healthy lifestyle.',
+  buttonText: 'Shop Now',
+  buttonLink: '/store',
+  image: '',
+  position: 'right',
+  isActive: true,
+  order: 0
+};
+
 const BannerManagement = () => {
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -286,7 +298,7 @@ const BannerManagement = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full mx-auto">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -311,8 +323,7 @@ const BannerManagement = () => {
               </button>
               <button
                 onClick={() => {
-                  resetForm();
-                  setFormData(prev => ({ ...prev, position: 'right' }));
+                  setFormData(DEFAULT_RIGHT_BANNER);
                   setShowAddModal(true);
                 }}
                 className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
@@ -412,7 +423,7 @@ const BannerManagement = () => {
                 resetForm();
                 setShowAddModal(true);
               }}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 text-white rounded-lg hover:bg-gray-800 transition-colors"
             >
               <FiPlus className="text-xl" />
               Add New Banner
@@ -515,7 +526,7 @@ const BannerManagement = () => {
 
       {/* Add/Edit Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 p-6">
               <div className="flex items-center justify-between">

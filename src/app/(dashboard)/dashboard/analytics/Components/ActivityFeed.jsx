@@ -18,9 +18,9 @@ const ActivityFeed = ({ orders = [] }) => {
             case 'pending': 
                 return { icon: 'O', color: 'bg-yellow-100 text-yellow-600' };
             case 'processing': 
-                return { icon: 'R', color: 'bg-blue-100 text-blue-600' };
+                return { icon: 'R', color: 'bg-green-100 text-green-600' };
             case 'shipped': 
-                return { icon: 'T', color: 'bg-purple-100 text-purple-600' };
+                return { icon: 'T', color: 'bg-emerald-100 text-emerald-600' };
             case 'delivered': 
                 return { icon: 'D', color: 'bg-green-100 text-green-600' };
             case 'cancelled': 
@@ -44,7 +44,7 @@ const ActivityFeed = ({ orders = [] }) => {
         <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
             <div className="flex justify-between items-center mb-6">
                 <h3 className="text-lg font-bold text-gray-800">Recent Activity</h3>
-                <span className="px-2 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full">
+                <span className="px-2 py-1 bg-green-100 text-green-600 text-xs font-semibold rounded-full">
                     {activities.length} New
                 </span>
             </div>

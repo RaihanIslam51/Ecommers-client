@@ -66,7 +66,7 @@ const Page = () => {
                     <p className="text-gray-600">No analytics data available</p>
                     <button 
                         onClick={fetchAnalyticsData}
-                        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                        className="mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
                     >
                         Retry
                     </button>
@@ -86,7 +86,7 @@ const Page = () => {
                 <button
                     onClick={handleRefresh}
                     disabled={refreshing}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center gap-2"
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center gap-2"
                 >
                     <span className={refreshing ? 'animate-spin' : ''}>🔄</span>
                     Refresh

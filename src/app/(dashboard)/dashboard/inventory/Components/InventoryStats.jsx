@@ -10,8 +10,8 @@ const InventoryStats = ({ stats }) => {
       title: 'Total Products',
       value: stats?.totalProducts || 0,
       icon: Package,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600',
+      iconBg: 'bg-green-100',
+      iconColor: 'text-green-600',
       trend: '+12%',
       trendUp: true
     },

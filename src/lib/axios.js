@@ -41,15 +41,24 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     // Enhanced error handling
+    // Only log detailed errors in development and for non-404 errors
+    const isDev = process.env.NODE_ENV === 'development';
+    const is404 = error.response?.status === 404;
+    
     if (error.code === 'ECONNABORTED') {
       console.error('⏱️ Request timeout - Server took too long to respond');
     } else if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
-      console.error('🔴 Network Error - Server might be offline. Please ensure the server is running on http://localhost:5000');
-      console.error('💡 Tip: Run "cd server && npm run dev" in a terminal');
+      if (isDev) {
+        console.warn('🔴 Network Error - Server might be offline');
+        console.warn('💡 Tip: Run "cd server && npm start" to start the backend');
+      }
     } else if (error.response?.status === 401) {
       console.error('🔒 Unauthorized access');
-    } else if (error.response?.status === 404) {
-      console.error('🔍 Endpoint not found:', error.config?.url);
+    } else if (is404) {
+      // Only log 404 as warning in development
+      if (isDev) {
+        console.warn('🔍 Endpoint not found:', error.config?.url);
+      }
     } else if (error.response?.status >= 500) {
       console.error('🔥 Server error:', error.response?.data?.message || error.message);
     }

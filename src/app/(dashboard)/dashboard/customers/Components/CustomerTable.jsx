@@ -64,7 +64,7 @@ const CustomerTable = ({
                                             }
                                         }}
                                         onChange={(e) => onSelectAll(e.target.checked)}
-                                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                                        className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500 cursor-pointer"
                                         title={isAllSelected ? "Deselect all" : "Select all"}
                                     />
                                 </th>
@@ -105,8 +105,8 @@ const CustomerTable = ({
                             return (
                                 <tr 
                                     key={customer.id} 
-                                    className={`hover:bg-blue-50 transition-all duration-200 ${
-                                        isSelected ? 'bg-blue-50' : index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                                    className={`hover:bg-green-50 transition-all duration-200 ${
+                                        isSelected ? 'bg-green-50' : index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
                                     }`}
                                 >
                                     {onSelectCustomer && (
@@ -115,7 +115,7 @@ const CustomerTable = ({
                                                 type="checkbox"
                                                 checked={isSelected}
                                                 onChange={() => onSelectCustomer(customer.email)}
-                                                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                                                className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500 cursor-pointer"
                                             />
                                         </td>
                                     )}
@@ -141,7 +141,7 @@ const CustomerTable = ({
                                         <span className="text-gray-400">📧</span>
                                         <a 
                                             href={`mailto:${customer.email}`}
-                                            className="text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                                            className="text-sm text-green-600 hover:text-green-800 hover:underline transition-colors"
                                         >
                                             {customer.email}
                                         </a>
@@ -152,7 +152,7 @@ const CustomerTable = ({
                                         <span className="text-gray-400">📱</span>
                                         <a 
                                             href={`tel:${customer.phone}`}
-                                            className="text-sm text-gray-900 hover:text-blue-600 transition-colors font-medium"
+                                            className="text-sm text-gray-900 hover:text-green-600 transition-colors font-medium"
                                         >
                                             {customer.phone}
                                         </a>
@@ -170,7 +170,7 @@ const CustomerTable = ({
                                     <CustomerStatusBadge status={customer.status} />
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    <div className="inline-flex items-center justify-center bg-blue-100 text-blue-800 rounded-full px-3 py-1">
+                                    <div className="inline-flex items-center justify-center bg-green-100 text-green-800 rounded-full px-3 py-1">
                                         <span className="text-sm font-bold">{customer.totalOrders}</span>
                                     </div>
                                 </td>
@@ -191,7 +191,7 @@ const CustomerTable = ({
                                     <div className="flex items-center justify-end gap-2">
                                         <button
                                             onClick={() => onViewDetails(customer)}
-                                            className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg font-medium text-sm transition-all"
+                                            className="p-2 text-green-600 hover:bg-green-100 rounded-lg font-medium text-sm transition-all"
                                             title="View Details"
                                         >
                                             👁️
@@ -227,7 +227,7 @@ const CustomerTable = ({
                     </div>
                     <div className="flex items-center gap-6">
                         <div className="text-sm text-gray-600">
-                            Total Orders: <span className="font-bold text-blue-600">
+                            Total Orders: <span className="font-bold text-green-600">
                                 {customers.reduce((sum, c) => sum + c.totalOrders, 0)}
                             </span>
                         </div>

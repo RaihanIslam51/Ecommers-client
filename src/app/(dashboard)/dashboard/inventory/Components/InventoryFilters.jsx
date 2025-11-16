@@ -31,7 +31,7 @@ const InventoryFilters = ({
                 placeholder="Search by product name, SKU..."
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all"
               />
             </div>
           </div>
@@ -54,7 +54,7 @@ const InventoryFilters = ({
             <select
               value={stockFilter}
               onChange={(e) => onStockFilterChange(e.target.value)}
-              className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white"
+              className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all bg-white"
             >
               <option value="all">All Stock</option>
               <option value="in-stock">In Stock</option>
@@ -68,7 +68,7 @@ const InventoryFilters = ({
           <select
             value={categoryFilter}
             onChange={(e) => onCategoryFilterChange(e.target.value)}
-            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all bg-white"
           >
             <option value="all">All Categories</option>
             <option value="electronics">Electronics</option>
@@ -81,7 +81,7 @@ const InventoryFilters = ({
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
-            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all bg-white"
           >
             <option value="name">Name (A-Z)</option>
             <option value="name-desc">Name (Z-A)</option>
@@ -96,7 +96,7 @@ const InventoryFilters = ({
               onClick={() => onViewModeChange('grid')}
               className={`p-2 rounded-md transition-all ${
                 viewMode === 'grid' 
-                  ? 'bg-white text-blue-600 shadow-sm' 
+                  ? 'bg-white text-green-600 shadow-sm' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
               title="Grid View"
@@ -107,7 +107,7 @@ const InventoryFilters = ({
               onClick={() => onViewModeChange('list')}
               className={`p-2 rounded-md transition-all ${
                 viewMode === 'list' 
-                  ? 'bg-white text-blue-600 shadow-sm' 
+                  ? 'bg-white text-green-600 shadow-sm' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
               title="List View"
@@ -118,7 +118,7 @@ const InventoryFilters = ({
               onClick={() => onViewModeChange('chart')}
               className={`p-2 rounded-md transition-all ${
                 viewMode === 'chart' 
-                  ? 'bg-white text-blue-600 shadow-sm' 
+                  ? 'bg-white text-green-600 shadow-sm' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
               title="Chart View"

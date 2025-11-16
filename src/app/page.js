@@ -1,9 +1,9 @@
 
-import Banner from "./Home/Banner/Banner";
-import Category from "./Home/Category/Category";
-import Topsales from "./Home/TopSales/Topsales";
-import Collection from "./Home/Collection/Collection";
-import Whatsapp from "./compoents/Whatsapp/whatsapp";
+import Banner from "@/components/Home/Banner/Banner";
+import Category from "@/components/Home/Category/Category";
+import Topsales from "@/components/Home/TopSales/Topsales";
+import Collection from "@/components/Home/Collection/Collection";
+import Whatsapp from "@/components/Whatsapp/whatsapp";
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
       </section>
 
       {/* Category Section */}
-      <section className="w-full py-8 md:py-12 lg:py-16">
+      <section id="categories" className="w-full py-2 md:py-4 lg:py-6">
         <Category />
       </section>
 

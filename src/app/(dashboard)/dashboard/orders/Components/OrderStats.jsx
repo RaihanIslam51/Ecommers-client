@@ -8,8 +8,8 @@ const OrderStats = ({ stats, activeFilter, onFilterChange }) => {
             value: stats?.total || '0',
             subtitle: 'All time',
             icon: '📦',
-            bgColor: 'bg-blue-50',
-            iconColor: 'text-blue-600',
+            bgColor: 'bg-green-50',
+            iconColor: 'text-green-600',
             filterValue: 'all'
         },
         {
@@ -109,8 +109,8 @@ const OrderStats = ({ stats, activeFilter, onFilterChange }) => {
                             onClick={() => onFilterChange && onFilterChange('dateRange', stat.filterValue)}
                             className={`bg-white rounded-xl shadow-sm border-2 p-6 transition-all duration-300 cursor-pointer ${
                                 isActive 
-                                    ? 'border-blue-500 shadow-lg scale-105' 
-                                    : 'border-gray-100 hover:border-blue-300 hover:shadow-md'
+                                    ? 'border-green-500 shadow-lg scale-105' 
+                                    : 'border-gray-100 hover:border-green-300 hover:shadow-md'
                             }`}
                         >
                             <div className="flex items-center justify-between mb-4">
@@ -118,7 +118,7 @@ const OrderStats = ({ stats, activeFilter, onFilterChange }) => {
                                     {stat.icon}
                                 </div>
                                 {isActive && (
-                                    <span className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                    <span className="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
                                         ACTIVE
                                     </span>
                                 )}

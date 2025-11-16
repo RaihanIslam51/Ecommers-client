@@ -93,7 +93,7 @@ const DashboardPage = () => {
         icon: 'error',
         title: 'Error',
         text: error.response?.data?.message || 'Failed to add product. Please try again.',
-        confirmButtonColor: '#3b82f6'
+        confirmButtonColor: '#10b981'
       });
     } finally {
       setIsSubmitting(false);
@@ -114,7 +114,7 @@ const DashboardPage = () => {
         title: 'Error!',
         text: 'Failed to fetch dashboard data',
         icon: 'error',
-        confirmButtonColor: '#3b82f6'
+        confirmButtonColor: '#10b981'
       });
     } finally {
       setLoading(false);
@@ -233,9 +233,7 @@ const DashboardPage = () => {
     category: cat.category || 'Other',
     amount: `$${(cat.amount || 0).toLocaleString()}`,
     percentage: parseInt(cat.percentage || 0),
-    color: (cat.category || '').toLowerCase().includes('electronic') ? 'blue' :
-           (cat.category || '').toLowerCase().includes('fashion') ? 'purple' :
-           (cat.category || '').toLowerCase().includes('home') ? 'green' : 'orange'
+    color: 'green'
   }));
 
   // Generate real recent activity from orders
@@ -278,16 +276,16 @@ const DashboardPage = () => {
   ].slice(0, 5);
 
   return (
-    <div className="space-y-4 sm:space-y-5 md:space-y-6">
+    <div className="space-y-4 sm:space-y-5 pl-4  md:space-y-6">
       {/* Page Header with Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-linear-to-r from-gray-900 via-gray-800 to-gray-600 bg-clip-text text-transparent">
-            Dashboard Overview
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-linear-to-r from-green-700 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
+            RannerKaj Admin Dashboard
           </h1>
-          <p className="text-xs sm:text-sm text-gray-500 mt-1 flex items-center gap-2">
+          <p className="text-xs sm:text-sm text-green-600 mt-1 flex items-center gap-2">
             <Calendar className="w-4 h-4" />
-            Welcome back! Here&apos;s what&apos;s happening with your store today.
+            Welcome back! Here&apos;s what&apos;s happening with your fresh food store today.
           </p>
         </div>
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
@@ -377,8 +375,8 @@ const DashboardPage = () => {
                 label: 'Status',
                 render: (row) => {
                   const variant = row.status === 'Completed' ? 'success' : 
-                                 row.status === 'Processing' ? 'info' :
-                                 row.status === 'Shipped' ? 'purple' : 'warning';
+                                 row.status === 'Processing' ? 'success' :
+                                 row.status === 'Shipped' ? 'success' : 'warning';
                   return <Badge variant={variant}>{row.status}</Badge>;
                 }
               },
@@ -411,11 +409,11 @@ const DashboardPage = () => {
           <div className="space-y-4">
             {recentActivity.map((activity, index) => {
               const colorMap = {
-                blue: { bg: 'bg-blue-50', icon: 'from-blue-500 to-cyan-500' },
+                blue: { bg: 'bg-green-50', icon: 'from-green-500 to-emerald-500' },
                 green: { bg: 'bg-green-50', icon: 'from-green-500 to-emerald-500' },
-                yellow: { bg: 'bg-yellow-50', icon: 'from-yellow-500 to-orange-500' },
-                purple: { bg: 'bg-purple-50', icon: 'from-purple-500 to-pink-500' },
-                orange: { bg: 'bg-orange-50', icon: 'from-orange-500 to-red-500' },
+                yellow: { bg: 'bg-green-50', icon: 'from-green-500 to-emerald-500' },
+                purple: { bg: 'bg-green-50', icon: 'from-green-500 to-emerald-500' },
+                orange: { bg: 'bg-green-50', icon: 'from-green-500 to-emerald-500' },
               };
               const colors = colorMap[activity.color];
               
@@ -463,11 +461,11 @@ const DashboardPage = () => {
             {topProducts.map((product, index) => (
               <div 
                 key={index}
-                className="flex items-center justify-between p-3 sm:p-3.5 rounded-xl hover:bg-linear-to-r hover:from-blue-50 hover:to-indigo-50 active:from-blue-100 active:to-indigo-100 transition-all duration-200 cursor-pointer group touch-manipulation border border-transparent hover:border-blue-100"
+                className="flex items-center justify-between p-3 sm:p-3.5 rounded-xl hover:bg-linear-to-r hover:from-green-50 hover:to-emerald-50 active:from-green-100 active:to-emerald-100 transition-all duration-200 cursor-pointer group touch-manipulation border border-transparent hover:border-green-100"
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-blue-100 to-indigo-100 group-hover:scale-110 transition-transform shrink-0">
-                    <span className="text-lg font-bold text-blue-600">#{index + 1}</span>
+                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-green-100 to-emerald-100 group-hover:scale-110 transition-transform shrink-0">
+                    <span className="text-lg font-bold text-green-600">#{index + 1}</span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-gray-900 text-sm truncate">{product.name}</p>
@@ -554,8 +552,8 @@ const DashboardPage = () => {
             <IconBox
               icon={<ShoppingCart className="w-5 h-5" />}
               size="sm"
-              color="from-blue-500 to-cyan-500"
-              bgColor="from-blue-50 to-cyan-50"
+              color="from-green-500 to-emerald-500"
+              bgColor="from-green-50 to-emerald-50"
             />
             <div>
               <p className="text-xs text-gray-500">Today&apos;s Orders</p>
@@ -569,8 +567,8 @@ const DashboardPage = () => {
             <IconBox
               icon={<CreditCard className="w-5 h-5" />}
               size="sm"
-              color="from-green-500 to-emerald-500"
-              bgColor="from-green-50 to-emerald-50"
+              color="from-emerald-500 to-teal-500"
+              bgColor="from-emerald-50 to-teal-50"
             />
             <div>
               <p className="text-xs text-gray-500">Today&apos;s Revenue</p>
@@ -586,8 +584,8 @@ const DashboardPage = () => {
             <IconBox
               icon={<Truck className="w-5 h-5" />}
               size="sm"
-              color="from-purple-500 to-pink-500"
-              bgColor="from-purple-50 to-pink-50"
+              color="from-teal-500 to-cyan-500"
+              bgColor="from-teal-50 to-cyan-50"
             />
             <div>
               <p className="text-xs text-gray-500">In Shipping</p>
@@ -603,8 +601,8 @@ const DashboardPage = () => {
             <IconBox
               icon={<CheckCircle className="w-5 h-5" />}
               size="sm"
-              color="from-yellow-500 to-orange-500"
-              bgColor="from-yellow-50 to-orange-50"
+              color="from-lime-500 to-green-500"
+              bgColor="from-lime-50 to-green-50"
             />
             <div>
               <p className="text-xs text-gray-500">Delivered</p>

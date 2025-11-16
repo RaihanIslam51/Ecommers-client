@@ -82,9 +82,9 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
                     {/* Order Info Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         {/* Customer Information */}
-                        <div className="bg-linear-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+                        <div className="bg-linear-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
                                     {order.customerInfo?.name?.charAt(0) || 'U'}
                                 </div>
                                 <h3 className="text-lg font-bold text-gray-800">Customer Information</h3>
@@ -160,10 +160,10 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
                         <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                             <span>🛍️</span> Product Details
                         </h3>
-                        <div className="bg-gradient-to-br from-orange-50 to-yellow-50 border border-orange-100 rounded-xl p-6">
+                        <div className="bg-linear-to-br from-orange-50 to-yellow-50 border border-orange-100 rounded-xl p-6">
                             <div className="flex gap-6">
                                 {/* Product Image */}
-                                <div className="flex-shrink-0">
+                                <div className="shrink-0">
                                     <div className="relative w-32 h-32 bg-white rounded-lg overflow-hidden border-2 border-orange-200 shadow-md">
                                         {order.product?.images?.[0] ? (
                                             <Image
@@ -217,7 +217,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
                     </div>
 
                     {/* Order Summary */}
-                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
+                    <div className="bg-linear-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
                         <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                             <span>💰</span> Order Summary
                         </h3>
@@ -237,7 +237,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
                                 <span className="font-semibold text-gray-800">$0.00</span>
                             </div>
                             <div className="border-t-2 border-gray-300 pt-3 mt-3">
-                                <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg">
+                                <div className="flex justify-between items-center p-4 bg-linear-to-r from-green-600 to-emerald-600 rounded-lg">
                                     <span className="text-base font-bold text-white">Total Amount</span>
                                     <span className="text-2xl font-bold text-white">
                                         ${order.totalAmount?.toFixed(2) || '0.00'}
@@ -249,7 +249,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
 
                     {/* Action Buttons */}
                     <div className="flex items-center gap-3 mt-8">
-                        <button className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-semibold">
+                        <button className="flex-1 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors font-semibold">
                             Update Status
                         </button>
                         <button className="flex-1 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors font-semibold">

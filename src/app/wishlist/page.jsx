@@ -26,11 +26,11 @@ const WishlistPage = () => {
   if (wishlistItems.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 pt-24 pb-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           {/* Empty State */}
           <div className="flex flex-col items-center justify-center py-16">
-            <div className="w-32 h-32 bg-gradient-to-br from-pink-100 to-red-100 rounded-full flex items-center justify-center mb-6">
-              <FaHeart className="text-red-400 text-5xl" />
+            <div className="w-32 h-32 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center mb-6">
+              <FaHeart className="text-green-500 text-5xl" />
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-3">Your Wishlist is Empty</h2>
             <p className="text-gray-500 text-lg mb-8 text-center max-w-md">
@@ -51,7 +51,7 @@ const WishlistPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pt-24 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <Link
@@ -98,7 +98,7 @@ const WishlistPage = () => {
                     e.preventDefault();
                     handleRemoveFromWishlist(product._id);
                   }}
-                  className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-red-50 transition-all duration-200 z-10"
+                  className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-50 transition-all duration-200 z-10"
                   title="Remove from wishlist"
                 >
                   <FaTrash className="text-red-500 text-sm" />

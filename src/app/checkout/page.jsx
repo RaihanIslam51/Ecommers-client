@@ -88,7 +88,7 @@ const CheckoutPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -173,7 +173,7 @@ const CheckoutPage = () => {
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Postal Code *
+                      Postal Code*
                     </label>
                     <input
                       type="text"

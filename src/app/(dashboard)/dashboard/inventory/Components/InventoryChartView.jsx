@@ -27,8 +27,8 @@ const InventoryChartView = ({ items }) => {
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-blue-100 rounded-xl">
-          <BarChart3 className="w-6 h-6 text-blue-600" />
+        <div className="p-3 bg-green-100 rounded-xl">
+          <BarChart3 className="w-6 h-6 text-green-600" />
         </div>
         <div>
           <h3 className="text-xl font-bold text-gray-900">Inventory by Category</h3>
@@ -53,7 +53,7 @@ const InventoryChartView = ({ items }) => {
               {/* Progress Bar */}
               <div className="relative h-8 bg-gray-100 rounded-lg overflow-hidden">
                 <div 
-                  className="absolute inset-y-0 left-0 bg-linear-to-r from-blue-500 to-blue-600 transition-all duration-500"
+                  className="absolute inset-y-0 left-0 bg-linear-to-r from-green-500 to-green-600 transition-all duration-500"
                   style={{ width: `${percentage}%` }}
                 />
                 <div className="absolute inset-0 flex items-center justify-between px-3 text-sm">

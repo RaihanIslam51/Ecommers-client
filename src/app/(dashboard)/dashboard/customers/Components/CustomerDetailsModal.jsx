@@ -15,7 +15,7 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-t-2xl">
+                <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-t-2xl">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-4">
                             <CustomerAvatar name={customer.name} image={customer.avatar} size="xl" />
@@ -37,7 +37,7 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
                 <div className="p-6">
                     {/* Quick Info */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                        <div className="bg-blue-50 rounded-lg p-4">
+                        <div className="bg-green-50 rounded-lg p-4">
                             <div className="text-sm text-gray-600 mb-1">Total Orders</div>
                             <div className="text-2xl font-bold text-gray-900">{customer.totalOrders}</div>
                         </div>
@@ -45,7 +45,7 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
                             <div className="text-sm text-gray-600 mb-1">Total Spent</div>
                             <div className="text-2xl font-bold text-gray-900">${customer.totalSpent.toLocaleString()}</div>
                         </div>
-                        <div className="bg-purple-50 rounded-lg p-4">
+                        <div className="bg-green-50 rounded-lg p-4">
                             <div className="text-sm text-gray-600 mb-1">Status</div>
                             <div className="mt-2">
                                 <CustomerStatusBadge status={customer.status} />
@@ -121,7 +121,7 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
 
                     {/* Actions */}
                     <div className="mt-6 flex gap-3">
-                        <button className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        <button className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
                             Send Email
                         </button>
                         <button className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">

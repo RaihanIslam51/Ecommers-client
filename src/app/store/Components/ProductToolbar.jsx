@@ -53,7 +53,7 @@ const ProductToolbar = ({
                 id="sort"
                 value={sortBy}
                 onChange={(e) => onSortChange(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-black focus:border-transparent bg-white cursor-pointer"
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white cursor-pointer"
               >
                 {sortOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -69,8 +69,8 @@ const ProductToolbar = ({
                 onClick={() => onViewChange('grid')}
                 className={`p-2 rounded transition-colors ${
                   currentView === 'grid'
-                    ? 'bg-black text-white'
-                    : 'text-gray-600 hover:bg-gray-100'
+                    ? 'bg-green-600 text-white'
+                    : 'text-gray-600 hover:bg-green-50'
                 }`}
                 title="Grid View"
               >
@@ -80,8 +80,8 @@ const ProductToolbar = ({
                 onClick={() => onViewChange('list')}
                 className={`p-2 rounded transition-colors ${
                   currentView === 'list'
-                    ? 'bg-black text-white'
-                    : 'text-gray-600 hover:bg-gray-100'
+                    ? 'bg-green-600 text-white'
+                    : 'text-gray-600 hover:bg-green-50'
                 }`}
                 title="List View"
               >

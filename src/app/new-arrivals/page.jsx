@@ -158,7 +158,7 @@ const NewArrivalsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <Link 
@@ -301,7 +301,7 @@ const NewArrivalsPage = () => {
                           </span>
                         )}
                         {discount > 0 && (
-                          <span className="absolute top-2 right-2 px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full">
+                          <span className="absolute top-2 right-2 px-3 py-1 bg-green-600 text-white text-xs font-bold rounded-full">
                             -{discount}%
                           </span>
                         )}
@@ -324,12 +324,12 @@ const NewArrivalsPage = () => {
                                 {product.category}
                               </span>
                             )}
-                            {product.brand && (
+                            {/* {product.brand && (
                               <span className="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">
                                 <MdVerified className="text-xs" />
                                 {product.brand}
                               </span>
-                            )}
+                            )} */}
                           </div>
 
                           <p className="text-gray-600 text-sm line-clamp-2 mb-3">
@@ -354,8 +354,8 @@ const NewArrivalsPage = () => {
                               onClick={() => handleToggleWishlist(product)}
                               className={`p-3 rounded-lg border-2 transition-all ${
                                 inWishlist
-                                  ? 'border-red-500 text-red-500 bg-red-50'
-                                  : 'border-gray-300 text-gray-600 hover:border-red-500 hover:text-red-500'
+                                  ? 'border-green-500 text-green-500 bg-green-50'
+                                  : 'border-gray-300 text-gray-600 hover:border-green-500 hover:text-green-500'
                               }`}
                             >
                               <FaHeart className={inWishlist ? 'fill-current' : ''} />
@@ -396,7 +396,7 @@ const NewArrivalsPage = () => {
                     )}
                     
                     {discount > 0 && (
-                      <span className="absolute top-3 right-3 px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full shadow-lg">
+                      <span className="absolute top-3 right-3 px-3 py-1 bg-green-600 text-white text-xs font-bold rounded-full shadow-lg">
                         -{discount}% OFF
                       </span>
                     )}
@@ -410,8 +410,8 @@ const NewArrivalsPage = () => {
                         }}
                         className={`p-2.5 rounded-lg backdrop-blur-sm shadow-lg transition-all ${
                           inWishlist
-                            ? 'bg-red-500 text-white'
-                            : 'bg-white/90 text-gray-700 hover:bg-red-500 hover:text-white'
+                            ? 'bg-green-500 text-white'
+                            : 'bg-white/90 text-gray-700 hover:bg-green-500 hover:text-white'
                         }`}
                       >
                         <FaHeart className={`text-sm ${inWishlist ? 'fill-current' : ''}`} />

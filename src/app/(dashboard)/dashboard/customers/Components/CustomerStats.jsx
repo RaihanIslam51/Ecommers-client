@@ -6,16 +6,16 @@ const CustomerStats = ({ stats, loading }) => {
             label: 'Total Customers',
             value: loading ? '...' : stats?.total || 0,
             icon: '👥',
-            bgColor: 'bg-blue-50',
-            iconColor: 'text-blue-600',
+            bgColor: 'bg-green-50',
+            iconColor: 'text-green-600',
             description: 'All registered customers'
         },
         {
             label: 'VIP Customers',
             value: loading ? '...' : stats?.vip || 0,
             icon: '⭐',
-            bgColor: 'bg-yellow-50',
-            iconColor: 'text-yellow-600',
+            bgColor: 'bg-green-50',
+            iconColor: 'text-green-600',
             description: 'Spent over $10,000'
         },
         {
@@ -30,32 +30,40 @@ const CustomerStats = ({ stats, loading }) => {
             label: 'New Customers',
             value: loading ? '...' : stats?.new || 0,
             icon: '🆕',
-            bgColor: 'bg-purple-50',
-            iconColor: 'text-purple-600',
+            bgColor: 'bg-green-50',
+            iconColor: 'text-green-600',
             description: 'First-time buyers'
         },
         {
             label: 'Inactive Customers',
             value: loading ? '...' : stats?.inactive || 0,
             icon: '💤',
-            bgColor: 'bg-gray-50',
-            iconColor: 'text-gray-600',
+            bgColor: 'bg-green-50',
+            iconColor: 'text-green-600',
             description: 'No orders in 90 days'
         },
         {
             label: 'Total Revenue',
             value: loading ? '...' : `$${(stats?.totalRevenue || 0).toLocaleString()}`,
             icon: '💰',
-            bgColor: 'bg-emerald-50',
-            iconColor: 'text-emerald-600',
+            bgColor: 'bg-green-50',
+            iconColor: 'text-green-600',
+            description: 'All-time revenue'
+        },
+        {
+            label: 'Lifetime Value',
+            value: loading ? '...' : `$${(stats?.lifetimeValue || 0).toFixed(2)}`,
+            icon: '📈',
+            bgColor: 'bg-green-50',
+            iconColor: 'text-green-600',
             description: 'Lifetime value'
         },
         {
             label: 'Avg Order Value',
             value: loading ? '...' : `$${(stats?.averageOrderValue || 0).toFixed(2)}`,
             icon: '�',
-            bgColor: 'bg-orange-50',
-            iconColor: 'text-orange-600',
+            bgColor: 'bg-green-50',
+            iconColor: 'text-green-600',
             description: 'Per customer average'
         }
     ];

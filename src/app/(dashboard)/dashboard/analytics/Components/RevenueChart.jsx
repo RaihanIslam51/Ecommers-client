@@ -7,7 +7,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         return (
             <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
                 <p className="font-semibold text-gray-800 mb-2">{label}</p>
-                <p className="text-sm text-purple-600">
+                <p className="text-sm text-green-600">
                     Revenue: ${payload[0].value.toLocaleString()}
                 </p>
             </div>
@@ -39,7 +39,7 @@ const RevenueChart = ({ data = [] }) => {
                     <p className="text-sm text-gray-500 mt-1">Last 7 days breakdown</p>
                 </div>
                 <div className="text-right">
-                    <p className="text-2xl font-bold text-purple-600">
+                    <p className="text-2xl font-bold text-green-600">
                         ${totalRevenue.toLocaleString()}
                     </p>
                     <p className="text-xs text-gray-500">Total Revenue</p>
@@ -50,8 +50,8 @@ const RevenueChart = ({ data = [] }) => {
                 <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                     <defs>
                         <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.9}/>
-                            <stop offset="95%" stopColor="#a78bfa" stopOpacity={0.8}/>
+                            <stop offset="5%" stopColor="#10b981" stopOpacity={0.9}/>
+                            <stop offset="95%" stopColor="#34d399" stopOpacity={0.8}/>
                         </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -78,13 +78,13 @@ const RevenueChart = ({ data = [] }) => {
 
             <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100">
                 <div className="text-center">
-                    <p className="text-2xl font-bold text-purple-600">
+                    <p className="text-2xl font-bold text-green-600">
                         ${avgRevenue.toLocaleString()}
                     </p>
                     <p className="text-sm text-gray-500 mt-1">Avg Daily Revenue</p>
                 </div>
                 <div className="text-center">
-                    <p className="text-2xl font-bold text-green-600">
+                    <p className="text-2xl font-bold text-emerald-600">
                         {chartData.length}
                     </p>
                     <p className="text-sm text-gray-500 mt-1">Days Tracked</p>

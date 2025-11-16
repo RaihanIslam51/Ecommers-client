@@ -1,5 +1,6 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { FiSearch, FiX } from 'react-icons/fi';
 import axiosInstance from '@/lib/axios';
@@ -10,7 +11,7 @@ import StoreProductCard from './Components/StoreProductCard';
 import { StoreProductCardSkeletonGrid } from './Components/StoreProductCardSkeleton';
 import Pagination from './Components/Pagination';
 
-const StorePage = () => {
+const StorePageContent = () => {
   const searchParams = useSearchParams();
   const urlSearchQuery = searchParams.get('search');
   const urlCategory = searchParams.get('category');
@@ -18,7 +19,6 @@ const StorePage = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState(urlSearchQuery || '');
   const [currentView, setCurrentView] = useState('grid');
@@ -29,7 +29,6 @@ const StorePage = () => {
 
   const [filters, setFilters] = useState({
     categories: [],
-    brands: [],
     priceRange: null,
     customPriceRange: null,
     productTypes: [],
@@ -70,10 +69,6 @@ const StorePage = () => {
       // Server returns: { success: true, message: "...", categories: [...] }
       if (response.data.success) {
         setCategories(response.data.categories || []);
-        
-        // Extract unique brands from products
-        const uniqueBrands = [...new Set(products.map(p => p.brand).filter(Boolean))];
-        setBrands(uniqueBrands.length > 0 ? uniqueBrands : ['Apple', 'Samsung', 'Sony', 'Nike', 'Adidas', 'Zara', 'H&M', 'Uniqlo']);
       }
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -85,7 +80,6 @@ const StorePage = () => {
   useEffect(() => {
     fetchProducts();
     fetchCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Apply filters whenever filters, search, or sort changes
@@ -113,12 +107,6 @@ const StorePage = () => {
     }
 
     // Brand filter
-    if (filters.brands && filters.brands.length > 0) {
-      result = result.filter(product =>
-        filters.brands.includes(product.brand)
-      );
-    }
-
     // Price range filter (predefined)
     if (filters.priceRange) {
       const { min, max } = filters.priceRange;
@@ -207,9 +195,6 @@ const StorePage = () => {
       case 'category':
         newFilters.categories = newFilters.categories.filter(c => c !== value);
         break;
-      case 'brand':
-        newFilters.brands = newFilters.brands.filter(b => b !== value);
-        break;
       case 'priceRange':
         newFilters.priceRange = null;
         break;
@@ -233,7 +218,6 @@ const StorePage = () => {
   const handleClearAllFilters = () => {
     setFilters({
       categories: [],
-      brands: [],
       priceRange: null,
       customPriceRange: null,
       productTypes: [],
@@ -252,19 +236,46 @@ const StorePage = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header Section */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Our Store
+        <div className="w-full mx-auto px-4 py-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-green-600 mb-4">
+            {filters.categories && filters.categories.length > 0 
+              ? `${filters.categories[0]} Products` 
+              : 'Fresh Store'
+            }
           </h1>
           <p className="text-gray-600 max-w-2xl">
-            Discover our wide range of products with advanced filtering options to find exactly what you need.
+            {filters.categories && filters.categories.length > 0 
+              ? `Browse our collection of fresh ${filters.categories[0].toLowerCase()} products with advanced filtering options.`
+              : 'Discover our wide range of fresh vegetables, healthy meal kits, and ready-to-cook packages with advanced filtering options.'
+            }
           </p>
+        </div>
+      </div>
+
+      {/* Breadcrumb */}
+      <div className="bg-gray-50 border-b border-gray-200">
+        <div className="w-full mx-auto px-4 py-3">
+          <nav className="flex items-center space-x-2 text-sm text-gray-600">
+            <Link href="/" className="hover:text-green-600 transition-colors">
+              Home
+            </Link>
+            <span>/</span>
+            <Link href="/store" className="hover:text-green-600 transition-colors">
+              Store
+            </Link>
+            {filters.categories && filters.categories.length > 0 && (
+              <>
+                <span>/</span>
+                <span className="text-green-600 font-medium">{filters.categories[0]}</span>
+              </>
+            )}
+          </nav>
         </div>
       </div>
 
       {/* Search Bar */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="w-full mx-auto px-4 py-4">
           <div className="relative max-w-2xl">
             <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
             <input
@@ -272,7 +283,7 @@ const StorePage = () => {
               placeholder="Search products by name or description..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+              className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
             />
             {searchQuery && (
               <button
@@ -287,7 +298,7 @@ const StorePage = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="w-full mx-auto px-4 py-6">
         <div className="flex gap-6">
           {/* Filter Sidebar */}
           <div className="w-64 hidden lg:block">
@@ -295,7 +306,6 @@ const StorePage = () => {
               filters={filters}
               onFilterChange={handleFilterChange}
               categories={categories}
-              brands={brands}
               onClearAll={handleClearAllFilters}
               isMobileOpen={false}
             />
@@ -307,7 +317,6 @@ const StorePage = () => {
               filters={filters}
               onFilterChange={handleFilterChange}
               categories={categories}
-              brands={brands}
               onClearAll={handleClearAllFilters}
               isMobileOpen={isMobileFilterOpen}
               onCloseMobile={() => setIsMobileFilterOpen(false)}
@@ -347,7 +356,7 @@ const StorePage = () => {
                 </p>
                 <button
                   onClick={handleClearAllFilters}
-                  className="px-6 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors"
+                  className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
                 >
                   Clear All Filters
                 </button>
@@ -384,4 +393,15 @@ const StorePage = () => {
   );
 };
 
-export default StorePage;
+export default function StorePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+        <p className="text-gray-600">Loading store...</p>
+      </div>
+    </div>}>
+      <StorePageContent />
+    </Suspense>
+  );
+}

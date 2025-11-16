@@ -26,7 +26,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                 title: 'Validation Error',
                 text: 'Please fill in both subject and message fields',
                 icon: 'warning',
-                confirmButtonColor: '#3b82f6'
+                confirmButtonColor: '#10b981'
             });
             return;
         }
@@ -42,7 +42,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
             `,
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#3b82f6',
+            confirmButtonColor: '#10b981',
             cancelButtonColor: '#6b7280',
             confirmButtonText: 'Yes, Send Email',
             cancelButtonText: 'Cancel'
@@ -154,7 +154,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4 flex items-center justify-between">
+                <div className="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4 flex items-center justify-between">
                     <div>
                         <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                             📧 Send Email to Customers
@@ -176,7 +176,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
 
                 <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
                     {/* Recipients Preview */}
-                    <div className="px-6 py-4 bg-blue-50 border-b border-blue-100">
+                    <div className="px-6 py-4 bg-green-50 border-b border-green-100">
                         <h3 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
                             <span>👥</span> Recipients ({recipients.length})
                         </h3>
@@ -184,14 +184,14 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                             {recipients.slice(0, 10).map((email, index) => (
                                 <span
                                     key={email}
-                                    className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-sm text-gray-700 border border-blue-200"
+                                    className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-sm text-gray-700 border border-green-200"
                                 >
                                     <span className="text-xs">📧</span>
                                     {recipientNames && recipientNames[index] ? recipientNames[index] : email}
                                 </span>
                             ))}
                             {recipients.length > 10 && (
-                                <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 rounded-full text-sm text-blue-700 font-semibold">
+                                <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 rounded-full text-sm text-green-700 font-semibold">
                                     +{recipients.length - 10} more
                                 </span>
                             )}
@@ -209,7 +209,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                                     key={index}
                                     onClick={() => applyTemplate(template)}
                                     disabled={sending}
-                                    className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-blue-50 hover:border-blue-300 transition-colors disabled:opacity-50"
+                                    className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-green-50 hover:border-green-300 transition-colors disabled:opacity-50"
                                 >
                                     {template.name}
                                 </button>
@@ -231,7 +231,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                                 onChange={handleChange}
                                 disabled={sending}
                                 placeholder="Enter email subject"
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                                 required
                             />
                         </div>
@@ -248,7 +248,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                                 disabled={sending}
                                 placeholder="Enter your message here..."
                                 rows={10}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed resize-none"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed resize-none"
                                 required
                             />
                             <p className="text-xs text-gray-500 mt-1">
@@ -257,7 +257,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                         </div>
 
                         {/* Template Option */}
-                        <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                        <div className="flex items-center gap-2 p-3 bg-green-50 rounded-lg border border-green-200">
                             <input
                                 type="checkbox"
                                 name="includeTemplate"
@@ -265,7 +265,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                                 checked={formData.includeTemplate}
                                 onChange={handleChange}
                                 disabled={sending}
-                                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                             />
                             <label htmlFor="includeTemplate" className="text-sm text-gray-700 cursor-pointer">
                                 <span className="font-semibold">Use professional email template</span>
@@ -286,7 +286,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                             <button
                                 type="submit"
                                 disabled={sending || !formData.subject.trim() || !formData.message.trim()}
-                                className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                className="flex-1 px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
                                 {sending ? (
                                     <>

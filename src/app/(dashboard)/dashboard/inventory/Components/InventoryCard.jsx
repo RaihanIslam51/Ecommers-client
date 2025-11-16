@@ -10,7 +10,7 @@ const InventoryCard = ({ item, onEdit, onRestock, onView }) => {
   const getStockStatus = () => {
     if (currentStock === 0) return { label: 'Out of Stock', color: 'red', icon: AlertCircle };
     if (currentStock <= minStock) return { label: 'Low Stock', color: 'orange', icon: AlertTriangle };
-    if (currentStock >= maxStock) return { label: 'Overstock', color: 'blue', icon: TrendingDown };
+    if (currentStock >= maxStock) return { label: 'Overstock', color: 'green', icon: TrendingDown };
     return { label: 'In Stock', color: 'green', icon: Package };
   };
 
@@ -38,7 +38,7 @@ const InventoryCard = ({ item, onEdit, onRestock, onView }) => {
           <span className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm flex items-center gap-1 ${
             stockStatus.color === 'red' ? 'bg-red-100/90 text-red-700 border border-red-200' :
             stockStatus.color === 'orange' ? 'bg-orange-100/90 text-orange-700 border border-orange-200' :
-            stockStatus.color === 'blue' ? 'bg-blue-100/90 text-blue-700 border border-blue-200' :
+            stockStatus.color === 'green' ? 'bg-green-100/90 text-green-700 border border-green-200' :
             'bg-green-100/90 text-green-700 border border-green-200'
           }`}>
             <stockStatus.icon className="w-3 h-3" />
@@ -74,7 +74,7 @@ const InventoryCard = ({ item, onEdit, onRestock, onView }) => {
                 className={`h-full transition-all duration-500 ${
                   stockStatus.color === 'red' ? 'bg-red-500' :
                   stockStatus.color === 'orange' ? 'bg-orange-500' :
-                  stockStatus.color === 'blue' ? 'bg-blue-500' :
+                  stockStatus.color === 'green' ? 'bg-green-500' :
                   'bg-green-500'
                 }`}
                 style={{ width: `${Math.min(stockPercentage, 100)}%` }}
@@ -99,7 +99,7 @@ const InventoryCard = ({ item, onEdit, onRestock, onView }) => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => onView(item)}
-            className="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors duration-200 text-sm font-medium"
+            className="flex-1 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors duration-200 text-sm font-medium"
           >
             View
           </button>
@@ -111,7 +111,7 @@ const InventoryCard = ({ item, onEdit, onRestock, onView }) => {
           </button>
           <button
             onClick={() => onEdit(item)}
-            className="flex-1 px-3 py-2 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors duration-200 text-sm font-medium"
+            className="flex-1 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors duration-200 text-sm font-medium"
           >
             Edit
           </button>

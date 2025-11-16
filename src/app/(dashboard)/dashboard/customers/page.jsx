@@ -305,7 +305,7 @@ const CustomersPage = () => {
                         <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
                             Customers Management
                             {loading && (
-                                <span className="inline-block animate-spin text-blue-600">⚙️</span>
+                                <span className="inline-block animate-spin text-green-600">⚙️</span>
                             )}
                         </h1>
                         <p className="text-gray-600 mt-2">
@@ -327,7 +327,7 @@ const CustomersPage = () => {
                         <button 
                             onClick={handleSendToAll}
                             disabled={loading || customers.length === 0}
-                            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="px-6 py-3 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             <span>📧</span>
                             Email All
@@ -335,7 +335,7 @@ const CustomersPage = () => {
                         <button 
                             onClick={handleSendEmail}
                             disabled={loading || selectedCustomers.length === 0}
-                            className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed relative"
+                            className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed relative"
                         >
                             <span>📤</span>
                             Send Email
@@ -388,14 +388,14 @@ const CustomersPage = () => {
 
             {/* Selection Info */}
             {selectedCustomers.length > 0 && (
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-center justify-between">
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <span className="text-2xl">✅</span>
                         <div>
-                            <p className="font-semibold text-blue-900">
+                            <p className="font-semibold text-green-900">
                                 {selectedCustomers.length} customer{selectedCustomers.length > 1 ? 's' : ''} selected
                             </p>
-                            <p className="text-sm text-blue-700">
+                            <p className="text-sm text-green-700">
                                 Ready to send email to selected customers
                             </p>
                         </div>
@@ -403,14 +403,14 @@ const CustomersPage = () => {
                     <div className="flex gap-2">
                         <button
                             onClick={handleSendEmail}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2"
+                            className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-2"
                         >
                             <span>📤</span>
                             Send Email
                         </button>
                         <button
                             onClick={() => setSelectedCustomers([])}
-                            className="px-4 py-2 bg-white border border-blue-300 text-blue-700 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+                            className="px-4 py-2 bg-white border border-green-300 text-green-700 rounded-lg font-semibold hover:bg-green-50 transition-colors"
                         >
                             Clear Selection
                         </button>

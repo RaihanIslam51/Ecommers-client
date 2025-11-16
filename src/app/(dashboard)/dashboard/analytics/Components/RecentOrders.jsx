@@ -47,8 +47,8 @@ const RecentOrders = ({ orders = [] }) => {
                     </thead>
                     <tbody>
                         {orderList.map((order, index) => (
-                            <tr key={index} className="border-b border-gray-100 hover:bg-blue-50 transition-colors">
-                                <td className="py-4 px-4 text-sm font-semibold text-blue-600">#{order.id}</td>
+                            <tr key={index} className="border-b border-gray-100 hover:bg-green-50 transition-colors">
+                                <td className="py-4 px-4 text-sm font-semibold text-green-600">#{order.id}</td>
                                 <td className="py-4 px-4 text-sm text-gray-700 font-medium">{order.customer}</td>
                                 <td className="py-4 px-4 text-sm font-bold text-green-600">
                                     ${typeof order.amount === 'number' ? order.amount.toFixed(2) : '0.00'}

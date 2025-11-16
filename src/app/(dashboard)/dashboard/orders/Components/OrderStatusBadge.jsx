@@ -10,8 +10,8 @@ const OrderStatusBadge = ({ status }) => {
         },
         processing: {
             label: 'Processing',
-            bgColor: 'bg-blue-100',
-            textColor: 'text-blue-700',
+            bgColor: 'bg-green-100',
+            textColor: 'text-green-700',
             icon: '⚙️'
         },
         shipped: {

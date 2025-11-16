@@ -31,14 +31,12 @@ const FilterSidebar = ({
   filters, 
   onFilterChange, 
   categories = [], 
-  brands = [],
   onClearAll,
   isMobileOpen,
   onCloseMobile 
 }) => {
   const [expandedSections, setExpandedSections] = useState({
     category: true,
-    brand: true,
     price: true,
     availability: true,
     rating: true,
@@ -116,7 +114,7 @@ const FilterSidebar = ({
                       : (filters.categories || []).filter(c => c !== category.name);
                     onFilterChange({ categories: newCategories });
                   }}
-                  className="w-4 h-4 text-black border-gray-300 rounded focus:ring-black"
+                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                 />
                 <span className="text-sm text-gray-700 flex items-center gap-2">
                   {category.icon && <span>{category.icon}</span>}
@@ -125,36 +123,6 @@ const FilterSidebar = ({
                     <span className="text-xs text-gray-500">({category.productCount})</span>
                   )}
                 </span>
-              </label>
-            ))}
-          </div>
-        </FilterSection>
-
-        {/* Brand Filter */}
-        <FilterSection 
-          title="Brand" 
-          sectionKey="brand"
-          expandedSections={expandedSections}
-          toggleSection={toggleSection}
-        >
-          <div className="space-y-2 max-h-48 overflow-y-auto">
-            {brands.map((brand) => (
-              <label
-                key={brand}
-                className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
-              >
-                <input
-                  type="checkbox"
-                  checked={filters.brands?.includes(brand) || false}
-                  onChange={(e) => {
-                    const newBrands = e.target.checked
-                      ? [...(filters.brands || []), brand]
-                      : (filters.brands || []).filter(b => b !== brand);
-                    onFilterChange({ brands: newBrands });
-                  }}
-                  className="w-4 h-4 text-black border-gray-300 rounded focus:ring-black"
-                />
-                <span className="text-sm text-gray-700">{brand}</span>
               </label>
             ))}
           </div>
@@ -185,7 +153,7 @@ const FilterSidebar = ({
                       priceRange: { min: range.min, max: range.max }
                     });
                   }}
-                  className="w-4 h-4 text-black border-gray-300 focus:ring-black"
+                  className="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500"
                 />
                 <span className="text-sm text-gray-700">{range.label}</span>
               </label>
@@ -206,7 +174,7 @@ const FilterSidebar = ({
                     }
                   });
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-black focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
               <span className="text-gray-500">-</span>
               <input
@@ -221,7 +189,7 @@ const FilterSidebar = ({
                     }
                   });
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-black focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -249,7 +217,7 @@ const FilterSidebar = ({
                       : (filters.productTypes || []).filter(t => t !== type);
                     onFilterChange({ productTypes: newTypes });
                   }}
-                  className="w-4 h-4 text-black border-gray-300 rounded focus:ring-black"
+                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                 />
                 <span className="text-sm text-gray-700">{type}</span>
               </label>
@@ -279,7 +247,7 @@ const FilterSidebar = ({
                       : (filters.availability || []).filter(a => a !== option);
                     onFilterChange({ availability: newAvailability });
                   }}
-                  className="w-4 h-4 text-black border-gray-300 rounded focus:ring-black"
+                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                 />
                 <span className="text-sm text-gray-700">{option}</span>
               </label>
@@ -309,7 +277,7 @@ const FilterSidebar = ({
                       : (filters.ratings || []).filter(r => r !== rating);
                     onFilterChange({ ratings: newRatings });
                   }}
-                  className="w-4 h-4 text-black border-gray-300 rounded focus:ring-black"
+                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                 />
                 <span className="flex items-center gap-1 text-sm">
                   {[...Array(5)].map((_, i) => (

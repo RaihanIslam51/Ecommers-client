@@ -100,7 +100,7 @@ const ProductCard = ({ product, viewType = 'grid' }) => {
                 </span>
               )}
               {discount > 0 && (
-                <span className="px-3 py-1 bg-black text-white text-xs font-bold rounded-full">
+                <span className="px-3 py-1 bg-green-600 text-white text-xs font-bold rounded-full">
                   -{discount}%
                 </span>
               )}
@@ -120,7 +120,7 @@ const ProductCard = ({ product, viewType = 'grid' }) => {
             <div>
               {/* Title & Description */}
               <Link href={`/products/${productId}`}>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600 cursor-pointer line-clamp-2">
+                <h3 className="text-lg font-bold text-gray-900 mb-2 hover:text-green-600 cursor-pointer line-clamp-2">
                   {productName}
                 </h3>
               </Link>
@@ -168,12 +168,12 @@ const ProductCard = ({ product, viewType = 'grid' }) => {
             <div className="flex items-center gap-3">
               <button 
                 onClick={handleAddToCart}
-                className="flex-1 bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+                className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
               >
                 <FaShoppingCart />
                 Add to Cart
               </button>
-              <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+              <button className="p-3 border border-gray-300 rounded-lg hover:bg-green-50 transition-colors">
                 <FaEye className="text-gray-600" />
               </button>
             </div>
@@ -202,7 +202,7 @@ const ProductCard = ({ product, viewType = 'grid' }) => {
         
         {/* Discount Badge */}
         {discount > 0 && (
-          <div className="absolute top-3 left-3 z-10 bg-red-500 text-white px-2.5 py-1 rounded-lg text-xs font-bold shadow-lg">
+          <div className="absolute top-3 left-3 z-10 bg-green-600 text-white px-2.5 py-1 rounded-lg text-xs font-bold shadow-lg">
             -{discount}%
           </div>
         )}
@@ -211,7 +211,7 @@ const ProductCard = ({ product, viewType = 'grid' }) => {
         <div className="absolute top-3 right-3 flex flex-col gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button
             onClick={handleToggleWishlist}
-            className="w-9 h-9 bg-white hover:bg-black text-gray-700 hover:text-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
+            className="w-9 h-9 bg-white hover:bg-green-600 text-gray-700 hover:text-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
             title="Add to Wishlist"
           >
             <FaHeart className={`text-sm ${isFavorite ? 'text-red-500' : ''}`} />
@@ -223,7 +223,7 @@ const ProductCard = ({ product, viewType = 'grid' }) => {
       <div className="p-4">
         {/* Product Title */}
         <Link href={`/products/${productId}`}>
-          <h3 className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2 min-h-10 hover:text-black transition-colors">
+          <h3 className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2 min-h-10 hover:text-green-600 transition-colors">
             {productName}
           </h3>
         </Link>
@@ -278,7 +278,7 @@ const ProductCard = ({ product, viewType = 'grid' }) => {
           
           {/* Add to Cart Icon */}
           <button 
-            className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gray-800"
+            className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-green-700"
             onClick={handleAddToCart}
             title="Add to Cart"
             disabled={stock === 0}

@@ -22,9 +22,9 @@ const CustomerStatusBadge = ({ status }) => {
         },
         new: {
             label: 'New',
-            bg: 'bg-blue-100',
-            text: 'text-blue-700',
-            dot: 'bg-blue-500'
+            bg: 'bg-green-100',
+            text: 'text-green-700',
+            dot: 'bg-green-500'
         },
         blocked: {
             label: 'Blocked',

@@ -10,7 +10,16 @@ export default function DashboardLayout({ children }) {
 
   return (
     <SessionProvider>
-      <div className="max-w-7xl mx-auto min-h-screen -mt-35 bg-linear-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
+      <style dangerouslySetInnerHTML={{__html: `
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}} />
+      <div className="w-full min-h-screen -mt-35 bg-linear-to-br from-gray-50 via-green-50/30 to-emerald-50/30">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -32,13 +41,13 @@ export default function DashboardLayout({ children }) {
         </aside>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex bg-amber-50 flex-col overflow-hidden w-full">
+        <div className="flex-1 flex bg-white flex-col overflow-hidden w-full">
           <Topbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
 
           {/* Main Content with Scroll */}
-          <main className="flex-1 overflow-y-auto overflow-x-hidden">
-            <div className="w-full px-3 py-4 sm:px-4 sm:py-5 md:px-6 md:py-6 lg:px-8 lg:py-8">
-              <div className="max-w-full">
+          <main className="flex-1 overflow-y-auto overflow-x-hidden hide-scrollbar">
+            <div className="w-full  py-4 sm:py-5  md:py-6  lg:py-8">
+              <div className="w-full mx-auto">
                 {children}
               </div>
             </div>

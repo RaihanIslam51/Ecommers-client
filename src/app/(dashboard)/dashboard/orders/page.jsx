@@ -25,6 +25,13 @@ const OrdersPage = () => {
     // Fetch orders from API
     useEffect(() => {
         fetchOrders();
+        
+        // Auto-refresh orders every 30 seconds
+        const interval = setInterval(() => {
+            fetchOrders();
+        }, 30000);
+        
+        return () => clearInterval(interval);
     }, []);
 
     const fetchOrders = async () => {
@@ -216,7 +223,7 @@ const OrdersPage = () => {
     });
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+        <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 p-6">
             {/* Page Header */}
             <div className="mb-8">
                 <div className="flex items-center justify-between mb-4">
@@ -227,7 +234,7 @@ const OrdersPage = () => {
                         <p className="text-gray-600 flex items-center gap-2">
                             Manage and track all your orders in one place
                             {filters.dateRange !== 'all' && (
-                                <span className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
                                     <span>📅</span>
                                     {filters.dateRange === 'today' && 'Today\'s Orders'}
                                     {filters.dateRange === 'week' && 'This Week\'s Orders'}
@@ -238,7 +245,7 @@ const OrdersPage = () => {
                     </div>
                     <button 
                         onClick={fetchOrders}
-                        className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl font-semibold flex items-center gap-2"
+                        className="px-6 py-3 bg-linear-to-r from-green-600 to-green-700 text-white rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-lg hover:shadow-xl font-semibold flex items-center gap-2"
                     >
                         <span className="text-xl">🔄</span>
                         Refresh Orders
@@ -282,7 +289,7 @@ const OrdersPage = () => {
                         {filters.dateRange !== 'all' && (
                             <button
                                 onClick={() => handleFilterChange('dateRange', 'all')}
-                                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                             >
                                 View All Orders
                             </button>

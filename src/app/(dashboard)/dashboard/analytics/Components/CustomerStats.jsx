@@ -2,14 +2,14 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
-const COLORS = ['#8b5cf6', '#10b981', '#3b82f6'];
+const COLORS = ['#10b981', '#059669', '#047857'];
 
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
                 <p className="font-semibold text-gray-800">{payload[0].name}</p>
-                <p className="text-sm text-purple-600">
+                <p className="text-sm text-green-600">
                     {payload[0].value} customers
                 </p>
             </div>
@@ -31,7 +31,7 @@ const CustomerStats = ({ segments = [], statusData = [] }) => {
     const orderStatus = statusData.length > 0 ? statusData : defaultStatusData;
     const totalCustomers = customerSegments.reduce((sum, s) => sum + s.value, 0);
 
-    const STATUS_COLORS = ['#eab308', '#3b82f6', '#8b5cf6', '#10b981', '#ef4444'];
+    const STATUS_COLORS = ['#eab308', '#10b981', '#059669', '#047857', '#ef4444'];
 
     return (
         <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
@@ -112,12 +112,12 @@ const CustomerStats = ({ segments = [], statusData = [] }) => {
             {/* Summary Stats */}
             <div className="pt-4 border-t border-gray-100">
                 <div className="grid grid-cols-2 gap-3">
-                    <div className="text-center p-3 bg-purple-50 rounded-lg">
-                        <p className="text-2xl font-bold text-purple-600">{totalCustomers}</p>
+                    <div className="text-center p-3 bg-green-50 rounded-lg">
+                        <p className="text-2xl font-bold text-green-600">{totalCustomers}</p>
                         <p className="text-xs text-gray-600 mt-1">Total Customers</p>
                     </div>
-                    <div className="text-center p-3 bg-green-50 rounded-lg">
-                        <p className="text-2xl font-bold text-green-600">
+                    <div className="text-center p-3 bg-emerald-50 rounded-lg">
+                        <p className="text-2xl font-bold text-emerald-600">
                             {totalCustomers > 0 ? ((customerSegments.find(s => s.name === 'Regular')?.value || 0) / totalCustomers * 100).toFixed(1) : 0}%
                         </p>
                         <p className="text-xs text-gray-600 mt-1">Retention Rate</p>

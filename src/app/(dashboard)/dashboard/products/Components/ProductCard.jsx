@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const ProductCard = ({ product, onEdit, onDelete, onView }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-green-200">
       {/* Product Image */}
       <div className="relative h-48 w-full bg-gray-100">
         {product.image ? (
@@ -53,7 +53,7 @@ const ProductCard = ({ product, onEdit, onDelete, onView }) => {
 
         <div className="flex items-center justify-between mb-3">
           <div>
-            <p className="text-2xl font-bold text-blue-600">
+            <p className="text-2xl font-bold text-green-600">
               ${product.price}
             </p>
             {product.originalPrice && (
@@ -72,7 +72,7 @@ const ProductCard = ({ product, onEdit, onDelete, onView }) => {
         <div className="flex gap-2">
           <button
             onClick={() => onView(product)}
-            className="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-sm transition-colors"
+            className="flex-1 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-md text-sm transition-colors"
           >
             View
           </button>

@@ -7,10 +7,10 @@ const CustomTooltip = ({ active, payload, label }) => {
         return (
             <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
                 <p className="font-semibold text-gray-800 mb-2">{label}</p>
-                <p className="text-sm text-blue-600">
+                <p className="text-sm text-green-600">
                     Sales: ${payload[0].value.toLocaleString()}
                 </p>
-                <p className="text-sm text-green-600">
+                <p className="text-sm text-emerald-600">
                     Orders: {payload[1].value}
                 </p>
             </div>
@@ -37,11 +37,11 @@ const SalesChart = ({ data = [] }) => {
                 </div>
                 <div className="flex gap-4 text-sm">
                     <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                         <span className="text-gray-600">Sales</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
                         <span className="text-gray-600">Orders</span>
                     </div>
                 </div>
@@ -51,12 +51,12 @@ const SalesChart = ({ data = [] }) => {
                 <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                     <defs>
                         <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                        </linearGradient>
-                        <linearGradient id="colorOrders" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
                             <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                        </linearGradient>
+                        <linearGradient id="colorOrders" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#059669" stopOpacity={0.3}/>
+                            <stop offset="95%" stopColor="#059669" stopOpacity={0}/>
                         </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -75,7 +75,7 @@ const SalesChart = ({ data = [] }) => {
                     <Area 
                         type="monotone" 
                         dataKey="sales" 
-                        stroke="#3b82f6" 
+                        stroke="#10b981" 
                         strokeWidth={2}
                         fillOpacity={1} 
                         fill="url(#colorSales)" 
@@ -83,7 +83,7 @@ const SalesChart = ({ data = [] }) => {
                     <Area 
                         type="monotone" 
                         dataKey="orders" 
-                        stroke="#10b981" 
+                        stroke="#059669" 
                         strokeWidth={2}
                         fillOpacity={1} 
                         fill="url(#colorOrders)" 
@@ -93,13 +93,13 @@ const SalesChart = ({ data = [] }) => {
 
             <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100">
                 <div className="text-center">
-                    <p className="text-2xl font-bold text-blue-600">
+                    <p className="text-2xl font-bold text-green-600">
                         ${chartData.reduce((sum, d) => sum + d.sales, 0).toLocaleString()}
                     </p>
                     <p className="text-sm text-gray-500 mt-1">Total Sales</p>
                 </div>
                 <div className="text-center">
-                    <p className="text-2xl font-bold text-green-600">
+                    <p className="text-2xl font-bold text-emerald-600">
                         {chartData.reduce((sum, d) => sum + d.orders, 0)}
                     </p>
                     <p className="text-sm text-gray-500 mt-1">Total Orders</p>

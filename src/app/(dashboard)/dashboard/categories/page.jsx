@@ -24,57 +24,111 @@ const CategoriesPage = () => {
   const [categories, setCategories] = useState([
     {
       id: 1,
-      name: 'Electronics',
-      description: 'Smartphones, laptops, tablets, and electronic accessories',
+      name: 'Fresh Vegetables',
+      description: 'Fresh, organic vegetables including carrots, potatoes, tomatoes, and more',
       image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 156,
-      status: 'active',
-      color: '#3b82f6'
-    },
-    {
-      id: 2,
-      name: 'Fashion',
-      description: 'Clothing, shoes, and fashion accessories for men and women',
-      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 234,
-      status: 'active',
-      color: '#ec4899'
-    },
-    {
-      id: 3,
-      name: 'Home & Kitchen',
-      description: 'Furniture, appliances, and home decor items',
-      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 98,
+      productCount: 45,
       status: 'active',
       color: '#10b981'
     },
     {
-      id: 4,
-      name: 'Sports & Fitness',
-      description: 'Exercise equipment, sportswear, and fitness accessories',
+      id: 2,
+      name: 'Fresh Fruits',
+      description: 'Seasonal fresh fruits, berries, and tropical fruits',
       image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 67,
+      productCount: 32,
       status: 'active',
       color: '#f59e0b'
     },
     {
-      id: 5,
-      name: 'Books',
-      description: 'Fiction, non-fiction, educational books and magazines',
+      id: 3,
+      name: 'Leafy Greens',
+      description: 'Fresh leafy vegetables including spinach, lettuce, kale, and herbs',
       image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 189,
-      status: 'inactive',
+      productCount: 28,
+      status: 'active',
+      color: '#22c55e'
+    },
+    {
+      id: 4,
+      name: 'Ready-to-Cook Meals',
+      description: 'Pre-prepped meals that are ready to cook in minutes',
+      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
+      productCount: 15,
+      status: 'active',
+      color: '#ef4444'
+    },
+    {
+      id: 5,
+      name: 'Meal Kits',
+      description: 'Complete meal kits with ingredients and recipes for easy cooking',
+      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
+      productCount: 12,
+      status: 'active',
       color: '#8b5cf6'
     },
     {
       id: 6,
-      name: 'Beauty & Health',
-      description: 'Cosmetics, skincare, and health products',
+      name: 'Fresh Herbs & Spices',
+      description: 'Aromatic herbs, spices, and seasonings for cooking',
       image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 145,
+      productCount: 18,
       status: 'active',
-      color: '#ef4444'
+      color: '#06b6d4'
+    },
+    {
+      id: 7,
+      name: 'Organic Products',
+      description: 'Certified organic vegetables, fruits, and food items',
+      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
+      productCount: 22,
+      status: 'active',
+      color: '#16a34a'
+    },
+    {
+      id: 8,
+      name: 'Healthy Snacks',
+      description: 'Nutritious snacks, nuts, seeds, and healthy alternatives',
+      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
+      productCount: 35,
+      status: 'active',
+      color: '#ea580c'
+    },
+    {
+      id: 9,
+      name: 'Dairy & Eggs',
+      description: 'Fresh dairy products, eggs, and milk alternatives',
+      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
+      productCount: 14,
+      status: 'inactive',
+      color: '#64748b'
+    },
+    {
+      id: 10,
+      name: 'Beverages',
+      description: 'Fresh juices, smoothies, and healthy drink options',
+      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
+      productCount: 8,
+      status: 'active',
+      color: '#3b82f6'
+    },
+    {
+      id: 11,
+      name: 'Grains & Cereals',
+      description: 'Whole grains, rice, quinoa, and healthy cereals',
+      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
+      productCount: 16,
+      status: 'active',
+      color: '#a855f7'
+    },
+    {
+      id: 12,
+      name: 'Seasonal Specials',
+      description: 'Limited-time seasonal vegetables, fruits, and special offers',
+      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
+      productCount: 9,
+      status: 'active',
+      color: '#ec4899'
     }
   ]);
 
@@ -166,7 +220,7 @@ const CategoriesPage = () => {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 via-blue-50 to-purple-50 p-4 md:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="w-full mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>

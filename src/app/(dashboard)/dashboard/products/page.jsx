@@ -263,14 +263,14 @@ const ProductsPage = () => {
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full mx-auto">
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
             <div>
               <h1 className="text-3xl font-bold text-gray-800">Products Management</h1>
               <p className="text-gray-600 mt-1">Manage your product inventory</p>
             </div>
-            <button onClick={handleAddProduct} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors shadow-lg">
+            <button onClick={handleAddProduct} className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors shadow-lg">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
@@ -319,7 +319,7 @@ const ProductsPage = () => {
             </svg>
             <h3 className="text-xl font-semibold text-gray-800 mb-2">No Products Found</h3>
             <p className="text-gray-600 mb-4">{filters.search || filters.category || filters.stockStatus ? 'Try adjusting your filters' : 'Start by adding your first product'}</p>
-            <button onClick={handleAddProduct} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors">Add Product</button>
+            <button onClick={handleAddProduct} className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors">Add Product</button>
           </div>
         )}
       </div>

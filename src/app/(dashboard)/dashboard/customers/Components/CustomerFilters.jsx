@@ -34,7 +34,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                                 }
                                 value={searchValue}
                                 onChange={(e) => handleSearchChange(e.target.value)}
-                                className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                                className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
                             />
                             <span className="absolute left-3 top-3 text-gray-400">
                                 {searchType === 'email' ? '�' : searchType === 'phone' ? '📱' : '�🔍'}
@@ -43,7 +43,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                         <select
                             value={searchType}
                             onChange={(e) => handleSearchTypeChange(e.target.value)}
-                            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all bg-white"
+                            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all bg-white"
                         >
                             <option value="all">All</option>
                             <option value="name">Name</option>
@@ -57,7 +57,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                             onClick={() => handleSearchTypeChange('all')}
                             className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                                 searchType === 'all' 
-                                    ? 'bg-blue-600 text-white' 
+                                    ? 'bg-green-600 text-white' 
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                         >
@@ -67,7 +67,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                             onClick={() => handleSearchTypeChange('name')}
                             className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                                 searchType === 'name' 
-                                    ? 'bg-blue-600 text-white' 
+                                    ? 'bg-green-600 text-white' 
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                         >
@@ -77,7 +77,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                             onClick={() => handleSearchTypeChange('email')}
                             className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                                 searchType === 'email' 
-                                    ? 'bg-blue-600 text-white' 
+                                    ? 'bg-green-600 text-white' 
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                         >
@@ -87,7 +87,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                             onClick={() => handleSearchTypeChange('phone')}
                             className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                                 searchType === 'phone' 
-                                    ? 'bg-blue-600 text-white' 
+                                    ? 'bg-green-600 text-white' 
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                         >
@@ -103,7 +103,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                     </label>
                     <select
                         onChange={(e) => onFilterChange('status', e.target.value)}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
                     >
                         <option value="">All Status</option>
                         <option value="active">Active</option>
@@ -121,7 +121,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                     </label>
                     <select
                         onChange={(e) => onSort(e.target.value)}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
                     >
                         <option value="name">Name</option>
                         <option value="totalSpent">Total Spent</option>
@@ -142,7 +142,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                 </button>
                 <button 
                     onClick={() => onFilterChange('quick', 'new')}
-                    className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold hover:bg-blue-200 transition-colors"
+                    className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold hover:bg-green-200 transition-colors"
                 >
                     ⭐ New This Month
                 </button>

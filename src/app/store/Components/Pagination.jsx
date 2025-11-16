@@ -49,7 +49,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         className={`p-2 rounded-lg border transition-colors ${
           currentPage === 1
             ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-            : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+            : 'border-gray-300 text-gray-700 hover:bg-green-50'
         }`}
       >
         <FiChevronLeft className="text-xl" />
@@ -72,8 +72,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
               onClick={() => onPageChange(page)}
               className={`min-w-[40px] px-3 py-2 rounded-lg font-medium transition-colors ${
                 currentPage === page
-                  ? 'bg-black text-white'
-                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                  ? 'bg-green-600 text-white'
+                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-green-50'
               }`}
             >
               {page}
@@ -89,7 +89,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         className={`p-2 rounded-lg border transition-colors ${
           currentPage === totalPages
             ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-            : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+            : 'border-gray-300 text-gray-700 hover:bg-green-50'
         }`}
       >
         <FiChevronRight className="text-xl" />

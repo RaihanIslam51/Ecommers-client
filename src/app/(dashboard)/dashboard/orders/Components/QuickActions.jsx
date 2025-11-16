@@ -7,9 +7,9 @@ const QuickActions = () => {
             title: 'Create New Order',
             description: 'Manually create a new order',
             icon: '➕',
-            bgColor: 'bg-blue-50',
-            iconColor: 'text-blue-600',
-            hoverColor: 'hover:bg-blue-100'
+            bgColor: 'bg-green-50',
+            iconColor: 'text-green-600',
+            hoverColor: 'hover:bg-green-100'
         },
         {
             id: 2,

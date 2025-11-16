@@ -47,7 +47,7 @@ const CategoryCard = ({
 
         {/* Product Count Badge */}
         <div className="absolute top-3 left-3">
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-600/90 text-white backdrop-blur-sm border border-blue-400">
+          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-600/90 text-white backdrop-blur-sm border border-green-400">
             {productCount || 0} Products
           </span>
         </div>
@@ -66,14 +66,14 @@ const CategoryCard = ({
         <div className="mt-4 flex items-center gap-2">
           <button
             onClick={() => onView(category)}
-            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors duration-200"
+            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors duration-200"
           >
             <Eye className="w-4 h-4" />
             <span className="text-sm font-medium">View</span>
           </button>
           <button
             onClick={() => onEdit(category)}
-            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors duration-200"
+            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors duration-200"
           >
             <Pencil className="w-4 h-4" />
             <span className="text-sm font-medium">Edit</span>
