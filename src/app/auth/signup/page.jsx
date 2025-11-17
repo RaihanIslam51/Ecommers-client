@@ -121,7 +121,7 @@ const SignUpPage = () => {
           {/* Header */}
           <div className="bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 px-8 py-10 text-center">
             <h1 className="text-3xl font-black text-white mb-2">Create Account</h1>
-            <p className="text-gray-300 text-sm">Join BDMart and start shopping</p>
+            <p className="text-gray-300 text-sm">Join RannarKaj.com and start shopping</p>
           </div>
 
           {/* Form */}

@@ -6,8 +6,10 @@ import { MdCancel, MdCheckCircle, MdLocalShipping } from 'react-icons/md';
 import { BiPackage } from 'react-icons/bi';
 import Swal from 'sweetalert2';
 import axios from '@/lib/axios';
+import { useOrders } from '@/context/OrderContext';
 
 const OrderDetailsModal = ({ notification, isOpen, onClose, onStatusUpdate }) => {
+  const { updateOrderStatus: updateStatusInContext, getOrderById } = useOrders();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState(false);
@@ -133,16 +135,15 @@ const OrderDetailsModal = ({ notification, isOpen, onClose, onStatusUpdate }) =>
     if (result.isConfirmed) {
       setUpdating(true);
       try {
-        const response = await axios.patch(`/orders/${order._id}/status`, {
-          status: newStatus
-        });
+        // Use centralized context function
+        const result = await updateStatusInContext(order._id || order.id, newStatus);
 
-        if (response.data && response.data.order) {
-          setOrder(response.data.order);
+        if (result.success) {
+          setOrder(result.order);
           
           // Notify parent component
           if (onStatusUpdate) {
-            onStatusUpdate(order._id, newStatus);
+            onStatusUpdate(order._id || order.id, newStatus);
           }
 
           Swal.fire({
@@ -295,6 +296,17 @@ const OrderDetailsModal = ({ notification, isOpen, onClose, onStatusUpdate }) =>
                     <p className="text-xs text-gray-500">Order Date</p>
                     <p className="text-sm font-semibold text-gray-800">
                       {formatDate(order.date || order.orderDate || order.createdAt || notification.createdAt)}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Delivery Time */}
+                <div className="flex items-center gap-3">
+                  <FaTruck className="text-green-600" size={16} />
+                  <div>
+                    <p className="text-xs text-gray-500">Delivery Time</p>
+                    <p className="text-sm font-semibold text-gray-800">
+                      {order.deliveryTime || '30 minutes'}
                     </p>
                   </div>
                 </div>

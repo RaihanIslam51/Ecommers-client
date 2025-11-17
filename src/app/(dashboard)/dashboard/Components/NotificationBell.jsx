@@ -140,6 +140,17 @@ const NotificationBell = () => {
         fetchNotifications();
     };
 
+    // Listen for order status updates from context
+    useEffect(() => {
+        const handleOrderUpdate = (event) => {
+            console.log('Order status updated, refreshing notifications:', event.detail);
+            fetchNotifications();
+        };
+
+        window.addEventListener('orderStatusUpdated', handleOrderUpdate);
+        return () => window.removeEventListener('orderStatusUpdated', handleOrderUpdate);
+    }, []);
+
     return (
         <div className="relative" ref={dropdownRef}>
             <button

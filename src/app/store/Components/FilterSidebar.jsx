@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { FiChevronDown, FiChevronUp, FiX } from 'react-icons/fi';
 import { FaStar } from 'react-icons/fa';
+import { BsFilterLeft } from 'react-icons/bs';
 
 // FilterSection component - moved outside to avoid recreation on render
 const FilterSection = ({ title, sectionKey, expandedSections, toggleSection, children }) => (
@@ -64,16 +65,21 @@ const FilterSidebar = ({
 
   return (
     <div className={`
-      ${isMobileOpen ? 'fixed inset-0 z-50 bg-white overflow-y-auto' : 'hidden lg:block'}
+      ${isMobileOpen ? 'fixed inset-0 z-50 bg-white overflow-y-auto animate-in slide-in-from-left duration-300' : 'hidden lg:block'}
       lg:sticky lg:top-4 lg:h-fit
     `}>
-      {/* Mobile Header */}
+      {/* Mobile Header - Enhanced */}
       {isMobileOpen && (
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-          <h2 className="text-lg font-bold">Filters</h2>
+        <div className="sticky top-0 bg-linear-to-r from-green-600 to-green-700 text-white border-b border-green-500 p-4 flex items-center justify-between shadow-lg">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+              <BsFilterLeft className="text-white text-lg" />
+            </div>
+            <h2 className="text-lg font-bold">Filter Products</h2>
+          </div>
           <button
             onClick={onCloseMobile}
-            className="p-2 hover:bg-gray-100 rounded-full"
+            className="p-2 hover:bg-white/20 rounded-full transition-colors"
           >
             <FiX className="text-xl" />
           </button>
@@ -81,12 +87,12 @@ const FilterSidebar = ({
       )}
 
       <div className="p-4 lg:p-0">
-        {/* Clear All Filters */}
+        {/* Clear All Filters - Enhanced */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-bold text-gray-900 hidden lg:block">Filters</h2>
           <button
             onClick={onClearAll}
-            className="text-sm text-red-600 hover:text-red-700 font-medium"
+            className="text-sm text-red-600 hover:text-red-700 font-medium hover:bg-red-50 px-3 py-1 rounded-lg transition-colors"
           >
             Clear All
           </button>

@@ -75,6 +75,9 @@ const OrderTable = ({ orders = [], loading, onViewDetails, onUpdateStatus, onDel
                                 Date
                             </th>
                             <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Delivery Time
+                            </th>
+                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Total
                             </th>
                             <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -132,6 +135,9 @@ const OrderTable = ({ orders = [], loading, onViewDetails, onUpdateStatus, onDel
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                     {formatDate(order.orderDate)}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                    {order.deliveryTime || '30 minutes'}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <span className="text-sm font-semibold text-gray-800">

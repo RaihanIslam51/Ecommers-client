@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import axiosInstance from '@/lib/axios';
+import { useOrders } from '@/context/OrderContext';
 import Swal from 'sweetalert2';
 import {
     OrderStats,
@@ -12,8 +12,7 @@ import {
 } from './Components';
 
 const OrdersPage = () => {
-    const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { orders, loading, fetchOrders, updateOrderStatus: updateStatus, deleteOrder } = useOrders();
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filters, setFilters] = useState({
@@ -30,30 +29,20 @@ const OrdersPage = () => {
         const interval = setInterval(() => {
             fetchOrders();
         }, 30000);
-        
-        return () => clearInterval(interval);
-    }, []);
 
-    const fetchOrders = async () => {
-        try {
-            setLoading(true);
-            const response = await axiosInstance.get('/orders');
-            // Server returns: { success: true, message: "...", orders: [...] }
-            if (response.data && response.data.orders) {
-                setOrders(response.data.orders);
-            }
-        } catch (error) {
-            console.error('Error fetching orders:', error);
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed to fetch orders',
-                icon: 'error',
-                confirmButtonColor: '#3b82f6'
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
+        // Listen for order status updates from other components
+        const handleOrderStatusUpdate = (event) => {
+            console.log('Order status updated event received:', event.detail);
+            // Orders will be automatically updated via context
+        };
+
+        window.addEventListener('orderStatusUpdated', handleOrderStatusUpdate);
+        
+        return () => {
+            clearInterval(interval);
+            window.removeEventListener('orderStatusUpdated', handleOrderStatusUpdate);
+        };
+    }, [fetchOrders]);
 
     // Helper functions to filter orders by date
     const isToday = (date) => {
@@ -115,16 +104,7 @@ const OrdersPage = () => {
 
     const handleUpdateStatus = async (orderId, newStatus) => {
         try {
-            await axiosInstance.put(`/orders/${orderId}`, { status: newStatus });
-            
-            // Update local state
-            setOrders(prevOrders =>
-                prevOrders.map(order =>
-                    (order._id || order.id) === orderId
-                        ? { ...order, status: newStatus }
-                        : order
-                )
-            );
+            await updateStatus(orderId, newStatus);
 
             Swal.fire({
                 title: 'Success!',
@@ -158,12 +138,7 @@ const OrdersPage = () => {
 
         if (result.isConfirmed) {
             try {
-                await axiosInstance.delete(`/orders/${orderId}`);
-                
-                // Update local state
-                setOrders(prevOrders =>
-                    prevOrders.filter(order => (order._id || order.id) !== orderId)
-                );
+                await deleteOrder(orderId);
 
                 Swal.fire({
                     title: 'Deleted!',

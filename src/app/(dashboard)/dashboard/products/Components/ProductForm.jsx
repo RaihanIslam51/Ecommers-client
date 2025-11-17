@@ -323,7 +323,8 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
               )}
             </label>
             <div className="space-y-2">
-              {/* <select
+              {/* Category Dropdown */}
+              <select
                 name="category"
                 value={formData.category}
                 onChange={(e) => {
@@ -340,39 +341,31 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
                     });
                   }
                 }}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black ${
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black bg-white ${
                   errors.category ? 'border-red-500' : 'border-gray-300'
                 }`}
               >
                 <option value="">Select Category</option>
-                <option value="Fresh Vegetables">🥕 Fresh Vegetables</option>
-                <option value="Fresh Fruits">🍎 Fresh Fruits</option>
-                <option value="Cut & Clean">✂️ Cut & Clean</option>
-                <option value="Ready-to-Cook">🍳 Ready-to-Cook</option>
-                <option value="Meal Kits">🥘 Meal Kits</option>
-                <option value="Healthy Items">🥗 Healthy Items</option>
-                <option value="Organic Products">🌱 Organic Products</option>
-                <option value="Essentials">🛒 Essentials</option>
-                <option value="Combos">📦 Combos</option>
-                <option value="Beverages">🥤 Beverages</option>
-                {categories.filter(cat => !['Fresh Vegetables', 'Fresh Fruits', 'Cut & Clean', 'Ready-to-Cook', 'Meal Kits', 'Healthy Items', 'Organic Products', 'Essentials', 'Combos', 'Beverages'].includes(cat.name)).map((cat) => (
+                {categories.map((cat) => (
                   <option key={cat._id} value={cat.name}>
-                    {cat.icon} {cat.name}
+                    {cat.icon && `${cat.icon} `}{cat.name}
                   </option>
                 ))}
-              </select> */}
+              </select>
               
+              {/* Add New Category Button */}
               <button
                 type="button"
                 onClick={() => setShowAddCategory(!showAddCategory)}
-                className="w-full px-4 py-2 border-2 border-dashed border-blue-400 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors flex items-center justify-center gap-2"
+                className="w-full px-4 py-2 border-2 border-dashed border-blue-400 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 font-medium"
               >
                 <span className="text-xl">+</span>
                 {showAddCategory ? 'Cancel' : 'Add New Category'}
               </button>
 
+              {/* Add Category Form */}
               {showAddCategory && (
-                <div className="flex gap-2 p-3 bg-blue-50 rounded-lg">
+                <div className="flex gap-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
                   <input
                     type="text"
                     value={newCategoryName}
@@ -384,7 +377,7 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
                   <button
                     type="button"
                     onClick={handleAddNewCategory}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm hover:shadow-md"
                   >
                     Add
                   </button>

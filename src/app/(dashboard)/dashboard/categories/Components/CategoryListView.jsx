@@ -5,13 +5,39 @@ import { Pencil, Trash2, Eye, Package } from 'lucide-react';
 /**
  * Category List View Component - Table view for categories
  */
-const CategoryListView = ({ categories, onEdit, onDelete, onView }) => {
+const CategoryListView = ({ categories, onEdit, onDelete, onView, selectedItems = [], onSelectItem }) => {
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      categories.forEach(cat => {
+        if (!selectedItems.includes(cat._id || cat.id)) {
+          onSelectItem(cat._id || cat.id);
+        }
+      });
+    } else {
+      categories.forEach(cat => {
+        if (selectedItems.includes(cat._id || cat.id)) {
+          onSelectItem(cat._id || cat.id);
+        }
+      });
+    }
+  };
+
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
+          <thead className="bg-linear-to-r from-gray-50 to-gray-100 border-b border-gray-200">
             <tr>
+              {onSelectItem && (
+                <th className="px-6 py-4 text-left">
+                  <input
+                    type="checkbox"
+                    checked={categories.length > 0 && categories.every(cat => selectedItems.includes(cat._id || cat.id))}
+                    onChange={handleSelectAll}
+                    className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                  />
+                </th>
+              )}
               <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Category
               </th>
@@ -30,13 +56,31 @@ const CategoryListView = ({ categories, onEdit, onDelete, onView }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {categories.map((category) => (
-              <tr 
-                key={category.id} 
-                className="hover:bg-gray-50 transition-colors duration-150"
-              >
-                {/* Category Info */}
-                <td className="px-6 py-4">
+            {categories.map((category) => {
+              const categoryId = category._id || category.id;
+              const isSelected = selectedItems.includes(categoryId);
+              
+              return (
+                <tr 
+                  key={categoryId} 
+                  className={`hover:bg-blue-50 transition-colors duration-150 ${
+                    isSelected ? 'bg-blue-50' : ''
+                  }`}
+                >
+                  {/* Selection Checkbox */}
+                  {onSelectItem && (
+                    <td className="px-6 py-4">
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => onSelectItem(categoryId)}
+                        className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                      />
+                    </td>
+                  )}
+                  
+                  {/* Category Info */}
+                  <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <div 
                       className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center shrink-0 relative"
@@ -69,7 +113,7 @@ const CategoryListView = ({ categories, onEdit, onDelete, onView }) => {
 
                 {/* Product Count */}
                 <td className="px-6 py-4 text-center">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
                     <Package className="w-4 h-4" />
                     {category.productCount || 0}
                   </span>
@@ -91,7 +135,7 @@ const CategoryListView = ({ categories, onEdit, onDelete, onView }) => {
                   <div className="flex items-center justify-center gap-2">
                     <button
                       onClick={() => onView(category)}
-                      className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                      className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       title="View Details"
                     >
                       <Eye className="w-4 h-4" />
@@ -113,7 +157,8 @@ const CategoryListView = ({ categories, onEdit, onDelete, onView }) => {
                   </div>
                 </td>
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>

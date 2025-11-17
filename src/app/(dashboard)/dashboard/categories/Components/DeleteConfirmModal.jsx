@@ -11,7 +11,7 @@ const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, categoryName }) => {
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/60 bg-opacity-50 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 

@@ -19,12 +19,12 @@ export default function Home() {
       </section>
 
       {/* Top Selling Products Section */}
-      <section className="w-full py-8 md:py-12 lg:py-16 bg-white">
+      <section className="w-full py-3 md:py-5 lg:py-6 bg-white">
         <Topsales />
       </section>
 
       {/* Featured Collections Section */}
-      <section className="w-full py-8 md:py-12 lg:py-16 bg-gray-50">
+      <section className="w-full py-2 md:py-3 lg:py-4">
         <Collection />
       </section>
 

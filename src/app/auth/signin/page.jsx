@@ -83,7 +83,7 @@ const SignInPage = () => {
           {/* Header */}
           <div className="bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 px-8 py-10 text-center">
             <h1 className="text-3xl font-black text-white mb-2">Welcome Back</h1>
-            <p className="text-gray-300 text-sm">Sign in to your BDMart account</p>
+            <p className="text-gray-300 text-sm">Sign in to your RannarKaj.com account</p>
           </div>
 
           {/* Form */}
@@ -173,7 +173,7 @@ const SignInPage = () => {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500">New to BDMart?</span>
+                <span className="px-4 bg-white text-gray-500">New to RannarKaj.com?</span>
               </div>
             </div>
 

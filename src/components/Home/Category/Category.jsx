@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -16,11 +16,12 @@ const Category = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [justUpdated, setJustUpdated] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const searchParams = useSearchParams();
   const highlightCategory = searchParams.get('highlight');
 
   // Fetch categories from database
-  const fetchCategories = async (isRefresh = false) => {
+  const fetchCategories = useCallback(async (isRefresh = false) => {
     try {
       if (isRefresh) {
         setRefreshing(true);
@@ -32,8 +33,8 @@ const Category = () => {
         setCategories(newCategories);
         if (isRefresh) {
           setJustUpdated(true);
-          // Auto-expand if we have more than 12 categories to ensure new category is visible
-          if (newCategories.length > 12) {
+          // Auto-expand on mobile if we have more than 12 categories to ensure new category is visible
+          if (isMobile && newCategories.length > 12) {
             setShowAll(true);
           }
           setTimeout(() => setJustUpdated(false), 2000);
@@ -47,7 +48,7 @@ const Category = () => {
         setRefreshing(false);
       }
     }
-  };
+  }, [isMobile]);
 
   useEffect(() => {
     fetchCategories();
@@ -64,6 +65,14 @@ const Category = () => {
     return () => {
       window.removeEventListener('categoryAdded', handleCategoryAdded);
     };
+  }, [fetchCategories]);
+
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const handleSeeMore = () => setShowAll((prev) => !prev);
@@ -73,9 +82,9 @@ const Category = () => {
     if (highlightCategory && categories.length > 0) {
       const highlightedCat = categories.find(cat => cat.name === highlightCategory);
       if (highlightedCat) {
-        // Auto-expand if highlighted category is beyond the default visible count
         const categoryIndex = categories.findIndex(cat => cat.name === highlightCategory);
-        if (categoryIndex >= 12) {
+        // Auto-expand on mobile if highlighted category is beyond the default visible count
+        if (isMobile && categoryIndex >= 12) {
           setShowAll(true);
         }
         
@@ -92,7 +101,7 @@ const Category = () => {
         }, 500);
       }
     }
-  }, [highlightCategory, categories]);
+  }, [highlightCategory, categories, isMobile]);
 
   if (loading) {
     return (
@@ -116,8 +125,8 @@ const Category = () => {
     );
   }
 
-  // Default visible: show 12 categories
-  const visibleCategories = showAll ? categories : categories.slice(0, 12);
+  // Default visible: show 12 categories on mobile, all on desktop
+  const visibleCategories = isMobile ? (showAll ? categories : categories.slice(0, 12)) : categories;
 
   return (
     <section className="w-full bg-white">
@@ -151,31 +160,33 @@ const Category = () => {
             </p>
           </div>
 
-          {/* See All Button */}
-          <button
-            onClick={handleSeeMore}
-            aria-expanded={showAll}
-            className="group relative inline-flex items-center gap-4 px-8 md:px-10 py-4 md:py-5 bg-linear-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-2xl font-bold text-lg shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 overflow-hidden"
-          >
-            {/* Button background effect */}
-            <div className="absolute inset-0 bg-linear-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
-            <span className="relative z-10 tracking-wide">{showAll ? "Show Less" : "View All Categories"}</span>
-            <FaChevronDown
-              className={`relative z-10 transition-all duration-500 transform group-hover:scale-110 ${
-                showAll ? "rotate-180" : "rotate-0"
-              }`}
-              size={18}
-            />
-            
-            {/* Decorative elements */}
-            <div className="absolute top-2 right-2 w-3 h-3 bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100"></div>
-            <div className="absolute bottom-2 left-2 w-2 h-2 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200"></div>
-          </button>
+          {/* See All Button - only on mobile */}
+          {isMobile && categories.length > 12 && (
+            <button
+              onClick={handleSeeMore}
+              aria-expanded={showAll}
+              className="group relative inline-flex items-center gap-4 px-8 md:px-10 py-4 md:py-5 bg-linear-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-2xl font-bold text-lg shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 overflow-hidden"
+            >
+              {/* Button background effect */}
+              <div className="absolute inset-0 bg-linear-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <span className="relative z-10 tracking-wide">{showAll ? "Show Less" : "View All Categories"}</span>
+              <FaChevronDown
+                className={`relative z-10 transition-all duration-500 transform group-hover:scale-110 ${
+                  showAll ? "rotate-180" : "rotate-0"
+                }`}
+                size={18}
+              />
+              
+              {/* Decorative elements */}
+              <div className="absolute top-2 right-2 w-3 h-3 bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100"></div>
+              <div className="absolute bottom-2 left-2 w-2 h-2 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200"></div>
+            </button>
+          )}
         </div>
 
         {/* Category Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 md:gap-4 lg:gap-5">
+        <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 md:gap-4 lg:gap-5">
           {visibleCategories.map((cat, index) => {
             // const categoryIcon = iconMap[cat.icon] || iconMap["📦"];
             const isHighlighted = highlightCategory === cat.name;
@@ -282,8 +293,8 @@ const Category = () => {
           })}
         </div>
 
-        {/* Bottom Info */}
-        {!showAll && categories.length > 12 && (
+        {/* Bottom Info - only on mobile */}
+        {isMobile && !showAll && categories.length > 12 && (
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-500">
               Showing {visibleCategories.length} of {categories.length}{" "}

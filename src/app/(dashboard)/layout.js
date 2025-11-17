@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { SessionProvider } from 'next-auth/react';
+import { OrderProvider } from '@/context/OrderContext';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 
@@ -10,16 +11,17 @@ export default function DashboardLayout({ children }) {
 
   return (
     <SessionProvider>
-      <style dangerouslySetInnerHTML={{__html: `
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}} />
-      <div className="w-full min-h-screen -mt-35 bg-linear-to-br from-gray-50 via-green-50/30 to-emerald-50/30">
+      <OrderProvider>
+        <style dangerouslySetInnerHTML={{__html: `
+          .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+          }
+          .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}} />
+        <div className="w-full min-h-screen -mt-35 bg-linear-to-br from-gray-50 via-green-50/30 to-emerald-50/30">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -57,7 +59,8 @@ export default function DashboardLayout({ children }) {
       
         </div>
       </div>
-    </div>
+        </div>
+      </OrderProvider>
     </SessionProvider>
   );
 }

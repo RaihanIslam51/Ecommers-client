@@ -1,12 +1,12 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import axiosInstance from '@/lib/axios';
 import { useCart } from '@/context/CartContext';
-import { 
-  FaShoppingCart, 
-  FaHeart, 
+import {
+  FaShoppingCart,
+  FaHeart,
   FaStar,
   FaFire,
   FaClock,
@@ -19,23 +19,25 @@ import { MdVerified } from 'react-icons/md';
 import { BiSort } from 'react-icons/bi';
 import Swal from 'sweetalert2';
 
-const HotDealsPage = () => {
+const HotDealsPage = memo(() => {
   const { addToCart, addToWishlist, isInWishlist, removeFromWishlist } = useCart();
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState('grid');
   const [sortBy, setSortBy] = useState('discount-high');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [categories, setCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(12);
 
   useEffect(() => {
     fetchHotDeals();
   }, []);
 
+  // Reset to first page when filters change
   useEffect(() => {
-    filterAndSortProducts();
-  }, [products, sortBy, selectedCategory]);
+    setCurrentPage(1);
+  }, [sortBy, selectedCategory]);
 
   const fetchHotDeals = async () => {
     try {
@@ -66,14 +68,15 @@ const HotDealsPage = () => {
     }
   };
 
-  const calculateDiscount = (product) => {
+  const calculateDiscount = useCallback((product) => {
     if (product.originalPrice && product.originalPrice > product.price) {
       return Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
     }
     return 0;
-  };
+  }, []);
 
-  const filterAndSortProducts = () => {
+  // Memoized filtered and sorted products
+  const filteredProducts = useMemo(() => {
     let filtered = [...products];
 
     // Filter by category
@@ -102,8 +105,16 @@ const HotDealsPage = () => {
         break;
     }
 
-    setFilteredProducts(filtered);
-  };
+    return filtered;
+  }, [products, selectedCategory, sortBy, calculateDiscount]);
+
+  // Paginated products
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredProducts, currentPage, itemsPerPage]);
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   const handleAddToCart = (product) => {
     addToCart(product, 1);
@@ -159,70 +170,70 @@ const HotDealsPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <Link 
+        <div className="mb-6 sm:mb-8">
+          <Link
             href="/"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-black mb-4 transition-colors"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-black mb-4 transition-colors text-sm sm:text-base"
           >
             <FaArrowLeft />
             <span>Back to Home</span>
           </Link>
-          
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <FaFire className="text-4xl text-green-600 animate-pulse" />
-                <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-600 via-green-700 to-green-800 bg-clip-text text-transparent">
+
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                <FaFire className="text-2xl sm:text-4xl text-green-600 animate-pulse" />
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-green-600 via-green-700 to-green-800 bg-clip-text text-transparent">
                   Fresh Deals
                 </h1>
               </div>
-              <p className="text-gray-700 font-medium">
+              <p className="text-gray-700 font-medium text-sm sm:text-base">
                 🍎 Fresh vegetables & meal kits at great prices! ({filteredProducts.length} deals)
               </p>
             </div>
 
             {/* View Mode Toggle */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 self-start lg:self-center">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-3 rounded-lg transition-all ${
+                className={`p-2.5 sm:p-3 rounded-lg transition-all touch-manipulation ${
                   viewMode === 'grid'
                     ? 'bg-green-600 text-white shadow-lg'
-                    : 'bg-white text-gray-600 hover:bg-green-50'
+                    : 'bg-white text-gray-600 hover:bg-green-50 border border-gray-200'
                 }`}
                 title="Grid View"
               >
-                <FaThLarge />
+                <FaThLarge className="text-sm sm:text-base" />
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-3 rounded-lg transition-all ${
+                className={`p-2.5 sm:p-3 rounded-lg transition-all touch-manipulation ${
                   viewMode === 'list'
                     ? 'bg-green-600 text-white shadow-lg'
-                    : 'bg-white text-gray-600 hover:bg-green-50'
+                    : 'bg-white text-gray-600 hover:bg-green-50 border border-gray-200'
                 }`}
                 title="List View"
               >
-                <FaListUl />
+                <FaListUl className="text-sm sm:text-base" />
               </button>
             </div>
           </div>
         </div>
 
         {/* Deal Timer Banner */}
-        <div className="bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between flex-wrap gap-4">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 text-white hidden lg:block md:block rounded-xl shadow-lg p-4 sm:p-6 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-3">
-              <FaClock className="text-3xl animate-pulse" />
+              <FaClock className="text-2xl sm:text-3xl animate-pulse" />
               <div>
-                <h3 className="text-xl font-bold">Fresh Deals Available!</h3>
-                <p className="text-green-100">Get the best prices on organic vegetables and meal kits</p>
+                <h3 className="text-lg sm:text-xl font-bold">Fresh Deals Available!</h3>
+                <p className="text-green-100 text-sm sm:text-base">Get the best prices on organic vegetables and meal kits</p>
               </div>
             </div>
-            <div className="text-right">
+            <div className="text-left sm:text-right">
               <p className="text-sm text-white">Average Savings</p>
-              <p className="text-3xl font-bold">
-                {products.length > 0 
+              <p className="text-2xl sm:text-3xl font-bold">
+                {products.length > 0
                   ? Math.round(products.reduce((acc, p) => acc + calculateDiscount(p), 0) / products.length)
                   : 0}% OFF
               </p>
@@ -231,18 +242,18 @@ const HotDealsPage = () => {
         </div>
 
         {/* Filters and Sort */}
-        <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
-          <div className="flex flex-col md:flex-row gap-4">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6">
+          <div className="flex flex-col sm:flex-row gap-4">
             {/* Category Filter */}
             <div className="flex-1">
               <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                <FaFilter />
+                <FaFilter className="text-green-600" />
                 Category
               </label>
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent touch-manipulation"
               >
                 <option value="all">All Categories</option>
                 {categories.map((category) => (
@@ -256,13 +267,13 @@ const HotDealsPage = () => {
             {/* Sort By */}
             <div className="flex-1">
               <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                <BiSort />
+                <BiSort className="text-green-600" />
                 Sort By
               </label>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent touch-manipulation"
               >
                 <option value="discount-high">Biggest Discount First</option>
                 <option value="discount-low">Smallest Discount First</option>
@@ -276,13 +287,13 @@ const HotDealsPage = () => {
 
         {/* Products Grid/List */}
         {filteredProducts.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-            <div className="text-6xl mb-4">🍎</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No fresh deals available</h3>
-            <p className="text-gray-600 mb-6">Check back later for amazing fresh deals and discounts!</p>
+          <div className="bg-white rounded-lg shadow-sm p-8 sm:p-12 text-center">
+            <div className="text-4xl sm:text-6xl mb-4">🍎</div>
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">No fresh deals available</h3>
+            <p className="text-gray-600 mb-6 text-sm sm:text-base">Check back later for amazing fresh deals and discounts!</p>
             <Link
               href="/"
-              className="inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              className="inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm sm:text-base"
             >
               Browse All Products
             </Link>
@@ -290,10 +301,10 @@ const HotDealsPage = () => {
         ) : (
           <div className={
             viewMode === 'grid'
-              ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
-              : 'space-y-4'
+              ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6'
+              : 'space-y-3 sm:space-y-4'
           }>
-            {filteredProducts.map((product) => {
+            {paginatedProducts.map((product) => {
               const productId = product._id || product.id;
               const inWishlist = isInWishlist(productId);
               const discount = calculateDiscount(product);
@@ -312,6 +323,9 @@ const HotDealsPage = () => {
                           src={product.image || 'https://via.placeholder.com/300'}
                           alt={product.name}
                           fill
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         {/* Hot Deal Badge */}
@@ -378,24 +392,25 @@ const HotDealsPage = () => {
                             )}
                           </div>
 
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 sm:gap-3">
                             <button
                               onClick={() => handleToggleWishlist(product)}
-                              className={`p-3 rounded-lg border-2 transition-all ${
+                              className={`p-2.5 sm:p-3 rounded-lg border-2 transition-all touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${
                                 inWishlist
                                   ? 'border-green-500 text-green-500 bg-green-50'
                                   : 'border-gray-300 text-gray-600 hover:border-green-500 hover:text-green-500'
                               }`}
                             >
-                              <FaHeart className={inWishlist ? 'fill-current' : ''} />
+                              <FaHeart className={`text-sm sm:text-base ${inWishlist ? 'fill-current' : ''}`} />
                             </button>
                             <button
                               onClick={() => handleAddToCart(product)}
                               disabled={product.stock <= 0}
-                              className="px-4 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 transition-all flex items-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg"
+                              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm sm:text-base font-medium rounded-lg hover:from-green-700 hover:to-green-800 transition-all flex items-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg touch-manipulation min-h-[44px]"
                             >
-                              <FaShoppingCart />
-                              Add to Cart
+                              <FaShoppingCart className="text-sm sm:text-base" />
+                              <span className="hidden xs:inline">Add to Cart</span>
+                              <span className="xs:hidden">Add</span>
                             </button>
                           </div>
                         </div>
@@ -414,6 +429,9 @@ const HotDealsPage = () => {
                       src={product.image || 'https://via.placeholder.com/300'}
                       alt={product.name}
                       fill
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     
@@ -442,7 +460,7 @@ const HotDealsPage = () => {
                           e.preventDefault();
                           handleToggleWishlist(product);
                         }}
-                        className={`p-2.5 rounded-lg backdrop-blur-sm shadow-lg transition-all ${
+                        className={`p-2.5 sm:p-3 rounded-lg backdrop-blur-sm shadow-lg transition-all touch-manipulation min-w-[40px] min-h-[40px] flex items-center justify-center ${
                           inWishlist
                             ? 'bg-green-500 text-white'
                             : 'bg-white/90 text-gray-700 hover:bg-green-500 hover:text-white'
@@ -456,7 +474,7 @@ const HotDealsPage = () => {
                           handleAddToCart(product);
                         }}
                         disabled={product.stock <= 0}
-                        className="p-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg backdrop-blur-sm hover:from-green-700 hover:to-green-800 shadow-lg transition-all disabled:bg-gray-400"
+                        className="p-2.5 sm:p-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg backdrop-blur-sm hover:from-green-700 hover:to-green-800 shadow-lg transition-all disabled:bg-gray-400 touch-manipulation min-w-[40px] min-h-[40px] flex items-center justify-center"
                       >
                         <FaShoppingCart className="text-sm" />
                       </button>
@@ -531,7 +549,7 @@ const HotDealsPage = () => {
                     <button
                       onClick={() => handleAddToCart(product)}
                       disabled={product.stock <= 0}
-                      className="w-full py-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm font-semibold rounded-lg hover:from-green-700 hover:to-green-800 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg"
+                      className="w-full py-3 sm:py-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm sm:text-base font-semibold rounded-lg hover:from-green-700 hover:to-green-800 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg touch-manipulation min-h-[44px] flex items-center justify-center"
                     >
                       {product.stock > 0 ? 'Grab This Deal!' : 'Out of Stock'}
                     </button>
@@ -539,6 +557,56 @@ const HotDealsPage = () => {
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-8 flex justify-center">
+            <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-3 sm:px-4 py-2 sm:py-3 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400 transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+              >
+                Previous
+              </button>
+
+              {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+                let pageNum;
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (currentPage <= 3) {
+                  pageNum = i + 1;
+                } else if (currentPage >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = currentPage - 2 + i;
+                }
+
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => setCurrentPage(pageNum)}
+                    className={`px-3 sm:px-4 py-2 sm:py-3 text-sm border rounded-lg transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${
+                      currentPage === pageNum
+                        ? 'bg-green-600 text-white border-green-600'
+                        : 'bg-white border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              })}
+
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-3 sm:px-4 py-2 sm:py-3 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400 transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+              >
+                Next
+              </button>
+            </div>
           </div>
         )}
 
@@ -556,6 +624,8 @@ const HotDealsPage = () => {
       </div>
     </div>
   );
-};
+});
+
+HotDealsPage.displayName = 'HotDealsPage';
 
 export default HotDealsPage;

@@ -10,12 +10,29 @@ const CategoryCard = ({
   category, 
   onEdit, 
   onDelete, 
-  onView 
+  onView,
+  isSelected,
+  onSelect
 }) => {
   const { name, description, image, productCount, status, color } = category;
 
   return (
-    <div className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+    <div className={`group bg-white rounded-xl border-2 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ${
+      isSelected ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
+    }`}>
+      {/* Selection Checkbox */}
+      {onSelect && (
+        <div className="absolute top-3 left-3 z-10">
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={onSelect}
+            onClick={(e) => e.stopPropagation()}
+            className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer shadow-sm"
+          />
+        </div>
+      )}
+
       {/* Image Section */}
       <div className="relative h-48 bg-linear-to-br from-gray-50 to-gray-100 overflow-hidden">
         {image ? (
@@ -46,11 +63,13 @@ const CategoryCard = ({
         </div>
 
         {/* Product Count Badge */}
-        <div className="absolute top-3 left-3">
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-600/90 text-white backdrop-blur-sm border border-green-400">
-            {productCount || 0} Products
-          </span>
-        </div>
+        {!onSelect && (
+          <div className="absolute top-3 left-3">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-600/90 text-white backdrop-blur-sm border border-blue-400">
+              {productCount || 0} Products
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Content Section */}

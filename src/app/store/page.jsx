@@ -1,8 +1,9 @@
 'use client';
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, memo, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { FiSearch, FiX } from 'react-icons/fi';
+import { BsFilterLeft } from 'react-icons/bs';
 import axiosInstance from '@/lib/axios';
 import FilterSidebar from './Components/FilterSidebar';
 import ProductToolbar from './Components/ProductToolbar';
@@ -11,7 +12,7 @@ import StoreProductCard from './Components/StoreProductCard';
 import { StoreProductCardSkeletonGrid } from './Components/StoreProductCardSkeleton';
 import Pagination from './Components/Pagination';
 
-const StorePageContent = () => {
+const StorePageContent = memo(() => {
   const searchParams = useSearchParams();
   const urlSearchQuery = searchParams.get('search');
   const urlCategory = searchParams.get('category');
@@ -88,14 +89,36 @@ const StorePageContent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products, filters, searchQuery, sortBy]);
 
-  const applyFilters = () => {
-    let result = [...products];
+  const sortProducts = useCallback((productsArray) => {
+    const sorted = [...productsArray];
+
+    switch (sortBy) {
+      case 'price-low-high':
+        return sorted.sort((a, b) => (a.price || 0) - (b.price || 0));
+      case 'price-high-low':
+        return sorted.sort((a, b) => (b.price || 0) - (a.price || 0));
+      case 'name-a-z':
+        return sorted.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      case 'name-z-a':
+        return sorted.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+      case 'rating':
+        return sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      case 'newest':
+        return sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      default:
+        return sorted;
+    }
+  }, [sortBy]);
+
+  const applyFilters = useCallback(() => {
+    let result = products;
 
     // Search filter
     if (searchQuery) {
       result = result.filter(product =>
         product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.description?.toLowerCase().includes(searchQuery.toLowerCase())
+        product.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.category?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
@@ -161,34 +184,13 @@ const StorePageContent = () => {
 
     setFilteredProducts(result);
     setCurrentPage(1); // Reset to first page when filters change
-  };
+  }, [products, filters, searchQuery, sortBy, sortProducts]);
 
-  const sortProducts = (productsArray) => {
-    const sorted = [...productsArray];
-
-    switch (sortBy) {
-      case 'price-low-high':
-        return sorted.sort((a, b) => (a.price || 0) - (b.price || 0));
-      case 'price-high-low':
-        return sorted.sort((a, b) => (b.price || 0) - (a.price || 0));
-      case 'name-a-z':
-        return sorted.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-      case 'name-z-a':
-        return sorted.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
-      case 'rating':
-        return sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-      case 'newest':
-        return sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      default:
-        return sorted;
-    }
-  };
-
-  const handleFilterChange = (newFilters) => {
+  const handleFilterChange = useCallback((newFilters) => {
     setFilters(prev => ({ ...prev, ...newFilters }));
-  };
+  }, []);
 
-  const handleRemoveFilter = (type, value) => {
+  const handleRemoveFilter = useCallback((type, value) => {
     const newFilters = { ...filters };
 
     switch (type) {
@@ -213,9 +215,9 @@ const StorePageContent = () => {
     }
 
     setFilters(newFilters);
-  };
+  }, [filters]);
 
-  const handleClearAllFilters = () => {
+  const handleClearAllFilters = useCallback(() => {
     setFilters({
       categories: [],
       priceRange: null,
@@ -225,26 +227,29 @@ const StorePageContent = () => {
       ratings: []
     });
     setSearchQuery('');
-  };
+  }, []);
 
   // Pagination
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-  const startIndex = (currentPage - 1) * productsPerPage;
-  const currentProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+  const totalPages = useMemo(() => Math.ceil(filteredProducts.length / productsPerPage), [filteredProducts.length, productsPerPage]);
+  const startIndex = useMemo(() => (currentPage - 1) * productsPerPage, [currentPage, productsPerPage]);
+  const currentProducts = useMemo(() => 
+    filteredProducts.slice(startIndex, startIndex + productsPerPage),
+    [filteredProducts, startIndex, productsPerPage]
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Section */}
       <div className="bg-white border-b border-gray-200">
-        <div className="w-full mx-auto px-4 py-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-green-600 mb-4">
-            {filters.categories && filters.categories.length > 0 
-              ? `${filters.categories[0]} Products` 
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 mb-3 sm:mb-4">
+            {filters.categories && filters.categories.length > 0
+              ? `${filters.categories[0]} Products`
               : 'Fresh Store'
             }
           </h1>
-          <p className="text-gray-600 max-w-2xl">
-            {filters.categories && filters.categories.length > 0 
+          <p className="text-gray-600 text-sm sm:text-base max-w-2xl leading-relaxed">
+            {filters.categories && filters.categories.length > 0
               ? `Browse our collection of fresh ${filters.categories[0].toLowerCase()} products with advanced filtering options.`
               : 'Discover our wide range of fresh vegetables, healthy meal kits, and ready-to-cook packages with advanced filtering options.'
             }
@@ -254,19 +259,19 @@ const StorePageContent = () => {
 
       {/* Breadcrumb */}
       <div className="bg-gray-50 border-b border-gray-200">
-        <div className="w-full mx-auto px-4 py-3">
-          <nav className="flex items-center space-x-2 text-sm text-gray-600">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
+          <nav className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600">
             <Link href="/" className="hover:text-green-600 transition-colors">
               Home
             </Link>
-            <span>/</span>
+            <span className="text-gray-400">/</span>
             <Link href="/store" className="hover:text-green-600 transition-colors">
               Store
             </Link>
             {filters.categories && filters.categories.length > 0 && (
               <>
-                <span>/</span>
-                <span className="text-green-600 font-medium">{filters.categories[0]}</span>
+                <span className="text-gray-400">/</span>
+                <span className="text-green-600 font-medium truncate">{filters.categories[0]}</span>
               </>
             )}
           </nav>
@@ -274,23 +279,23 @@ const StorePageContent = () => {
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="w-full mx-auto px-4 py-4">
-          <div className="relative max-w-2xl">
-            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+          <div className="relative max-w-2xl mx-auto sm:mx-0">
+            <FiSearch className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg sm:text-xl" />
             <input
               type="text"
               placeholder="Search products by name or description..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1"
               >
-                <FiX className="text-xl" />
+                <FiX className="text-lg sm:text-xl" />
               </button>
             )}
           </div>
@@ -298,33 +303,37 @@ const StorePageContent = () => {
       </div>
 
       {/* Main Content */}
-      <div className="w-full mx-auto px-4 py-6">
-        <div className="flex gap-6">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
           {/* Filter Sidebar */}
-          <div className="w-64 hidden lg:block">
-            <FilterSidebar
-              filters={filters}
-              onFilterChange={handleFilterChange}
-              categories={categories}
-              onClearAll={handleClearAllFilters}
-              isMobileOpen={false}
-            />
+          <div className="w-full lg:w-64 lg:shrink-0">
+            <div className="hidden lg:block">
+              <FilterSidebar
+                filters={filters}
+                onFilterChange={handleFilterChange}
+                categories={categories}
+                onClearAll={handleClearAllFilters}
+                isMobileOpen={false}
+              />
+            </div>
           </div>
 
           {/* Mobile Filter Sidebar */}
           {isMobileFilterOpen && (
-            <FilterSidebar
-              filters={filters}
-              onFilterChange={handleFilterChange}
-              categories={categories}
-              onClearAll={handleClearAllFilters}
-              isMobileOpen={isMobileFilterOpen}
-              onCloseMobile={() => setIsMobileFilterOpen(false)}
-            />
+            <div className="fixed inset-0 z-50 lg:hidden">
+              <FilterSidebar
+                filters={filters}
+                onFilterChange={handleFilterChange}
+                categories={categories}
+                onClearAll={handleClearAllFilters}
+                isMobileOpen={isMobileFilterOpen}
+                onCloseMobile={() => setIsMobileFilterOpen(false)}
+              />
+            </div>
           )}
 
           {/* Products Section */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             {/* Toolbar */}
             <ProductToolbar
               totalProducts={filteredProducts.length}
@@ -333,6 +342,7 @@ const StorePageContent = () => {
               sortBy={sortBy}
               onSortChange={setSortBy}
               onFilterToggle={() => setIsMobileFilterOpen(true)}
+              filters={filters}
             />
 
             {/* Active Filters */}
@@ -346,17 +356,17 @@ const StorePageContent = () => {
             {loading ? (
               <StoreProductCardSkeletonGrid count={12} viewType={currentView} />
             ) : filteredProducts.length === 0 ? (
-              <div className="text-center py-20">
-                <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <div className="text-center py-12 sm:py-20 px-4">
+                <div className="text-4xl sm:text-6xl mb-4">🔍</div>
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
                   No Products Found
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 text-sm sm:text-base mb-6 max-w-md mx-auto">
                   Try adjusting your filters or search query
                 </p>
                 <button
                   onClick={handleClearAllFilters}
-                  className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
+                  className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors text-sm sm:text-base"
                 >
                   Clear All Filters
                 </button>
@@ -365,9 +375,9 @@ const StorePageContent = () => {
               <>
                 <div className={`
                   ${currentView === 'grid'
-                    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
-                    : 'flex flex-col gap-6'
-                  } p-6
+                    ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6'
+                    : 'flex flex-col gap-3 sm:gap-4 lg:gap-6'
+                  } p-4 sm:p-6
                 `}>
                   {currentProducts.map((product) => (
                     <StoreProductCard
@@ -388,10 +398,36 @@ const StorePageContent = () => {
             )}
           </div>
         </div>
+
+        {/* Mobile Floating Filter Button */}
+        <div className="lg:hidden fixed bottom-6 right-6 z-40">
+          <button
+            onClick={() => setIsMobileFilterOpen(true)}
+            className="w-14 h-14 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95"
+            aria-label="Open filters"
+          >
+            <BsFilterLeft className="text-xl" />
+            {/* Active filter indicator */}
+            {(filters.categories?.length > 0 || filters.priceRange || filters.customPriceRange || filters.productTypes?.length > 0 || filters.availability?.length > 0 || filters.ratings?.length > 0) && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                {[
+                  filters.categories?.length || 0,
+                  filters.priceRange ? 1 : 0,
+                  filters.customPriceRange ? 1 : 0,
+                  filters.productTypes?.length || 0,
+                  filters.availability?.length || 0,
+                  filters.ratings?.length || 0
+                ].reduce((a, b) => a + b, 0)}
+              </span>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
-};
+});
+
+StorePageContent.displayName = 'StorePageContent';
 
 export default function StorePage() {
   return (

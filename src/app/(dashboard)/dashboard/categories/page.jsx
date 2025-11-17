@@ -1,14 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Package } from 'lucide-react';
+import axiosInstance from '@/lib/axios';
+import Swal from 'sweetalert2';
 import {
   CategoryCard,
   CategoryStats,
   CategoryFilters,
   AddCategoryModal,
   CategoryListView,
-  DeleteConfirmModal
+  DeleteConfirmModal,
+  CategoryProductsModal
 } from './Components';
 
 const CategoriesPage = () => {
@@ -19,9 +22,39 @@ const CategoriesPage = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [isProductsModalOpen, setIsProductsModalOpen] = useState(false);
+  const [viewingCategory, setViewingCategory] = useState(null);
 
-  // Sample data - replace with your API data
-  const [categories, setCategories] = useState([
+  // Fetch categories from database
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get('/categories');
+      if (response.data && response.data.categories) {
+        setCategories(response.data.categories);
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed to load categories',
+        text: error.response?.data?.message || 'Please try again later',
+        confirmButtonColor: '#3b82f6'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // OLD SAMPLE DATA - NOW FETCHING FROM DATABASE
+  const oldCategories = [
     {
       id: 1,
       name: 'Fresh Vegetables',
@@ -130,7 +163,8 @@ const CategoriesPage = () => {
       status: 'active',
       color: '#ec4899'
     }
-  ]);
+  ];
+  // End of old sample data
 
   // Calculate stats
   const stats = {
@@ -181,13 +215,28 @@ const CategoriesPage = () => {
   const filteredCategories = getFilteredCategories();
 
   // Handlers
-  const handleAddCategory = (categoryData) => {
-    const newCategory = {
-      ...categoryData,
-      id: categories.length + 1,
-      productCount: 0
-    };
-    setCategories([...categories, newCategory]);
+  const handleAddCategory = async (categoryData) => {
+    try {
+      const response = await axiosInstance.post('/categories', categoryData);
+      if (response.data.success) {
+        await fetchCategories();
+        Swal.fire({
+          icon: 'success',
+          title: 'Category Added!',
+          text: 'New category has been created successfully',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      }
+    } catch (error) {
+      console.error('Error adding category:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed to add category',
+        text: error.response?.data?.message || 'Please try again',
+        confirmButtonColor: '#3b82f6'
+      });
+    }
   };
 
   const handleEditCategory = (category) => {
@@ -195,11 +244,30 @@ const CategoriesPage = () => {
     setIsAddModalOpen(true);
   };
 
-  const handleUpdateCategory = (updatedData) => {
-    setCategories(categories.map(cat =>
-      cat.id === selectedCategory.id ? { ...cat, ...updatedData } : cat
-    ));
-    setSelectedCategory(null);
+  const handleUpdateCategory = async (updatedData) => {
+    try {
+      const id = selectedCategory._id || selectedCategory.id;
+      const response = await axiosInstance.put(`/categories/${id}`, updatedData);
+      if (response.data.success) {
+        await fetchCategories();
+        setSelectedCategory(null);
+        Swal.fire({
+          icon: 'success',
+          title: 'Category Updated!',
+          text: 'Category has been updated successfully',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      }
+    } catch (error) {
+      console.error('Error updating category:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed to update category',
+        text: error.response?.data?.message || 'Please try again',
+        confirmButtonColor: '#3b82f6'
+      });
+    }
   };
 
   const handleDeleteClick = (category) => {
@@ -207,15 +275,99 @@ const CategoriesPage = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleDeleteConfirm = () => {
-    setCategories(categories.filter(cat => cat.id !== selectedCategory.id));
-    setIsDeleteModalOpen(false);
-    setSelectedCategory(null);
+  const handleDeleteConfirm = async () => {
+    try {
+      const id = selectedCategory._id || selectedCategory.id;
+      await axiosInstance.delete(`/categories/${id}`);
+      await fetchCategories();
+      setIsDeleteModalOpen(false);
+      setSelectedCategory(null);
+      Swal.fire({
+        icon: 'success',
+        title: 'Deleted!',
+        text: 'Category has been deleted successfully',
+        timer: 2000,
+        showConfirmButton: false
+      });
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed to delete category',
+        text: error.response?.data?.message || 'Please try again',
+        confirmButtonColor: '#3b82f6'
+      });
+      setIsDeleteModalOpen(false);
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedItems.length === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'No categories selected',
+        text: 'Please select categories to delete',
+        confirmButtonColor: '#3b82f6'
+      });
+      return;
+    }
+
+    const result = await Swal.fire({
+      title: 'Delete Selected Categories?',
+      text: `Are you sure you want to delete ${selectedItems.length} categories? This action cannot be undone!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, delete them!',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await Promise.all(
+          selectedItems.map(id => axiosInstance.delete(`/categories/${id}`))
+        );
+        await fetchCategories();
+        setSelectedItems([]);
+        Swal.fire({
+          icon: 'success',
+          title: 'Deleted!',
+          text: `${selectedItems.length} categories have been deleted`,
+          timer: 2000,
+          showConfirmButton: false
+        });
+      } catch (error) {
+        console.error('Error deleting categories:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed to delete categories',
+          text: 'Some categories could not be deleted',
+          confirmButtonColor: '#3b82f6'
+        });
+      }
+    }
+  };
+
+  const handleSelectItem = (categoryId) => {
+    setSelectedItems(prev => 
+      prev.includes(categoryId)
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectedItems.length === filteredCategories.length) {
+      setSelectedItems([]);
+    } else {
+      setSelectedItems(filteredCategories.map(cat => cat._id || cat.id));
+    }
   };
 
   const handleViewCategory = (category) => {
-    console.log('View category:', category);
-    // Implement view details functionality
+    setViewingCategory(category);
+    setIsProductsModalOpen(true);
   };
 
   return (
@@ -258,16 +410,51 @@ const CategoriesPage = () => {
           onSortChange={setSortBy}
         />
 
+        {/* Bulk Actions */}
+        {selectedItems.length > 0 && (
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                checked={selectedItems.length === filteredCategories.length}
+                onChange={handleSelectAll}
+                className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <span className="text-sm font-semibold text-gray-700">
+                {selectedItems.length} selected
+              </span>
+            </div>
+            <button
+              onClick={handleBulkDelete}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors font-medium flex items-center gap-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              Delete Selected
+            </button>
+          </div>
+        )}
+
         {/* Categories Display */}
-        {viewMode === 'grid' ? (
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="text-center">
+              <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-gray-600 font-medium">Loading categories...</p>
+            </div>
+          </div>
+        ) : viewMode === 'grid' ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCategories.map((category) => (
               <CategoryCard
-                key={category.id}
+                key={category._id || category.id}
                 category={category}
                 onEdit={handleEditCategory}
                 onDelete={handleDeleteClick}
                 onView={handleViewCategory}
+                isSelected={selectedItems.includes(category._id || category.id)}
+                onSelect={() => handleSelectItem(category._id || category.id)}
               />
             ))}
           </div>
@@ -277,6 +464,8 @@ const CategoriesPage = () => {
             onEdit={handleEditCategory}
             onDelete={handleDeleteClick}
             onView={handleViewCategory}
+            selectedItems={selectedItems}
+            onSelectItem={handleSelectItem}
           />
         )}
 
@@ -324,6 +513,15 @@ const CategoriesPage = () => {
         }}
         onConfirm={handleDeleteConfirm}
         categoryName={selectedCategory?.name}
+      />
+
+      <CategoryProductsModal
+        isOpen={isProductsModalOpen}
+        onClose={() => {
+          setIsProductsModalOpen(false);
+          setViewingCategory(null);
+        }}
+        category={viewingCategory}
       />
     </div>
   );

@@ -48,7 +48,7 @@ const Navbarfirst = () => {
             className="flex items-center gap-2 text-green-700 hover:text-green-900 transition-all duration-200 group"
           >
             <FaPhoneAlt className="text-xs group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-medium">+880 1956-486761</span>
+            <span className="text-xs font-medium">+88013095 40406</span>
           </Link>
 
           <div className="w-px h-3 bg-green-300"></div>

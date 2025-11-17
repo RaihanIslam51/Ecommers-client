@@ -41,18 +41,19 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center gap-2 py-8">
+    <div className="flex items-center justify-center gap-1 sm:gap-2 py-6 sm:py-8 px-4">
       {/* Previous Button */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`p-2 rounded-lg border transition-colors ${
+        className={`p-2 sm:p-3 rounded-lg border transition-colors ${
           currentPage === 1
             ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-            : 'border-gray-300 text-gray-700 hover:bg-green-50'
+            : 'border-gray-300 text-gray-700 hover:bg-green-50 active:bg-green-100'
         }`}
+        aria-label="Previous page"
       >
-        <FiChevronLeft className="text-xl" />
+        <FiChevronLeft className="text-lg sm:text-xl" />
       </button>
 
       {/* Page Numbers */}
@@ -60,7 +61,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         {getPageNumbers().map((page, index) => {
           if (page === '...') {
             return (
-              <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-500">
+              <span key={`ellipsis-${index}`} className="px-2 sm:px-3 py-2 text-gray-500 text-sm sm:text-base">
                 ...
               </span>
             );
@@ -70,11 +71,12 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             <button
               key={page}
               onClick={() => onPageChange(page)}
-              className={`min-w-[40px] px-3 py-2 rounded-lg font-medium transition-colors ${
+              className={`min-w-[36px] sm:min-w-[40px] px-2 sm:px-3 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base ${
                 currentPage === page
                   ? 'bg-green-600 text-white'
-                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-green-50'
+                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-green-50 active:bg-green-100'
               }`}
+              aria-label={`Go to page ${page}`}
             >
               {page}
             </button>
@@ -86,13 +88,14 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`p-2 rounded-lg border transition-colors ${
+        className={`p-2 sm:p-3 rounded-lg border transition-colors ${
           currentPage === totalPages
             ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-            : 'border-gray-300 text-gray-700 hover:bg-green-50'
+            : 'border-gray-300 text-gray-700 hover:bg-green-50 active:bg-green-100'
         }`}
+        aria-label="Next page"
       >
-        <FiChevronRight className="text-xl" />
+        <FiChevronRight className="text-lg sm:text-xl" />
       </button>
     </div>
   );

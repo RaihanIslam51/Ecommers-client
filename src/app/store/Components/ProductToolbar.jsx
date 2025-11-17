@@ -9,7 +9,8 @@ const ProductToolbar = ({
   onViewChange, 
   sortBy, 
   onSortChange,
-  onFilterToggle 
+  onFilterToggle,
+  filters = {}
 }) => {
   const sortOptions = [
     { value: 'featured', label: 'Featured' },
@@ -22,28 +23,41 @@ const ProductToolbar = ({
   ];
 
   return (
-    <div className="bg-white border-b border-gray-200 sticky top-0 z-30">
-      <div className="px-4 py-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div className="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm">
+      <div className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           {/* Left Section - Product Count & Filter Button */}
-          <div className="flex items-center gap-4">
-            {/* Mobile Filter Toggle */}
+          <div className="flex items-center justify-between sm:justify-start gap-4">
+            {/* Mobile Filter Toggle - Enhanced */}
             <button
               onClick={onFilterToggle}
-              className="lg:hidden flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              className="lg:hidden flex items-center gap-2 px-3 sm:px-4 py-2 bg-green-600 text-white border border-green-600 rounded-lg hover:bg-green-700 transition-colors text-sm sm:text-base shadow-sm"
             >
-              <BsFilterLeft className="text-xl" />
-              <span className="text-sm font-medium">Filters</span>
+              <BsFilterLeft className="text-lg sm:text-xl" />
+              <span className="font-medium">Filters</span>
+              {/* Active filter indicator */}
+              {(filters.categories?.length > 0 || filters.priceRange || filters.customPriceRange || filters.productTypes?.length > 0 || filters.availability?.length > 0 || filters.ratings?.length > 0) && (
+                <span className="bg-white text-green-600 text-xs px-1.5 py-0.5 rounded-full font-semibold">
+                  {[
+                    filters.categories?.length || 0,
+                    filters.priceRange ? 1 : 0,
+                    filters.customPriceRange ? 1 : 0,
+                    filters.productTypes?.length || 0,
+                    filters.availability?.length || 0,
+                    filters.ratings?.length || 0
+                  ].reduce((a, b) => a + b, 0)}
+                </span>
+              )}
             </button>
 
             {/* Product Count */}
-            <div className="text-sm text-gray-600">
+            <div className="text-sm sm:text-base text-gray-600">
               <span className="font-semibold text-gray-900">{totalProducts}</span> Products Found
             </div>
           </div>
 
           {/* Right Section - View Toggle & Sort */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-4">
             {/* Sort Dropdown */}
             <div className="flex items-center gap-2">
               <label htmlFor="sort" className="text-sm text-gray-600 hidden sm:block">
@@ -53,7 +67,7 @@ const ProductToolbar = ({
                 id="sort"
                 value={sortBy}
                 onChange={(e) => onSortChange(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white cursor-pointer"
+                className="px-2 sm:px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white cursor-pointer min-w-0"
               >
                 {sortOptions.map((option) => (
                   <option key={option.value} value={option.value}>

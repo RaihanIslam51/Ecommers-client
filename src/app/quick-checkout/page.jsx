@@ -25,6 +25,7 @@ const QuickCheckoutPage = () => {
     postalCode: '',
     paymentMethod: 'cash',
     quantity: 1,
+    deliveryTime: '30 minutes',
   });
 
   const [loading, setLoading] = useState(false);
@@ -93,6 +94,7 @@ const QuickCheckoutPage = () => {
           postalCode: formData.postalCode
         },
         paymentMethod: formData.paymentMethod,
+        deliveryTime: formData.deliveryTime,
         status: 'pending',
         orderDate: new Date().toISOString()
       };
@@ -264,7 +266,7 @@ const QuickCheckoutPage = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-800 mb-3">
                       <FaShoppingCart className="text-blue-500" />
@@ -280,6 +282,26 @@ const QuickCheckoutPage = () => {
                       required
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 focus:bg-white"
                     />
+                  </div>
+
+                  <div>
+                    <label className="flex items-center gap-2 text-sm font-semibold text-gray-800 mb-3">
+                      <FaCreditCard className="text-blue-500" />
+                      Delivery Time *
+                    </label>
+                    <select
+                      name="deliveryTime"
+                      value={formData.deliveryTime}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 focus:bg-white"
+                    >
+                      <option value="30 minutes">30 minutes</option>
+                      <option value="1 hour">1 hour</option>
+                      <option value="2 hours">2 hours</option>
+                      <option value="4 hours">4 hours</option>
+                      <option value="1 day">1 day</option>
+                      <option value="2 days">2 days</option>
+                    </select>
                   </div>
 
                   <div>
@@ -349,6 +371,10 @@ const QuickCheckoutPage = () => {
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Price per item:</span>
                   <span className="font-semibold text-gray-900">${(product.price || 0).toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Delivery Time:</span>
+                  <span className="font-semibold text-gray-900">{formData.deliveryTime}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Subtotal:</span>

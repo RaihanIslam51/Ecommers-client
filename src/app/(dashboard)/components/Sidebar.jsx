@@ -43,12 +43,12 @@ const Sidebar = ({ onClose }) => {
     {
       title: 'E-Commerce',
       items: [
-        { name: 'Products', href: '/dashboard/products', icon: Package, badge: '1.2k' },
-        { name: 'Orders', href: '/dashboard/orders', icon: ShoppingCart, badge: '45' },
+        { name: 'Products', href: '/dashboard/products', icon: Package, badge: '*' },
+        { name: 'Orders', href: '/dashboard/orders', icon: ShoppingCart, badge: '*' },
         { name: 'Customers', href: '/dashboard/customers', icon: Users, badge: null },
         { name: 'Categories', href: '/dashboard/categories', icon: Tag, badge: null },
         { name: 'Banners', href: '/dashboard/banners', icon: Image, badge: null },
-        { name: 'Inventory', href: '/dashboard/inventory', icon: ShoppingBag, badge: null },
+        // { name: 'Inventory', href: '/dashboard/inventory', icon: ShoppingBag, badge: null },
         { name: 'Shipping', href: '/dashboard/shipping', icon: Truck, badge: null },
       ]
     },
@@ -57,10 +57,10 @@ const Sidebar = ({ onClose }) => {
       items: [
         { name: 'Users', href: '/dashboard/users', icon: Users, badge: null },
         { name: 'Email Customers', href: '/dashboard/email', icon: Mail, badge: 'New' },
-        { name: 'Reviews', href: '/dashboard/reviews', icon: MessageSquare, badge: '12' },
-        { name: 'Notifications', href: '/dashboard/notifications', icon: Bell, badge: '5' },
-        { name: 'Settings', href: '/dashboard/settings', icon: Settings, badge: null },
-        { name: 'Store Setup', href: '/dashboard/store-setup', icon: Store, badge: null },
+        // { name: 'Reviews', href: '/dashboard/reviews', icon: MessageSquare, badge: '12' },
+        // { name: 'Notifications', href: '/dashboard/notifications', icon: Bell, badge: '5' },
+        // { name: 'Settings', href: '/dashboard/settings', icon: Settings, badge: null },
+        // { name: 'Store Setup', href: '/dashboard/store-setup', icon: Store, badge: null },
       ]
     }
   ];

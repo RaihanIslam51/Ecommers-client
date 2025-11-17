@@ -257,10 +257,10 @@ const LiveChatModal = ({ isOpen, onClose }) => {
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
                   <span className="text-lg">👋</span>
                 </div>
-                <span className="font-semibold">BDMart Support</span>
+                <span className="font-semibold">RannarKaj.com Support</span>
               </div>
               <p className="text-sm mb-1">
-                Hello {session?.user?.name || 'there'}! Welcome to BDMart Live Chat Support! 🎉
+                Hello {session?.user?.name || 'there'}! Welcome to RannarKaj.com Live Chat Support! 🎉
               </p>
               <p className="text-xs text-blue-100">
                 We're here to help you with any questions about our products, orders, or services. How can we assist you today?

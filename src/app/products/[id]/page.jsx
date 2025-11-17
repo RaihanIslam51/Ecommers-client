@@ -319,8 +319,8 @@ const ProductDetailsPage = () => {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center">
         <div className="text-center">
           <div className="relative mb-8">
-            <div className="animate-spin rounded-full h-20 w-20 border-4 border-slate-200 border-t-slate-900 mx-auto"></div>
-            <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-500 animate-spin mx-auto" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
+            
+           
           </div>
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Loading Product Details</h2>
           <p className="text-slate-600">Please wait while we fetch the best information for you...</p>

@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import Swal from 'sweetalert2';
+import axiosInstance from '@/lib/axios';
 
 const CheckoutPage = () => {
   const { cart, getTotalPrice, clearCart } = useCart();
@@ -19,6 +18,7 @@ const CheckoutPage = () => {
     city: '',
     postalCode: '',
     paymentMethod: 'cash',
+    deliveryTime: '30 minutes',
   });
 
   const [loading, setLoading] = useState(false);
@@ -45,18 +45,47 @@ const CheckoutPage = () => {
     setLoading(true);
 
     try {
-      // Here you can add API call to create order
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Prepare order data
+      const orderData = {
+        customerInfo: {
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          address: `${formData.address}, ${formData.city}, ${formData.postalCode}`
+        },
+        items: cart.map(item => ({
+          productId: item._id || item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity || 1,
+          image: item.image
+        })),
+        totalAmount: getTotalPrice() + 5, // including shipping
+        shippingAddress: {
+          address: formData.address,
+          city: formData.city,
+          postalCode: formData.postalCode
+        },
+        paymentMethod: formData.paymentMethod,
+        deliveryTime: formData.deliveryTime,
+        status: 'pending',
+        orderDate: new Date().toISOString()
+      };
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Order Placed!',
-        text: 'Your order has been successfully placed.',
-        confirmButtonColor: '#000',
-      });
+      // Create order via API
+      const response = await axiosInstance.post('/orders', orderData);
 
-      clearCart();
-      router.push('/');
+      if (response.data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Order Placed!',
+          text: 'Your order has been successfully placed. Order ID: ' + response.data.order._id,
+          confirmButtonColor: '#000',
+        }).then(() => {
+          clearCart();
+          router.push('/');
+        });
+      }
     } catch (error) {
       console.error('Checkout error:', error);
       Swal.fire({
@@ -184,6 +213,25 @@ const CheckoutPage = () => {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
                     />
                   </div>
+                </div>
+
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Delivery Time *
+                  </label>
+                  <select
+                    name="deliveryTime"
+                    value={formData.deliveryTime}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                  >
+                    <option value="30 minutes">30 minutes</option>
+                    <option value="1 hour">1 hour</option>
+                    <option value="2 hours">2 hours</option>
+                    <option value="4 hours">4 hours</option>
+                    <option value="1 day">1 day</option>
+                    <option value="2 days">2 days</option>
+                  </select>
                 </div>
 
                 <div className="mb-6">

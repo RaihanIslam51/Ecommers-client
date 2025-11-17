@@ -44,7 +44,7 @@ const SUPPORT_LINKS = [
 
 const MOBILE_NAV_ITEMS = [
   { icon: FaHome, label: "Home", href: "/" },
-  { icon: FaTag, label: "Offers", href: "/offers" },
+  { icon: FaTag, label: "Shop Now", href: "/store" },
   { icon: FaUser, label: "Account", href: "/profile" },
   { icon: FaHeart, label: "Wishlist", href: "/wishlist" },
 ];

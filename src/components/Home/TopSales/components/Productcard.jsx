@@ -199,24 +199,7 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
           )}
         </div>
 
-        {/* Rating */}
-        {/* <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-1">
-            <div className="flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <FaStar key={i} className="text-yellow-400 text-xs" />
-              ))}
-            </div>
-            <span className="text-xs text-gray-500 ml-1">(4.5)</span>
-          </div>
-          
-    
-          {product.originLocation && (
-            <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full border border-orange-200">
-              📍 {product.originLocation.split(',')[0]}
-            </span>
-          )}
-        </div> */}
+        
 
         {/* Price */}
         <div className="flex items-baseline gap-2 mb-3">
@@ -230,31 +213,7 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
           )}
         </div>
 
-        {/* Stock Status with Enhanced Info */}
-        {/* <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-          <div className="flex items-center gap-2">
-            {stock > 0 ? (
-              <>
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-xs text-gray-600">
-                  <span className="font-semibold text-green-600">{stock}</span> in stock
-                </span>
-              </>
-            ) : (
-              <>
-                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                <span className="text-xs text-red-600 font-semibold">Out of stock</span>
-              </>
-            )}
-          </div>
-          
-         
-          {product.shelfLife && (
-            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full border border-blue-200">
-              🕒 {product.shelfLife}
-            </span>
-          )}
-        </div> */}
+       
 
         {/* Buy Now Button - Only show if not out of stock */}
         {stock > 0 && (

@@ -6,7 +6,7 @@ import { useSession, signOut } from 'next-auth/react';
 import Swal from 'sweetalert2';
 import NotificationBell from '../dashboard/Components/NotificationBell';
 import MessageBell from '../dashboard/Components/MessageBell';
-import LiveChatAdmin from '../dashboard/Components/LiveChatAdmin';
+// import LiveChatAdmin from '../dashboard/Components/LiveChatAdmin';
 import { 
   Search,
   Menu,
@@ -321,7 +321,7 @@ const Topbar = ({
           <MessageBell />
 
           {/* Live Chat Icon */}
-          <LiveChatAdmin />
+          {/* <LiveChatAdmin /> */}
 
           {/* Notifications Icon */}
           <NotificationBell />

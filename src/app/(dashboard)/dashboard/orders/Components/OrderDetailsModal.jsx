@@ -59,7 +59,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" onClick={onClose}>
+        <div className="fixed inset-0 bg-black/50 bg-opacity-50 z-50 flex items-center justify-center p-4" onClick={onClose}>
             <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
                 {/* Header */}
                 <div className="sticky top-0 bg-linear-to-r from-blue-600 to-blue-700 text-white px-8 py-6 rounded-t-2xl flex items-center justify-between z-10">
@@ -127,6 +127,12 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
                                     </p>
                                 </div>
                                 <div className="bg-white rounded-lg p-3">
+                                    <p className="text-xs text-gray-500 mb-1">Delivery Time</p>
+                                    <p className="text-sm font-semibold text-gray-800">
+                                        {order.deliveryTime || '30 minutes'}
+                                    </p>
+                                </div>
+                                <div className="bg-white rounded-lg p-3">
                                     <p className="text-xs text-gray-500 mb-1">Total Amount</p>
                                     <p className="text-2xl font-bold text-green-600">
                                         ${order.totalAmount?.toFixed(2) || '0.00'}
@@ -155,67 +161,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
                         </div>
                     </div>
 
-                    {/* Order Items */}
-                    <div className="mb-8">
-                        <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                            <span>🛍️</span> Product Details
-                        </h3>
-                        <div className="bg-linear-to-br from-orange-50 to-yellow-50 border border-orange-100 rounded-xl p-6">
-                            <div className="flex gap-6">
-                                {/* Product Image */}
-                                <div className="shrink-0">
-                                    <div className="relative w-32 h-32 bg-white rounded-lg overflow-hidden border-2 border-orange-200 shadow-md">
-                                        {order.product?.images?.[0] ? (
-                                            <Image
-                                                src={order.product.images[0]}
-                                                alt={order.product.name || 'Product'}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
-                                                No Image
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Product Info */}
-                                <div className="flex-1">
-                                    <h4 className="text-xl font-bold text-gray-800 mb-2">
-                                        {order.product?.name || 'Product Name'}
-                                    </h4>
-                                    <div className="grid grid-cols-2 gap-4 mt-4">
-                                        <div className="bg-white rounded-lg p-3 border border-orange-200">
-                                            <p className="text-xs text-gray-500 mb-1">Price</p>
-                                            <p className="text-lg font-bold text-orange-600">
-                                                ${order.product?.price?.toFixed(2) || '0.00'}
-                                            </p>
-                                        </div>
-                                        <div className="bg-white rounded-lg p-3 border border-orange-200">
-                                            <p className="text-xs text-gray-500 mb-1">Quantity</p>
-                                            <p className="text-lg font-bold text-gray-800">
-                                                {order.quantity || 1}
-                                            </p>
-                                        </div>
-                                        <div className="bg-white rounded-lg p-3 border border-orange-200">
-                                            <p className="text-xs text-gray-500 mb-1">Brand</p>
-                                            <p className="text-sm font-semibold text-gray-800">
-                                                {order.product?.brand || 'N/A'}
-                                            </p>
-                                        </div>
-                                        <div className="bg-white rounded-lg p-3 border border-orange-200">
-                                            <p className="text-xs text-gray-500 mb-1">Category</p>
-                                            <p className="text-sm font-semibold text-gray-800">
-                                                {order.product?.category || 'N/A'}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                   
                     {/* Order Summary */}
                     <div className="bg-linear-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
                         <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">

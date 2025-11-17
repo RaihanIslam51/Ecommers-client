@@ -302,7 +302,7 @@ const EmailPage = () => {
           </h3>
           <div className="border border-gray-200 rounded-lg overflow-hidden">
             <div className="bg-gradient-to-r from-purple-600 to-purple-800 p-8 text-center">
-              <h1 className="text-white text-3xl font-bold">🛒 BDMart</h1>
+              <h1 className="text-white text-3xl font-bold">🛒 RannarKaj.com</h1>
               <p className="text-white text-sm mt-2 opacity-90">Your Trusted Shopping Partner</p>
             </div>
             <div className="p-8 bg-white">
@@ -315,12 +315,12 @@ const EmailPage = () => {
                   href="#"
                   className="inline-block px-8 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-full font-semibold"
                 >
-                  Visit BDMart
+                  Visit RannarKaj.com
                 </a>
               </div>
             </div>
             <div className="bg-gray-50 p-6 text-center border-t">
-              <p className="text-gray-600 text-sm">© 2025 BDMart. All rights reserved.</p>
+              <p className="text-gray-600 text-sm">© 2025 RannarKaj.com. All rights reserved.</p>
             </div>
           </div>
         </div>

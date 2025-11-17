@@ -15,7 +15,7 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
     // Initialize from localStorage
     if (typeof window !== 'undefined') {
-      const savedCart = localStorage.getItem('bdmart_cart');
+      const savedCart = localStorage.getItem('RannarKaj.com_cart');
       if (savedCart) {
         try {
           return JSON.parse(savedCart);
@@ -30,7 +30,7 @@ export const CartProvider = ({ children }) => {
   const [wishlistItems, setWishlistItems] = useState(() => {
     // Initialize from localStorage
     if (typeof window !== 'undefined') {
-      const savedWishlist = localStorage.getItem('bdmart_wishlist');
+      const savedWishlist = localStorage.getItem('RannarKaj.com_wishlist');
       if (savedWishlist) {
         try {
           return JSON.parse(savedWishlist);
@@ -45,18 +45,18 @@ export const CartProvider = ({ children }) => {
   // Save cart to localStorage whenever it changes
   useEffect(() => {
     if (cartItems.length > 0) {
-      localStorage.setItem('bdmart_cart', JSON.stringify(cartItems));
+      localStorage.setItem('RannarKaj.com_cart', JSON.stringify(cartItems));
     } else {
-      localStorage.removeItem('bdmart_cart');
+      localStorage.removeItem('RannarKaj.com_cart');
     }
   }, [cartItems]);
 
   // Save wishlist to localStorage whenever it changes
   useEffect(() => {
     if (wishlistItems.length > 0) {
-      localStorage.setItem('bdmart_wishlist', JSON.stringify(wishlistItems));
+      localStorage.setItem('RannarKaj.com_wishlist', JSON.stringify(wishlistItems));
     } else {
-      localStorage.removeItem('bdmart_wishlist');
+      localStorage.removeItem('RannarKaj.com_wishlist');
     }
   }, [wishlistItems]);
 
