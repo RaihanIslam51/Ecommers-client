@@ -133,14 +133,14 @@ const Category = () => {
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-10 md:mb-12 lg:mb-16">
-          <div className="flex-1">
+          <div className="flex-1 ">
             <div className="flex items-center gap-4 mb-3">
               <div className="relative">
                 <div className="w-1.5 h-12 md:h-14 bg-linear-to-b from-green-500 to-emerald-600 rounded-full shadow-lg"></div>
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
               </div>
             <div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black bg-linear-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight">
+                <h2 className="text-4xl  md:text-5xl lg:text-6xl font-black bg-linear-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight">
                   Fresh Categories
                   {refreshing && (
                     <span className="ml-4 inline-block w-6 h-6 border-2 border-green-600 border-t-transparent rounded-full animate-spin"></span>
@@ -198,7 +198,7 @@ const Category = () => {
                 key={cat._id || `cat-${index}`}
                 role="button"
                 tabIndex={0}
-                className={`group relative bg-white hover:bg-linear-to-br hover:from-green-50 hover:to-emerald-50 border-2 rounded-2xl md:rounded-3xl p-5 md:p-6 lg:p-7 cursor-pointer transition-all duration-500 hover:shadow-2xl transform hover:-translate-y-2 hover:scale-105 overflow-hidden ${
+                className={`group relative bg-white hover:bg-linear-to-br  hover:from-green-50 hover:to-emerald-50 border-2 rounded-2xl md:rounded-3xl p-5 md:p-6 lg:p-7 cursor-pointer transition-all duration-500 hover:shadow-2xl transform hover:-translate-y-2 hover:scale-105 overflow-hidden ${
                   isHighlighted 
                     ? 'border-blue-400 bg-linear-to-br from-blue-50 to-indigo-50 shadow-xl ring-2 ring-blue-200 scale-105' 
                     : 'border-gray-200 hover:border-green-400'
@@ -212,7 +212,7 @@ const Category = () => {
                     <span className={`text-lg md:text-xl lg:text-2xl font-black transition-all duration-500 leading-tight tracking-wide ${
                       isHighlighted 
                         ? 'bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent drop-shadow-sm' 
-                        : 'text-gray-900 group-hover:bg-linear-to-r group-hover:from-green-600 group-hover:via-emerald-600 group-hover:to-teal-600 group-hover:bg-clip-text group-hover:text-transparent'
+                        : 'text-gray-900  group-hover:bg-linear-to-r group-hover:from-green-600 group-hover:via-emerald-600 group-hover:to-teal-600 group-hover:bg-clip-text group-hover:text-transparent'
                     }`}>
                       {cat.name}
                     </span>

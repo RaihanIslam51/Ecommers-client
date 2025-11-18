@@ -20,7 +20,7 @@ const DEFAULT_BANNER = {
  * Loading Skeleton for Side Banner
  */
 const LeftBannerSkeleton = () => (
-  <div className="relative w-full h-full bg-linear-to-br from-gray-100 to-gray-200 rounded-xl overflow-hidden animate-pulse">
+  <div className="relative w-full h-full  bg-linear-to-br from-gray-100 to-gray-200 rounded-xl overflow-hidden animate-pulse">
     <div className="absolute inset-0 flex items-center justify-center">
       <div className="w-12 h-12 border-4 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
     </div>
@@ -58,7 +58,7 @@ const SideBannerContent = ({ banner }) => (
       <div className="animate-slide-up animation-delay-200">
         <Link
           href={banner.buttonLink || "/store"}
-          className="group inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-900 text-gray-900 hover:text-white px-5 py-2.5 rounded-lg font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 w-max"
+          className="group inline-flex items-center justify-center gap-2 bg-white  text-gray-900 hover:text-white px-5 py-2.5 rounded-lg font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 w-max"
         >
           <span>{banner.buttonText}</span>
           <svg
@@ -85,8 +85,8 @@ const SideBannerContent = ({ banner }) => (
  */
 const DecorativeOrbs = () => (
   <>
-    <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl animate-pulse-slow" />
-    <div className="absolute bottom-10 left-10 w-32 h-32 bg-purple-500/15 rounded-full blur-2xl animate-pulse-slow animation-delay-500" />
+    <div className="absolute -top-10 -right-10 w-40 h-40  rounded-full blur-3xl animate-pulse-slow" />
+    <div className="absolute bottom-10 left-10 w-32 h-32  rounded-full blur-2xl animate-pulse-slow animation-delay-500" />
   </>
 );
 
@@ -145,9 +145,7 @@ const LeftBanner = () => {
         />
       </div>
 
-      {/* Multi-layer Gradient Overlays */}
-      <div className="absolute inset-0 bg-linear-to-t from-gray-900/90 via-gray-900/60 to-transparent" />
-      <div className="absolute inset-0 bg-linear-to-r from-transparent via-black/10 to-black/30" />
+      
 
       {/* Content Layer */}
       <SideBannerContent banner={displayBanner} />

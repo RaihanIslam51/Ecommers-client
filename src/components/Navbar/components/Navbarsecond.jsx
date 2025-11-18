@@ -68,7 +68,7 @@ const Navbarsecond = () => {
   ];
 
   return (
-    <nav className="bg-white">
+    <nav >
       <div className="flex justify-between items-center h-full py-3 md:py-0">
         {/* Logo Section */}
         <div className="flex items-center gap-3">
@@ -89,7 +89,7 @@ const Navbarsecond = () => {
             
             <div className="hidden sm:flex flex-col">
               <span className="text-xl md:text-2xl font-black tracking-tight leading-none bg-gradient-to-r from-green-700 to-green-900 bg-clip-text text-transparent">
-                KannerKaj
+                RannerKaj
               </span>
               <span className="text-[9px] text-green-600 font-semibold tracking-widest uppercase">
                 Fresh & Healthy Foods

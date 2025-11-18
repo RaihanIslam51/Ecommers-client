@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaCity, FaCreditCard, FaShoppingCart, FaArrowLeft } from "react-icons/fa";
@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
 import axiosInstance from "@/lib/axios";
 
-const QuickCheckoutPage = () => {
+const QuickCheckoutContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session } = useSession();
@@ -412,4 +412,17 @@ const QuickCheckoutPage = () => {
   );
 };
 
-export default QuickCheckoutPage;
+QuickCheckoutContent.displayName = 'QuickCheckoutContent';
+
+export default function QuickCheckoutPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+        <p className="text-gray-600">Loading checkout...</p>
+      </div>
+    </div>}>
+      <QuickCheckoutContent />
+    </Suspense>
+  );
+}

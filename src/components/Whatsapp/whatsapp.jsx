@@ -12,7 +12,7 @@ const Whatsapp = () => {
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-50">
+        <div className="fixed bottom-18 right-6 z-50">
             {/* Tooltip */}
             <div
                 className={`
@@ -43,7 +43,7 @@ const Whatsapp = () => {
                     onMouseLeave={() => setShowTooltip(false)}
                     className="
                         relative flex items-center justify-center
-                        w-14 h-14 md:w-16 md:h-16
+                        w-10 h-10 md:w-13 md:h-13
                         bg-gradient-to-br from-green-500 to-green-600
                         hover:from-green-600 hover:to-green-700
                         text-white rounded-full
@@ -54,10 +54,9 @@ const Whatsapp = () => {
                     "
                     aria-label="Contact us on WhatsApp"
                 >
-                    <FaWhatsapp className="w-7 h-7 md:w-8 md:h-8 group-hover:rotate-12 transition-transform duration-300" />
+                    <FaWhatsapp className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform duration-300" />
                     
-                    {/* Pulse animation */}
-                    <span className="absolute inset-0 rounded-full bg-green-400 opacity-75 animate-ping"></span>
+                  
                 </button>
             </div>
         </div>

@@ -1,4 +1,4 @@
-
+import { Suspense } from "react";
 import Banner from "@/components/Home/Banner/Banner";
 import Category from "@/components/Home/Category/Category";
 import Topsales from "@/components/Home/TopSales/Topsales";
@@ -15,7 +15,9 @@ export default function Home() {
 
       {/* Category Section */}
       <section id="categories" className="w-full py-2 md:py-4 lg:py-6">
-        <Category />
+        <Suspense fallback={<div>Loading categories...</div>}>
+          <Category />
+        </Suspense>
       </section>
 
       {/* Top Selling Products Section */}

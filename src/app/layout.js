@@ -94,7 +94,7 @@ export default function RootLayout({ children }) {
                 </header>
 
                 {/* ========== MAIN CONTENT AREA ========== */}
-                <main className="flex-1 pt-[120px] md:pt-[140px] w-full overflow-hidden">
+                <main className="flex-1 pt-18 md:pt-32 w-full overflow-hidden">
                   {/* Content Container with Professional Spacing */}
                   <div className="w-full  mx-auto ">
                     {children}

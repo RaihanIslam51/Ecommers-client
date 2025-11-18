@@ -10,7 +10,7 @@ import RightBanner from "./Components/RightBanner.jsx/RightBanner";
  * Skeleton Loader for Main Banner
  */
 const MainBannerSkeleton = () => (
-  <div className="relative w-full h-72 md:h-full bg-linear-to-br from-gray-200 via-gray-100 to-gray-200 rounded-xl overflow-hidden">
+  <div className="relative w-full h-full bg-linear-to-br from-gray-200 via-gray-100 to-gray-200 rounded-xl overflow-hidden">
     {/* Shimmer Animation */}
     <div className="absolute inset-0 -translate-x-full animate-shimmer bg-linear-to-r from-transparent via-white/60 to-transparent" />
     
@@ -151,14 +151,14 @@ const Banner = () => {
       {isLoading ? (
         <BannerSkeleton />
       ) : (
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-1 sm:px-3 lg:px-5">
           {/* Hero Banner Container */}
-          <div className="relative mb-6 md:mb-8 lg:mb-10 animate-fade-in">
+          <div className="relative mb-2 md:mb-4 lg:mb-5 animate-fade-in">
             {/* Banner Grid Wrapper */}
             <div className="bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-6 items-stretch md:h-[420px] lg:h-[480px]">
                 {/* Main Featured Banner - 2/3 width on desktop */}
-                <div className="col-span-1 md:col-span-2 w-full h-72 md:h-full">
+                <div className="col-span-1 md:col-span-2 w-full h-full">
                   <RightBanner />
                 </div>
 

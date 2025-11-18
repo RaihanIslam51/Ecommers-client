@@ -27,7 +27,7 @@ const SOCIAL_LINKS = [
 ];
 
 const COMPANY_LINKS = [
-  { label: "About KannerKaj", href: "/about" },
+  { label: "About RannerKaj", href: "/about" },
   { label: "Our Story", href: "/story" },
   { label: "Quality Standards", href: "/quality" },
   { label: "Store Locations", href: "/locations" },
@@ -50,7 +50,7 @@ const MOBILE_NAV_ITEMS = [
 ];
 
 const CONTACT_INFO = {
-  email: "support@kannerkaj.com",
+  email: "support@Rannerkaj.com",
   phone: "+880 013095-40406",
   address: {
     building: "House No: 540, 4th Floor",
@@ -247,7 +247,7 @@ const MobileNavItem = ({ icon: Icon, label, href }) => (
 const BrandSection = () => (
   <div className="space-y-6">
     <div>
-      <h2 className="text-2xl font-black mb-3 tracking-tight text-green-400">KannerKaj</h2>
+      <h2 className="text-2xl font-black mb-3 tracking-tight text-green-400">RannerKaj</h2>
       <p className="text-sm text-gray-400 leading-relaxed">
         Your trusted source for fresh, organic vegetables, healthy food items, and ready-to-cook meal packages. 
         Quality guaranteed, hygienically prepared, and delivered fresh to your doorstep.
@@ -262,7 +262,7 @@ const BrandSection = () => (
  * Desktop footer content component
  */
 const DesktopFooter = () => (
-  <div className="hidden md:block">
+  <div className="">
     {/* Main Footer Content */}
     <div className="bg-gray-900 border-b border-gray-800">
       <div className="400px] mx-auto px-6 lg:px-8 py-16">
@@ -280,7 +280,7 @@ const DesktopFooter = () => (
       <div className="w-full mx-auto px-6 lg:px-8 py-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="text-sm text-gray-500">
-            <span>© {new Date().getFullYear()} KannerKaj.com. All rights reserved.</span>
+            <span>© {new Date().getFullYear()} RannerKaj.com. All rights reserved.</span>
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
             <SocialLinks />

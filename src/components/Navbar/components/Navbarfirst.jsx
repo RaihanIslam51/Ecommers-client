@@ -54,11 +54,11 @@ const Navbarfirst = () => {
           <div className="w-px h-3 bg-green-300"></div>
 
           <Link 
-            href="mailto:info@kannerkaj.com" 
+            href="mailto:info@rannerkaj.com" 
             className="flex items-center gap-2 text-green-700 hover:text-green-900 transition-all duration-200 group"
           >
             <MdEmail className="text-sm group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-medium">info@kannerkaj.com</span>
+            <span className="text-xs font-medium">info@rannerkaj.com</span>
           </Link>
         </div>
 
