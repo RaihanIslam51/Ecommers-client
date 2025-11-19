@@ -154,7 +154,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4 flex items-center justify-between">
+                <div className="bg-linear-to-r from-green-600 to-green-700 px-6 py-4 flex items-center justify-between">
                     <div>
                         <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                             📧 Send Email to Customers
@@ -286,7 +286,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                             <button
                                 type="submit"
                                 disabled={sending || !formData.subject.trim() || !formData.message.trim()}
-                                className="flex-1 px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                className="flex-1 px-6 py-3 bg-linear-to-r from-green-600 to-green-700 text-white rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
                                 {sending ? (
                                     <>

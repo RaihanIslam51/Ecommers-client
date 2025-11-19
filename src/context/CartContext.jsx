@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 const CartContext = createContext();
 
@@ -137,6 +137,11 @@ export const CartProvider = ({ children }) => {
     return cartItems.reduce((count, item) => count + item.quantity, 0);
   };
 
+  // Get cart item count (reactive)
+  const cartCount = useMemo(() => {
+    return cartItems.reduce((count, item) => count + item.quantity, 0);
+  }, [cartItems]);
+
   const value = {
     cartItems,
     wishlistItems,
@@ -149,7 +154,7 @@ export const CartProvider = ({ children }) => {
     isInWishlist,
     getCartTotal,
     getCartItemCount,
-    cartCount: getCartItemCount(),
+    cartCount,
     wishlistCount: wishlistItems.length,
   };
 

@@ -2,11 +2,11 @@ import React from 'react';
 
 const StatsCard = ({ title, value, icon, trend, trendValue, color = "green" }) => {
     const colorClasses = {
-        blue: "bg-gradient-to-br from-blue-500 to-blue-600",
-        green: "bg-gradient-to-br from-green-500 to-emerald-600",
-        purple: "bg-gradient-to-br from-purple-500 to-purple-600",
-        orange: "bg-gradient-to-br from-orange-500 to-orange-600",
-        red: "bg-gradient-to-br from-red-500 to-red-600"
+        blue: "bg-linear-to-br from-blue-500 to-blue-600",
+        green: "bg-linear-to-br from-green-500 to-emerald-600",
+        purple: "bg-linear-to-br from-purple-500 to-purple-600",
+        orange: "bg-linear-to-br from-orange-500 to-orange-600",
+        red: "bg-linear-to-br from-red-500 to-red-600"
     };
 
     return (

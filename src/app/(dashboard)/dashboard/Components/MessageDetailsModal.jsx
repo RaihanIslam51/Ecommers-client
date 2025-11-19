@@ -85,7 +85,7 @@ const MessageDetailsModal = ({ message, isOpen, onClose, onDelete, onMarkAsRead 
       {/* Modal */}
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto my-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-green-600 to-emerald-600 text-white p-6 rounded-t-2xl z-10">
+        <div className="sticky top-0 bg-linear-to-r from-green-600 to-emerald-600 text-white p-6 rounded-t-2xl z-10">
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
@@ -113,7 +113,7 @@ const MessageDetailsModal = ({ message, isOpen, onClose, onDelete, onMarkAsRead 
         {/* Content */}
         <div className="p-6 space-y-6">
           {/* Contact Information */}
-          <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-5 border border-gray-200">
+          <div className="bg-linear-to-r from-gray-50 to-gray-100 rounded-xl p-5 border border-gray-200">
             <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
               <FaUser className="text-green-600" />
               Contact Information
@@ -207,7 +207,7 @@ const MessageDetailsModal = ({ message, isOpen, onClose, onDelete, onMarkAsRead 
           </div>
 
           {/* Message Status */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-200">
+          <div className="bg-linear-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-200">
             <h3 className="text-lg font-bold text-gray-800 mb-3">Status</h3>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -313,7 +313,7 @@ const MessageDetailsModal = ({ message, isOpen, onClose, onDelete, onMarkAsRead 
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-gradient-to-r from-gray-100 to-gray-200 p-4 rounded-b-2xl border-t border-gray-300">
+        <div className="sticky bottom-0 bg-linear-to-r from-gray-100 to-gray-200 p-4 rounded-b-2xl border-t border-gray-300">
           <button
             onClick={onClose}
             className="w-full px-6 py-3 bg-gray-700 hover:bg-gray-800 text-white rounded-lg font-semibold transition-colors"

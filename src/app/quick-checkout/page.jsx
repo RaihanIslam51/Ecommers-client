@@ -144,7 +144,7 @@ const QuickCheckoutContent = () => {
   const totalPrice = (product.price || 0) * formData.quantity;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -326,7 +326,7 @@ const QuickCheckoutContent = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                  className="w-full px-6 py-4 bg-linear-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>
@@ -347,7 +347,7 @@ const QuickCheckoutContent = () => {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Order Summary</h2>
               
               {/* Product Info */}
-              <div className="flex gap-4 mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-100">
+              <div className="flex gap-4 mb-6 p-4 bg-linear-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-100">
                 <div className="relative w-24 h-24 shrink-0 rounded-xl overflow-hidden shadow-lg">
                   <Image
                     src={product.image || 'https://via.placeholder.com/96'}

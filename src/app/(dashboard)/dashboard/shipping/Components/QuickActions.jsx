@@ -40,7 +40,7 @@ const QuickActions = () => {
       {actions.map((action, index) => (
         <button
           key={index}
-          className={`bg-gradient-to-r ${action.color} ${action.hoverColor} text-white rounded-xl p-4 transition-all duration-300 hover:shadow-xl hover:scale-105 group`}
+          className={`bg-linear-to-r ${action.color} ${action.hoverColor} text-white rounded-xl p-4 transition-all duration-300 hover:shadow-xl hover:scale-105 group`}
         >
           <div className="flex items-start gap-3">
             <div className="text-3xl group-hover:scale-110 transition-transform">

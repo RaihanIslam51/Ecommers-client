@@ -121,16 +121,6 @@ const PageLoader = () => {
             </div>
           </div>
         </div>
-
-        {/* Spinning Ring Loader (Alternative/Additional) */}
-        <div className="absolute bottom-20 animate-fade-in animation-delay-500">
-          <div className="relative w-16 h-16">
-            {/* Outer Ring */}
-            <div className="absolute inset-0 border-4 border-gray-200 rounded-full" />
-            {/* Spinning Ring */}
-            <div className="absolute inset-0 border-4 border-transparent border-t-green-700 border-r-green-500 rounded-full animate-spin" />
-          </div>
-        </div>
       </div>
 
       {/* Bottom Tagline */}

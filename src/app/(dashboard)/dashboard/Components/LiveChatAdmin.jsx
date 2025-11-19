@@ -165,7 +165,7 @@ const LiveChatAdmin = () => {
       {showPanel && (
         <div className="fixed right-4 top-20 w-96 h-[600px] bg-white rounded-2xl shadow-2xl z-50 flex flex-col border border-gray-200 animate-slide-up">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-t-2xl flex items-center justify-between">
+          <div className="bg-linear-to-r from-blue-600 to-blue-700 text-white p-4 rounded-t-2xl flex items-center justify-between">
             <div className="flex items-center gap-3">
               <FaComments className="text-xl" />
               <div>

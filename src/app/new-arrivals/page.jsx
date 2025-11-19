@@ -199,7 +199,7 @@ const NewArrivalsPage = memo(() => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-purple-50 via-pink-50 to-indigo-50 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-purple-300 border-t-purple-600 rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600 text-lg font-medium">Discovering new arrivals...</p>
@@ -212,7 +212,7 @@ const NewArrivalsPage = memo(() => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
+    <div className="min-h-screen bg-linear-to-br from-purple-50 via-white to-pink-50">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Header */}
         <div className="mb-6 sm:mb-8">
@@ -228,7 +228,7 @@ const NewArrivalsPage = memo(() => {
             <div className="flex-1">
               <div className="flex items-center gap-2 sm:gap-3 mb-2">
                 <FaMagic className="text-purple-500 text-2xl sm:text-4xl animate-pulse" />
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-linear-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
                   New Arrivals
                 </h1>
               </div>
@@ -266,7 +266,7 @@ const NewArrivalsPage = memo(() => {
         </div>
 
         {/* Hero Banner */}
-        <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 hidden lg:block md:block text-white rounded-2xl shadow-xl p-6 sm:p-8 mb-8 relative overflow-hidden">
+        <div className="bg-linear-to-r from-purple-600 via-pink-600 to-indigo-600 hidden lg:block md:block text-white rounded-2xl shadow-xl p-6 sm:p-8 mb-8 relative overflow-hidden">
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
             <div className="flex-1">

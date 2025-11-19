@@ -301,7 +301,7 @@ const EmailPage = () => {
             Email Preview
           </h3>
           <div className="border border-gray-200 rounded-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-purple-600 to-purple-800 p-8 text-center">
+            <div className="bg-linear-to-r from-purple-600 to-purple-800 p-8 text-center">
               <h1 className="text-white text-3xl font-bold">🛒 RannarKaj.com</h1>
               <p className="text-white text-sm mt-2 opacity-90">Your Trusted Shopping Partner</p>
             </div>
@@ -313,7 +313,7 @@ const EmailPage = () => {
               <div className="mt-8 text-center">
                 <a
                   href="#"
-                  className="inline-block px-8 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-full font-semibold"
+                  className="inline-block px-8 py-3 bg-linear-to-r from-purple-600 to-purple-800 text-white rounded-full font-semibold"
                 >
                   Visit RannarKaj.com
                 </a>

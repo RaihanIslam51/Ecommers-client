@@ -19,7 +19,7 @@ const ShippingTableRow = ({ order, onViewDetails, onUpdateStatus }) => {
       </td>
       <td className="px-6 py-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
+          <div className="w-8 h-8 rounded-full bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
             {order.customer.charAt(0)}
           </div>
           <span className="text-sm font-medium text-gray-900">{order.customer}</span>
@@ -33,7 +33,7 @@ const ShippingTableRow = ({ order, onViewDetails, onUpdateStatus }) => {
       </td>
       <td className="px-6 py-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-linear-to-br from-purple-100 to-pink-100 flex items-center justify-center">
             <span className="text-sm">🚚</span>
           </div>
           <span className="text-sm font-medium text-gray-700">{order.carrier}</span>

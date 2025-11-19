@@ -45,7 +45,7 @@ const ProgressBar = ({
         <div 
           className={`
             ${sizes[size]} 
-            bg-gradient-to-r ${colors[color]} 
+            bg-linear-to-r ${colors[color]} 
             rounded-full transition-all duration-1000
             ${animated ? 'animate-pulse' : ''}
           `}

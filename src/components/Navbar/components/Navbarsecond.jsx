@@ -19,7 +19,7 @@ const Navbarsecond = () => {
   const userDropdownRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
 
-  // Ensure component is mounted on client
+  // Ensure component is mounted on client to prevent hydration mismatch
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -83,12 +83,12 @@ const Navbarsecond = () => {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 md:w-11 md:h-11 bg-gradient-to-br from-green-600 to-green-800 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
+            <div className="w-10 h-10 md:w-11 md:h-11 bg-linear-to-br from-green-600 to-green-800 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
               <HiShoppingBag className="text-white text-xl md:text-2xl" />
             </div>
             
             <div className="hidden sm:flex flex-col">
-              <span className="text-xl md:text-2xl font-black tracking-tight leading-none bg-gradient-to-r from-green-700 to-green-900 bg-clip-text text-transparent">
+              <span className="text-xl md:text-2xl font-black tracking-tight leading-none bg-linear-to-r from-green-700 to-green-900 bg-clip-text text-transparent">
                 RannerKaj
               </span>
               <span className="text-[9px] text-green-600 font-semibold tracking-widest uppercase">

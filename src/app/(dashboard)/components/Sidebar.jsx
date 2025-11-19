@@ -89,7 +89,7 @@ const Sidebar = ({ onClose }) => {
         <button
           onClick={() => router.back()}
           className="group flex items-center gap-2  py-2 sm:py-2.5 rounded-xl transition-all duration-300 w-full
-            bg-gradient-to-r from-gray-50 to-gray-100 hover:from-green-50 hover:to-emerald-50
+            bg-linear-to-r from-gray-50 to-gray-100 hover:from-green-50 hover:to-emerald-50
             border border-gray-200 hover:border-green-200 shadow-sm hover:shadow-md active:scale-95"
         >
           <div className="p-1 sm:p-1.5 rounded-lg bg-white group-hover:bg-green-100 transition-all duration-300">
@@ -107,7 +107,7 @@ const Sidebar = ({ onClose }) => {
           <div key={idx} className="space-y-1">
             <h3 className="px-2 sm:px-3 mb-2 sm:mb-3 text-[10px] sm:text-[11px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
               <span className="flex-1">{section.title}</span>
-              <span className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent"></span>
+              <span className="h-px flex-1 bg-linear-to-r from-gray-200 to-transparent"></span>
             </h3>
             <div className="space-y-0.5">
               {section.items.map((item) => {
@@ -127,14 +127,14 @@ const Sidebar = ({ onClose }) => {
                       group flex items-center justify-between px-2 sm:px-3 py-2 sm:py-2.5 rounded-xl transition-all duration-300 relative overflow-hidden
                       active:scale-95 touch-manipulation
                       ${active
-                        ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg shadow-green-500/30 scale-[1.02]'
-                        : 'text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 hover:shadow-sm'
+                        ? 'bg-linear-to-r from-green-600 to-emerald-600 text-white shadow-lg shadow-green-500/30 scale-[1.02]'
+                        : 'text-gray-700 hover:bg-linear-to-r hover:from-green-50 hover:to-emerald-50 hover:shadow-sm'
                       }
                     `}
                   >
                     {/* Animated background effect */}
                     {isHovered && !active && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-green-100/50 to-emerald-100/50 animate-pulse"></div>
+                      <div className="absolute inset-0 bg-linear-to-r from-green-100/50 to-emerald-100/50 animate-pulse"></div>
                     )}
                     
                     <div className="flex items-center gap-2 sm:gap-3 relative z-10 min-w-0">
@@ -142,7 +142,7 @@ const Sidebar = ({ onClose }) => {
                         p-1 sm:p-1.5 rounded-lg transition-all duration-300 flex-shrink-0
                         ${active 
                           ? 'bg-white/20' 
-                          : 'bg-gradient-to-br from-green-50 to-emerald-50 group-hover:from-green-100 group-hover:to-emerald-100'
+                          : 'bg-linear-to-br from-green-50 to-emerald-50 group-hover:from-green-100 group-hover:to-emerald-100'
                         }
                       `}>
                         <Icon 
@@ -165,8 +165,8 @@ const Sidebar = ({ onClose }) => {
                           ${active 
                             ? 'bg-white/20 text-white' 
                             : item.badge === 'New'
-                              ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white'
-                              : 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 group-hover:from-green-200 group-hover:to-emerald-200'
+                              ? 'bg-linear-to-r from-green-500 to-emerald-500 text-white'
+                              : 'bg-linear-to-r from-green-100 to-emerald-100 text-green-700 group-hover:from-green-200 group-hover:to-emerald-200'
                           }
                         `}>
                           {item.badge}

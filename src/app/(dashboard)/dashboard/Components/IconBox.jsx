@@ -40,12 +40,12 @@ const IconBox = ({
       className={`
         ${sizes[size]} 
         ${shapes[shape]} 
-        bg-gradient-to-br ${bgColor} 
+        bg-linear-to-br ${bgColor} 
         flex items-center justify-center
         ${className}
       `}
     >
-      <div className={`${iconSizes[size]} bg-gradient-to-r ${color} text-transparent`}>
+      <div className={`${iconSizes[size]} bg-linear-to-r ${color} text-transparent`}>
         {icon}
       </div>
     </div>

@@ -36,12 +36,12 @@ const Stat = ({
       `}
     >
       {/* Background Pattern */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-gray-50 to-transparent rounded-full -mr-16 -mt-16 opacity-50"></div>
+      <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-gray-50 to-transparent rounded-full -mr-16 -mt-16 opacity-50"></div>
       
       <div className="relative">
         <div className="flex items-start justify-between mb-3 sm:mb-4">
           {Icon && (
-            <div className={`p-2 sm:p-2.5 md:p-3 rounded-xl bg-gradient-to-br ${bgColor} group-hover:scale-110 transition-transform duration-300 shrink-0`}>
+            <div className={`p-2 sm:p-2.5 md:p-3 rounded-xl bg-linear-to-br ${bgColor} group-hover:scale-110 transition-transform duration-300 shrink-0`}>
               <Icon className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: 'inherit' }} />
             </div>
           )}

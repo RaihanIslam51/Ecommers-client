@@ -316,7 +316,7 @@ const ProductDetailsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center">
         <div className="text-center">
           <div className="relative mb-8">
             
@@ -344,7 +344,7 @@ const ProductDetailsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <div className="min-h-screen bg-linge-to-br from-slate-50 via-white to-slate-50">
       {/* Breadcrumb */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -501,7 +501,7 @@ const ProductDetailsPage = () => {
             <div className="space-y-6">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-4 leading-tight">
+                  <h1 className="text-3xl lg:text-5xl font-bold text-slate-900 mb-4 leading-tight">
                     {product.name}
                   </h1>
                   
@@ -551,13 +551,13 @@ const ProductDetailsPage = () => {
             {/* Price Section */}
             <div className="bg-linear-to-r from-slate-50 to-slate-100 rounded-3xl p-8 border border-slate-200 shadow-xl">
               <div className="flex items-center gap-6 mb-6">
-                <span className="text-6xl font-bold text-slate-900">
-                  ${product.price?.toFixed(2)}
+                <span className="text-4xl font-bold text-slate-900">
+                  ৳{product.price?.toFixed(2)}
                 </span>
                 {product.originalPrice && product.originalPrice > product.price && (
                   <>
                     <span className="text-4xl text-slate-400 line-through">
-                      ${product.originalPrice.toFixed(2)}
+                      ৳{product.originalPrice.toFixed(2)}
                     </span>
                     <span className="bg-linear-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-full text-lg font-bold shadow-lg">
                       {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF

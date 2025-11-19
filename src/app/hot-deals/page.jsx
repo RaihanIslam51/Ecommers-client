@@ -157,7 +157,7 @@ const HotDealsPage = memo(() => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-green-50 via-white to-green-50 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-green-300 border-t-green-600 rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600 text-lg">Loading hot deals...</p>
@@ -167,7 +167,7 @@ const HotDealsPage = memo(() => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50">
+    <div className="min-h-screen bg-linear-to-br from-green-50 via-white to-green-50">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-6 sm:mb-8">
@@ -183,7 +183,7 @@ const HotDealsPage = memo(() => {
             <div className="flex-1">
               <div className="flex items-center gap-2 sm:gap-3 mb-2">
                 <FaFire className="text-2xl sm:text-4xl text-green-600 animate-pulse" />
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-green-600 via-green-700 to-green-800 bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-linear-to-r from-green-600 via-green-700 to-green-800 bg-clip-text text-transparent">
                   Fresh Deals
                 </h1>
               </div>
@@ -221,7 +221,7 @@ const HotDealsPage = memo(() => {
         </div>
 
         {/* Deal Timer Banner */}
-        <div className="bg-gradient-to-r from-green-600 to-green-700 text-white hidden lg:block md:block rounded-xl shadow-lg p-4 sm:p-6 mb-6">
+        <div className="bg-linear-to-r from-green-600 to-green-700 text-white hidden lg:block md:block rounded-xl shadow-lg p-4 sm:p-6 mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-3">
               <FaClock className="text-2xl sm:text-3xl animate-pulse" />
@@ -330,7 +330,7 @@ const HotDealsPage = memo(() => {
                         />
                         {/* Hot Deal Badge */}
                         <div className="absolute top-2 left-2">
-                          <span className="px-3 py-1 bg-gradient-to-r from-green-600 to-green-700 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1 animate-pulse">
+                          <span className="px-3 py-1 bg-linear-to-r from-green-600 to-green-700 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1 animate-pulse">
                             <FaFire /> FRESH DEAL
                           </span>
                         </div>
@@ -406,7 +406,7 @@ const HotDealsPage = memo(() => {
                             <button
                               onClick={() => handleAddToCart(product)}
                               disabled={product.stock <= 0}
-                              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm sm:text-base font-medium rounded-lg hover:from-green-700 hover:to-green-800 transition-all flex items-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg touch-manipulation min-h-[44px]"
+                              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-linear-to-r from-green-600 to-green-700 text-white text-sm sm:text-base font-medium rounded-lg hover:from-green-700 hover:to-green-800 transition-all flex items-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg touch-manipulation min-h-[44px]"
                             >
                               <FaShoppingCart className="text-sm sm:text-base" />
                               <span className="hidden xs:inline">Add to Cart</span>
@@ -437,7 +437,7 @@ const HotDealsPage = memo(() => {
                     
                     {/* Hot Deal Badge */}
                     <div className="absolute top-3 left-3">
-                      <span className="px-3 py-1 bg-gradient-to-r from-green-600 to-green-700 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1 animate-pulse">
+                      <span className="px-3 py-1 bg-linear-to-r from-green-600 to-green-700 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1 animate-pulse">
                         <FaFire /> FRESH
                       </span>
                     </div>
@@ -474,7 +474,7 @@ const HotDealsPage = memo(() => {
                           handleAddToCart(product);
                         }}
                         disabled={product.stock <= 0}
-                        className="p-2.5 sm:p-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg backdrop-blur-sm hover:from-green-700 hover:to-green-800 shadow-lg transition-all disabled:bg-gray-400 touch-manipulation min-w-[40px] min-h-[40px] flex items-center justify-center"
+                        className="p-2.5 sm:p-3 bg-linear-to-r from-green-600 to-green-700 text-white rounded-lg backdrop-blur-sm hover:from-green-700 hover:to-green-800 shadow-lg transition-all disabled:bg-gray-400 touch-manipulation min-w-[40px] min-h-[40px] flex items-center justify-center"
                       >
                         <FaShoppingCart className="text-sm" />
                       </button>
@@ -549,7 +549,7 @@ const HotDealsPage = memo(() => {
                     <button
                       onClick={() => handleAddToCart(product)}
                       disabled={product.stock <= 0}
-                      className="w-full py-3 sm:py-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm sm:text-base font-semibold rounded-lg hover:from-green-700 hover:to-green-800 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg touch-manipulation min-h-[44px] flex items-center justify-center"
+                      className="w-full py-3 sm:py-2.5 bg-linear-to-r from-green-600 to-green-700 text-white text-sm sm:text-base font-semibold rounded-lg hover:from-green-700 hover:to-green-800 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg touch-manipulation min-h-[44px] flex items-center justify-center"
                     >
                       {product.stock > 0 ? 'Grab This Deal!' : 'Out of Stock'}
                     </button>

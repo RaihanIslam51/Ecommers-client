@@ -462,7 +462,7 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Price (৳) *
+              Price ($) *
             </label>
             <input
               type="number"
@@ -480,7 +480,7 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Original Price (৳) <span className="text-gray-500">(for discount)</span>
+              Original Price ($) <span className="text-gray-500">(for discount)</span>
             </label>
             <input
               type="number"

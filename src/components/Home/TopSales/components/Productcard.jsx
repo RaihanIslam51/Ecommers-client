@@ -84,7 +84,7 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
     >
       {/* Discount Badge */}
       {discountPercent > 0 && (
-        <div className="absolute top-4 left-4 z-20 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg animate-pulse">
+        <div className="absolute top-4 left-4 z-20 bg-linear-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg animate-pulse">
           -{discountPercent}% OFF
         </div>
       )}
@@ -118,7 +118,7 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
       </div>
 
       {/* Product Image Container */}
-      <div className="relative w-full aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="relative w-full aspect-square overflow-hidden bg-linear-to-br from-gray-50 to-gray-100">
         <Image
           src={productImage}
           alt={productName}
@@ -157,20 +157,20 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
         {/* Product Badges */}
         <div className="flex items-center gap-2 flex-wrap">
           {product.productType && (
-            <span className="bg-gradient-to-r from-green-100 to-green-200 text-green-800 text-xs px-2.5 py-1 rounded-full font-medium border border-green-300">
+            <span className="bg-linear-to-r from-green-100 to-green-200 text-green-800 text-xs px-2.5 py-1 rounded-full font-medium border border-green-300">
               🌱 {product.productType}
             </span>
           )}
-          {product.freshnessLevel && (
-            <span className="bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 text-xs px-2.5 py-1 rounded-full font-medium border border-blue-300">
+          {/* {product.freshnessLevel && (
+            <span className="bg-linear-to-r from-blue-100 to-blue-200 text-blue-800 text-xs px-2.5 py-1 rounded-full font-medium border border-blue-300">
               ✨ {product.freshnessLevel}
             </span>
-          )}
-          {product.packagingType && (
-            <span className="bg-gradient-to-r from-purple-100 to-purple-200 text-purple-800 text-xs px-2.5 py-1 rounded-full font-medium border border-purple-300">
+          )} */}
+          {/* {product.packagingType && (
+            <span className="bg-linear-to-r from-purple-100 to-purple-200 text-purple-800 text-xs px-2.5 py-1 rounded-full font-medium border border-purple-300">
               📦 {product.packagingType}
             </span>
-          )}
+          )} */}
         </div>
 
         {/* Product Title */}
@@ -219,7 +219,7 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
         {stock > 0 && (
           <button
             onClick={handleBuyNow}
-            className="w-full mt-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2.5 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 text-sm font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105"
+            className="w-full mt-4 bg-linear-to-r from-blue-600 to-blue-700 text-white py-2.5 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 text-sm font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105"
           >
             <span>🛒 Buy Now</span>
           </button>

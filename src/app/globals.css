@@ -84,9 +84,9 @@
   --bg-tertiary: #F3F4F6;
   --bg-dark: #111827;
   --bg-overlay: rgba(0, 0, 0, 0.5);
-  --bg-gradient-primary: linear-gradient(135deg, #10B981 0%, #059669 100%);
-  --bg-gradient-secondary: linear-gradient(135deg, #34D399 0%, #10B981 100%);
-  --bg-gradient-accent: linear-gradient(135deg, #84CC16 0%, #65A30D 100%);
+  --bg-linear-primary: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  --bg-linear-secondary: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+  --bg-linear-accent: linear-gradient(135deg, #84CC16 0%, #65A30D 100%);
 
   /* ============= TEXT COLORS ============= */
   --text-primary: #064E3B;         /* Main text - Deep Green */
@@ -421,20 +421,20 @@ select option {
 
 /* ============= GRADIENT UTILITIES ============= */
 .gradient-primary {
-  background: var(--bg-gradient-primary);
+  background: var(--bg-linear-primary);
 }
 
 .gradient-secondary {
-  background: var(--bg-gradient-secondary);
+  background: var(--bg-linear-secondary);
 }
 
 .gradient-accent {
-  background: var(--bg-gradient-accent);
+  background: var(--bg-linear-accent);
 }
 
 /* ============= TEXT UTILITIES ============= */
 .text-gradient-primary {
-  background: var(--bg-gradient-primary);
+  background: var(--bg-linear-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

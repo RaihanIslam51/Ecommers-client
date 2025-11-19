@@ -15,7 +15,7 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-t-2xl">
+                <div className="bg-linear-to-r from-green-600 to-green-700 text-white p-6 rounded-t-2xl">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-4">
                             <CustomerAvatar name={customer.name} image={customer.avatar} size="xl" />

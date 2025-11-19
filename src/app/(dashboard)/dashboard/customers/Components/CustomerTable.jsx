@@ -51,7 +51,7 @@ const CustomerTable = ({
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
                 <table className="w-full">
-                    <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+                    <thead className="bg-linear-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                         <tr>
                             {onSelectCustomer && (
                                 <th className="px-6 py-4 text-left">

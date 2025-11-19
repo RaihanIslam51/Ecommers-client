@@ -20,7 +20,7 @@ import {
 
 // ==================== CONSTANTS ====================
 const SOCIAL_LINKS = [
-  { icon: FaFacebookF, label: "Facebook", href: "#" },
+  { icon: FaFacebookF, label: "Facebook", href: "https://www.facebook.com/share/194smTfLZu/" },
   { icon: FaTwitter, label: "Twitter", href: "#" },
   { icon: FaInstagram, label: "Instagram", href: "#" },
   { icon: FaLinkedinIn, label: "LinkedIn", href: "#" },

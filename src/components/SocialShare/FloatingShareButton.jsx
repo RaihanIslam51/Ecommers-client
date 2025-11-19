@@ -82,7 +82,7 @@ const FloatingShareButton = ({ product }) => {
                 className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-white transition-all duration-300 ${
                     isOpen 
                         ? 'bg-red-500 hover:bg-red-600 rotate-45' 
-                        : 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700'
+                        : 'bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700'
                 }`}
             >
                 <FaShare className={`text-xl transition-transform duration-300 ${isOpen ? 'rotate-0' : ''}`} />

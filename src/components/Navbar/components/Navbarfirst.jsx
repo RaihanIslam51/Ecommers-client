@@ -29,9 +29,9 @@ const Navbarfirst = () => {
     }
   };
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   fetchCategories();
+  // }, []);
 
   return (
     <>

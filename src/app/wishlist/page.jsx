@@ -29,7 +29,7 @@ const WishlistPage = () => {
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           {/* Empty State */}
           <div className="flex flex-col items-center justify-center py-16">
-            <div className="w-32 h-32 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center mb-6">
+            <div className="w-32 h-32 bg-linear-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center mb-6">
               <FaHeart className="text-green-500 text-5xl" />
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-3">Your Wishlist is Empty</h2>
@@ -139,11 +139,11 @@ const WishlistPage = () => {
                 {/* Price */}
                 <div className="flex items-center gap-2 mb-4">
                   <span className="text-2xl font-black text-gray-900">
-                    ৳{product.price?.toLocaleString()}
+                    ${product.price?.toLocaleString()}
                   </span>
                   {product.discount > 0 && product.originalPrice && (
                     <span className="text-sm text-gray-400 line-through">
-                      ৳{product.originalPrice?.toLocaleString()}
+                      ${product.originalPrice?.toLocaleString()}
                     </span>
                   )}
                 </div>

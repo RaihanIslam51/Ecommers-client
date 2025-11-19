@@ -122,7 +122,7 @@ const SocialShare = ({ product, url }) => {
 
                     {/* Share Menu */}
                     <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 animate-in fade-in slide-in-from-top-5 duration-200">
-                        <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
+                        <div className="p-4 border-b border-gray-200 bg-linear-to-r from-blue-50 to-purple-50">
                             <h3 className="font-bold text-gray-800 text-lg">Share this product</h3>
                             <p className="text-sm text-gray-600 mt-1">Choose where to share</p>
                         </div>
@@ -187,7 +187,7 @@ const SocialShare = ({ product, url }) => {
                             {typeof navigator !== 'undefined' && navigator.share && (
                                 <button
                                     onClick={handleNativeShare}
-                                    className="w-full mt-3 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center gap-2"
+                                    className="w-full mt-3 px-4 py-3 bg-linear-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center gap-2"
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />

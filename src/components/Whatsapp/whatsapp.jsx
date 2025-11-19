@@ -44,7 +44,7 @@ const Whatsapp = () => {
                     className="
                         relative flex items-center justify-center
                         w-10 h-10 md:w-13 md:h-13
-                        bg-gradient-to-br from-green-500 to-green-600
+                        bg-linear-to-br from-green-500 to-green-600
                         hover:from-green-600 hover:to-green-700
                         text-white rounded-full
                         shadow-lg hover:shadow-2xl

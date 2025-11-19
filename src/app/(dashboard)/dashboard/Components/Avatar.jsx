@@ -54,7 +54,7 @@ const Avatar = ({
           ${shapes[shape]} 
           flex items-center justify-center 
           font-bold text-white 
-          bg-gradient-to-br from-blue-500 to-indigo-500
+          bg-linear-to-br from-blue-500 to-indigo-500
           overflow-hidden
         `}
       >
