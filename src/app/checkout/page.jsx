@@ -4,6 +4,7 @@ import { useCart } from '@/context/CartContext';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import axiosInstance from '@/lib/axios';
+import Image from 'next/image';
 
 const CheckoutPage = () => {
   const { cart, getTotalPrice, clearCart } = useCart();

@@ -21,6 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
+  metadataBase: new URL('https://rannerkaj.com'),
   title: "RannerKaj.com - Fresh Vegetables, Healthy Foods & Ready-to-Cook Meal Kits",
   description:
     "Discover fresh, organic vegetables, healthy food items, and ready-to-cook meal packages at KannerKaj.com. Hygienically prepared meal kits, pre-cut vegetables, and healthy food combos delivered fresh to your doorstep.",
@@ -67,11 +68,12 @@ export const metadata = {
     description: "Fresh, organic vegetables and ready-to-cook meal packages delivered to your doorstep",
     images: ["/og-image.png"],
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({ children }) {
