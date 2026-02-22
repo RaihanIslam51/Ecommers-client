@@ -7,36 +7,36 @@ const QuickActions = () => {
             title: 'Create New Order',
             description: 'Manually create a new order',
             icon: '➕',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
-            hoverColor: 'hover:bg-green-100'
+            bgColor: 'bg-white',
+            iconColor: 'text-gray-700',
+            hoverColor: 'hover:bg-gray-50'
         },
         {
             id: 2,
             title: 'Bulk Update',
             description: 'Update multiple orders at once',
             icon: '📋',
-            bgColor: 'bg-purple-50',
-            iconColor: 'text-purple-600',
-            hoverColor: 'hover:bg-purple-100'
+            bgColor: 'bg-white',
+            iconColor: 'text-gray-700',
+            hoverColor: 'hover:bg-gray-50'
         },
         {
             id: 3,
             title: 'Generate Report',
             description: 'Create detailed order reports',
             icon: '📊',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
-            hoverColor: 'hover:bg-green-100'
+            bgColor: 'bg-white',
+            iconColor: 'text-gray-700',
+            hoverColor: 'hover:bg-gray-50'
         },
         {
             id: 4,
             title: 'Import Orders',
             description: 'Import orders from CSV/Excel',
             icon: '📥',
-            bgColor: 'bg-orange-50',
-            iconColor: 'text-orange-600',
-            hoverColor: 'hover:bg-orange-100'
+            bgColor: 'bg-white',
+            iconColor: 'text-gray-700',
+            hoverColor: 'hover:bg-gray-50'
         }
     ];
 
@@ -45,12 +45,12 @@ const QuickActions = () => {
             {actions.map((action) => (
                 <button
                     key={action.id}
-                    className={`${action.bgColor} ${action.hoverColor} rounded-xl p-5 text-left transition-all duration-300 hover:shadow-md border border-transparent hover:border-gray-200`}
+                    className={`${action.bgColor} ${action.hoverColor} rounded-xl p-5 text-left transition-all duration-300 hover:shadow-md border border-gray-100`}
                 >
                     <div className={`${action.iconColor} text-3xl mb-3`}>
                         {action.icon}
                     </div>
-                    <h4 className="font-semibold text-gray-800 text-sm mb-1">
+                    <h4 className="font-semibold text-black text-sm mb-1">
                         {action.title}
                     </h4>
                     <p className="text-xs text-gray-600">

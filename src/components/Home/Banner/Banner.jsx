@@ -104,25 +104,10 @@ const SupportSkeleton = () => (
  */
 const BannerSkeleton = () => (
   <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
-    {/* Hero Banner Container */}
-    <div className="relative  md:mb-8 lg:mb-10">
-      <div className="bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-gray-100">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-6 items-stretch md:h-[420px] lg:h-[480px]">
-          {/* Main Banner Skeleton */}
-          <div className="col-span-1 md:col-span-2 w-full h-72 md:h-full">
-            <MainBannerSkeleton />
-          </div>
-
-          {/* Side Banner Skeleton */}
-          <div className="hidden md:block md:col-span-1 w-full h-full">
-            <SideBannerSkeleton />
-          </div>
-        </div>
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:h-[500px] lg:h-[560px]">
+      <div className="col-span-1 md:col-span-2 w-full h-64 md:h-full bg-gray-100 animate-pulse" />
+      <div className="hidden md:block md:col-span-1 w-full h-full bg-gray-100 animate-pulse" />
     </div>
-
-    {/* Support Features Skeleton */}
-    {/* <SupportSkeleton /> */}
   </div>
 );
 
@@ -147,34 +132,21 @@ const Banner = () => {
   }, []);
 
   return (
-    <section className="w-full  bg-linear-to-b from-gray-50 via-white to-gray-50 pt-0 pb-6 md:pb-8 lg:pb-10">
+    <section className="w-full bg-white pt-0">
       {isLoading ? (
         <BannerSkeleton />
       ) : (
-        <div className="w-full mx-auto px-1 sm:px-3 lg:px-5">
-          {/* Hero Banner Container */}
-          <div className="relative mb-2 md:mb-4 lg:mb-5 animate-fade-in">
-            {/* Banner Grid Wrapper */}
-            <div className="bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-6 items-stretch md:h-[420px] lg:h-[480px]">
-                {/* Main Featured Banner - 2/3 width on desktop */}
-                <div className="col-span-1 md:col-span-2 w-full h-full">
-                  <RightBanner />
-                </div>
-
-                {/* Secondary Side Banner - 1/3 width on desktop, hidden on mobile */}
-                <div className="hidden md:block md:col-span-1 w-full h-full">
-                  <LeftBanner />
-                </div>
-              </div>
+        <div className="w-full mx-auto ">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-1 md:h-[300px] lg:h-[360px] animate-fade-in">
+            {/* Main Featured Banner — 2/3 width */}
+            <div className="col-span-1 md:col-span-2 w-full h-64 md:h-full">
+              <RightBanner />
             </div>
-
-            {/* Decorative Background Elements */}
-            <div className="absolute -top-20 -left-20 w-40 h-40 bg-purple-200/30 rounded-full blur-3xl -z-10 hidden lg:block" />
-            <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-blue-200/30 rounded-full blur-3xl -z-10 hidden lg:block" />
+            {/* Side Banner — 1/3 width, hidden on mobile */}
+            <div className="hidden md:block md:col-span-1 w-full h-full">
+              <LeftBanner />
+            </div>
           </div>
-
-         
         </div>
       )}
     </section>

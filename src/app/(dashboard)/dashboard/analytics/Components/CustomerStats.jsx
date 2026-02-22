@@ -9,7 +9,7 @@ const CustomTooltip = ({ active, payload }) => {
         return (
             <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
                 <p className="font-semibold text-gray-800">{payload[0].name}</p>
-                <p className="text-sm text-green-600">
+                <p className="text-sm text-black">
                     {payload[0].value} customers
                 </p>
             </div>
@@ -113,7 +113,7 @@ const CustomerStats = ({ segments = [], statusData = [] }) => {
             <div className="pt-4 border-t border-gray-100">
                 <div className="grid grid-cols-2 gap-3">
                     <div className="text-center p-3 bg-green-50 rounded-lg">
-                        <p className="text-2xl font-bold text-green-600">{totalCustomers}</p>
+                        <p className="text-2xl font-bold text-black">{totalCustomers}</p>
                         <p className="text-xs text-gray-600 mt-1">Total Customers</p>
                     </div>
                     <div className="text-center p-3 bg-emerald-50 rounded-lg">

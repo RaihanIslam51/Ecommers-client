@@ -10,7 +10,7 @@ const RecentActivity = () => {
             time: '5 minutes ago',
             icon: '🛍️',
             iconBg: 'bg-green-100',
-            iconColor: 'text-green-600'
+            iconColor: 'text-black'
         },
         {
             id: 2,

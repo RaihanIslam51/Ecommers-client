@@ -115,7 +115,7 @@ const MessageDetailsModal = ({ message, isOpen, onClose, onDelete, onMarkAsRead 
           {/* Contact Information */}
           <div className="bg-linear-to-r from-gray-50 to-gray-100 rounded-xl p-5 border border-gray-200">
             <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <FaUser className="text-green-600" />
+              <FaUser className="text-black" />
               Contact Information
             </h3>
             <div className="space-y-3">
@@ -123,7 +123,7 @@ const MessageDetailsModal = ({ message, isOpen, onClose, onDelete, onMarkAsRead 
               {message.phone && (
                 <div className="flex items-center justify-between group">
                   <div className="flex items-center gap-3">
-                    <FaPhone className="text-green-600" size={16} />
+                    <FaPhone className="text-black" size={16} />
                     <div>
                       <p className="text-xs text-gray-500">Phone Number</p>
                       <p className="text-sm font-semibold text-gray-800">{message.phone}</p>
@@ -184,7 +184,7 @@ const MessageDetailsModal = ({ message, isOpen, onClose, onDelete, onMarkAsRead 
           {/* Message Content */}
           <div className="bg-white rounded-xl p-5 border-2 border-green-200">
             <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
-              <FaCommentDots className="text-green-600" />
+              <FaCommentDots className="text-black" />
               Message
             </h3>
             <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">

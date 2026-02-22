@@ -19,7 +19,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {/* Advanced Search */}
                 <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-black mb-2">
                         Search Customers
                     </label>
                     <div className="flex gap-2">
@@ -34,7 +34,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                                 }
                                 value={searchValue}
                                 onChange={(e) => handleSearchChange(e.target.value)}
-                                className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
+                                className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition-all"
                             />
                             <span className="absolute left-3 top-3 text-gray-400">
                                 {searchType === 'email' ? '�' : searchType === 'phone' ? '📱' : '�🔍'}
@@ -43,7 +43,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                         <select
                             value={searchType}
                             onChange={(e) => handleSearchTypeChange(e.target.value)}
-                            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all bg-white"
+                            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition-all bg-white"
                         >
                             <option value="all">All</option>
                             <option value="name">Name</option>
@@ -57,7 +57,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                             onClick={() => handleSearchTypeChange('all')}
                             className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                                 searchType === 'all' 
-                                    ? 'bg-green-600 text-white' 
+                                    ? 'bg-black text-white' 
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                         >
@@ -67,7 +67,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                             onClick={() => handleSearchTypeChange('name')}
                             className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                                 searchType === 'name' 
-                                    ? 'bg-green-600 text-white' 
+                                    ? 'bg-black text-white' 
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                         >
@@ -77,7 +77,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                             onClick={() => handleSearchTypeChange('email')}
                             className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                                 searchType === 'email' 
-                                    ? 'bg-green-600 text-white' 
+                                    ? 'bg-black text-white' 
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                         >
@@ -87,7 +87,7 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                             onClick={() => handleSearchTypeChange('phone')}
                             className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                                 searchType === 'phone' 
-                                    ? 'bg-green-600 text-white' 
+                                    ? 'bg-black text-white' 
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                         >
@@ -98,12 +98,12 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
 
                 {/* Status Filter */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-black mb-2">
                         Status
                     </label>
                     <select
                         onChange={(e) => onFilterChange('status', e.target.value)}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition-all"
                     >
                         <option value="">All Status</option>
                         <option value="active">Active</option>
@@ -116,12 +116,12 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
 
                 {/* Sort */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-black mb-2">
                         Sort By
                     </label>
                     <select
                         onChange={(e) => onSort(e.target.value)}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition-all"
                     >
                         <option value="name">Name</option>
                         <option value="totalSpent">Total Spent</option>
@@ -136,19 +136,19 @@ const CustomerFilters = ({ onFilterChange, onSearch, onSort }) => {
                 <span className="text-sm font-medium text-gray-700 mr-2">Quick Filters:</span>
                 <button 
                     onClick={() => onFilterChange('quick', 'vip')}
-                    className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold hover:bg-purple-200 transition-colors"
+                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold hover:bg-gray-200 transition-colors"
                 >
                     💎 VIP Customers
                 </button>
                 <button 
                     onClick={() => onFilterChange('quick', 'new')}
-                    className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold hover:bg-green-200 transition-colors"
+                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold hover:bg-gray-200 transition-colors"
                 >
                     ⭐ New This Month
                 </button>
                 <button 
                     onClick={() => onFilterChange('quick', 'high-spender')}
-                    className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold hover:bg-green-200 transition-colors"
+                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold hover:bg-gray-200 transition-colors"
                 >
                     💰 High Spenders
                 </button>

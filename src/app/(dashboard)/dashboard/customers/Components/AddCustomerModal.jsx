@@ -26,15 +26,15 @@ const AddCustomerModal = ({ onClose, onSubmit }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="bg-linear-to-r from-green-600 to-green-700 text-white p-6 rounded-t-2xl">
+                <div className="p-6 border-b border-gray-200 bg-white rounded-t-2xl">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h2 className="text-2xl font-bold">Add New Customer</h2>
-                            <p className="text-blue-100 mt-1">Fill in the customer details below</p>
+                            <h2 className="text-2xl font-bold text-black">Add New Customer</h2>
+                            <p className="text-gray-500 mt-1">Fill in the customer details below</p>
                         </div>
                         <button
                             onClick={onClose}
-                            className="text-white hover:bg-white hover:bg-opacity-20 rounded-lg p-2 transition-colors"
+                            className="text-gray-500 hover:bg-gray-100 rounded-lg p-2 transition-colors"
                         >
                             ✕
                         </button>
@@ -56,7 +56,7 @@ const AddCustomerModal = ({ onClose, onSubmit }) => {
                                 value={formData.name}
                                 onChange={handleChange}
                                 placeholder="Enter customer name"
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition-all"
                             />
                         </div>
 
@@ -72,7 +72,7 @@ const AddCustomerModal = ({ onClose, onSubmit }) => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 placeholder="customer@example.com"
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition-all"
                             />
                         </div>
 
@@ -88,7 +88,7 @@ const AddCustomerModal = ({ onClose, onSubmit }) => {
                                 value={formData.phone}
                                 onChange={handleChange}
                                 placeholder="+880 1XXX-XXXXXX"
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition-all"
                             />
                         </div>
 
@@ -103,7 +103,7 @@ const AddCustomerModal = ({ onClose, onSubmit }) => {
                                 onChange={handleChange}
                                 placeholder="Enter full address"
                                 rows="3"
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all resize-none"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition-all resize-none"
                             />
                         </div>
 
@@ -116,7 +116,7 @@ const AddCustomerModal = ({ onClose, onSubmit }) => {
                                 name="status"
                                 value={formData.status}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition-all"
                             >
                                 <option value="active">Active</option>
                                 <option value="inactive">Inactive</option>
@@ -137,7 +137,7 @@ const AddCustomerModal = ({ onClose, onSubmit }) => {
                         </button>
                         <button
                             type="submit"
-                            className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+                            className="flex-1 bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-900 transition-colors"
                         >
                             Add Customer
                         </button>

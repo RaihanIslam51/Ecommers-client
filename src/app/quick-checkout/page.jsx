@@ -382,14 +382,14 @@ const QuickCheckoutContent = () => {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Shipping:</span>
-                  <span className="font-semibold text-green-600">Free</span>
+                  <span className="font-semibold text-black">Free</span>
                 </div>
               </div>
 
               <div className="border-t-2 border-gray-200 pt-4">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-semibold text-gray-800">Total Amount:</span>
-                  <span className="text-3xl font-bold text-green-600">${totalPrice.toFixed(2)}</span>
+                  <span className="text-3xl font-bold text-black">${totalPrice.toFixed(2)}</span>
                 </div>
                 <p className="text-xs text-gray-500 mt-2">Includes all applicable taxes</p>
               </div>

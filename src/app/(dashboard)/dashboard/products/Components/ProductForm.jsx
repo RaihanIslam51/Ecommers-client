@@ -13,33 +13,20 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
     category: '',
     subcategory: '',
     
-    // Freshness & Type Details
-    productType: 'Fresh',
-    freshnessLevel: 'Farm Fresh',
-    
+    // Size & Color
+    size: 'M',
+    color: '',
+
     // Pricing
     price: '',
     originalPrice: '',
     discount: '',
-    
+
     // Stock & Inventory
     stock: '',
     stockStatus: 'In Stock',
     sku: '',
-    
-    // Packaging Details
-    netWeight: '',
-    servings: '',
-    packagingType: 'Airtight Pack',
-    shelfLife: '',
-    storageInstructions: '',
-    
-    // Ready-to-Cook/Meal Kit Details
-    preparationTime: '',
-    cookingInstructions: '',
-    ingredientsList: '',
-    allergenInfo: '',
-    
+
     // Media
     image: '',
     images: [],
@@ -52,10 +39,6 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
     
     // Product Description
     description: '',
-    
-    // Origin Information
-    farmSource: '',
-    originLocation: '',
     
     // Display Settings
     showInCollection: true,
@@ -146,33 +129,20 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
         category: product.category || '',
         subcategory: product.subcategory || '',
         
-        // Freshness & Type Details
-        productType: product.productType || 'Fresh',
-        freshnessLevel: product.freshnessLevel || 'Farm Fresh',
-        
+        // Size & Color
+        size: product.size || 'M',
+        color: product.color || '',
+
         // Pricing
         price: product.price || '',
         originalPrice: product.originalPrice || '',
         discount: product.discount || '',
-        
+
         // Stock & Inventory
         stock: product.stock || '',
         stockStatus: product.stockStatus || 'In Stock',
         sku: product.sku || '',
-        
-        // Packaging Details
-        netWeight: product.netWeight || '',
-        servings: product.servings || '',
-        packagingType: product.packagingType || 'Airtight Pack',
-        shelfLife: product.shelfLife || '',
-        storageInstructions: product.storageInstructions || '',
-        
-        // Ready-to-Cook/Meal Kit Details
-        preparationTime: product.preparationTime || '',
-        cookingInstructions: product.cookingInstructions || '',
-        ingredientsList: product.ingredientsList || '',
-        allergenInfo: product.allergenInfo || '',
-        
+
         // Media
         image: product.image || '',
         images: product.images || [],
@@ -185,10 +155,6 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
         
         // Product Description
         description: product.description || '',
-        
-        // Origin Information
-        farmSource: product.farmSource || '',
-        originLocation: product.originLocation || '',
         
         // Display Settings
         showInCollection: product.showInCollection !== undefined ? product.showInCollection : true,
@@ -262,7 +228,6 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
     if (!formData.category) newErrors.category = 'Category is required';
     if (!formData.stock || parseInt(formData.stock) < 0) newErrors.stock = 'Valid stock quantity is required';
     if (!formData.sku.trim()) newErrors.sku = 'SKU is required';
-    if (!formData.netWeight.trim()) newErrors.netWeight = 'Net weight is required';
     if (!formData.image.trim()) newErrors.image = 'Main product image is required';
     
     setErrors(newErrors);
@@ -289,9 +254,9 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Basic Information */}
       <div className="bg-white p-6 rounded-lg border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <span className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-            <span className="text-blue-600 font-bold text-sm">1</span>
+        <h3 className="text-lg font-semibold text-black mb-4 flex items-center gap-2">
+          <span className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+            <span className="text-black font-bold text-sm">1</span>
           </span>
           Basic Information
         </h3>
@@ -317,7 +282,7 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Category *
               {formData.category && (
-                <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-black">
                   Selected: {formData.category}
                 </span>
               )}
@@ -357,7 +322,7 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
               <button
                 type="button"
                 onClick={() => setShowAddCategory(!showAddCategory)}
-                className="w-full px-4 py-2 border-2 border-dashed border-blue-400 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 font-medium"
+                className="w-full px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg text-black hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 font-medium"
               >
                 <span className="text-xl">+</span>
                 {showAddCategory ? 'Cancel' : 'Add New Category'}
@@ -365,19 +330,19 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
 
               {/* Add Category Form */}
               {showAddCategory && (
-                <div className="flex gap-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="flex gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
                   <input
                     type="text"
                     value={newCategoryName}
                     onChange={(e) => setNewCategoryName(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddNewCategory())}
-                    className="flex-1 px-3 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent text-black"
                     placeholder="Enter new category name"
                   />
                   <button
                     type="button"
                     onClick={handleAddNewCategory}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm hover:shadow-md"
+                    className="px-4 py-2 border border-gray-300 bg-white text-black rounded-lg hover:bg-gray-50 transition-colors font-medium shadow-sm"
                   >
                     Add
                   </button>
@@ -403,50 +368,43 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
         </div>
       </div>
 
-      {/* Freshness & Type Details */}
+      {/* Size & Color */}
       <div className="bg-white p-6 rounded-lg border border-gray-200">
         <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <span className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-            <span className="text-green-600 font-bold text-sm">🍃</span>
+          <span className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+            <span className="text-gray-700 font-bold text-sm">2</span>
           </span>
-          Freshness & Type Details
+          Size &amp; Color
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Product Type
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Size</label>
             <select
-              name="productType"
-              value={formData.productType}
+              name="size"
+              value={formData.size}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-black"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
             >
-              <option value="Fresh">Fresh</option>
-              <option value="Organic">Organic</option>
-              <option value="Cut & Clean">Cut & Clean</option>
-              <option value="Ready-to-Cook">Ready-to-Cook</option>
-              <option value="Premium">Premium</option>
-              <option value="Seasonal">Seasonal</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+              <option value="XXXL">XXXL</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Freshness Level
-            </label>
-            <select
-              name="freshnessLevel"
-              value={formData.freshnessLevel}
+            <label className="block text-sm font-medium text-gray-700 mb-2">Color</label>
+            <input
+              type="text"
+              name="color"
+              value={formData.color}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-black"
-            >
-              <option value="Farm Fresh">Farm Fresh</option>
-              <option value="Pre-Washed">Pre-Washed</option>
-              <option value="Cleaned & Sanitized">Cleaned & Sanitized</option>
-              <option value="Cut & Ready">Cut & Ready</option>
-              <option value="Ready-to-Cook">Ready-to-Cook</option>
-            </select>
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
+              placeholder="e.g. Red, Black, White, Yellow, Blue"
+            />
           </div>
         </div>
       </div>
@@ -573,160 +531,9 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
         </div>
       </div>
 
-      {/* Packaging Details */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <span className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
-            <span className="text-indigo-600 font-bold text-sm">⚖️</span>
-          </span>
-          Packaging Details
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Net Weight (g / kg) *
-            </label>
-            <input
-              type="text"
-              name="netWeight"
-              value={formData.netWeight}
-              onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-black ${
-                errors.netWeight ? 'border-red-500' : 'border-gray-300'
-              }`}
-              placeholder="Example: 250g, 500g, 1kg"
-            />
-            {errors.netWeight && <p className="text-red-500 text-xs mt-1">{errors.netWeight}</p>}
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Number of Servings
-            </label>
-            <input
-              type="text"
-              name="servings"
-              value={formData.servings}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-black"
-              placeholder="Example: 2 servings, 4 servings"
-            />
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Packaging Type
-            </label>
-            <select
-              name="packagingType"
-              value={formData.packagingType}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-black"
-            >
-              <option value="Airtight Pack">Airtight Pack</option>
-              <option value="Zip Pouch">Zip Pouch</option>
-              <option value="Eco-Friendly Pack">Eco-Friendly Pack</option>
-              <option value="Vacuum-Sealed">Vacuum-Sealed</option>
-              <option value="Box Pack">Box Pack</option>
-            </select>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Shelf Life
-            </label>
-            <input
-              type="text"
-              name="shelfLife"
-              value={formData.shelfLife}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-black"
-              placeholder="Example: 3 Days, 24 Hours, 7 Days (Chilled)"
-            />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Storage Instructions
-            </label>
-            <input
-              type="text"
-              name="storageInstructions"
-              value={formData.storageInstructions}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-black"
-              placeholder="Example: Keep refrigerated between 2–8°C"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Ready-to-Cook/Meal Kit Details */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <span className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
-            <span className="text-orange-600 font-bold text-sm">🍽️</span>
-          </span>
-          Ready-to-Cook/Meal Kit Details <span className="text-gray-500 text-sm">(if applicable)</span>
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Preparation Time
-            </label>
-            <input
-              type="text"
-              name="preparationTime"
-              value={formData.preparationTime}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-black"
-              placeholder="Example: 10 minutes, 15 minutes"
-            />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Cooking Instructions
-            </label>
-            <textarea
-              name="cookingInstructions"
-              value={formData.cookingInstructions}
-              onChange={handleChange}
-              rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-black"
-              placeholder="Example:&#10;Heat oil&#10;Add vegetables&#10;Cook for 5–7 minutes"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Ingredients List
-            </label>
-            <textarea
-              name="ingredientsList"
-              value={formData.ingredientsList}
-              onChange={handleChange}
-              rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-black"
-              placeholder="Example:&#10;Carrot&#10;Beans&#10;Cauliflower"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Allergen Information
-            </label>
-            <textarea
-              name="allergenInfo"
-              value={formData.allergenInfo}
-              onChange={handleChange}
-              rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-black"
-              placeholder="Example: Contains nuts, Gluten-free, No preservatives"
-            />
-          </div>
-        </div>
-      </div>
 
       {/* Media */}
       <div className="bg-white p-6 rounded-lg border border-gray-200">
@@ -817,44 +624,7 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
         </div>
       </div>
 
-      {/* Origin Information */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <span className="w-8 h-8 bg-lime-100 rounded-full flex items-center justify-center">
-            <span className="text-lime-600 font-bold text-sm">🌱</span>
-          </span>
-          Origin Information
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Farm/Source Name
-            </label>
-            <input
-              type="text"
-              name="farmSource"
-              value={formData.farmSource}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent text-black"
-              placeholder="Farm or source name"
-            />
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Origin Location
-            </label>
-            <input
-              type="text"
-              name="originLocation"
-              value={formData.originLocation}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent text-black"
-              placeholder="Example: Bogura, Kishoreganj farms, Local Market Selected"
-            />
-          </div>
-        </div>
-      </div>
 
       {/* Display Settings */}
       <div className="bg-white p-6 rounded-lg border border-gray-200">
@@ -887,7 +657,7 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
               name="showInTopSelling"
               checked={formData.showInTopSelling}
               onChange={(e) => setFormData(prev => ({ ...prev, showInTopSelling: e.target.checked }))}
-              className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-2 focus:ring-green-500"
+              className="w-5 h-5 text-black border-gray-300 rounded focus:ring-2 focus:ring-green-500"
             />
             <label htmlFor="showInTopSelling" className="flex-1 cursor-pointer">
               <span className="text-sm font-semibold text-gray-800">2. Show in Top Selling</span>
@@ -941,7 +711,7 @@ const ProductForm = ({ product, onSubmit, onCancel, isSubmitting = false }) => {
           <button
             type="button"
             onClick={() => window.open(`/?highlight=${encodeURIComponent(formData.category)}`, '_blank')}
-            className="px-6 py-2 border border-blue-500 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-2"
+            className="px-6 py-2 border border-gray-300 bg-white text-black rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
             title="Preview selected category in frontend"
           >
             👁️ Preview Category

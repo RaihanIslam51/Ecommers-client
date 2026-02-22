@@ -102,17 +102,17 @@ const SupportModal = ({ isOpen, onClose }) => {
       {/* Modal */}
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-linear-to-r from-blue-600 to-purple-600 text-white p-6 rounded-t-2xl">
+        <div className="sticky top-0 bg-white text-black p-6 rounded-t-2xl border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-bold">Customer Support</h2>
-              <p className="text-blue-100 text-sm mt-1">আমরা আপনাকে সাহায্য করতে প্রস্তুত</p>
+              <p className="text-black text-sm mt-1">আমরা আপনাকে সাহায্য করতে প্রস্তুত</p>
             </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-white/20 rounded-full transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
-              <IoClose size={24} />
+              <IoClose size={24} className="text-black" />
             </button>
           </div>
         </div>
@@ -121,7 +121,7 @@ const SupportModal = ({ isOpen, onClose }) => {
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-black mb-2">
               <FaUser className="inline mr-2 text-blue-600" />
               Your Name *
             </label>
@@ -131,15 +131,15 @@ const SupportModal = ({ isOpen, onClose }) => {
               value={formData.name}
               onChange={handleChange}
               placeholder="আপনার নাম লিখুন"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-black"
               required
             />
           </div>
 
           {/* Phone */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <FaPhone className="inline mr-2 text-green-600" />
+            <label className="block text-sm font-medium text-black mb-2">
+              <FaPhone className="inline mr-2 text-black" />
               Phone Number *
             </label>
             <input
@@ -148,14 +148,14 @@ const SupportModal = ({ isOpen, onClose }) => {
               value={formData.phone}
               onChange={handleChange}
               placeholder="01XXXXXXXXX"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-black"
               required
             />
           </div>
 
           {/* Email (Optional) */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-black mb-2">
               <FaEnvelope className="inline mr-2 text-purple-600" />
               Email (Optional)
             </label>
@@ -165,13 +165,13 @@ const SupportModal = ({ isOpen, onClose }) => {
               value={formData.email}
               onChange={handleChange}
               placeholder="your@email.com"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-black"
             />
           </div>
 
           {/* Message Type */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-black mb-2">
               <FaCommentDots className="inline mr-2 text-orange-600" />
               Message Type
             </label>
@@ -179,7 +179,7 @@ const SupportModal = ({ isOpen, onClose }) => {
               name="messageType"
               value={formData.messageType}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-black"
             >
               <option value="complaint">Complaint (অভিযোগ)</option>
               <option value="inquiry">Inquiry (জিজ্ঞাসা)</option>
@@ -190,7 +190,7 @@ const SupportModal = ({ isOpen, onClose }) => {
 
           {/* Message */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-black mb-2">
               Message *
             </label>
             <textarea
@@ -199,10 +199,10 @@ const SupportModal = ({ isOpen, onClose }) => {
               onChange={handleChange}
               placeholder="আপনার complaint/message বিস্তারিত লিখুন..."
               rows="5"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none text-black"
               required
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-black mt-1">
               {formData.message.length} characters
             </p>
           </div>
@@ -212,14 +212,14 @@ const SupportModal = ({ isOpen, onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+              className="flex-1 px-6 py-3 border border-gray-300 text-black rounded-lg hover:bg-gray-50 transition-colors font-medium"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 px-6 py-3 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-900 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
@@ -238,11 +238,11 @@ const SupportModal = ({ isOpen, onClose }) => {
 
         {/* Footer Info */}
         <div className="px-6 pb-6">
-          <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
-            <p className="text-sm text-blue-800">
+          <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <p className="text-sm text-black">
               <strong>📞 Emergency Contact:</strong> +880 1956-486761
             </p>
-            <p className="text-sm text-blue-600 mt-1">
+            <p className="text-sm text-black mt-1">
               আমরা সাধারণত ২৪ ঘণ্টার মধ্যে response দিয়ে থাকি
             </p>
           </div>

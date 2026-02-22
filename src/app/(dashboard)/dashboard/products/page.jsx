@@ -239,7 +239,8 @@ const ProductsPage = () => {
   };
 
   return (
-    <div className="min-h-screen  p-4">
+    <div className="min-h-screen bg-white text-black antialiased">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
       {/* Alert Notification */}
       {alert.show && (
         <div className="fixed top-4 right-4 z-50 animate-slide-in">
@@ -264,14 +265,14 @@ const ProductsPage = () => {
         </div>
       )}
 
-      <div className="w-full mx-auto">
+      <div className="w-full">
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">Products Management</h1>
+              <h1 className="text-3xl font-bold text-black">Products Management</h1>
               <p className="text-gray-600 mt-1">Manage your product inventory</p>
             </div>
-            <button onClick={handleAddProduct} className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors shadow-lg">
+            <button onClick={handleAddProduct} className="px-6 py-3 border border-gray-200 bg-white text-black rounded-lg flex items-center gap-2 transition-colors shadow-sm hover:bg-gray-50">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
@@ -302,7 +303,7 @@ const ProductsPage = () => {
         {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
 
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
             {filteredProducts.map((product, index) => (
               <ProductCard 
                 key={product._id || product.id || `product-${index}`} 
@@ -318,11 +319,12 @@ const ProductsPage = () => {
             <svg className="w-24 h-24 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
             </svg>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">No Products Found</h3>
+            <h3 className="text-xl font-semibold text-black mb-2">No Products Found</h3>
             <p className="text-gray-600 mb-4">{filters.search || filters.category || filters.stockStatus ? 'Try adjusting your filters' : 'Start by adding your first product'}</p>
-            <button onClick={handleAddProduct} className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors">Add Product</button>
+            <button onClick={handleAddProduct} className="px-6 py-2 border border-gray-300 bg-white text-black rounded-lg hover:bg-gray-50 transition-colors">Add Product</button>
           </div>
         )}
+      </div>
       </div>
     </div>
   );

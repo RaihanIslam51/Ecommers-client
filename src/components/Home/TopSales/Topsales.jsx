@@ -64,7 +64,7 @@ const Topsales = () => {
       <section className="w-full bg-white">
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center py-12 md:py-16">
-            <h2 className="text-2xl md:text-3xl font-bold text-green-600 mb-2">Top Fresh Products</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">Top Products</h2>
             <p className="text-gray-600">No top selling products available</p>
           </div>
         </div>
@@ -80,7 +80,7 @@ const Topsales = () => {
           <div>
             <div className="flex items-center gap-3 mb-2">
               <div className="w-1 h-8 md:h-10 bg-green-600 rounded-full"></div>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-green-600">Top Fresh Products</h2>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black">Top Products</h2>
             </div>
             <p className="text-sm md:text-base text-gray-600 ml-4 lg:ml-5">Discover our best-selling fresh vegetables and healthy meal kits</p>
           </div>
@@ -91,7 +91,7 @@ const Topsales = () => {
             </span>
             <button
               onClick={() => setShowAll(!showAll)}
-              className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 text-sm font-semibold text-green-600 border border-green-300 rounded-lg hover:border-green-600 hover:bg-green-50 transition-all duration-200"
+              className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 text-sm font-semibold text-black border border-green-300 rounded-lg hover:border-green-600 hover:bg-green-50 transition-all duration-200"
             >
               <span>{showAll ? 'Show Less' : 'Show More'}</span>
               <svg 
@@ -106,7 +106,7 @@ const Topsales = () => {
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5 lg:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5 lg:gap-6">
           {displayedProducts.map((product) => (
             <ProductCard
               key={product._id || product.id}
@@ -125,7 +125,7 @@ const Topsales = () => {
           <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-4xl relative shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 animate-slide-up">
             {/* Close Button */}
             <button
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-green-100 hover:bg-green-600 hover:text-white text-green-600 transition-all duration-200 z-10"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-green-100 hover:bg-green-600 hover:text-white text-black transition-all duration-200 z-10"
               onClick={() => setModalProductId(null)}
               aria-label="Close quick view"
             >

@@ -68,31 +68,28 @@ const FilterSidebar = ({
       ${isMobileOpen ? 'fixed inset-0 z-50 bg-white overflow-y-auto animate-in slide-in-from-left duration-300' : 'hidden lg:block'}
       lg:sticky lg:top-4 lg:h-fit
     `}>
-      {/* Mobile Header - Enhanced */}
+      {/* Mobile Header */}
       {isMobileOpen && (
-        <div className="sticky top-0 bg-linear-to-r from-green-600 to-green-700 text-white border-b border-green-500 p-4 flex items-center justify-between shadow-lg">
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-              <BsFilterLeft className="text-white text-lg" />
-            </div>
-            <h2 className="text-lg font-bold">Filter Products</h2>
+            <BsFilterLeft className="text-black text-lg" />
+            <h2 className="text-sm font-bold uppercase tracking-widest text-black">Filters</h2>
           </div>
           <button
             onClick={onCloseMobile}
-            className="p-2 hover:bg-white/20 rounded-full transition-colors"
+            className="p-1.5 hover:bg-gray-100 transition-colors"
           >
-            <FiX className="text-xl" />
+            <FiX className="text-lg text-black" />
           </button>
         </div>
       )}
 
       <div className="p-4 lg:p-0">
-        {/* Clear All Filters - Enhanced */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-gray-900 hidden lg:block">Filters</h2>
+          <h2 className="text-sm font-bold uppercase tracking-widest text-black hidden lg:block">Filters</h2>
           <button
             onClick={onClearAll}
-            className="text-sm text-red-600 hover:text-red-700 font-medium hover:bg-red-50 px-3 py-1 rounded-lg transition-colors"
+            className="text-xs font-semibold uppercase tracking-widest text-gray-400 hover:text-black transition-colors"
           >
             Clear All
           </button>
@@ -120,7 +117,7 @@ const FilterSidebar = ({
                       : (filters.categories || []).filter(c => c !== category.name);
                     onFilterChange({ categories: newCategories });
                   }}
-                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                  className="w-4 h-4 accent-black border-gray-300 rounded"
                 />
                 <span className="text-sm text-gray-700 flex items-center gap-2">
                   {category.icon && <span>{category.icon}</span>}
@@ -159,7 +156,7 @@ const FilterSidebar = ({
                       priceRange: { min: range.min, max: range.max }
                     });
                   }}
-                  className="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500"
+                  className="w-4 h-4 accent-black border-gray-300"
                 />
                 <span className="text-sm text-gray-700">{range.label}</span>
               </label>
@@ -180,7 +177,7 @@ const FilterSidebar = ({
                     }
                   });
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-200 text-sm focus:border-black focus:outline-none transition-colors bg-gray-50 text-black"
               />
               <span className="text-gray-500">-</span>
               <input
@@ -195,7 +192,7 @@ const FilterSidebar = ({
                     }
                   });
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-200 text-sm focus:border-black focus:outline-none transition-colors bg-gray-50 text-black"
               />
             </div>
           </div>
@@ -223,7 +220,7 @@ const FilterSidebar = ({
                       : (filters.productTypes || []).filter(t => t !== type);
                     onFilterChange({ productTypes: newTypes });
                   }}
-                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                  className="w-4 h-4 accent-black border-gray-300 rounded"
                 />
                 <span className="text-sm text-gray-700">{type}</span>
               </label>
@@ -253,7 +250,7 @@ const FilterSidebar = ({
                       : (filters.availability || []).filter(a => a !== option);
                     onFilterChange({ availability: newAvailability });
                   }}
-                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                  className="w-4 h-4 accent-black border-gray-300 rounded"
                 />
                 <span className="text-sm text-gray-700">{option}</span>
               </label>
@@ -283,7 +280,7 @@ const FilterSidebar = ({
                       : (filters.ratings || []).filter(r => r !== rating);
                     onFilterChange({ ratings: newRatings });
                   }}
-                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                  className="w-4 h-4 accent-black border-gray-300 rounded"
                 />
                 <span className="flex items-center gap-1 text-sm">
                   {[...Array(5)].map((_, i) => (
@@ -304,10 +301,10 @@ const FilterSidebar = ({
 
       {/* Mobile Apply Button */}
       {isMobileOpen && (
-        <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4">
+        <div className="sticky bottom-0 bg-white border-t border-gray-100 p-4">
           <button
             onClick={onCloseMobile}
-            className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
+            className="w-full bg-black text-white py-3 font-semibold text-sm uppercase tracking-widest hover:bg-gray-900 transition-colors"
           >
             Apply Filters
           </button>

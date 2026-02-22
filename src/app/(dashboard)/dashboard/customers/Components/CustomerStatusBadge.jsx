@@ -4,9 +4,9 @@ const CustomerStatusBadge = ({ status }) => {
     const statusConfig = {
         active: {
             label: 'Active',
-            bg: 'bg-green-100',
-            text: 'text-green-700',
-            dot: 'bg-green-500'
+            bg: 'bg-gray-100',
+            text: 'text-black',
+            dot: 'bg-gray-500'
         },
         inactive: {
             label: 'Inactive',
@@ -16,15 +16,15 @@ const CustomerStatusBadge = ({ status }) => {
         },
         vip: {
             label: 'VIP',
-            bg: 'bg-purple-100',
-            text: 'text-purple-700',
-            dot: 'bg-purple-500'
+            bg: 'bg-gray-100',
+            text: 'text-black',
+            dot: 'bg-black'
         },
         new: {
             label: 'New',
-            bg: 'bg-green-100',
-            text: 'text-green-700',
-            dot: 'bg-green-500'
+            bg: 'bg-gray-100',
+            text: 'text-black',
+            dot: 'bg-gray-500'
         },
         blocked: {
             label: 'Blocked',

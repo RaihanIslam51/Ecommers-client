@@ -60,7 +60,10 @@ axiosInstance.interceptors.response.use(
         console.warn('🔍 Endpoint not found:', error.config?.url);
       }
     } else if (error.response?.status >= 500) {
-      console.error('🔥 Server error:', error.response?.data?.message || error.message);
+      // Log server errors only during development to avoid noisy console in production
+      if (isDev) {
+        console.error('🔥 Server error:', error.response?.data?.message || error.message);
+      }
     }
     
     return Promise.reject(error);

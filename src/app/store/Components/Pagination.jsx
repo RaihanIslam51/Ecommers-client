@@ -46,10 +46,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`p-2 sm:p-3 rounded-lg border transition-colors ${
+        className={`p-2 sm:p-3 border transition-colors ${
           currentPage === 1
-            ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-            : 'border-gray-300 text-gray-700 hover:bg-green-50 active:bg-green-100'
+            ? 'border-gray-100 text-gray-300 cursor-not-allowed'
+            : 'border-gray-300 text-black hover:bg-black hover:text-white hover:border-black'
         }`}
         aria-label="Previous page"
       >
@@ -71,10 +71,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             <button
               key={page}
               onClick={() => onPageChange(page)}
-              className={`min-w-[36px] sm:min-w-[40px] px-2 sm:px-3 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base ${
+              className={`min-w-[36px] sm:min-w-[40px] px-2 sm:px-3 py-2 font-medium transition-colors text-sm ${
                 currentPage === page
-                  ? 'bg-green-600 text-white'
-                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-green-50 active:bg-green-100'
+                  ? 'bg-black text-white border border-black'
+                  : 'bg-white border border-gray-300 text-black hover:border-black hover:bg-black hover:text-white'
               }`}
               aria-label={`Go to page ${page}`}
             >
@@ -88,10 +88,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`p-2 sm:p-3 rounded-lg border transition-colors ${
+        className={`p-2 sm:p-3 border transition-colors ${
           currentPage === totalPages
-            ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-            : 'border-gray-300 text-gray-700 hover:bg-green-50 active:bg-green-100'
+            ? 'border-gray-100 text-gray-300 cursor-not-allowed'
+            : 'border-gray-300 text-black hover:bg-black hover:text-white hover:border-black'
         }`}
         aria-label="Next page"
       >

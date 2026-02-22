@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 /* ========================================
@@ -6,102 +7,98 @@
    ======================================== */
 
 :root {
-  /* ============= PRIMARY COLORS - FRESH GREEN ============= */
-  /* Vibrant Green - Freshness, Health, Nature */
-  --color-primary-50: #ECFDF5;
-  --color-primary-100: #D1FAE5;
-  --color-primary-200: #A7F3D0;
-  --color-primary-300: #6EE7B7;
-  --color-primary-400: #34D399;
-  --color-primary-500: #10B981;    /* Main Primary - Fresh Green */
-  --color-primary-600: #059669;    /* Primary Hover - Deep Green */
-  --color-primary-700: #047857;
-  --color-primary-800: #065F46;
-  --color-primary-900: #064E3B;
+  /* ============= PRIMARY COLORS - BLACK & WHITE ============= */
+  --color-primary-50: #F5F5F5;
+  --color-primary-100: #EEEEEE;
+  --color-primary-200: #E0E0E0;
+  --color-primary-300: #BDBDBD;
+  --color-primary-400: #9E9E9E;
+  --color-primary-500: #000000;    /* Main Primary - Black */
+  --color-primary-600: #000000;    /* Primary Hover - Black */
+  --color-primary-700: #000000;
+  --color-primary-800: #000000;
+  --color-primary-900: #000000;
   --color-primary: var(--color-primary-500);
   
   /* ============= SECONDARY COLORS ============= */
-  /* Emerald Green - Premium, Organic, Quality */
-  --color-secondary-50: #ECFDF5;
-  --color-secondary-100: #D1FAE5;
-  --color-secondary-200: #A7F3D0;
-  --color-secondary-300: #6EE7B7;
-  --color-secondary-400: #34D399;
-  --color-secondary-500: #10B981;   /* Main Secondary */
-  --color-secondary-600: #059669;   /* Secondary Hover */
-  --color-secondary-700: #047857;
-  --color-secondary-800: #065F46;
-  --color-secondary-900: #064E3B;
+  --color-secondary-50: #F5F5F5;
+  --color-secondary-100: #EEEEEE;
+  --color-secondary-200: #E0E0E0;
+  --color-secondary-300: #BDBDBD;
+  --color-secondary-400: #9E9E9E;
+  --color-secondary-500: #000000;   /* Main Secondary */
+  --color-secondary-600: #000000;   /* Secondary Hover */
+  --color-secondary-700: #000000;
+  --color-secondary-800: #000000;
+  --color-secondary-900: #000000;
   --color-secondary: var(--color-secondary-500);
 
   /* ============= ACCENT COLORS ============= */
-  /* Lime Green - Freshness, Energy, New Arrivals */
-  --color-accent-50: #F7FEE7;
-  --color-accent-100: #ECFCCB;
-  --color-accent-200: #D9F99D;
-  --color-accent-300: #BEF264;
-  --color-accent-400: #A3E635;
-  --color-accent-500: #84CC16;
-  --color-accent-600: #65A30D;
-  --color-accent-700: #4D7C0F;
-  --color-accent-800: #3F6212;
-  --color-accent-900: #365314;
+  --color-accent-50: #F5F5F5;
+  --color-accent-100: #EEEEEE;
+  --color-accent-200: #E0E0E0;
+  --color-accent-300: #BDBDBD;
+  --color-accent-400: #9E9E9E;
+  --color-accent-500: #424242;
+  --color-accent-600: #212121;
+  --color-accent-700: #000000;
+  --color-accent-800: #000000;
+  --color-accent-900: #000000;
   --color-accent: var(--color-accent-500);
 
   /* ============= SEMANTIC COLORS ============= */
-  --color-success: #10B981;        /* Green - Success, In Stock, Fresh */
-  --color-success-light: #D1FAE5;
-  --color-success-dark: #065F46;
+  --color-success: #4CAF50;        /* Green - Success, In Stock */
+  --color-success-light: #E8F5E9;
+  --color-success-dark: #1B5E20;
   
-  --color-warning: #F59E0B;        /* Amber - Warnings, Limited Stock */
-  --color-warning-light: #FEF3C7;
-  --color-warning-dark: #92400E;
+  --color-warning: #FF9800;        /* Orange - Warnings, Limited Stock */
+  --color-warning-light: #FFF3E0;
+  --color-warning-dark: #E65100;
   
-  --color-error: #EF4444;          /* Red - Errors, Out of Stock */
-  --color-error-light: #FEE2E2;
-  --color-error-dark: #991B1B;
+  --color-error: #F44336;          /* Red - Errors, Out of Stock */
+  --color-error-light: #FFEBEE;
+  --color-error-dark: #C62828;
   
-  --color-info: #10B981;           /* Green - Information, Healthy Tips */
-  --color-info-light: #D1FAE5;
-  --color-info-dark: #065F46;
+  --color-info: #2196F3;           /* Blue - Information */
+  --color-info-light: #E3F2FD;
+  --color-info-dark: #0D47A1;
 
   /* ============= NEUTRAL COLORS ============= */
-  /* Sophisticated Grays - Professional & Clean */
-  --color-gray-50: #F9FAFB;
-  --color-gray-100: #F3F4F6;
-  --color-gray-200: #E5E7EB;
-  --color-gray-300: #D1D5DB;
-  --color-gray-400: #9CA3AF;
-  --color-gray-500: #6B7280;
-  --color-gray-600: #4B5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1F2937;
-  --color-gray-900: #111827;
+  --color-gray-50: #FAFAFA;
+  --color-gray-100: #F5F5F5;
+  --color-gray-200: #EEEEEE;
+  --color-gray-300: #E0E0E0;
+  --color-gray-400: #BDBDBD;
+  --color-gray-500: #9E9E9E;
+  --color-gray-600: #757575;
+  --color-gray-700: #616161;
+  --color-gray-800: #424242;
+  --color-gray-900: #212121;
 
   /* ============= BACKGROUND COLORS ============= */
   --bg-primary: #FFFFFF;
-  --bg-secondary: #F9FAFB;
-  --bg-tertiary: #F3F4F6;
-  --bg-dark: #111827;
+  --bg-secondary: #F5F5F5;
+  --bg-tertiary: #EEEEEE;
+  --bg-dark: #000000;
   --bg-overlay: rgba(0, 0, 0, 0.5);
-  --bg-linear-primary: linear-gradient(135deg, #10B981 0%, #059669 100%);
-  --bg-linear-secondary: linear-gradient(135deg, #34D399 0%, #10B981 100%);
-  --bg-linear-accent: linear-gradient(135deg, #84CC16 0%, #65A30D 100%);
+  --bg-linear-primary: linear-gradient(135deg, #000000 0%, #424242 100%);
+  --bg-linear-secondary: linear-gradient(135deg, #212121 0%, #000000 100%);
+  --bg-linear-accent: linear-gradient(135deg, #424242 0%, #212121 100%);
 
   /* ============= TEXT COLORS ============= */
-  --text-primary: #064E3B;         /* Main text - Deep Green */
-  --text-secondary: #047857;       /* Secondary text - Medium Green */
-  --text-tertiary: #065F46;        /* Muted text - Dark Green */
+  --text-primary: #000000;         /* Main text - Black */
+  --text-secondary: #212121;       /* Secondary text - Dark Gray */
+  --text-tertiary: #424242;        /* Muted text - Medium Gray */
   --text-inverse: #FFFFFF;         /* Text on dark backgrounds */
-  --text-link: #10B981;            /* Links - Fresh Green */
-  --text-link-hover: #059669;      /* Link hover - Deep Green */
+  --text-link: #000000;            /* Links - Black */
+  --text-link-hover: #424242;      /* Link hover - Gray */
 
   /* ============= BORDER COLORS ============= */
-  --border-light: #D1FAE5;
-  --border-medium: #A7F3D0;
-  --border-dark: #6EE7B7;
-  --border-primary: #10B981;
-  --border-focus: #34D399;
+  --border-light: #EEEEEE;
+  --border-medium: #BDBDBD;
+  --border-dark: #757575;
+  --border-primary: #000000;
+  --border-focus: #424242;
 
   /* ============= SHADOW COLORS ============= */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -109,16 +106,16 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  --shadow-primary: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
-  --shadow-secondary: 0 10px 15px -3px rgba(249, 115, 22, 0.3);
+  --shadow-primary: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  --shadow-secondary: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
 
   /* ============= E-COMMERCE SPECIFIC ============= */
-  --color-sale: #EF4444;           /* Sale/Discount Red */
-  --color-new: #84CC16;            /* New Arrivals Lime Green */
-  --color-featured: #10B981;       /* Featured Products Fresh Green */
-  --color-rating: #FBBF24;         /* Star Rating Yellow */
-  --color-price: #064E3B;          /* Price Text - Deep Green */
-  --color-old-price: #6EE7B7;      /* Strikethrough Price - Light Green */
+  --color-sale: #F44336;           /* Sale/Discount Red */
+  --color-new: #FF6F00;            /* New Arrivals Orange */
+  --color-featured: #000000;       /* Featured Products Black */
+  --color-rating: #FBC02D;         /* Star Rating Yellow */
+  --color-price: #000000;          /* Price Text - Black */
+  --color-old-price: #9E9E9E;      /* Strikethrough Price - Gray */
   
   /* ============= UTILITY VARIABLES ============= */
   --bg-default: var(--bg-primary);
@@ -138,17 +135,48 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-primary: #FFFFFF;
-    --bg-secondary: #1F2937;
-    --bg-tertiary: #374151;
-    --text-primary: #F9FAFB;
-    --text-secondary: #D1D5DB;
-    --text-tertiary: #9CA3AF;
-    --border-light: #374151;
-    --border-medium: #4B5563;
-    --border-dark: #6B7280;
+    --bg-secondary: #F5F5F5;
+    --bg-tertiary: #EEEEEE;
+    --text-primary: #000000;
+    --text-secondary: #212121;
+    --text-tertiary: #424242;
+    --border-light: #EEEEEE;
+    --border-medium: #BDBDBD;
+    --border-dark: #757575;
   }
 }
 
+
+/* ============= GOOGLE FONTS - BANGLA & ENGLISH ============= */
+.tiro-bangla-regular {
+  font-family: "Tiro Bangla", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.tiro-bangla-regular-italic {
+  font-family: "Tiro Bangla", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.inter-regular {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.inter-semibold {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.inter-bold {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
 
 /* ============= GLOBAL STYLES ============= */
 body {
@@ -188,8 +216,8 @@ body {
 
 /* ============= BUTTON UTILITIES ============= */
 .btn-primary {
-  background-color: var(--color-primary);
-  color: var(--text-inverse);
+  background-color: #000000;
+  color: #FFFFFF;
   padding: 0.75rem 1.5rem;
   border-radius: var(--border-radius-md);
   font-weight: 600;
@@ -200,7 +228,7 @@ body {
 }
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: var(--color-primary-600);
+  background-color: #212121;
   box-shadow: var(--shadow-primary);
   transform: translateY(-1px);
 }
@@ -209,8 +237,8 @@ body {
 }
 
 .btn-secondary {
-  background-color: var(--color-secondary);
-  color: var(--text-inverse);
+  background-color: #424242;
+  color: #FFFFFF;
   padding: 0.75rem 1.5rem;
   border-radius: var(--border-radius-md);
   font-weight: 600;
@@ -221,7 +249,7 @@ body {
 }
 .btn-secondary:hover,
 .btn-secondary:focus {
-  background-color: var(--color-secondary-600);
+  background-color: #212121;
   box-shadow: var(--shadow-secondary);
   transform: translateY(-1px);
 }
@@ -231,9 +259,9 @@ body {
 
 .btn-outline-primary {
   background-color: transparent;
-  color: var(--color-primary);
+  color: #000000;
   padding: 0.75rem 1.5rem;
-  border: 2px solid var(--color-primary);
+  border: 2px solid #000000;
   border-radius: var(--border-radius-md);
   font-weight: 600;
   transition: all var(--transition-fast);
@@ -241,16 +269,16 @@ body {
 }
 .btn-outline-primary:hover,
 .btn-outline-primary:focus {
-  background-color: var(--color-primary);
-  color: var(--text-inverse);
+  background-color: #000000;
+  color: #FFFFFF;
   box-shadow: var(--shadow-primary);
 }
 
 .btn-outline-secondary {
   background-color: transparent;
-  color: var(--color-secondary);
+  color: #424242;
   padding: 0.75rem 1.5rem;
-  border: 2px solid var(--color-secondary);
+  border: 2px solid #424242;
   border-radius: var(--border-radius-md);
   font-weight: 600;
   transition: all var(--transition-fast);
@@ -258,15 +286,15 @@ body {
 }
 .btn-outline-secondary:hover,
 .btn-outline-secondary:focus {
-  background-color: var(--color-secondary);
-  color: var(--text-inverse);
+  background-color: #424242;
+  color: #FFFFFF;
   box-shadow: var(--shadow-secondary);
 }
 
 /* ============= BADGE UTILITIES ============= */
 .badge-sale {
-  background-color: var(--color-sale);
-  color: var(--text-inverse);
+  background-color: #F44336;
+  color: #FFFFFF;
   padding: 0.25rem 0.75rem;
   border-radius: var(--border-radius-full);
   font-size: 0.75rem;
@@ -276,8 +304,8 @@ body {
 }
 
 .badge-new {
-  background-color: var(--color-new);
-  color: var(--text-inverse);
+  background-color: #FF6F00;
+  color: #FFFFFF;
   padding: 0.25rem 0.75rem;
   border-radius: var(--border-radius-full);
   font-size: 0.75rem;
@@ -287,8 +315,8 @@ body {
 }
 
 .badge-featured {
-  background-color: var(--color-featured);
-  color: var(--text-inverse);
+  background-color: #000000;
+  color: #FFFFFF;
   padding: 0.25rem 0.75rem;
   border-radius: var(--border-radius-full);
   font-size: 0.75rem;
@@ -299,8 +327,8 @@ body {
 
 /* ============= CARD UTILITIES ============= */
 .card {
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-light);
+  background-color: #FFFFFF;
+  border: 1px solid #EEEEEE;
   border-radius: var(--border-radius-lg);
   padding: 1.5rem;
   box-shadow: var(--shadow-sm);
@@ -309,11 +337,12 @@ body {
 .card:hover {
   box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
+  border-color: #000000;
 }
 
 .card-product {
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-light);
+  background-color: #FFFFFF;
+  border: 1px solid #EEEEEE;
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   transition: all var(--transition-normal);
@@ -322,24 +351,24 @@ body {
 .card-product:hover {
   box-shadow: var(--shadow-xl);
   transform: translateY(-4px);
-  border-color: var(--color-primary-200);
+  border-color: #000000;
 }
 
 /* ============= PRICE UTILITIES ============= */
 .price-current {
-  color: var(--color-price);
+  color: #000000;
   font-weight: 700;
   font-size: 1.5rem;
 }
 
 .price-old {
-  color: var(--color-old-price);
+  color: #9E9E9E;
   text-decoration: line-through;
   font-size: 1rem;
 }
 
 .price-discount {
-  color: var(--color-sale);
+  color: #F44336;
   font-weight: 600;
   margin-left: 0.5rem;
 }
@@ -367,30 +396,30 @@ body {
 .input-field:focus {
   outline: none;
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 .input-field::placeholder {
   color: var(--text-tertiary);
 }
 
 /* ============= GLOBAL INPUT TEXT COLOR ============= */
-/* All input fields, textareas, and selects will have green text */
+/* All input fields, textareas, and selects will have black text */
 input,
 textarea,
 select {
-  color: #064E3B !important; /* Force deep green text color */
+  color: #000000 !important; /* Force black text color */
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #6EE7B7 !important; /* Light green placeholder */
+  color: #9E9E9E !important; /* Gray placeholder */
 }
 
-/* Ensure text remains green when focused */
+/* Ensure text remains black when focused */
 input:focus,
 textarea:focus,
 select:focus {
-  color: #064E3B !important;
+  color: #000000 !important;
 }
 
 /* Autofill text color */
@@ -398,9 +427,9 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-text-fill-color: #064E3B !important;
+  -webkit-text-fill-color: #000000 !important;
   -webkit-box-shadow: 0 0 0 30px white inset !important;
-  color: #064E3B !important;
+  color: #000000 !important;
 }
 
 /* For date, time, and other special inputs */
@@ -410,12 +439,12 @@ input[type="datetime-local"],
 input[type="month"],
 input[type="week"],
 input[type="number"] {
-  color: #064E3B !important;
+  color: #000000 !important;
 }
 
 /* Select dropdown options */
 select option {
-  color: #064E3B !important;
+  color: #000000 !important;
   background-color: white !important;
 }
 
@@ -442,23 +471,23 @@ select option {
 
 /* ============= LINK UTILITIES ============= */
 a {
-  color: var(--text-link);
+  color: #000000;
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 a:hover {
-  color: var(--text-link-hover);
+  color: #424242;
 }
 
 /* ============= SELECTION STYLING ============= */
 ::selection {
-  background-color: var(--color-primary-200);
-  color: var(--color-primary-900);
+  background-color: #000000;
+  color: #FFFFFF;
 }
 
 /* ============= FOCUS VISIBLE ============= */
 *:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid #000000;
   outline-offset: 2px;
 }
 

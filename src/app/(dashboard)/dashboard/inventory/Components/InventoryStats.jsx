@@ -11,7 +11,7 @@ const InventoryStats = ({ stats }) => {
       value: stats?.totalProducts || 0,
       icon: Package,
       iconBg: 'bg-green-100',
-      iconColor: 'text-green-600',
+      iconColor: 'text-black',
       trend: '+12%',
       trendUp: true
     },
@@ -38,7 +38,7 @@ const InventoryStats = ({ stats }) => {
       value: `$${(stats?.totalValue || 0).toLocaleString()}`,
       icon: TrendingUp,
       iconBg: 'bg-green-100',
-      iconColor: 'text-green-600',
+      iconColor: 'text-black',
       trend: '+8%',
       trendUp: true
     }

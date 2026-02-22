@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const ProductCard = ({ product, onEdit, onDelete, onView }) => {
   return (
-    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-green-200">
+    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-200">
       {/* Product Image */}
       <div className="relative h-48 w-full bg-gray-100">
         {product.image ? (
@@ -27,11 +27,11 @@ const ProductCard = ({ product, onEdit, onDelete, onView }) => {
         {/* Stock Badge */}
         <div className="absolute top-2 right-2">
           {product.stock > 0 ? (
-            <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+            <span className="bg-gray-100 text-black text-xs px-2 py-1 rounded-full">
               In Stock
             </span>
           ) : (
-            <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+            <span className="bg-gray-100 text-black text-xs px-2 py-1 rounded-full">
               Out of Stock
             </span>
           )}
@@ -41,7 +41,7 @@ const ProductCard = ({ product, onEdit, onDelete, onView }) => {
       {/* Product Details */}
       <div className="p-4">
         <div className="mb-2">
-          <h3 className="text-lg font-semibold text-gray-800 truncate">
+          <h3 className="text-lg font-semibold text-black truncate">
             {product.name}
           </h3>
           <p className="text-sm text-gray-500">{product.category}</p>
@@ -53,7 +53,7 @@ const ProductCard = ({ product, onEdit, onDelete, onView }) => {
 
         <div className="flex items-center justify-between mb-3">
           <div>
-            <p className="text-2xl font-bold text-green-600">
+            <p className="text-2xl font-bold text-black">
               ${product.price}
             </p>
             {product.originalPrice && (
@@ -72,19 +72,19 @@ const ProductCard = ({ product, onEdit, onDelete, onView }) => {
         <div className="flex gap-2">
           <button
             onClick={() => onView(product)}
-            className="flex-1 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-md text-sm transition-colors"
+            className="flex-1 border border-gray-200 bg-white text-black px-3 py-2 rounded-md text-sm transition-colors hover:bg-gray-50"
           >
             View
           </button>
           <button
             onClick={() => onEdit(product)}
-            className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-md text-sm transition-colors"
+            className="flex-1 border border-gray-200 bg-white text-black px-3 py-2 rounded-md text-sm transition-colors hover:bg-gray-50"
           >
             Edit
           </button>
           <button
             onClick={() => onDelete(product)}
-            className="flex-1 bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md text-sm transition-colors"
+            className="flex-1 border border-red-200 bg-white text-red-600 px-3 py-2 rounded-md text-sm transition-colors hover:bg-red-50"
           >
             Delete
           </button>

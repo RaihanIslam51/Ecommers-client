@@ -1,18 +1,18 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import axiosInstance from "@/lib/axios";
 
 const Category = () => {
-  const [showAll, setShowAll] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const scrollRef = useRef(null);
   const searchParams = useSearchParams();
   const highlightCategory = searchParams.get('highlight');
 
-  // Fetch categories from database
   const fetchCategories = useCallback(async () => {
     try {
       const response = await axiosInstance.get('/categories');
@@ -30,124 +30,124 @@ const Category = () => {
     fetchCategories();
   }, [fetchCategories]);
 
-  // Detect mobile
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+  const checkScrollState = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
   }, []);
 
-  const handleSeeMore = () => setShowAll((prev) => !prev);
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    checkScrollState();
+    el.addEventListener('scroll', checkScrollState);
+    window.addEventListener('resize', checkScrollState);
+    return () => {
+      el.removeEventListener('scroll', checkScrollState);
+      window.removeEventListener('resize', checkScrollState);
+    };
+  }, [categories, checkScrollState]);
 
-  // Auto-expand and scroll to highlighted category
+  const scroll = (dir) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * 320, behavior: 'smooth' });
+  };
+
+  // Scroll to highlighted category
   useEffect(() => {
     if (highlightCategory && categories.length > 0) {
-      const highlightedCat = categories.find(cat => cat.name === highlightCategory);
-      if (highlightedCat) {
-        const categoryIndex = categories.findIndex(cat => cat.name === highlightCategory);
-        if (isMobile && categoryIndex >= 12) {
-          setShowAll(true);
-        }
-        
+      const highlighted = categories.find(cat => cat.name === highlightCategory);
+      if (highlighted) {
         setTimeout(() => {
-          const element = document.getElementById(`category-${highlightedCat._id || highlightedCat.name}`);
+          const element = document.getElementById(`category-${highlighted._id || highlighted.name}`);
           if (element) {
-            element.scrollIntoView({ 
-              behavior: 'smooth', 
-              block: 'center',
-              inline: 'center' 
-            });
+            element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
           }
-        }, 500);
+        }, 400);
       }
     }
-  }, [highlightCategory, categories, isMobile]);
+  }, [highlightCategory, categories]);
 
   if (loading) {
     return (
-      <section className="w-full bg-white">
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center items-center py-16 md:py-20">
-            <div className="text-gray-600">Loading categories...</div>
+      <section className="w-full bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex gap-8 overflow-hidden">
+            {[...Array(10)].map((_, i) => (
+              <div key={i} className="h-3 w-16 bg-gray-100 animate-pulse flex-shrink-0 rounded-sm" />
+            ))}
           </div>
         </div>
       </section>
     );
   }
 
-  if (categories.length === 0) {
-    return (
-      <section className="w-full bg-white">
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-600 py-16 md:py-20">No categories available</p>
-        </div>
-      </section>
-    );
-  }
-
-  // Default visible: show 12 categories on mobile, all on desktop
-  const visibleCategories = isMobile ? (showAll ? categories : categories.slice(0, 12)) : categories;
+  if (categories.length === 0) return null;
 
   return (
-    <section className="w-full bg-white">
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-10 md:mb-12 lg:mb-16">
-          <div className="flex-1">
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900">
-              Fresh Categories
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 mt-2">
-              Explore our fresh vegetables, meal kits, and healthy food categories
-            </p>
-          </div>
+    <section className="w-full bg-white border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative flex items-center">
 
-          {/* See All Button - only on mobile */}
-          {isMobile && categories.length > 12 && (
+          {/* Left fade + arrow */}
+          <div className={`absolute left-0 z-10 flex items-center h-full transition-opacity duration-200 ${canScrollLeft ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+            <div className="absolute left-0 w-16 h-full bg-gradient-to-r from-white to-transparent pointer-events-none" />
             <button
-              onClick={handleSeeMore}
-              className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium"
+              onClick={() => scroll(-1)}
+              aria-label="Scroll left"
+              className="relative z-10 w-7 h-7 flex items-center justify-center text-gray-400 hover:text-black transition-colors"
             >
-              {showAll ? "Show Less" : "View All Categories"}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
             </button>
-          )}
-        </div>
-
-        {/* Category Grid */}
-        <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 md:gap-4 lg:gap-5">
-          {visibleCategories.map((cat, index) => {
-            const isHighlighted = highlightCategory === cat.name;
-            
-            return (
-              <Link
-                href={`/store?category=${encodeURIComponent(cat.name)}`}
-                id={`category-${cat._id || cat.name}`}
-                key={cat._id || `cat-${index}`}
-                className={`bg-white hover:bg-gray-50 border  rounded-lg p-4 text-center ${
-                  isHighlighted ? 'border-blue-400 bg-blue-50' : 'border-gray-200 hover:border-green-400'
-                }`}
-                aria-label={`Browse ${cat.name} category`}
-              >
-                <div className="text-sm font-semibold text-gray-900">
-                  {cat.name}
-                  {cat.productCount > 0 && (
-                    <span className="text-gray-500 ml-1">({cat.productCount})</span>
-                  )}
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* Bottom Info - only on mobile */}
-        {isMobile && !showAll && categories.length > 12 && (
-          <div className="mt-8 text-center">
-            <p className="text-sm text-gray-500">
-              Showing {visibleCategories.length} of {categories.length} categories
-            </p>
           </div>
-        )}
+
+          {/* Scroll track */}
+          <div
+            ref={scrollRef}
+            className="flex items-center overflow-x-auto scroll-smooth"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {categories.map((cat, index) => {
+              const isHighlighted = highlightCategory === cat.name;
+              return (
+                <Link
+                  href={`/store?category=${encodeURIComponent(cat.name)}`}
+                  id={`category-${cat._id || cat.name}`}
+                  key={cat._id || `cat-${index}`}
+                  aria-label={`Browse ${cat.name}`}
+                  className={`group relative flex-shrink-0 px-4 py-4 text-xs font-semibold uppercase tracking-widest whitespace-nowrap transition-colors duration-200 ${
+                    isHighlighted ? 'text-black' : 'text-gray-400 hover:text-black'
+                  }`}
+                >
+                  {cat.name}
+                  {/* Underline indicator */}
+                  <span className={`absolute bottom-0 left-4 right-4 h-[2px] bg-black transition-transform duration-200 origin-left ${
+                    isHighlighted ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`} />
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Right fade + arrow */}
+          <div className={`absolute right-0 z-10 flex items-center justify-end h-full transition-opacity duration-200 ${canScrollRight ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+            <div className="absolute right-0 w-16 h-full bg-gradient-to-l from-white to-transparent pointer-events-none" />
+            <button
+              onClick={() => scroll(1)}
+              aria-label="Scroll right"
+              className="relative z-10 w-7 h-7 flex items-center justify-center text-gray-400 hover:text-black transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </div>
+
+        </div>
       </div>
     </section>
   );

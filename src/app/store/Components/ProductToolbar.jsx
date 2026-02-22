@@ -23,7 +23,7 @@ const ProductToolbar = ({
   ];
 
   return (
-    <div className="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm">
+    <div className="bg-white border-b border-gray-100 sticky top-0 z-30">
       <div className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           {/* Left Section - Product Count & Filter Button */}
@@ -31,13 +31,12 @@ const ProductToolbar = ({
             {/* Mobile Filter Toggle - Enhanced */}
             <button
               onClick={onFilterToggle}
-              className="lg:hidden flex items-center gap-2 px-3 sm:px-4 py-2 bg-green-600 text-white border border-green-600 rounded-lg hover:bg-green-700 transition-colors text-sm sm:text-base shadow-sm"
+              className="lg:hidden flex items-center gap-2 px-4 py-2 bg-black text-white text-sm font-semibold uppercase tracking-widest hover:bg-gray-900 transition-colors"
             >
-              <BsFilterLeft className="text-lg sm:text-xl" />
-              <span className="font-medium">Filters</span>
-              {/* Active filter indicator */}
+              <BsFilterLeft className="text-base" />
+              <span>Filters</span>
               {(filters.categories?.length > 0 || filters.priceRange || filters.customPriceRange || filters.productTypes?.length > 0 || filters.availability?.length > 0 || filters.ratings?.length > 0) && (
-                <span className="bg-white text-green-600 text-xs px-1.5 py-0.5 rounded-full font-semibold">
+                <span className="bg-white text-black text-xs w-5 h-5 flex items-center justify-center font-bold">
                   {[
                     filters.categories?.length || 0,
                     filters.priceRange ? 1 : 0,
@@ -67,7 +66,7 @@ const ProductToolbar = ({
                 id="sort"
                 value={sortBy}
                 onChange={(e) => onSortChange(e.target.value)}
-                className="px-2 sm:px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white cursor-pointer min-w-0"
+                className="px-2 sm:px-3 py-2 border border-gray-200 text-sm focus:border-black focus:outline-none bg-white cursor-pointer min-w-0 text-black"
               >
                 {sortOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -81,10 +80,10 @@ const ProductToolbar = ({
             <div className="hidden md:flex items-center gap-1 border border-gray-300 rounded-lg p-1">
               <button
                 onClick={() => onViewChange('grid')}
-                className={`p-2 rounded transition-colors ${
+                className={`p-2 transition-colors ${
                   currentView === 'grid'
-                    ? 'bg-green-600 text-white'
-                    : 'text-gray-600 hover:bg-green-50'
+                    ? 'bg-black text-white'
+                    : 'text-gray-400 hover:text-black'
                 }`}
                 title="Grid View"
               >
@@ -92,10 +91,10 @@ const ProductToolbar = ({
               </button>
               <button
                 onClick={() => onViewChange('list')}
-                className={`p-2 rounded transition-colors ${
+                className={`p-2 transition-colors ${
                   currentView === 'list'
-                    ? 'bg-green-600 text-white'
-                    : 'text-gray-600 hover:bg-green-50'
+                    ? 'bg-black text-white'
+                    : 'text-gray-400 hover:text-black'
                 }`}
                 title="List View"
               >

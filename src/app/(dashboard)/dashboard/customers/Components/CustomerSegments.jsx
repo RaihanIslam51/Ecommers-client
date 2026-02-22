@@ -38,22 +38,22 @@ const CustomerSegments = () => {
 
     const colorClasses = {
         purple: {
-            bg: 'bg-purple-50',
-            text: 'text-purple-600',
-            border: 'border-purple-200',
-            progress: 'bg-purple-600'
+            bg: 'bg-gray-50',
+            text: 'text-gray-700',
+            border: 'border-gray-200',
+            progress: 'bg-gray-700'
         },
         blue: {
-            bg: 'bg-blue-50',
-            text: 'text-blue-600',
-            border: 'border-blue-200',
-            progress: 'bg-blue-600'
+            bg: 'bg-gray-50',
+            text: 'text-gray-700',
+            border: 'border-gray-200',
+            progress: 'bg-gray-700'
         },
         green: {
-            bg: 'bg-green-50',
-            text: 'text-green-600',
-            border: 'border-green-200',
-            progress: 'bg-green-600'
+            bg: 'bg-gray-50',
+            text: 'text-black',
+            border: 'border-gray-200',
+            progress: 'bg-gray-700'
         },
         gray: {
             bg: 'bg-gray-50',

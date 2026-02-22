@@ -122,7 +122,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
 
                 {/* Upload Button */}
                 <div className="flex-1">
-                  <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-3 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors">
+                  <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-3 bg-green-50 text-black rounded-lg hover:bg-green-100 transition-colors">
                     <Upload className="w-5 h-5" />
                     <span className="font-medium">Upload Image</span>
                     <input

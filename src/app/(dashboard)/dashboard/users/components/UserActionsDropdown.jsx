@@ -80,7 +80,7 @@ export default function UserActionsDropdown({ user, isOpen, onToggle, onRoleChan
               }}
               className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-green-50 flex items-center gap-2 transition-colors"
             >
-              <FiShield className="w-4 h-4 text-green-600" />
+              <FiShield className="w-4 h-4 text-black" />
               Make Admin
             </button>
           ) : (

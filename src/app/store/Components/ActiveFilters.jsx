@@ -50,21 +50,21 @@ const ActiveFilters = ({ filters, onRemoveFilter, onClearAll }) => {
   if (activeFilters.length === 0) return null;
 
   return (
-    <div className="bg-gray-50 border-b border-gray-200 px-4 py-3">
+    <div className="bg-white border-b border-gray-100 px-4 py-3">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-sm font-medium text-gray-700">Active Filters:</span>
+        <span className="text-xs font-semibold uppercase tracking-widest text-gray-400">Active:</span>
         
         {activeFilters.map((filter, index) => (
           <span
             key={`${filter.type}-${filter.value}-${index}`}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-300 rounded-full text-sm text-gray-700"
+            className="inline-flex items-center gap-1.5 px-3 py-1 border border-gray-300 text-xs text-black font-medium"
           >
             {filter.label}
             <button
               onClick={() => onRemoveFilter(filter.type, filter.value)}
-              className="hover:bg-gray-100 rounded-full p-0.5 transition-colors"
+              className="hover:text-gray-500 transition-colors p-0.5"
             >
-              <FiX className="text-gray-500 hover:text-gray-700" />
+              <FiX className="text-xs" />
             </button>
           </span>
         ))}
@@ -72,7 +72,7 @@ const ActiveFilters = ({ filters, onRemoveFilter, onClearAll }) => {
         {activeFilters.length > 1 && (
           <button
             onClick={onClearAll}
-            className="text-sm text-red-600 hover:text-red-700 font-medium ml-2"
+            className="text-xs font-semibold uppercase tracking-widest text-gray-400 hover:text-black transition-colors ml-1"
           >
             Clear All
           </button>

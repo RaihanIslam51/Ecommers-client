@@ -142,7 +142,7 @@ const CategoryListView = ({ categories, onEdit, onDelete, onView, selectedItems 
                     </button>
                     <button
                       onClick={() => onEdit(category)}
-                      className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                      className="p-2 text-black hover:bg-green-50 rounded-lg transition-colors"
                       title="Edit"
                     >
                       <Pencil className="w-4 h-4" />

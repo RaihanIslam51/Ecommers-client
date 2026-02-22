@@ -198,7 +198,8 @@ const OrdersPage = () => {
     });
 
     return (
-        <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 p-6">
+        <div className="min-h-screen bg-white text-black antialiased">
+            <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
             {/* Page Header */}
             <div className="mb-8">
                 <div className="flex items-center justify-between mb-4">
@@ -209,22 +210,22 @@ const OrdersPage = () => {
                         <p className="text-gray-600 flex items-center gap-2">
                             Manage and track all your orders in one place
                             {filters.dateRange !== 'all' && (
-                                <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                <span className="inline-flex items-center gap-1 bg-gray-100 text-black px-3 py-1 rounded-full text-xs font-semibold">
                                     <span>📅</span>
                                     {filters.dateRange === 'today' && 'Today\'s Orders'}
                                     {filters.dateRange === 'week' && 'This Week\'s Orders'}
                                     {filters.dateRange === 'month' && 'This Month\'s Orders'}
                                 </span>
-                            )}
+                            )} 
                         </p>
                     </div>
-                    <button 
+                    <button
                         onClick={fetchOrders}
-                        className="px-6 py-3 bg-linear-to-r from-green-600 to-green-700 text-white rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-lg hover:shadow-xl font-semibold flex items-center gap-2"
+                        className="px-6 py-3 border border-gray-200 bg-white text-black rounded-xl hover:bg-gray-50 transition-all duration-300 shadow-sm font-semibold flex items-center gap-2"
                     >
                         <span className="text-xl">🔄</span>
                         Refresh Orders
-                    </button>
+                    </button> 
                 </div>
             </div>
 
@@ -264,11 +265,11 @@ const OrdersPage = () => {
                         {filters.dateRange !== 'all' && (
                             <button
                                 onClick={() => handleFilterChange('dateRange', 'all')}
-                                className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                                className="px-6 py-3 border border-gray-300 bg-white text-black rounded-lg hover:bg-gray-50 transition-colors"
                             >
                                 View All Orders
                             </button>
-                        )}
+                        )} 
                     </div>
                 )}
 
@@ -292,6 +293,7 @@ const OrdersPage = () => {
                 onUpdateStatus={handleUpdateStatus}
                 onDeleteOrder={handleDeleteOrder}
             />
+            </div>
         </div>
     );
 };

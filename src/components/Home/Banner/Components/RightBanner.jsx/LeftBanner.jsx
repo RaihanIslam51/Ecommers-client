@@ -32,63 +32,41 @@ const LeftBannerSkeleton = () => (
  */
 const SideBannerContent = ({ banner }) => (
   <div className="relative z-10 flex flex-col justify-end h-full p-6 lg:p-8">
-    {/* Badge/Subtitle */}
+    {/* Subtitle */}
     {banner.subtitle && (
-      <div className="mb-3 animate-fade-in">
-        <span className="inline-block px-3 py-1.5 bg-yellow-400 text-gray-900 text-xs font-bold rounded-full shadow-lg hover:bg-yellow-300 transition-colors duration-300">
-          {banner.subtitle}
-        </span>
-      </div>
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70 mb-2">
+        {banner.subtitle}
+      </p>
     )}
 
     {/* Heading */}
-    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight drop-shadow-lg animate-slide-up">
+    <h3 className="text-xl md:text-2xl lg:text-2xl font-black text-white mb-2 leading-tight tracking-tight">
       {banner.title}
     </h3>
 
     {/* Description */}
     {banner.description && (
-      <p className="text-sm text-gray-200 mb-4 leading-relaxed drop-shadow-md animate-slide-up animation-delay-100">
+      <p className="text-xs text-white/70 mb-5 leading-relaxed">
         {banner.description}
       </p>
     )}
 
-    {/* CTA Button */}
+    {/* CTA */}
     {banner.buttonText && (
-      <div className="animate-slide-up animation-delay-200">
-        <Link
-          href={banner.buttonLink || "/store"}
-          className="group inline-flex items-center justify-center gap-2 bg-white  text-gray-900 hover:text-white px-5 py-2.5 rounded-lg font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 w-max"
-        >
-          <span>{banner.buttonText}</span>
-          <svg
-            className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </Link>
-      </div>
+      <Link
+        href={banner.buttonLink || "/store"}
+        className="inline-flex items-center gap-2 bg-white text-black px-5 py-2.5 text-xs font-semibold tracking-wide hover:bg-black hover:text-white transition-colors duration-300 w-max"
+      >
+        <span>{banner.buttonText}</span>
+        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </Link>
     )}
   </div>
 );
 
-/**
- * Decorative Gradient Orbs
- */
-const DecorativeOrbs = () => (
-  <>
-    <div className="absolute -top-10 -right-10 w-40 h-40  rounded-full blur-3xl animate-pulse-slow" />
-    <div className="absolute bottom-10 left-10 w-32 h-32  rounded-full blur-2xl animate-pulse-slow animation-delay-500" />
-  </>
-);
+const DecorativeOrbs = () => null;
 
 // ==================== MAIN COMPONENT ====================
 
@@ -132,26 +110,19 @@ const LeftBanner = () => {
   }
 
   return (
-    <div className="relative w-full h-full bg-linear-to-br from-indigo-600 via-purple-600 to-blue-700 rounded-xl overflow-hidden group">
-      {/* Background Image with Zoom Effect */}
-      <div className="absolute inset-0 overflow-hidden">
-        <Image
-          src={displayBanner.image}
-          alt={displayBanner.title || "Side banner image"}
-          fill
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-          priority
-          sizes="33vw"
-        />
-      </div>
-
-      
-
-      {/* Content Layer */}
+    <div className="relative w-full h-full overflow-hidden">
+      {/* Background Image */}
+      <Image
+        src={displayBanner.image}
+        alt={displayBanner.title || "Side banner image"}
+        fill
+        className="object-cover"
+        priority
+        sizes="33vw"
+      />
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
       <SideBannerContent banner={displayBanner} />
-
-      {/* Decorative Elements */}
-      <DecorativeOrbs />
     </div>
   );
 };

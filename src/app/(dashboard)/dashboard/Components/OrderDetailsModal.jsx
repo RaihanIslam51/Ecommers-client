@@ -269,7 +269,7 @@ const OrderDetailsModal = ({ notification, isOpen, onClose, onStatusUpdate }) =>
 
                 {/* Phone */}
                 <div className="flex items-center gap-3">
-                  <FaPhone className="text-green-600" size={16} />
+                  <FaPhone className="text-black" size={16} />
                   <div>
                     <p className="text-xs text-gray-500">Phone Number</p>
                     <p className="text-sm font-semibold text-gray-800">
@@ -302,7 +302,7 @@ const OrderDetailsModal = ({ notification, isOpen, onClose, onStatusUpdate }) =>
 
                 {/* Delivery Time */}
                 <div className="flex items-center gap-3">
-                  <FaTruck className="text-green-600" size={16} />
+                  <FaTruck className="text-black" size={16} />
                   <div>
                     <p className="text-xs text-gray-500">Delivery Time</p>
                     <p className="text-sm font-semibold text-gray-800">

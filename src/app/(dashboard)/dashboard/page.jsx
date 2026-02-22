@@ -276,15 +276,16 @@ const DashboardPage = () => {
   ].slice(0, 5);
 
   return (
-    <div className="space-y-4 sm:space-y-5 pl-4  md:space-y-6">
+    <div className="min-h-screen bg-white text-black antialiased">
+      <div className="container mx-auto py-3">
       {/* Page Header with Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-linear-to-r from-green-700 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
-            RannerKaj Admin Dashboard
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-black">
+            BDmart Admin Dashboard
           </h1>
-          <p className="text-xs sm:text-sm text-green-600 mt-1 flex items-center gap-2">
-            <Calendar className="w-4 h-4" />
+          <p className="text-xs sm:text-sm text-gray-500 mt-1 flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-gray-400" />
             Welcome back! Here&apos;s what&apos;s happening with your fresh food store today.
           </p>
         </div>
@@ -330,7 +331,7 @@ const DashboardPage = () => {
      
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
         {/* Recent Orders - Larger Section */}
         <Card
           className="xl:col-span-2"
@@ -351,7 +352,7 @@ const DashboardPage = () => {
         >
           <Table
             columns={[
-              { key: 'id', label: 'Order ID', render: (row) => <span className="font-semibold text-gray-900">{row.id}</span> },
+              { key: 'id', label: 'Order ID', render: (row) => <span className="font-semibold text-black">{row.id}</span> },
               { 
                 key: 'customer', 
                 label: 'Customer',
@@ -359,7 +360,7 @@ const DashboardPage = () => {
                   <div className="flex items-center gap-2">
                     <Avatar initials={row.avatar} size="sm" />
                     <div>
-                      <p className="font-medium text-gray-900 text-xs sm:text-sm">{row.customer}</p>
+                      <p className="font-medium text-black text-xs sm:text-sm">{row.customer}</p>
                       <p className="text-[10px] sm:text-xs text-gray-500 flex items-center gap-1">
                         <Clock className="w-3 h-3" />
                         {row.date}
@@ -409,11 +410,11 @@ const DashboardPage = () => {
           <div className="space-y-4">
             {recentActivity.map((activity, index) => {
               const colorMap = {
-                blue: { bg: 'bg-green-50', icon: 'from-green-500 to-emerald-500' },
-                green: { bg: 'bg-green-50', icon: 'from-green-500 to-emerald-500' },
-                yellow: { bg: 'bg-green-50', icon: 'from-green-500 to-emerald-500' },
-                purple: { bg: 'bg-green-50', icon: 'from-green-500 to-emerald-500' },
-                orange: { bg: 'bg-green-50', icon: 'from-green-500 to-emerald-500' },
+                blue: { bg: 'bg-gray-50', icon: 'from-gray-600 to-gray-500' },
+                green: { bg: 'bg-gray-50', icon: 'from-gray-600 to-gray-500' },
+                yellow: { bg: 'bg-gray-50', icon: 'from-gray-600 to-gray-500' },
+                purple: { bg: 'bg-gray-50', icon: 'from-gray-600 to-gray-500' },
+                orange: { bg: 'bg-gray-50', icon: 'from-gray-600 to-gray-500' },
               };
               const colors = colorMap[activity.color];
               
@@ -426,10 +427,10 @@ const DashboardPage = () => {
                     bgColor={colors.bg}
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900">{activity.action}</p>
+                    <p className="text-sm font-medium text-black">{activity.action}</p>
                     <p className="text-xs text-gray-500 mt-1">by {activity.user}</p>
                     <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
+                      <Clock className="w-3 h-3 text-gray-400" />
                       {activity.time}
                     </p>
                   </div>
@@ -461,14 +462,14 @@ const DashboardPage = () => {
             {topProducts.map((product, index) => (
               <div 
                 key={index}
-                className="flex items-center justify-between p-3 sm:p-3.5 rounded-xl hover:bg-linear-to-r hover:from-green-50 hover:to-emerald-50 active:from-green-100 active:to-emerald-100 transition-all duration-200 cursor-pointer group touch-manipulation border border-transparent hover:border-green-100"
+                className="flex items-center justify-between p-3 sm:p-3.5 rounded-xl hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 cursor-pointer group touch-manipulation border border-transparent hover:border-gray-100"
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-green-100 to-emerald-100 group-hover:scale-110 transition-transform shrink-0">
-                    <span className="text-lg font-bold text-green-600">#{index + 1}</span>
+                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gray-100 group-hover:scale-110 transition-transform shrink-0">
+                    <span className="text-lg font-bold text-black">#{index + 1}</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-gray-900 text-sm truncate">{product.name}</p>
+                    <p className="font-semibold text-black text-sm truncate">{product.name}</p>
                     <div className="flex items-center gap-2 mt-1">
                       <p className="text-xs text-gray-500">{product.sales} sales</p>
                       <span className="text-gray-300">•</span>
@@ -480,7 +481,7 @@ const DashboardPage = () => {
                   </div>
                 </div>
                 <div className="text-right shrink-0 ml-3">
-                  <p className="font-bold text-gray-900 text-sm">{product.revenue}</p>
+                  <p className="font-bold text-black text-sm">{product.revenue}</p>
                   <Badge variant="success" size="sm" className="mt-1">{product.trend}</Badge>
                   <p className="text-xs text-gray-400 mt-1">Stock: {product.stock}</p>
                 </div>
@@ -512,7 +513,7 @@ const DashboardPage = () => {
                     <Badge variant={category.color} dot size="sm">{category.category}</Badge>
                   </div>
                   <div className="text-right">
-                    <span className="text-sm font-bold text-gray-900">{category.amount}</span>
+                    <span className="text-sm font-bold text-black">{category.amount}</span>
                     <span className="text-xs text-gray-500 ml-2">({category.percentage}%)</span>
                   </div>
                 </div>
@@ -529,7 +530,7 @@ const DashboardPage = () => {
           <div className="mt-6 pt-6 border-t border-gray-200">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-gray-500">Total Revenue</span>
-              <span className="text-xl font-bold text-gray-900">
+              <span className="text-xl font-bold text-black">
                 ${dashboardData.totalRevenue.toLocaleString()}
               </span>
             </div>
@@ -550,14 +551,14 @@ const DashboardPage = () => {
         <Card hoverable className="p-4">
           <div className="flex items-center gap-3">
             <IconBox
-              icon={<ShoppingCart className="w-5 h-5" />}
+              icon={<ShoppingCart className="w-5 h-5 text-gray-700" />}
               size="sm"
-              color="from-green-500 to-emerald-500"
-              bgColor="from-green-50 to-emerald-50"
+              color="from-gray-600 to-gray-500"
+              bgColor="from-gray-50 to-gray-50"
             />
             <div>
               <p className="text-xs text-gray-500">Today&apos;s Orders</p>
-              <p className="text-lg font-bold text-gray-900">{dashboardData.todayOrders}</p>
+              <p className="text-lg font-bold text-black">{dashboardData.todayOrders}</p>
             </div>
           </div>
         </Card>
@@ -565,14 +566,14 @@ const DashboardPage = () => {
         <Card hoverable className="p-4">
           <div className="flex items-center gap-3">
             <IconBox
-              icon={<CreditCard className="w-5 h-5" />}
+              icon={<CreditCard className="w-5 h-5 text-gray-700" />}
               size="sm"
-              color="from-emerald-500 to-teal-500"
-              bgColor="from-emerald-50 to-teal-50"
+              color="from-gray-600 to-gray-500"
+              bgColor="from-gray-50 to-gray-50"
             />
             <div>
               <p className="text-xs text-gray-500">Today&apos;s Revenue</p>
-              <p className="text-lg font-bold text-gray-900">
+              <p className="text-lg font-bold text-black">
                 ${dashboardData.todayRevenue.toLocaleString()}
               </p>
             </div>
@@ -582,14 +583,14 @@ const DashboardPage = () => {
         <Card hoverable className="p-4">
           <div className="flex items-center gap-3">
             <IconBox
-              icon={<Truck className="w-5 h-5" />}
+              icon={<Truck className="w-5 h-5 text-gray-700" />}
               size="sm"
-              color="from-teal-500 to-cyan-500"
-              bgColor="from-teal-50 to-cyan-50"
+              color="from-gray-600 to-gray-500"
+              bgColor="from-gray-50 to-gray-50"
             />
             <div>
               <p className="text-xs text-gray-500">In Shipping</p>
-              <p className="text-lg font-bold text-gray-900">
+              <p className="text-lg font-bold text-black">
                 {dashboardData.ordersByStatus.shipped}
               </p>
             </div>
@@ -599,14 +600,14 @@ const DashboardPage = () => {
         <Card hoverable className="p-4">
           <div className="flex items-center gap-3">
             <IconBox
-              icon={<CheckCircle className="w-5 h-5" />}
+              icon={<CheckCircle className="w-5 h-5 text-gray-700" />}
               size="sm"
-              color="from-lime-500 to-green-500"
-              bgColor="from-lime-50 to-green-50"
+              color="from-gray-600 to-gray-500"
+              bgColor="from-gray-50 to-gray-50"
             />
             <div>
               <p className="text-xs text-gray-500">Delivered</p>
-              <p className="text-lg font-bold text-gray-900">
+              <p className="text-lg font-bold text-black">
                 {dashboardData.ordersByStatus.delivered}
               </p>
             </div>
@@ -627,6 +628,7 @@ const DashboardPage = () => {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };

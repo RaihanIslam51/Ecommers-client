@@ -41,7 +41,10 @@ const CategoriesPage = () => {
         setCategories(response.data.categories);
       }
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      // show details only in development to avoid cluttering production console
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error fetching categories:', error);
+      }
       Swal.fire({
         icon: 'error',
         title: 'Failed to load categories',
@@ -81,88 +84,8 @@ const CategoriesPage = () => {
       productCount: 28,
       status: 'active',
       color: '#22c55e'
-    },
-    {
-      id: 4,
-      name: 'Ready-to-Cook Meals',
-      description: 'Pre-prepped meals that are ready to cook in minutes',
-      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 15,
-      status: 'active',
-      color: '#ef4444'
-    },
-    {
-      id: 5,
-      name: 'Meal Kits',
-      description: 'Complete meal kits with ingredients and recipes for easy cooking',
-      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 12,
-      status: 'active',
-      color: '#8b5cf6'
-    },
-    {
-      id: 6,
-      name: 'Fresh Herbs & Spices',
-      description: 'Aromatic herbs, spices, and seasonings for cooking',
-      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 18,
-      status: 'active',
-      color: '#06b6d4'
-    },
-    {
-      id: 7,
-      name: 'Organic Products',
-      description: 'Certified organic vegetables, fruits, and food items',
-      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 22,
-      status: 'active',
-      color: '#16a34a'
-    },
-    {
-      id: 8,
-      name: 'Healthy Snacks',
-      description: 'Nutritious snacks, nuts, seeds, and healthy alternatives',
-      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 35,
-      status: 'active',
-      color: '#ea580c'
-    },
-    {
-      id: 9,
-      name: 'Dairy & Eggs',
-      description: 'Fresh dairy products, eggs, and milk alternatives',
-      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 14,
-      status: 'inactive',
-      color: '#64748b'
-    },
-    {
-      id: 10,
-      name: 'Beverages',
-      description: 'Fresh juices, smoothies, and healthy drink options',
-      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 8,
-      status: 'active',
-      color: '#3b82f6'
-    },
-    {
-      id: 11,
-      name: 'Grains & Cereals',
-      description: 'Whole grains, rice, quinoa, and healthy cereals',
-      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 16,
-      status: 'active',
-      color: '#a855f7'
-    },
-    {
-      id: 12,
-      name: 'Seasonal Specials',
-      description: 'Limited-time seasonal vegetables, fruits, and special offers',
-      image: 'https://i.ibb.co/b5NrY9ZS/image-Right.jpg',
-      productCount: 9,
-      status: 'active',
-      color: '#ec4899'
     }
+   
   ];
   // End of old sample data
 

@@ -37,9 +37,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, total
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 {/* Info */}
                 <div className="text-sm text-gray-600">
-                    Showing <span className="font-semibold text-gray-900">{startItem}</span> to{' '}
-                    <span className="font-semibold text-gray-900">{endItem}</span> of{' '}
-                    <span className="font-semibold text-gray-900">{totalItems}</span> customers
+                    Showing <span className="font-semibold text-black">{startItem}</span> to{' '}
+                    <span className="font-semibold text-black">{endItem}</span> of{' '}
+                    <span className="font-semibold text-black">{totalItems}</span> customers
                 </div>
 
                 {/* Pagination Controls */}
@@ -64,7 +64,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, total
                                     onClick={() => onPageChange(page)}
                                     className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                                         currentPage === page
-                                            ? 'bg-green-600 text-white'
+                                            ? 'bg-black text-white'
                                             : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
                                     }`}
                                 >

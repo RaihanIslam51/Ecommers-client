@@ -72,7 +72,7 @@ const ProductModal = ({ product, onClose }) => {
 
               <div className="flex items-center gap-4">
                 <div>
-                  <p className="text-3xl font-bold text-green-600">
+                  <p className="text-3xl font-bold text-black">
                     ${product.price}
                   </p>
                   {product.originalPrice && (
@@ -82,7 +82,7 @@ const ProductModal = ({ product, onClose }) => {
                   )}
                 </div>
                 {product.originalPrice && (
-                  <span className="bg-red-500 text-black px-3 py-1 rounded-full text-sm">
+                  <span className="bg-gray-100 text-black px-3 py-1 rounded-full text-sm">
                     {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
                   </span>
                 )}
@@ -103,7 +103,7 @@ const ProductModal = ({ product, onClose }) => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Stock</p>
-                  <p className={`font-semibold ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  <p className={`font-semibold ${product.stock > 0 ? 'text-black' : 'text-red-600'}`}>
                     {product.stock > 0 ? `${product.stock} units` : 'Out of Stock'}
                   </p>
                 </div>
@@ -156,7 +156,7 @@ const ProductModal = ({ product, onClose }) => {
         <div className="p-6 border-t bg-gray-50 flex justify-end">
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            className="px-6 py-2 border border-gray-300 bg-white text-black rounded-lg hover:bg-gray-50 transition-colors"
           >
             Close
           </button>

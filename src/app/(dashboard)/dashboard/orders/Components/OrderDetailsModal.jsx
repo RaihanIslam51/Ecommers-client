@@ -62,20 +62,20 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
         <div className="fixed inset-0 bg-black/50 bg-opacity-50 z-50 flex items-center justify-center p-4" onClick={onClose}>
             <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
                 {/* Header */}
-                <div className="sticky top-0 bg-linear-to-r from-blue-600 to-blue-700 text-white px-8 py-6 rounded-t-2xl flex items-center justify-between z-10">
+                <div className="sticky top-0 bg-gray-50 px-8 py-6 rounded-t-2xl flex items-center justify-between z-10">
                     <div>
-                        <h2 className="text-2xl font-bold">Order Details</h2>
-                        <p className="text-blue-100 text-sm mt-1">
+                        <h2 className="text-2xl font-bold text-black">Order Details</h2>
+                        <p className="text-sm text-gray-600 mt-1">
                             Order #{(order._id || order.id).toString().slice(-8).toUpperCase()}
                         </p>
                     </div>
                     <button
                         onClick={onClose}
-                        className="text-white hover:bg-white/20 rounded-full p-2 transition-colors"
+                        className="text-black hover:bg-gray-100 rounded-full p-2 transition-colors"
                     >
                         <span className="text-2xl">✕</span>
                     </button>
-                </div>
+                </div> 
 
                 {/* Content */}
                 <div className="p-8">
@@ -84,15 +84,15 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
                         {/* Customer Information */}
                         <div className="bg-linear-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-black font-bold text-xl">
                                     {order.customerInfo?.name?.charAt(0) || 'U'}
                                 </div>
-                                <h3 className="text-lg font-bold text-gray-800">Customer Information</h3>
+                                <h3 className="text-lg font-bold text-black">Customer Information</h3>
                             </div>
                             <div className="space-y-4">
                                 <div className="bg-white rounded-lg p-3">
                                     <p className="text-xs text-gray-500 mb-1">Full Name</p>
-                                    <p className="text-sm font-semibold text-gray-800">
+                                    <p className="text-sm font-semibold text-black">
                                         {order.customerInfo?.name || 'N/A'}
                                     </p>
                                 </div>
@@ -114,18 +114,18 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
                         {/* Order Information */}
                         <div className="bg-linear-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-black font-bold text-xl">
                                     📦
                                 </div>
-                                <h3 className="text-lg font-bold text-gray-800">Order Information</h3>
+                                <h3 className="text-lg font-bold text-black">Order Information</h3>
                             </div>
                             <div className="space-y-4">
                                 <div className="bg-white rounded-lg p-3">
                                     <p className="text-xs text-gray-500 mb-1">Order Date</p>
-                                    <p className="text-sm font-semibold text-gray-800">
+                                    <p className="text-sm font-semibold text-black">
                                         {formatDate(order.orderDate)}
                                     </p>
-                                </div>
+                                </div> 
                                 <div className="bg-white rounded-lg p-3">
                                     <p className="text-xs text-gray-500 mb-1">Delivery Time</p>
                                     <p className="text-sm font-semibold text-gray-800">
@@ -134,7 +134,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
                                 </div>
                                 <div className="bg-white rounded-lg p-3">
                                     <p className="text-xs text-gray-500 mb-1">Total Amount</p>
-                                    <p className="text-2xl font-bold text-green-600">
+                                    <p className="text-2xl font-bold text-black">
                                         ${order.totalAmount?.toFixed(2) || '0.00'}
                                     </p>
                                 </div>
@@ -146,19 +146,19 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
                         </div>
 
                         {/* Shipping Address */}
-                        <div className="bg-linear-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100 md:col-span-2">
+                        <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 md:col-span-2">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-black font-bold text-xl">
                                     📍
                                 </div>
-                                <h3 className="text-lg font-bold text-gray-800">Shipping Address</h3>
+                                <h3 className="text-lg font-bold text-black">Shipping Address</h3>
                             </div>
                             <div className="bg-white rounded-lg p-4">
                                 <p className="text-sm text-gray-800 whitespace-pre-line leading-relaxed">
                                     {order.customerInfo?.address || 'No address provided'}
                                 </p>
                             </div>
-                        </div>
+                        </div> 
                     </div>
 
                    
@@ -183,25 +183,25 @@ const OrderDetailsModal = ({ order, isOpen, onClose, onUpdateStatus, onDeleteOrd
                                 <span className="font-semibold text-gray-800">$0.00</span>
                             </div>
                             <div className="border-t-2 border-gray-300 pt-3 mt-3">
-                                <div className="flex justify-between items-center p-4 bg-linear-to-r from-green-600 to-emerald-600 rounded-lg">
-                                    <span className="text-base font-bold text-white">Total Amount</span>
-                                    <span className="text-2xl font-bold text-white">
+                                <div className="flex justify-between items-center p-4 bg-gray-100 rounded-lg">
+                                    <span className="text-base font-bold text-black">Total Amount</span>
+                                    <span className="text-2xl font-bold text-black">
                                         ${order.totalAmount?.toFixed(2) || '0.00'}
                                     </span>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
 
                     {/* Action Buttons */}
                     <div className="flex items-center gap-3 mt-8">
-                        <button className="flex-1 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors font-semibold">
+                        <button className="flex-1 px-6 py-3 border border-gray-300 bg-white text-black rounded-xl hover:bg-gray-50 transition-colors font-semibold">
                             Update Status
                         </button>
-                        <button className="flex-1 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors font-semibold">
+                        <button className="flex-1 px-6 py-3 border border-gray-300 bg-white text-black rounded-xl hover:bg-gray-50 transition-colors font-semibold">
                             Print Invoice
                         </button>
-                        <button className="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-colors font-semibold">
+                        <button className="px-6 py-3 border border-gray-200 bg-white text-black rounded-xl hover:bg-gray-50 transition-colors font-semibold">
                             Cancel Order
                         </button>
                     </div>

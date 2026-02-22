@@ -65,7 +65,7 @@ const RestockModal = ({ isOpen, onClose, onSubmit, item }) => {
                 </div>
                 <div>
                   <p className="text-gray-500">After Restock</p>
-                  <p className="text-lg font-bold text-green-600">{item.currentStock + quantity}</p>
+                  <p className="text-lg font-bold text-black">{item.currentStock + quantity}</p>
                 </div>
               </div>
             </div>

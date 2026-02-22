@@ -222,7 +222,7 @@ const NotificationBell = () => {
                                 >
                                     <div className="flex items-start gap-3">
                                         <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
-                                            notification.type === 'new_order' ? 'bg-green-100 text-green-600' :
+                                            notification.type === 'new_order' ? 'bg-green-100 text-black' :
                                             notification.type === 'order_updated' ? 'bg-blue-100 text-blue-600' :
                                             'bg-gray-100 text-gray-600'
                                         }`}>

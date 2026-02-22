@@ -28,7 +28,7 @@ const InventoryChartView = ({ items }) => {
     <div className="bg-white rounded-xl border border-gray-200 p-6">
       <div className="flex items-center gap-3 mb-6">
         <div className="p-3 bg-green-100 rounded-xl">
-          <BarChart3 className="w-6 h-6 text-green-600" />
+          <BarChart3 className="w-6 h-6 text-black" />
         </div>
         <div>
           <h3 className="text-xl font-bold text-gray-900">Inventory by Category</h3>
@@ -78,7 +78,7 @@ const InventoryChartView = ({ items }) => {
                   </div>
                 )}
                 {data.outOfStock === 0 && data.lowStock === 0 && (
-                  <div className="flex items-center gap-1 text-green-600">
+                  <div className="flex items-center gap-1 text-black">
                     <Package className="w-3 h-3" />
                     <span>All items in stock</span>
                   </div>

@@ -1,7 +1,7 @@
 export default function UserStatsCard({ title, value, icon, color, loading }) {
   const colorClasses = {
     blue: "bg-blue-50 text-blue-600",
-    green: "bg-green-50 text-green-600",
+    green: "bg-green-50 text-black",
     purple: "bg-purple-50 text-purple-600",
     orange: "bg-orange-50 text-orange-600",
   };

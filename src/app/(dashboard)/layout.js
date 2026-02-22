@@ -47,12 +47,9 @@ export default function DashboardLayout({ children }) {
           <Topbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
 
           {/* Main Content with Scroll */}
+          {/* main area gets negative margins so page-level padding doesn't create unwanted gap to sidebar */}
           <main className="flex-1 overflow-y-auto overflow-x-hidden hide-scrollbar">
-            <div className="w-full  py-4 sm:py-5  md:py-6  lg:py-8">
-              <div className="w-full mx-auto">
-                {children}
-              </div>
-            </div>
+            {children}
           </main>
 
           {/* Footer */}

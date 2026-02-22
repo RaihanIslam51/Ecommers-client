@@ -23,7 +23,7 @@ const ProductStats = ({ products }) => {
       ),
       color: 'green',
       bg: 'bg-green-100',
-      text: 'text-green-600',
+      text: 'text-black',
     },
     {
       label: 'In Stock',
@@ -35,7 +35,7 @@ const ProductStats = ({ products }) => {
       ),
       color: 'green',
       bg: 'bg-green-100',
-      text: 'text-green-600',
+      text: 'text-black',
     },
     {
       label: 'Out of Stock',
@@ -71,7 +71,7 @@ const ProductStats = ({ products }) => {
       ),
       color: 'green',
       bg: 'bg-green-100',
-      text: 'text-green-600',
+      text: 'text-black',
     },
     {
       label: 'Categories',
@@ -83,7 +83,7 @@ const ProductStats = ({ products }) => {
       ),
       color: 'green',
       bg: 'bg-green-100',
-      text: 'text-green-600',
+      text: 'text-black',
     },
   ];
 
@@ -92,12 +92,12 @@ const ProductStats = ({ products }) => {
       {statCards.map((stat, index) => (
         <div
           key={index}
-          className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-green-200"
+          className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-gray-200"
         >
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
-              <p className="text-2xl font-bold text-gray-800">{stat.value}</p>
+              <p className="text-2xl font-bold text-black">{stat.value}</p>
             </div>
             <div className={`${stat.bg} ${stat.text} p-3 rounded-full`}>
               {stat.icon}

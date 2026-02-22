@@ -26,14 +26,14 @@ const CustomerAvatar = ({ name, image, size = 'md' }) => {
     };
 
     const colors = [
-        'bg-blue-500',
-        'bg-green-500',
-        'bg-purple-500',
-        'bg-pink-500',
-        'bg-yellow-500',
-        'bg-indigo-500',
-        'bg-red-500',
-        'bg-teal-500'
+        'bg-gray-200',
+        'bg-gray-300',
+        'bg-gray-200',
+        'bg-gray-300',
+        'bg-gray-200',
+        'bg-gray-300',
+        'bg-gray-200',
+        'bg-gray-300'
     ];
 
     const getColorFromName = (name) => {
@@ -57,7 +57,7 @@ const CustomerAvatar = ({ name, image, size = 'md' }) => {
 
     return (
         <div 
-            className={`${sizeClasses[size]} ${getColorFromName(name)} rounded-full flex items-center justify-center text-white font-semibold`}
+            className={`${sizeClasses[size]} ${getColorFromName(name)} rounded-full flex items-center justify-center text-black font-semibold`}
         >
             {getInitials(name)}
         </div>

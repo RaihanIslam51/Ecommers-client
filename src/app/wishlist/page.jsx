@@ -50,7 +50,7 @@ const WishlistPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-24 pb-12">
+    <div className="min-h-screen bg-gray-50 pt-2 pb-12">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -77,102 +77,95 @@ const WishlistPage = () => {
         </div>
 
         {/* Wishlist Items Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {wishlistItems.map((product) => (
-            <div
-              key={product._id}
-              className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group"
-            >
-              {/* Product Image */}
-              <Link href={`/products/${product._id}`} className="block relative aspect-square overflow-hidden bg-gray-100">
-                <Image
-                  src={product.images?.[0] || '/placeholder-product.jpg'}
-                  alt={product.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                
-                {/* Remove Button */}
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleRemoveFromWishlist(product._id);
-                  }}
-                  className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-50 transition-all duration-200 z-10"
-                  title="Remove from wishlist"
-                >
-                  <FaTrash className="text-red-500 text-sm" />
-                </button>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+          {wishlistItems.map((product) => {
+            const pid = product._id || product.id;
+            const discountPercent =
+              product.originalPrice > product.price
+                ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+                : 0;
 
-                {/* Discount Badge */}
-                {product.discount > 0 && (
-                  <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-                    -{product.discount}%
-                  </div>
-                )}
+            return (
+              <div
+                key={pid}
+                className="relative group flex flex-col bg-white rounded-xl border border-gray-200 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                onClick={() => window.location.href = `/products/${pid}`}
+                style={{ height: '320px' }}
+              >
+                {/* IMAGE (75%) */}
+                <div className="relative w-full" style={{ flex: '0 0 75%' }}>
+                  <Image
+                    src={product.images?.[0] || '/placeholder-product.jpg'}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                  />
 
-                {/* Stock Badge */}
-                {product.stock === 0 && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                    <span className="bg-red-500 text-white px-4 py-2 rounded-full font-bold text-sm">
-                      Out of Stock
+                  {/* Remove button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveFromWishlist(pid);
+                    }}
+                    className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-green-50 transition-colors z-20"
+                    title="Remove from wishlist"
+                  >
+                    <FaTrash className="text-red-500 text-xs" />
+                  </button>
+
+                  {/* Discount badge */}
+                  {discountPercent > 0 && (
+                    <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                      -{discountPercent}%
                     </span>
-                  </div>
-                )}
-              </Link>
+                  )}
 
-              {/* Product Info */}
-              <div className="p-4">
-                <Link href={`/products/${product._id}`}>
-                  <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 hover:text-blue-600 transition-colors">
-                    {product.name}
-                  </h3>
-                </Link>
-
-                {/* Category */}
-                {product.category && (
-                  <p className="text-xs text-gray-500 mb-3">
-                    {product.category}
-                  </p>
-                )}
-
-                {/* Price */}
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-2xl font-black text-gray-900">
-                    ${product.price?.toLocaleString()}
-                  </span>
-                  {product.discount > 0 && product.originalPrice && (
-                    <span className="text-sm text-gray-400 line-through">
-                      ${product.originalPrice?.toLocaleString()}
-                    </span>
+                  {/* Out of stock overlay */}
+                  {product.stock === 0 && (
+                    <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
+                      <span className="text-xs font-semibold text-gray-500 tracking-widest uppercase">
+                        Out of Stock
+                      </span>
+                    </div>
                   )}
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-2">
+                {/* INFO (25%) */}
+                <div className="flex flex-col justify-center px-3 py-2 gap-1" style={{ flex: '0 0 25%' }}>
+                  <p className="text-xs font-semibold text-black line-clamp-1 leading-tight">
+                    {product.name}
+                  </p>
+
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm font-bold text-black">
+                      ${product.price?.toLocaleString()}
+                    </span>
+                    {discountPercent > 0 && (
+                      <span className="text-xs text-gray-400 line-through">
+                        ${product.originalPrice?.toLocaleString()}
+                      </span>
+                    )}
+                    {discountPercent > 0 && (
+                      <span className="ml-auto text-xs font-semibold text-red-500">
+                        -{discountPercent}%
+                      </span>
+                    )}
+                  </div>
+
                   <button
-                    onClick={() => handleMoveToCart(product)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleMoveToCart(product);
+                    }}
                     disabled={product.stock === 0}
-                    className={`flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 ${
-                      product.stock === 0
-                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                        : 'bg-black text-white hover:bg-gray-800 shadow-md hover:shadow-lg'
-                    }`}
+                    className={`flex-1 py-1 text-xs font-semibold text-black border border-black rounded-md hover:bg-black hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed`}
                   >
-                    <FaShoppingCart />
                     Move to Cart
                   </button>
                 </div>
-
-                {/* Stock Status */}
-                {product.stock > 0 && product.stock <= 10 && (
-                  <p className="text-xs text-orange-600 font-semibold mt-2 text-center">
-                    Only {product.stock} left in stock!
-                  </p>
-                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Bottom CTA */}

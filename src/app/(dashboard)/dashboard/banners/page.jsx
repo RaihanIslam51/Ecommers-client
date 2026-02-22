@@ -298,7 +298,7 @@ const BannerManagement = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="w-full mx-auto">
+      <div className="w-full container mx-auto">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -348,10 +348,10 @@ const BannerManagement = () => {
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-green-600 font-medium">Left Banners</p>
+                  <p className="text-sm text-black font-medium">Left Banners</p>
                   <p className="text-2xl font-bold text-green-900">{leftBanners.length}</p>
                 </div>
-                <MdOutlineKeyboardArrowLeft className="text-3xl text-green-600" />
+                <MdOutlineKeyboardArrowLeft className="text-3xl text-black" />
               </div>
             </div>
             <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
@@ -568,7 +568,7 @@ const BannerManagement = () => {
                           className="object-contain"
                         />
                       </div>
-                      <p className="text-xs text-green-600 mb-2">✓ Hosted on ImgBB</p>
+                      <p className="text-xs text-black mb-2">✓ Hosted on ImgBB</p>
                       <button
                         type="button"
                         onClick={() => {

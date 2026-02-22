@@ -27,7 +27,7 @@ const SOCIAL_LINKS = [
 ];
 
 const COMPANY_LINKS = [
-  { label: "About RannerKaj", href: "/about" },
+  { label: "About BDmart", href: "/about" },
   { label: "Our Story", href: "/story" },
   { label: "Quality Standards", href: "/quality" },
   { label: "Store Locations", href: "/locations" },
@@ -50,7 +50,7 @@ const MOBILE_NAV_ITEMS = [
 ];
 
 const CONTACT_INFO = {
-  email: "support@Rannerkaj.com",
+  email: "support@BDmart.com",
   phone: "+880 013095-40406",
   address: {
     building: "House No: 540, 4th Floor",
@@ -74,8 +74,8 @@ const NewsletterForm = () => {
 
   return (
     <div>
-      <h4 className="text-xs font-bold text-green-400 mb-3 uppercase tracking-widest">
-        Stay Fresh
+      <h4 className="text-xs font-bold text-black mb-3 uppercase tracking-widest">
+        Stay Updated
       </h4>
       <form onSubmit={handleSubmit} aria-label="Subscribe to newsletter">
         <label htmlFor="newsletter" className="sr-only">
@@ -85,13 +85,13 @@ const NewsletterForm = () => {
           <input
             id="newsletter"
             type="email"
-            placeholder="Get fresh updates & recipes"
+            placeholder="Your email address"
             required
-            className="w-full py-2.5 px-4 bg-gray-900 text-white placeholder-gray-500 text-sm border border-gray-800 focus:border-green-500 focus:outline-none transition-colors rounded-l-md"
+            className="w-full py-2.5 px-4 bg-white text-black placeholder-gray-400 text-sm border border-gray-200 focus:border-black focus:outline-none transition-colors rounded-l-md"
           />
           <button
             type="submit"
-            className="absolute right-0 top-0 bottom-0 px-5 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-r-md transition-colors duration-200"
+            className="absolute right-0 top-0 bottom-0 px-5 bg-black hover:bg-gray-800 text-white font-bold text-xs rounded-r-md transition-colors duration-200"
           >
             Subscribe
           </button>
@@ -105,21 +105,21 @@ const NewsletterForm = () => {
  * Contact information display component
  */
 const ContactInfo = () => (
-  <div className="text-sm text-gray-400 space-y-2">
+  <div className="text-sm text-gray-600 space-y-2">
     <div className="flex items-center gap-2">
-      <FaEnvelope className="text-green-500 shrink-0" size={14} />
+      <FaEnvelope className="text-black shrink-0" size={14} />
       <a
         href={`mailto:${CONTACT_INFO.email}`}
-        className="hover:text-green-400 transition-colors duration-200"
+        className="hover:text-black transition-colors duration-200 font-medium"
       >
         {CONTACT_INFO.email}
       </a>
     </div>
     <div className="flex items-center gap-2">
-      <FaPhone className="text-green-500 shrink-0" size={14} />
+      <FaPhone className="text-black shrink-0" size={14} />
       <a
         href={`tel:${CONTACT_INFO.phone.replace(/\s/g, "")}`}
-        className="hover:text-green-400 transition-colors duration-200"
+        className="hover:text-black transition-colors duration-200 font-medium"
       >
         {CONTACT_INFO.phone}
       </a>
@@ -132,7 +132,7 @@ const ContactInfo = () => (
  */
 const FooterSection = ({ title, links }) => (
   <div>
-    <h3 className="text-xs font-bold mb-5 text-green-400 uppercase tracking-widest">
+    <h3 className="text-xs font-bold mb-5 text-black uppercase tracking-widest">
       {title}
     </h3>
     <ul className="space-y-3 text-sm">
@@ -140,7 +140,7 @@ const FooterSection = ({ title, links }) => (
         <li key={link.label}>
           <a
             href={link.href}
-            className="text-gray-400 hover:text-green-400 transition-colors duration-200"
+            className="text-gray-600 hover:text-black transition-colors duration-200"
           >
             {link.label}
           </a>
@@ -155,10 +155,10 @@ const FooterSection = ({ title, links }) => (
  */
 const OfficeInfo = () => (
   <div>
-    <h3 className="text-xs font-bold mb-5 text-green-400 uppercase tracking-widest">
+    <h3 className="text-xs font-bold mb-5 text-black uppercase tracking-widest">
       Head Office
     </h3>
-    <address className="not-italic text-sm text-gray-400 leading-relaxed space-y-3">
+    <address className="not-italic text-sm text-gray-600 leading-relaxed space-y-3">
       <p>
         {CONTACT_INFO.address.building}
         <br />
@@ -173,7 +173,7 @@ const OfficeInfo = () => (
           <div key={phone}>
             <a
               href={`tel:${phone.replace(/\s/g, "")}`}
-              className="hover:text-green-400 transition-colors duration-200"
+              className="hover:text-black transition-colors duration-200 font-medium"
             >
               {phone}
             </a>
@@ -195,7 +195,7 @@ const SocialLinks = () => (
         <a
           key={social.label}
           href={social.href}
-          className="w-8 h-8 rounded-full bg-gray-900 hover:bg-green-600 text-gray-400 hover:text-white flex items-center justify-center transition-all duration-200"
+          className="w-8 h-8 rounded-full border border-gray-300 hover:bg-black hover:border-black text-gray-600 hover:text-white flex items-center justify-center transition-all duration-200"
           aria-label={social.label}
         >
           <Icon size={14} />
@@ -210,18 +210,18 @@ const SocialLinks = () => (
  */
 const PaymentMethods = () => (
   <div className="flex items-center gap-4">
-    <span className="text-xs text-gray-600">Secure Payment:</span>
+    <span className="text-xs text-gray-600 font-semibold">Secure Payment:</span>
     <div className="flex items-center gap-2 text-2xl text-gray-600">
       <FaCcVisa
-        className="hover:text-green-400 transition-colors duration-200"
+        className="hover:text-black transition-colors duration-200"
         aria-label="Visa"
       />
       <FaCcMastercard
-        className="hover:text-green-400 transition-colors duration-200"
+        className="hover:text-black transition-colors duration-200"
         aria-label="Mastercard"
       />
       <FaCcPaypal
-        className="hover:text-green-400 transition-colors duration-200"
+        className="hover:text-black transition-colors duration-200"
         aria-label="PayPal"
       />
     </div>
@@ -234,7 +234,7 @@ const PaymentMethods = () => (
 const MobileNavItem = ({ icon: Icon, label, href }) => (
   <Link
     href={href}
-    className="flex flex-col items-center justify-center text-xs text-gray-600 hover:text-green-600 transition-colors duration-200 flex-1 h-full active:bg-green-50"
+    className="flex flex-col items-center justify-center text-xs text-gray-600 hover:text-black transition-colors duration-200 flex-1 h-full active:bg-gray-100"
   >
     <Icon size={18} />
     <span className="mt-1.5 font-medium text-[10px]">{label}</span>
@@ -247,8 +247,8 @@ const MobileNavItem = ({ icon: Icon, label, href }) => (
 const BrandSection = () => (
   <div className="space-y-6">
     <div>
-      <h2 className="text-2xl font-black mb-3 tracking-tight text-green-400">RannerKaj</h2>
-      <p className="text-sm text-gray-400 leading-relaxed">
+      <h2 className="text-2xl font-black mb-3 tracking-tight text-black">BDmart</h2>
+      <p className="text-sm text-gray-600 leading-relaxed">
         Your trusted source for fresh, organic vegetables, healthy food items, and ready-to-cook meal packages. 
         Quality guaranteed, hygienically prepared, and delivered fresh to your doorstep.
       </p>
@@ -264,7 +264,7 @@ const BrandSection = () => (
 const DesktopFooter = () => (
   <div className="">
     {/* Main Footer Content */}
-    <div className="bg-gray-900 border-b border-gray-800">
+    <div className="bg-white border-b border-gray-200">
       <div className="400px] mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16">
           <BrandSection />
@@ -276,11 +276,11 @@ const DesktopFooter = () => (
     </div>
 
     {/* Footer Bottom Bar */}
-    <div className="bg-gray-950 border-t border-gray-900">
+    <div className="bg-gray-50 border-t border-gray-200">
       <div className="w-full mx-auto px-6 lg:px-8 py-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div className="text-sm text-gray-500">
-            <span>© {new Date().getFullYear()} RannerKaj.com. All rights reserved.</span>
+          <div className="text-sm text-gray-600">
+            <span>© {new Date().getFullYear()} BDmart.com. All rights reserved.</span>
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
             <SocialLinks />
@@ -321,7 +321,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-white text-black">
       <DesktopFooter />
       <MobileNavigation />
     </footer>

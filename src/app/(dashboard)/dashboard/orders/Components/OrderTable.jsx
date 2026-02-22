@@ -8,7 +8,7 @@ const OrderTable = ({ orders = [], loading, onViewDetails, onUpdateStatus, onDel
         return (
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12">
                 <div className="flex justify-center items-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-400"></div>
                 </div>
             </div>
         );
@@ -92,15 +92,15 @@ const OrderTable = ({ orders = [], loading, onViewDetails, onUpdateStatus, onDel
                         {orders.map((order) => (
                             <tr key={order._id || order.id} className="hover:bg-gray-50 transition-colors">
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    <span className="text-sm font-semibold text-green-600">
+                                    <span className="text-sm font-semibold text-black">
                                         #{(order._id || order.id).toString().slice(-8).toUpperCase()}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <div className="flex items-center">
-                                        <div className="w-8 h-8 bg-linear-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-semibold text-sm mr-3">
+                                        <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-black font-semibold text-sm mr-3">
                                             {order.customerInfo?.name?.charAt(0) || 'U'}
-                                        </div>
+                                        </div> 
                                         <div>
                                             <span className="text-sm font-medium text-gray-800 block">
                                                 {order.customerInfo?.name || 'Unknown'}
@@ -151,14 +151,14 @@ const OrderTable = ({ orders = [], loading, onViewDetails, onUpdateStatus, onDel
                                     <div className="flex items-center gap-2">
                                         <button
                                             onClick={() => onViewDetails && onViewDetails(order)}
-                                            className="text-green-600 hover:text-green-800 font-medium text-sm transition-colors"
+                                            className="text-black hover:text-gray-900 font-medium text-sm transition-colors"
                                             title="View Details"
                                         >
                                             👁️
                                         </button>
                                         <button
                                             onClick={() => handleStatusChange(order)}
-                                            className="text-green-600 hover:text-green-800 font-medium text-sm transition-colors"
+                                            className="text-black hover:text-gray-900 font-medium text-sm transition-colors"
                                             title="Update Status"
                                         >
                                             ✏️
@@ -170,7 +170,7 @@ const OrderTable = ({ orders = [], loading, onViewDetails, onUpdateStatus, onDel
                                         >
                                             🗑️
                                         </button>
-                                    </div>
+                                    </div> 
                                 </td>
                             </tr>
                         ))}

@@ -12,6 +12,7 @@ import CustomerStats from './Components/CustomerStats';
 import ActivityFeed from './Components/ActivityFeed';
 import { Spinner } from '../Components';
 
+
 const Page = () => {
     const [loading, setLoading] = useState(true);
     const [analyticsData, setAnalyticsData] = useState(null);
@@ -66,7 +67,7 @@ const Page = () => {
                     <p className="text-gray-600">No analytics data available</p>
                     <button 
                         onClick={fetchAnalyticsData}
-                        className="mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                        className="mt-4 px-4 py-2 border border-gray-200 bg-gray-50 text-black rounded-lg hover:bg-gray-100"
                     >
                         Retry
                     </button>
@@ -76,22 +77,23 @@ const Page = () => {
     }
 
     return (
-        <div className="p-4 min-h-screen">
-            {/* Page Header */}
-            <div className="mb-8 flex justify-between items-center">
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-800">Analytics Dashboard</h1>
-                    <p className="text-gray-600 mt-2">Track your business performance and insights</p>
+        <div className="min-h-screen bg-white text-black antialiased">
+            <div className="container mx-auto py-3">
+                {/* Page Header */}
+                <div className="mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center ">
+                    <div>
+                        <h1 className="text-3xl font-bold text-black">Analytics Dashboard</h1>
+                        <p className="text-sm text-gray-600 mt-2">Track your business performance and insights</p>
+                    </div>
+                    <button
+                        onClick={handleRefresh}
+                        disabled={refreshing}
+                        className="px-4 py-2 border border-gray-200 bg-gray-50 text-black rounded-lg hover:bg-gray-100 disabled:opacity-50 flex items-center gap-2"
+                    >
+                        <span className={refreshing ? 'animate-spin' : ''}>🔄</span>
+                        Refresh
+                    </button>
                 </div>
-                <button
-                    onClick={handleRefresh}
-                    disabled={refreshing}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center gap-2"
-                >
-                    <span className={refreshing ? 'animate-spin' : ''}>🔄</span>
-                    Refresh
-                </button>
-            </div>
 
             {/* Stats Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -101,7 +103,7 @@ const Page = () => {
                     icon="💰"
                     trend={analyticsData.revenueTrend >= 0 ? "up" : "down"}
                     trendValue={`${Math.abs(analyticsData.revenueTrend)}%`}
-                    color="blue"
+                    color="neutral"
                 />
                 <StatsCard 
                     title="Total Orders"
@@ -109,7 +111,7 @@ const Page = () => {
                     icon="📦"
                     trend={analyticsData.ordersTrend >= 0 ? "up" : "down"}
                     trendValue={`${Math.abs(analyticsData.ordersTrend)}%`}
-                    color="green"
+                    color="neutral"
                 />
                 <StatsCard 
                     title="Total Customers"
@@ -117,7 +119,7 @@ const Page = () => {
                     icon="👥"
                     trend="up"
                     trendValue="15.3%"
-                    color="purple"
+                    color="neutral"
                 />
                 <StatsCard 
                     title="Avg. Order Value"
@@ -125,7 +127,7 @@ const Page = () => {
                     icon="📊"
                     trend={analyticsData.avgOrderValue > 20 ? "up" : "down"}
                     trendValue="3.1%"
-                    color="orange"
+                    color="neutral"
                 />
             </div>
 
@@ -157,6 +159,7 @@ const Page = () => {
             {/* Recent Orders Section */}
             <div className="mb-8">
                 <RecentOrders orders={analyticsData.recentOrders} />
+            </div>
             </div>
         </div>
     );

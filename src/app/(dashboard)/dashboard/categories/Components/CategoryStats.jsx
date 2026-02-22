@@ -11,21 +11,21 @@ const CategoryStats = ({ stats }) => {
       value: stats?.total || 0,
       icon: Folder,
       iconBg: 'bg-green-100',
-      iconColor: 'text-green-600'
+      iconColor: 'text-black'
     },
     {
       title: 'Active Categories',
       value: stats?.active || 0,
       icon: TrendingUp,
       iconBg: 'bg-green-100',
-      iconColor: 'text-green-600'
+      iconColor: 'text-black'
     },
     {
       title: 'Total Products',
       value: stats?.totalProducts || 0,
       icon: Package,
       iconBg: 'bg-green-100',
-      iconColor: 'text-green-600'
+      iconColor: 'text-black'
     },
     {
       title: 'Inactive Categories',

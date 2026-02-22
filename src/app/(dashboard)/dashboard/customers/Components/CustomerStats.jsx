@@ -6,64 +6,65 @@ const CustomerStats = ({ stats, loading }) => {
             label: 'Total Customers',
             value: loading ? '...' : stats?.total || 0,
             icon: '👥',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
+            bgColor: 'bg-gray-50',
+            iconColor: 'text-black',
             description: 'All registered customers'
         },
+
         {
             label: 'VIP Customers',
             value: loading ? '...' : stats?.vip || 0,
             icon: '⭐',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
+            bgColor: 'bg-gray-50',
+            iconColor: 'text-black',
             description: 'Spent over $10,000'
         },
         {
             label: 'Active Customers',
             value: loading ? '...' : stats?.active || 0,
             icon: '✅',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
+            bgColor: 'bg-gray-50',
+            iconColor: 'text-black',
             description: 'Regular shoppers'
         },
         {
             label: 'New Customers',
             value: loading ? '...' : stats?.new || 0,
             icon: '🆕',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
+            bgColor: 'bg-gray-50',
+            iconColor: 'text-black',
             description: 'First-time buyers'
         },
         {
             label: 'Inactive Customers',
             value: loading ? '...' : stats?.inactive || 0,
             icon: '💤',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
+            bgColor: 'bg-gray-50',
+            iconColor: 'text-black',
             description: 'No orders in 90 days'
         },
         {
             label: 'Total Revenue',
             value: loading ? '...' : `$${(stats?.totalRevenue || 0).toLocaleString()}`,
             icon: '💰',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
+            bgColor: 'bg-gray-50',
+            iconColor: 'text-black',
             description: 'All-time revenue'
         },
         {
             label: 'Lifetime Value',
             value: loading ? '...' : `$${(stats?.lifetimeValue || 0).toFixed(2)}`,
             icon: '📈',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
+            bgColor: 'bg-gray-50',
+            iconColor: 'text-black',
             description: 'Lifetime value'
         },
         {
             label: 'Avg Order Value',
             value: loading ? '...' : `$${(stats?.averageOrderValue || 0).toFixed(2)}`,
             icon: '�',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
+            bgColor: 'bg-gray-50',
+            iconColor: 'text-black',
             description: 'Per customer average'
         }
     ];
@@ -80,7 +81,7 @@ const CustomerStats = ({ stats, loading }) => {
                             {stat.icon}
                         </div>
                         <p className="text-xs font-medium text-gray-600 mb-1 uppercase tracking-wide">{stat.label}</p>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</h3>
+                        <h3 className="text-2xl font-bold text-black mb-1">{stat.value}</h3>
                         <p className="text-xs text-gray-500">{stat.description}</p>
                     </div>
                 </div>

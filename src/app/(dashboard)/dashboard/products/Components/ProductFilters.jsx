@@ -6,10 +6,10 @@ const ProductFilters = ({ filters, onFilterChange, onReset }) => {
   return (
     <div className="bg-white text-black rounded-xl shadow-lg p-6 mb-6 border border-gray-100">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-800">Filters</h3>
+        <h3 className="text-lg font-semibold text-black">Filters</h3>
         <button
           onClick={onReset}
-          className="text-sm text-green-600 hover:text-green-700 font-medium"
+          className="text-sm text-black hover:text-gray-700 font-medium"
         >
           Reset All
         </button>

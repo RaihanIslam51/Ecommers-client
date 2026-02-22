@@ -83,7 +83,7 @@ const ShippingCarriers = () => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-xs text-gray-600">On-Time Delivery</span>
-                <span className="text-sm font-bold text-green-600">{carrier.onTime}%</span>
+                <span className="text-sm font-bold text-black">{carrier.onTime}%</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-xs text-gray-600">Avg. Delivery</span>

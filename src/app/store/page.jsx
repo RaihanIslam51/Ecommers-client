@@ -238,40 +238,33 @@ const StorePageContent = memo(() => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Header Section */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 mb-3 sm:mb-4">
+      {/* <div className="bg-white border-b border-gray-100">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 mb-2">
+            {filters.categories && filters.categories.length > 0 ? filters.categories[0] : 'All Products'}
+          </p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-black tracking-tight">
             {filters.categories && filters.categories.length > 0
-              ? `${filters.categories[0]} Products`
-              : 'Fresh Store'
+              ? filters.categories[0]
+              : 'Store'
             }
           </h1>
-          <p className="text-gray-600 text-sm sm:text-base max-w-2xl leading-relaxed">
-            {filters.categories && filters.categories.length > 0
-              ? `Browse our collection of fresh ${filters.categories[0].toLowerCase()} products with advanced filtering options.`
-              : 'Discover our wide range of fresh vegetables, healthy meal kits, and ready-to-cook packages with advanced filtering options.'
-            }
-          </p>
         </div>
-      </div>
+      </div> */}
 
       {/* Breadcrumb */}
-      <div className="bg-gray-50 border-b border-gray-200">
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
-          <nav className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600">
-            <Link href="/" className="hover:text-green-600 transition-colors">
-              Home
-            </Link>
-            <span className="text-gray-400">/</span>
-            <Link href="/store" className="hover:text-green-600 transition-colors">
-              Store
-            </Link>
+      <div className="bg-white border-b border-gray-100">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5">
+          <nav className="flex items-center space-x-2 text-xs text-gray-400 uppercase tracking-wide">
+            <Link href="/" className="hover:text-black transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/store" className="hover:text-black transition-colors">Store</Link>
             {filters.categories && filters.categories.length > 0 && (
               <>
-                <span className="text-gray-400">/</span>
-                <span className="text-green-600 font-medium truncate">{filters.categories[0]}</span>
+                <span>/</span>
+                <span className="text-black font-medium">{filters.categories[0]}</span>
               </>
             )}
           </nav>
@@ -279,23 +272,23 @@ const StorePageContent = memo(() => {
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+      <div className="bg-white border-b border-gray-100 sticky top-0 z-40">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="relative max-w-2xl mx-auto sm:mx-0">
-            <FiSearch className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg sm:text-xl" />
+            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base" />
             <input
               type="text"
-              placeholder="Search products by name or description..."
+              placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
+              className="w-full pl-11 pr-10 py-2.5 border border-gray-200 bg-gray-50 focus:bg-white focus:border-black focus:outline-none transition-colors text-sm text-black placeholder-gray-400"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black p-0.5"
               >
-                <FiX className="text-lg sm:text-xl" />
+                <FiX className="text-base" />
               </button>
             )}
           </div>
@@ -303,8 +296,8 @@ const StorePageContent = memo(() => {
       </div>
 
       {/* Main Content */}
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           {/* Filter Sidebar */}
           <div className="w-full lg:w-64 lg:shrink-0">
             <div className="hidden lg:block">
@@ -357,16 +350,16 @@ const StorePageContent = memo(() => {
               <StoreProductCardSkeletonGrid count={12} viewType={currentView} />
             ) : filteredProducts.length === 0 ? (
               <div className="text-center py-12 sm:py-20 px-4">
-                <div className="text-4xl sm:text-6xl mb-4">🔍</div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+                <div className="text-5xl mb-4">—</div>
+                <h3 className="text-xl font-bold text-black mb-2 uppercase tracking-wide">
                   No Products Found
                 </h3>
-                <p className="text-gray-600 text-sm sm:text-base mb-6 max-w-md mx-auto">
+                <p className="text-gray-500 text-sm mb-6 max-w-md mx-auto">
                   Try adjusting your filters or search query
                 </p>
                 <button
                   onClick={handleClearAllFilters}
-                  className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors text-sm sm:text-base"
+                  className="px-8 py-3 bg-black text-white text-sm font-semibold uppercase tracking-widest hover:bg-gray-800 transition-colors"
                 >
                   Clear All Filters
                 </button>
@@ -375,9 +368,9 @@ const StorePageContent = memo(() => {
               <>
                 <div className={`
                   ${currentView === 'grid'
-                    ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6'
-                    : 'flex flex-col gap-3 sm:gap-4 lg:gap-6'
-                  } p-4 sm:p-6
+                    ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4'
+                    : 'flex flex-col gap-3 sm:gap-4'
+                  } p-0 py-4
                 `}>
                   {currentProducts.map((product) => (
                     <StoreProductCard
@@ -403,13 +396,12 @@ const StorePageContent = memo(() => {
         <div className="lg:hidden fixed bottom-6 right-6 z-40">
           <button
             onClick={() => setIsMobileFilterOpen(true)}
-            className="w-14 h-14 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95"
+            className="w-14 h-14 bg-black text-white shadow-lg hover:bg-gray-900 transition-colors flex items-center justify-center"
             aria-label="Open filters"
           >
             <BsFilterLeft className="text-xl" />
-            {/* Active filter indicator */}
             {(filters.categories?.length > 0 || filters.priceRange || filters.customPriceRange || filters.productTypes?.length > 0 || filters.availability?.length > 0 || filters.ratings?.length > 0) && (
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+              <span className="absolute -top-1 -right-1 bg-black border border-white text-white text-xs w-5 h-5 flex items-center justify-center font-bold">
                 {[
                   filters.categories?.length || 0,
                   filters.priceRange ? 1 : 0,
@@ -431,10 +423,10 @@ StorePageContent.displayName = 'StorePageContent';
 
 export default function StorePage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center">
       <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-        <p className="text-gray-600">Loading store...</p>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-black mx-auto mb-4"></div>
+        <p className="text-sm text-gray-500 uppercase tracking-widest">Loading...</p>
       </div>
     </div>}>
       <StorePageContent />

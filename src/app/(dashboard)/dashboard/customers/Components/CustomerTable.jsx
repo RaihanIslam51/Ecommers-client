@@ -51,7 +51,7 @@ const CustomerTable = ({
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
                 <table className="w-full">
-                    <thead className="bg-linear-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+                    <thead className="bg-gray-50 border-b border-gray-200">
                         <tr>
                             {onSelectCustomer && (
                                 <th className="px-6 py-4 text-left">
@@ -64,7 +64,7 @@ const CustomerTable = ({
                                             }
                                         }}
                                         onChange={(e) => onSelectAll(e.target.checked)}
-                                        className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500 cursor-pointer"
+                                        className="w-4 h-4 text-black border-gray-300 rounded focus:ring-gray-300 cursor-pointer"
                                         title={isAllSelected ? "Deselect all" : "Select all"}
                                     />
                                 </th>
@@ -105,8 +105,8 @@ const CustomerTable = ({
                             return (
                                 <tr 
                                     key={customer.id} 
-                                    className={`hover:bg-green-50 transition-all duration-200 ${
-                                        isSelected ? 'bg-green-50' : index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                                    className={`hover:bg-gray-50 transition-all duration-200 ${
+                                        isSelected ? 'bg-gray-50' : index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
                                     }`}
                                 >
                                     {onSelectCustomer && (
@@ -115,7 +115,7 @@ const CustomerTable = ({
                                                 type="checkbox"
                                                 checked={isSelected}
                                                 onChange={() => onSelectCustomer(customer.email)}
-                                                className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500 cursor-pointer"
+                                                className="w-4 h-4 text-black border-gray-300 rounded focus:ring-gray-300 cursor-pointer"
                                             />
                                         </td>
                                     )}
@@ -127,7 +127,7 @@ const CustomerTable = ({
                                             size="md"
                                         />
                                         <div>
-                                            <div className="font-semibold text-gray-900 text-sm">
+                                            <div className="font-semibold text-black text-sm">
                                                 {customer.name}
                                             </div>
                                             <div className="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-0.5 rounded inline-block mt-1">
@@ -141,7 +141,7 @@ const CustomerTable = ({
                                         <span className="text-gray-400">📧</span>
                                         <a 
                                             href={`mailto:${customer.email}`}
-                                            className="text-sm text-green-600 hover:text-green-800 hover:underline transition-colors"
+                                            className="text-sm text-black hover:text-black hover:underline transition-colors"
                                         >
                                             {customer.email}
                                         </a>
@@ -152,7 +152,7 @@ const CustomerTable = ({
                                         <span className="text-gray-400">📱</span>
                                         <a 
                                             href={`tel:${customer.phone}`}
-                                            className="text-sm text-gray-900 hover:text-green-600 transition-colors font-medium"
+                                            className="text-sm text-black hover:text-black transition-colors font-medium"
                                         >
                                             {customer.phone}
                                         </a>
@@ -170,17 +170,17 @@ const CustomerTable = ({
                                     <CustomerStatusBadge status={customer.status} />
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    <div className="inline-flex items-center justify-center bg-green-100 text-green-800 rounded-full px-3 py-1">
+                                    <div className="inline-flex items-center justify-center bg-gray-100 text-gray-700 rounded-full px-3 py-1">
                                         <span className="text-sm font-bold">{customer.totalOrders}</span>
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    <div className="text-sm font-bold text-green-600">
+                                    <div className="text-sm font-bold text-black">
                                         ${customer.totalSpent.toLocaleString()}
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    <div className="text-sm text-gray-900">{formatDate(customer.joinedDate)}</div>
+                                    <div className="text-sm text-black">{formatDate(customer.joinedDate)}</div>
                                     {customer.lastOrderDate && (
                                         <div className="text-xs text-gray-500 mt-1">
                                             Last: {formatDate(customer.lastOrderDate)}
@@ -191,14 +191,14 @@ const CustomerTable = ({
                                     <div className="flex items-center justify-end gap-2">
                                         <button
                                             onClick={() => onViewDetails(customer)}
-                                            className="p-2 text-green-600 hover:bg-green-100 rounded-lg font-medium text-sm transition-all"
+                                            className="p-2 text-black hover:bg-gray-100 rounded-lg font-medium text-sm transition-all"
                                             title="View Details"
                                         >
                                             👁️
                                         </button>
                                         <button
                                             onClick={() => onEdit(customer)}
-                                            className="p-2 text-green-600 hover:bg-green-100 rounded-lg font-medium text-sm transition-all"
+                                            className="p-2 text-black hover:bg-gray-100 rounded-lg font-medium text-sm transition-all"
                                             title="Edit Customer"
                                         >
                                             ✏️
@@ -223,16 +223,16 @@ const CustomerTable = ({
             <div className="bg-gray-50 border-t border-gray-200 px-6 py-4">
                 <div className="flex items-center justify-between">
                     <div className="text-sm text-gray-600">
-                        Showing <span className="font-semibold text-gray-900">{customers.length}</span> customer{customers.length !== 1 ? 's' : ''}
+                        Showing <span className="font-semibold text-black">{customers.length}</span> customer{customers.length !== 1 ? 's' : ''}
                     </div>
                     <div className="flex items-center gap-6">
                         <div className="text-sm text-gray-600">
-                            Total Orders: <span className="font-bold text-green-600">
+                            Total Orders: <span className="font-bold text-black">
                                 {customers.reduce((sum, c) => sum + c.totalOrders, 0)}
                             </span>
                         </div>
                         <div className="text-sm text-gray-600">
-                            Total Revenue: <span className="font-bold text-green-600">
+                            Total Revenue: <span className="font-bold text-black">
                                 ${customers.reduce((sum, c) => sum + c.totalSpent, 0).toLocaleString()}
                             </span>
                         </div>

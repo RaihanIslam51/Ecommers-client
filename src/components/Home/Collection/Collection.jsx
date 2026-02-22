@@ -22,10 +22,7 @@ const Collection = () => {
         // Server returns: { success: true, message: "...", products: [...] }
         const productsData = response.data.products || [];
         console.log('✅ Products fetched:', productsData.length);
-        // Filter products to show only those marked for collection
-        const collectionProducts = productsData.filter(product => product.showInCollection === true);
-        console.log('📦 Collection products:', collectionProducts.length);
-        setProducts(collectionProducts);
+        setProducts(productsData);
       } catch (error) {
         console.error('❌ Error fetching products:', error);
         console.error('Error details:', {
@@ -77,7 +74,7 @@ const Collection = () => {
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-1 h-8 md:h-10 bg-green-600 rounded-full"></div>
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-green-600">Fresh Collections</h2>
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black">All Collections</h2>
                 </div>
                 <p className="text-sm md:text-base text-gray-600 ml-4 lg:ml-5">Discover our ready-to-cook meal kits and healthy food combos</p>
               </div>
@@ -88,7 +85,7 @@ const Collection = () => {
                 </span>
                 <button
                   onClick={() => setShowAll(!showAll)}
-                  className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 text-sm font-semibold text-green-600 border border-green-300 rounded-lg hover:border-green-600 hover:bg-green-50 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 text-sm font-semibold text-black border border-green-300 rounded-lg hover:border-green-600 hover:bg-green-50 transition-all duration-200"
                   disabled={products.length <= 24}
                 >
                 <span>{showAll ? 'Show Less' : 'Show More'}</span>
@@ -109,7 +106,7 @@ const Collection = () => {
               <p className="text-gray-600">No products available</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5 lg:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5 lg:gap-6">
               {displayedProducts.map((product) => (
                 <ProductCard
                   key={product._id || product.id}
@@ -138,7 +135,7 @@ const Collection = () => {
           <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-4xl relative shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 animate-slide-up">
             {/* Close Button */}
             <button
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-green-100 hover:bg-green-600 hover:text-white text-green-600 transition-all duration-200 z-10"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-green-100 hover:bg-green-600 hover:text-white text-black transition-all duration-200 z-10"
               onClick={() => setModalProductId(null)}
               aria-label="Close quick view"
             >

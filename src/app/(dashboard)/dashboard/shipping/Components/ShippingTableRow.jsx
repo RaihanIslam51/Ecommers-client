@@ -64,7 +64,7 @@ const ShippingTableRow = ({ order, onViewDetails, onUpdateStatus }) => {
           </button>
           <button
             onClick={() => onUpdateStatus && onUpdateStatus(order)}
-            className="px-3 py-1.5 text-xs font-medium text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+            className="px-3 py-1.5 text-xs font-medium text-black hover:bg-green-50 rounded-lg transition-colors"
             title="Update Status"
           >
             ✏️

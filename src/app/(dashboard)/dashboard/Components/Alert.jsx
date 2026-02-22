@@ -25,7 +25,7 @@ const Alert = ({
       border: 'border-green-200',
       titleColor: 'text-green-800',
       messageColor: 'text-green-700',
-      iconColor: 'text-green-600',
+      iconColor: 'text-black',
     },
     warning: {
       bg: 'bg-yellow-50',

@@ -2,24 +2,26 @@
 import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import axiosInstance from '@/lib/axios';
 import { useCart } from '@/context/CartContext';
 import {
-  FaShoppingCart,
   FaHeart,
-  FaStar,
+  FaEye,
   FaFire,
-  FaClock,
   FaThLarge,
   FaListUl,
   FaArrowLeft,
-  FaFilter
+  FaFilter,
+  FaChevronLeft,
+  FaChevronRight,
+  FaArrowUp
 } from 'react-icons/fa';
-import { MdVerified } from 'react-icons/md';
 import { BiSort } from 'react-icons/bi';
 import Swal from 'sweetalert2';
 
 const HotDealsPage = memo(() => {
+  const router = useRouter();
   const { addToCart, addToWishlist, isInWishlist, removeFromWishlist } = useCart();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,39 +32,21 @@ const HotDealsPage = memo(() => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(12);
 
-  useEffect(() => {
-    fetchHotDeals();
-  }, []);
-
-  // Reset to first page when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [sortBy, selectedCategory]);
+  useEffect(() => { fetchHotDeals(); }, []);
+  useEffect(() => { setCurrentPage(1); }, [sortBy, selectedCategory]);
 
   const fetchHotDeals = async () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get('/products');
-      
-      // Server returns: { success: true, message: "...", products: [...] }
       const productsData = response.data.products || [];
-      
-      // Filter products that are marked as Hot Deals
       const hotDealsProducts = productsData.filter(p => p.showInHotDeals === true);
-      
       setProducts(hotDealsProducts);
-      
-      // Extract unique categories
       const uniqueCategories = [...new Set(hotDealsProducts.map(p => p.category).filter(Boolean))];
       setCategories(uniqueCategories);
     } catch (error) {
       console.error('Error fetching hot deals:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to load hot deals. Please try again.',
-        confirmButtonColor: '#000'
-      });
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to load hot deals.', confirmButtonColor: '#000' });
     } finally {
       setLoading(false);
     }
@@ -75,225 +59,146 @@ const HotDealsPage = memo(() => {
     return 0;
   }, []);
 
-  // Memoized filtered and sorted products
   const filteredProducts = useMemo(() => {
     let filtered = [...products];
-
-    // Filter by category
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(p => p.category === selectedCategory);
-    }
-
-    // Sort products
+    if (selectedCategory !== 'all') filtered = filtered.filter(p => p.category === selectedCategory);
     switch (sortBy) {
-      case 'discount-high':
-        filtered.sort((a, b) => calculateDiscount(b) - calculateDiscount(a));
-        break;
-      case 'discount-low':
-        filtered.sort((a, b) => calculateDiscount(a) - calculateDiscount(b));
-        break;
-      case 'price-low':
-        filtered.sort((a, b) => parseFloat(a.price || 0) - parseFloat(b.price || 0));
-        break;
-      case 'price-high':
-        filtered.sort((a, b) => parseFloat(b.price || 0) - parseFloat(a.price || 0));
-        break;
-      case 'name':
-        filtered.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-        break;
-      default:
-        break;
+      case 'discount-high': filtered.sort((a, b) => calculateDiscount(b) - calculateDiscount(a)); break;
+      case 'discount-low':  filtered.sort((a, b) => calculateDiscount(a) - calculateDiscount(b)); break;
+      case 'price-low':     filtered.sort((a, b) => parseFloat(a.price || 0) - parseFloat(b.price || 0)); break;
+      case 'price-high':    filtered.sort((a, b) => parseFloat(b.price || 0) - parseFloat(a.price || 0)); break;
+      case 'name':          filtered.sort((a, b) => (a.name || '').localeCompare(b.name || '')); break;
     }
-
     return filtered;
   }, [products, selectedCategory, sortBy, calculateDiscount]);
 
-  // Paginated products
-  const paginatedProducts = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredProducts, currentPage, itemsPerPage]);
-
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedProducts = useMemo(() => filteredProducts.slice(startIndex, endIndex), [filteredProducts, startIndex, endIndex]);
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+  const getPageNumbers = useCallback(() => {
+    const pages = [];
+    const maxVisible = 5;
+    if (totalPages <= maxVisible) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else if (currentPage <= 3) {
+      for (let i = 1; i <= 5; i++) pages.push(i);
+    } else if (currentPage >= totalPages - 2) {
+      for (let i = totalPages - 4; i <= totalPages; i++) pages.push(i);
+    } else {
+      for (let i = currentPage - 2; i <= currentPage + 2; i++) pages.push(i);
+    }
+    return pages;
+  }, [currentPage, totalPages]);
 
   const handleAddToCart = (product) => {
     addToCart(product, 1);
-    Swal.fire({
-      icon: 'success',
-      title: 'Added to Cart!',
-      text: `${product.name} has been added to your cart.`,
-      timer: 1500,
-      showConfirmButton: false,
-      toast: true,
-      position: 'top-end'
-    });
+    Swal.fire({ icon: 'success', title: 'Added to Cart!', timer: 1200, showConfirmButton: false, toast: true, position: 'top-end' });
   };
 
   const handleToggleWishlist = (product) => {
     const productId = product._id || product.id;
-    
     if (isInWishlist(productId)) {
       removeFromWishlist(productId);
-      Swal.fire({
-        icon: 'info',
-        title: 'Removed from Wishlist',
-        timer: 1500,
-        showConfirmButton: false,
-        toast: true,
-        position: 'top-end'
-      });
+      Swal.fire({ icon: 'info', title: 'Removed from Wishlist', timer: 1200, showConfirmButton: false, toast: true, position: 'top-end' });
     } else {
       addToWishlist(product);
-      Swal.fire({
-        icon: 'success',
-        title: 'Added to Wishlist!',
-        timer: 1500,
-        showConfirmButton: false,
-        toast: true,
-        position: 'top-end'
-      });
+      Swal.fire({ icon: 'success', title: 'Added to Wishlist!', timer: 1200, showConfirmButton: false, toast: true, position: 'top-end' });
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-green-50 via-white to-green-50 flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-green-300 border-t-green-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Loading hot deals...</p>
+          <div className="w-10 h-10 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-xs text-gray-500 uppercase tracking-widest">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-green-50 via-white to-green-50">
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-white">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-4 py-4 sm:py-5">
+
         {/* Header */}
-        <div className="mb-6 sm:mb-8">
+        {/* <div className="border-b border-gray-100 pb-6 mb-8">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-black mb-4 transition-colors text-sm sm:text-base"
+            className="inline-flex items-center gap-2 text-xs text-gray-400 hover:text-black uppercase tracking-widest mb-5 transition-colors"
           >
-            <FaArrowLeft />
+            <FaArrowLeft className="text-xs" />
             <span>Back to Home</span>
           </Link>
-
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 sm:gap-3 mb-2">
-                <FaFire className="text-2xl sm:text-4xl text-green-600 animate-pulse" />
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-linear-to-r from-green-600 via-green-700 to-green-800 bg-clip-text text-transparent">
-                  Fresh Deals
-                </h1>
-              </div>
-              <p className="text-gray-700 font-medium text-sm sm:text-base">
-                🍎 Fresh vegetables & meal kits at great prices! ({filteredProducts.length} deals)
-              </p>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 mb-1">Deals</p>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-black tracking-tight">Hot Deals</h1>
+              <p className="text-sm text-gray-500 mt-1">{filteredProducts.length} items</p>
             </div>
-
-            {/* View Mode Toggle */}
-            <div className="flex items-center gap-2 self-start lg:self-center">
+            <div className="flex items-center gap-1">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-2.5 sm:p-3 rounded-lg transition-all touch-manipulation ${
-                  viewMode === 'grid'
-                    ? 'bg-green-600 text-white shadow-lg'
-                    : 'bg-white text-gray-600 hover:bg-green-50 border border-gray-200'
-                }`}
+                className={`p-2.5 border transition-colors ${viewMode === 'grid' ? 'bg-black text-white border-black' : 'bg-white text-gray-400 border-gray-200 hover:border-black hover:text-black'}`}
                 title="Grid View"
               >
-                <FaThLarge className="text-sm sm:text-base" />
+                <FaThLarge className="text-sm" />
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-2.5 sm:p-3 rounded-lg transition-all touch-manipulation ${
-                  viewMode === 'list'
-                    ? 'bg-green-600 text-white shadow-lg'
-                    : 'bg-white text-gray-600 hover:bg-green-50 border border-gray-200'
-                }`}
+                className={`p-2.5 border transition-colors ${viewMode === 'list' ? 'bg-black text-white border-black' : 'bg-white text-gray-400 border-gray-200 hover:border-black hover:text-black'}`}
                 title="List View"
               >
-                <FaListUl className="text-sm sm:text-base" />
+                <FaListUl className="text-sm" />
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        {/* Deal Timer Banner */}
-        <div className="bg-linear-to-r from-green-600 to-green-700 text-white hidden lg:block md:block rounded-xl shadow-lg p-4 sm:p-6 mb-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <FaClock className="text-2xl sm:text-3xl animate-pulse" />
-              <div>
-                <h3 className="text-lg sm:text-xl font-bold">Fresh Deals Available!</h3>
-                <p className="text-green-100 text-sm sm:text-base">Get the best prices on organic vegetables and meal kits</p>
-              </div>
-            </div>
-            <div className="text-left sm:text-right">
-              <p className="text-sm text-white">Average Savings</p>
-              <p className="text-2xl sm:text-3xl font-bold">
-                {products.length > 0
-                  ? Math.round(products.reduce((acc, p) => acc + calculateDiscount(p), 0) / products.length)
-                  : 0}% OFF
-              </p>
-            </div>
+        {/* Filters */}
+        <div className="flex flex-col sm:flex-row gap-3 mb-8">
+          <div className="flex-1">
+            <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1.5">
+              <FaFilter className="text-xs" /> Category
+            </label>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full px-3 py-2.5 text-sm border border-gray-200 bg-gray-50 focus:bg-white focus:border-black focus:outline-none transition-colors text-black"
+            >
+              <option value="all">All Categories</option>
+              {categories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
+            </select>
+          </div>
+          <div className="flex-1">
+            <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1.5">
+              <BiSort className="text-xs" /> Sort By
+            </label>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="w-full px-3 py-2.5 text-sm border border-gray-200 bg-gray-50 focus:bg-white focus:border-black focus:outline-none transition-colors text-black"
+            >
+              <option value="discount-high">Biggest Discount First</option>
+              <option value="discount-low">Smallest Discount First</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="name">Name: A to Z</option>
+            </select>
           </div>
         </div>
 
-        {/* Filters and Sort */}
-        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6">
-          <div className="flex flex-col sm:flex-row gap-4">
-            {/* Category Filter */}
-            <div className="flex-1">
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                <FaFilter className="text-green-600" />
-                Category
-              </label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent touch-manipulation"
-              >
-                <option value="all">All Categories</option>
-                {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Sort By */}
-            <div className="flex-1">
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                <BiSort className="text-green-600" />
-                Sort By
-              </label>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-4 py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent touch-manipulation"
-              >
-                <option value="discount-high">Biggest Discount First</option>
-                <option value="discount-low">Smallest Discount First</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="name">Name: A to Z</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Products Grid/List */}
+        {/* Products */}
         {filteredProducts.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm p-8 sm:p-12 text-center">
-            <div className="text-4xl sm:text-6xl mb-4">🍎</div>
-            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">No fresh deals available</h3>
-            <p className="text-gray-600 mb-6 text-sm sm:text-base">Check back later for amazing fresh deals and discounts!</p>
+          <div className="text-center py-20">
+            <div className="text-4xl mb-4">—</div>
+            <h3 className="text-lg font-bold text-black uppercase tracking-wide mb-2">No Deals Found</h3>
+            <p className="text-gray-500 text-sm mb-6">Check back later for amazing deals.</p>
             <Link
               href="/"
-              className="inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm sm:text-base"
+              className="inline-block px-8 py-3 bg-black text-white text-sm font-semibold uppercase tracking-widest hover:bg-gray-800 transition-colors"
             >
               Browse All Products
             </Link>
@@ -301,258 +206,165 @@ const HotDealsPage = memo(() => {
         ) : (
           <div className={
             viewMode === 'grid'
-              ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6'
-              : 'space-y-3 sm:space-y-4'
+              ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4'
+              : 'flex flex-col gap-3'
           }>
             {paginatedProducts.map((product) => {
               const productId = product._id || product.id;
               const inWishlist = isInWishlist(productId);
               const discount = calculateDiscount(product);
+              const salePrice = parseFloat(product.price || 0);
+              const originalPriceVal = parseFloat(product.originalPrice || 0);
+              const stock = product.stock || 0;
 
+              /* ── LIST VIEW ── */
               if (viewMode === 'list') {
-                // List View
                 return (
-                  <div key={productId} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all border-2 border-green-200">
-                    <div className="flex flex-col sm:flex-row gap-4 p-4">
-                      {/* Image */}
-                      <Link 
-                        href={`/products/${productId}`}
-                        className="relative w-full sm:w-48 h-48 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 group"
-                      >
-                        <Image
-                          src={product.image || 'https://via.placeholder.com/300'}
-                          alt={product.name}
-                          fill
-                          loading="lazy"
-                          placeholder="blur"
-                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        {/* Hot Deal Badge */}
-                        <div className="absolute top-2 left-2">
-                          <span className="px-3 py-1 bg-linear-to-r from-green-600 to-green-700 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1 animate-pulse">
-                            <FaFire /> FRESH DEAL
-                          </span>
+                  <div
+                    key={productId}
+                    className="group relative flex flex-col sm:flex-row bg-white border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-300"
+                    onClick={() => router.push(`/products/${productId}`)}
+                  >
+                    <div className="relative w-full sm:w-48 h-48 shrink-0 bg-gray-50">
+                      <Image src={product.image || 'https://via.placeholder.com/300'} alt={product.name} fill className="object-cover" sizes="(max-width: 640px) 100vw, 192px" />
+                      {discount > 0 && (
+                        <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full z-10">
+                          -{discount}%
+                        </span>
+                      )}
+                      {stock === 0 && (
+                        <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-10">
+                          <span className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Out of Stock</span>
                         </div>
-                        {discount > 0 && (
-                          <div className="absolute top-2 right-2">
-                            <span className="px-3 py-1 bg-green-600 text-white text-lg font-bold rounded-full shadow-lg">
-                              -{discount}%
-                            </span>
-                          </div>
+                      )}
+                    </div>
+                    <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between">
+                      <div>
+                        <p className="text-xs font-semibold text-black line-clamp-2 leading-snug mb-2">{product.name}</p>
+                        <p className="text-xs text-gray-500 line-clamp-2 mb-3">{product.description || ''}</p>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-base font-bold text-black">${salePrice.toFixed(2)}</span>
+                          {originalPriceVal > salePrice && (
+                            <span className="text-xs text-gray-400 line-through">${originalPriceVal.toFixed(2)}</span>
+                          )}
+                          {discount > 0 && <span className="text-xs font-semibold text-red-500">-{discount}%</span>}
+                        </div>
+                      </div>
+                      <div className="flex gap-1.5 mt-3">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleAddToCart(product); }}
+                          disabled={stock === 0}
+                          className="flex-1 py-2 text-xs font-semibold text-black border border-black rounded-md hover:bg-black hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                        >
+                          Add to Cart
+                        </button>
+                        {stock > 0 && (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); router.push(`/quick-checkout?product=${encodeURIComponent(JSON.stringify(product))}`); }}
+                            className="flex-1 py-2 text-xs font-semibold bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+                          >
+                            Buy Now
+                          </button>
                         )}
-                      </Link>
-
-                      {/* Info */}
-                      <div className="flex-1 flex flex-col justify-between">
-                        <div>
-                          <div className="flex items-start justify-between gap-2 mb-2">
-                            <Link href={`/products/${productId}`}>
-                              <h3 className="text-lg font-semibold text-gray-900 hover:text-green-600 line-clamp-2 transition-colors">
-                                {product.name}
-                              </h3>
-                            </Link>
-                          </div>
-
-                          <div className="flex items-center gap-2 mb-3">
-                            {product.category && (
-                              <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
-                                {product.category}
-                              </span>
-                            )}
-                            {/* {product.brand && (
-                              <span className="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">
-                                <MdVerified className="text-xs" />
-                                {product.brand}
-                              </span>
-                            )} */}
-                          </div>
-
-                          <p className="text-gray-600 text-sm line-clamp-2 mb-3">
-                            {product.description || product.feature || 'No description available'}
-                          </p>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="flex items-center gap-3 mb-1">
-                              <span className="text-2xl font-bold text-green-600">
-                                ${parseFloat(product.price || 0).toFixed(2)}
-                              </span>
-                              {product.originalPrice && product.originalPrice > product.price && (
-                                <span className="text-lg text-gray-400 line-through">
-                                  ${parseFloat(product.originalPrice).toFixed(2)}
-                                </span>
-                              )}
-                            </div>
-                            {discount > 0 && (
-                              <p className="text-sm text-green-600 font-semibold">
-                                You save ${(parseFloat(product.originalPrice || 0) - parseFloat(product.price || 0)).toFixed(2)}
-                              </p>
-                            )}
-                          </div>
-
-                          <div className="flex items-center gap-2 sm:gap-3">
-                            <button
-                              onClick={() => handleToggleWishlist(product)}
-                              className={`p-2.5 sm:p-3 rounded-lg border-2 transition-all touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${
-                                inWishlist
-                                  ? 'border-green-500 text-green-500 bg-green-50'
-                                  : 'border-gray-300 text-gray-600 hover:border-green-500 hover:text-green-500'
-                              }`}
-                            >
-                              <FaHeart className={`text-sm sm:text-base ${inWishlist ? 'fill-current' : ''}`} />
-                            </button>
-                            <button
-                              onClick={() => handleAddToCart(product)}
-                              disabled={product.stock <= 0}
-                              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-linear-to-r from-green-600 to-green-700 text-white text-sm sm:text-base font-medium rounded-lg hover:from-green-700 hover:to-green-800 transition-all flex items-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg touch-manipulation min-h-[44px]"
-                            >
-                              <FaShoppingCart className="text-sm sm:text-base" />
-                              <span className="hidden xs:inline">Add to Cart</span>
-                              <span className="xs:hidden">Add</span>
-                            </button>
-                          </div>
-                        </div>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleToggleWishlist(product); }}
+                          className="px-3 py-2 border border-gray-200 rounded-md hover:border-black transition-colors"
+                        >
+                          <FaHeart className={`text-xs ${inWishlist ? 'text-red-500' : 'text-gray-400'}`} />
+                        </button>
                       </div>
                     </div>
                   </div>
                 );
               }
 
-              // Grid View
+              /* ── GRID VIEW ── */
               return (
-                <div key={productId} className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-green-100 hover:border-green-300">
-                  {/* Image */}
-                  <Link href={`/products/${productId}`} className="relative block w-full h-64 bg-gray-100 overflow-hidden">
+                <div
+                  key={productId}
+                  onClick={() => router.push(`/products/${productId}`)}
+                  className="relative group flex flex-col bg-white rounded-xl border border-gray-200 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                  style={{ height: '320px' }}
+                >
+                  {/* IMAGE — 75% */}
+                  <div className="relative w-full" style={{ flex: '0 0 75%' }}>
                     <Image
                       src={product.image || 'https://via.placeholder.com/300'}
                       alt={product.name}
                       fill
-                      loading="lazy"
-                      placeholder="blur"
-                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="object-cover"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                     />
-                    
-                    {/* Hot Deal Badge */}
-                    <div className="absolute top-3 left-3">
-                      <span className="px-3 py-1 bg-linear-to-r from-green-600 to-green-700 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1 animate-pulse">
-                        <FaFire /> FRESH
-                      </span>
+
+                    {/* Hover buttons */}
+                    <div className="absolute top-2 right-2 flex flex-col gap-1.5 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleToggleWishlist(product); }}
+                        title="Add to Wishlist"
+                        className="w-8 h-8 bg-white text-gray-700 hover:text-red-500 rounded-full shadow border border-gray-200 flex items-center justify-center transition-colors"
+                      >
+                        <FaHeart className={`text-xs ${inWishlist ? 'text-red-500' : ''}`} />
+                      </button>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); router.push(`/products/${productId}`); }}
+                        title="View Product"
+                        className="w-8 h-8 bg-white text-gray-700 hover:text-blue-500 rounded-full shadow border border-gray-200 flex items-center justify-center transition-colors"
+                      >
+                        <FaEye className="text-xs" />
+                      </button>
                     </div>
-                    
-                    {/* Discount Badge */}
+
+                    {/* Discount badge */}
                     {discount > 0 && (
-                      <div className="absolute top-3 right-3">
-                        <div className="relative">
-                          <span className="block px-3 py-1 bg-green-600 text-white text-xl font-bold rounded-full shadow-lg animate-bounce">
-                            -{discount}%
-                          </span>
-                        </div>
-                      </div>
+                      <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full z-10">
+                        -{discount}%
+                      </span>
                     )}
 
-                    {/* Quick Actions */}
-                    <div className="absolute bottom-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleToggleWishlist(product);
-                        }}
-                        className={`p-2.5 sm:p-3 rounded-lg backdrop-blur-sm shadow-lg transition-all touch-manipulation min-w-[40px] min-h-[40px] flex items-center justify-center ${
-                          inWishlist
-                            ? 'bg-green-500 text-white'
-                            : 'bg-white/90 text-gray-700 hover:bg-green-500 hover:text-white'
-                        }`}
-                      >
-                        <FaHeart className={`text-sm ${inWishlist ? 'fill-current' : ''}`} />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleAddToCart(product);
-                        }}
-                        disabled={product.stock <= 0}
-                        className="p-2.5 sm:p-3 bg-linear-to-r from-green-600 to-green-700 text-white rounded-lg backdrop-blur-sm hover:from-green-700 hover:to-green-800 shadow-lg transition-all disabled:bg-gray-400 touch-manipulation min-w-[40px] min-h-[40px] flex items-center justify-center"
-                      >
-                        <FaShoppingCart className="text-sm" />
-                      </button>
-                    </div>
-                  </Link>
+                    {/* Hot badge */}
+                    {discount > 0 && (
+                      <span className="absolute bottom-2 left-2 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full z-10 flex items-center gap-1">
+                        <FaFire className="text-red-400 text-xs" /> HOT
+                      </span>
+                    )}
 
-                  {/* Product Info */}
-                  <div className="p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      {product.category && (
-                        <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">
-                          {product.category}
-                        </span>
-                      )}
-                      {product.brand && (
-                        <span className="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full">
-                          <MdVerified className="text-xs" />
-                          {product.brand}
-                        </span>
-                      )}
-                    </div>
-
-                    <Link href={`/products/${productId}`}>
-                      <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-green-600 transition-colors min-h-12">
-                        {product.name}
-                      </h3>
-                    </Link>
-
-                    {/* Rating */}
-                    <div className="flex items-center gap-1 mb-3">
-                      {[...Array(5)].map((_, i) => (
-                        <FaStar key={i} className="text-yellow-400 text-xs" />
-                      ))}
-                      <span className="text-xs text-gray-500 ml-1">(4.5)</span>
-                    </div>
-
-                    {/* Price */}
-                    <div className="mb-2">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-2xl font-bold text-green-600">
-                          ${parseFloat(product.price || 0).toFixed(2)}
-                        </span>
-                        {product.originalPrice && product.originalPrice > product.price && (
-                          <span className="text-sm text-gray-400 line-through">
-                            ${parseFloat(product.originalPrice).toFixed(2)}
-                          </span>
-                        )}
+                    {/* Out of stock */}
+                    {stock === 0 && (
+                      <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-10">
+                        <span className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Out of Stock</span>
                       </div>
+                    )}
+                  </div>
+
+                  {/* INFO — 25% */}
+                  <div className="flex flex-col justify-center px-3 py-2 gap-1" style={{ flex: '0 0 25%' }}>
+                    <p className="text-xs font-semibold text-black line-clamp-1 leading-tight">{product.name}</p>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-sm font-bold text-black">${salePrice.toFixed(2)}</span>
+                      {originalPriceVal > salePrice && (
+                        <span className="text-xs text-gray-400 line-through">${originalPriceVal.toFixed(2)}</span>
+                      )}
                       {discount > 0 && (
-                        <p className="text-xs text-green-600 font-semibold">
-                          Save ${(parseFloat(product.originalPrice || 0) - parseFloat(product.price || 0)).toFixed(2)}
-                        </p>
+                        <span className="ml-auto text-xs font-semibold text-red-500">-{discount}%</span>
                       )}
                     </div>
-
-                    {/* Stock Status */}
-                    <div className="flex items-center gap-2 mb-3">
-                      {product.stock > 0 ? (
-                        <>
-                          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                          <span className="text-xs text-green-700 font-medium">In Stock - Hurry!</span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                          <span className="text-xs text-red-700 font-medium">Sold Out</span>
-                        </>
+                    <div className="flex gap-1.5">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleAddToCart(product); }}
+                        disabled={stock === 0}
+                        className="flex-1 py-1 text-xs font-semibold text-black border border-black rounded-md hover:bg-black hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                      >
+                        Add to Cart
+                      </button>
+                      {stock > 0 && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); router.push(`/quick-checkout?product=${encodeURIComponent(JSON.stringify(product))}`); }}
+                          className="flex-1 py-1 text-xs font-semibold bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+                        >
+                          Buy Now
+                        </button>
                       )}
                     </div>
-
-                    {/* Add to Cart Button */}
-                    <button
-                      onClick={() => handleAddToCart(product)}
-                      disabled={product.stock <= 0}
-                      className="w-full py-3 sm:py-2.5 bg-linear-to-r from-green-600 to-green-700 text-white text-sm sm:text-base font-semibold rounded-lg hover:from-green-700 hover:to-green-800 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg touch-manipulation min-h-[44px] flex items-center justify-center"
-                    >
-                      {product.stock > 0 ? 'Grab This Deal!' : 'Out of Stock'}
-                    </button>
                   </div>
                 </div>
               );
@@ -562,49 +374,37 @@ const HotDealsPage = memo(() => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="mt-8 flex justify-center">
-            <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-10 pt-6 border-t border-gray-100">
+            <p className="text-xs text-gray-400 uppercase tracking-widest">
+              {startIndex + 1}–{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length}
+            </p>
+            <div className="flex items-center gap-1">
               <button
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className="px-3 sm:px-4 py-2 sm:py-3 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400 transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="p-2 border border-gray-300 text-black hover:bg-black hover:text-white hover:border-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               >
-                Previous
+                <FaChevronLeft className="text-xs" />
               </button>
-
-              {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
-                let pageNum;
-                if (totalPages <= 5) {
-                  pageNum = i + 1;
-                } else if (currentPage <= 3) {
-                  pageNum = i + 1;
-                } else if (currentPage >= totalPages - 2) {
-                  pageNum = totalPages - 4 + i;
-                } else {
-                  pageNum = currentPage - 2 + i;
-                }
-
-                return (
-                  <button
-                    key={pageNum}
-                    onClick={() => setCurrentPage(pageNum)}
-                    className={`px-3 sm:px-4 py-2 sm:py-3 text-sm border rounded-lg transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${
-                      currentPage === pageNum
-                        ? 'bg-green-600 text-white border-green-600'
-                        : 'bg-white border-gray-300 hover:bg-gray-50'
-                    }`}
-                  >
-                    {pageNum}
-                  </button>
-                );
-              })}
-
+              {getPageNumbers().map((page) => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`min-w-[36px] px-2 py-2 text-sm font-medium border transition-colors ${
+                    page === currentPage
+                      ? 'bg-black text-white border-black'
+                      : 'bg-white text-black border-gray-300 hover:border-black'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
               <button
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                 disabled={currentPage === totalPages}
-                className="px-3 sm:px-4 py-2 sm:py-3 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400 transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="p-2 border border-gray-300 text-black hover:bg-black hover:text-white hover:border-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               >
-                Next
+                <FaChevronRight className="text-xs" />
               </button>
             </div>
           </div>
@@ -615,12 +415,14 @@ const HotDealsPage = memo(() => {
           <div className="mt-12 text-center">
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="px-6 py-3 bg-white text-green-600 border-2 border-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-all shadow-lg"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-black text-white text-sm font-semibold uppercase tracking-widest hover:bg-gray-800 transition-colors"
             >
-              Back to Top ↑
+              Back to Top
+              <FaArrowUp className="text-xs" />
             </button>
           </div>
         )}
+
       </div>
     </div>
   );

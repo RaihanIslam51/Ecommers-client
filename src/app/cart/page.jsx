@@ -177,7 +177,7 @@ const CartPage = () => {
             </p>
             <Link 
               href="/store"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white rounded-lg hover:bg-gray-800 transition-all duration-200 font-semibold text-lg"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white rounded-lg hover:bg-gray-800 duration-200 font-semibold text-lg"
             >
               <FaShoppingBag />
               Continue Shopping

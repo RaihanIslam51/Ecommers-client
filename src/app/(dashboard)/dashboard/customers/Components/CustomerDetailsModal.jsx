@@ -15,18 +15,18 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="bg-linear-to-r from-green-600 to-green-700 text-white p-6 rounded-t-2xl">
+                <div className="p-6 border-b border-gray-200 bg-white rounded-t-2xl">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-4">
                             <CustomerAvatar name={customer.name} image={customer.avatar} size="xl" />
                             <div>
-                                <h2 className="text-2xl font-bold">{customer.name}</h2>
-                                <p className="text-blue-100 mt-1">{customer.customerId}</p>
+                                <h2 className="text-2xl font-bold text-black">{customer.name}</h2>
+                                <p className="text-gray-500 mt-1">{customer.customerId}</p>
                             </div>
                         </div>
                         <button
                             onClick={onClose}
-                            className="text-white hover:bg-white hover:bg-opacity-20 rounded-lg p-2 transition-colors"
+                            className="text-gray-500 hover:bg-gray-100 rounded-lg p-2 transition-colors"
                         >
                             ✕
                         </button>
@@ -37,15 +37,15 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
                 <div className="p-6">
                     {/* Quick Info */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                        <div className="bg-green-50 rounded-lg p-4">
+                        <div className="bg-gray-50 rounded-lg p-4">
                             <div className="text-sm text-gray-600 mb-1">Total Orders</div>
-                            <div className="text-2xl font-bold text-gray-900">{customer.totalOrders}</div>
+                            <div className="text-2xl font-bold text-black">{customer.totalOrders}</div>
                         </div>
-                        <div className="bg-green-50 rounded-lg p-4">
+                        <div className="bg-gray-50 rounded-lg p-4">
                             <div className="text-sm text-gray-600 mb-1">Total Spent</div>
-                            <div className="text-2xl font-bold text-gray-900">${customer.totalSpent.toLocaleString()}</div>
+                            <div className="text-2xl font-bold text-black">${customer.totalSpent.toLocaleString()}</div>
                         </div>
-                        <div className="bg-green-50 rounded-lg p-4">
+                        <div className="bg-gray-50 rounded-lg p-4">
                             <div className="text-sm text-gray-600 mb-1">Status</div>
                             <div className="mt-2">
                                 <CustomerStatusBadge status={customer.status} />
@@ -55,34 +55,34 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
 
                     {/* Contact Information */}
                     <div className="mb-6">
-                        <h3 className="text-lg font-bold text-gray-900 mb-4">Contact Information</h3>
+                        <h3 className="text-lg font-bold text-black mb-4">Contact Information</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
                                 <span className="text-2xl">📧</span>
                                 <div>
                                     <div className="text-sm text-gray-600">Email</div>
-                                    <div className="font-medium text-gray-900">{customer.email}</div>
+                                    <div className="font-medium text-black">{customer.email}</div>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
                                 <span className="text-2xl">📱</span>
                                 <div>
                                     <div className="text-sm text-gray-600">Phone</div>
-                                    <div className="font-medium text-gray-900">{customer.phone}</div>
+                                    <div className="font-medium text-black">{customer.phone}</div>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
                                 <span className="text-2xl">📍</span>
                                 <div>
                                     <div className="text-sm text-gray-600">Address</div>
-                                    <div className="font-medium text-gray-900">{customer.address || 'Not provided'}</div>
+                                    <div className="font-medium text-black">{customer.address || 'Not provided'}</div>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
                                 <span className="text-2xl">📅</span>
                                 <div>
                                     <div className="text-sm text-gray-600">Joined Date</div>
-                                    <div className="font-medium text-gray-900">{customer.joinedDate}</div>
+                                    <div className="font-medium text-black">{customer.joinedDate}</div>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
 
                     {/* Recent Orders */}
                     <div>
-                        <h3 className="text-lg font-bold text-gray-900 mb-4">Recent Orders</h3>
+                        <h3 className="text-lg font-bold text-black mb-4">Recent Orders</h3>
                         <div className="border border-gray-200 rounded-lg overflow-hidden">
                             <table className="w-full">
                                 <thead className="bg-gray-50">
@@ -104,11 +104,11 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
                                 <tbody className="divide-y divide-gray-200">
                                     {recentOrders.map((order) => (
                                         <tr key={order.id} className="hover:bg-gray-50">
-                                            <td className="px-4 py-3 font-medium text-gray-900">{order.id}</td>
+                                            <td className="px-4 py-3 font-medium text-black">{order.id}</td>
                                             <td className="px-4 py-3 text-gray-600">{order.date}</td>
-                                            <td className="px-4 py-3 font-semibold text-gray-900">${order.total}</td>
+                                            <td className="px-4 py-3 font-semibold text-black">${order.total}</td>
                                             <td className="px-4 py-3">
-                                                <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+                                                <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold">
                                                     {order.status}
                                                 </span>
                                             </td>
@@ -121,10 +121,10 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
 
                     {/* Actions */}
                     <div className="mt-6 flex gap-3">
-                        <button className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                        <button className="flex-1 bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-900 transition-colors">
                             Send Email
                         </button>
-                        <button className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                        <button className="flex-1 bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-900 transition-colors">
                             View All Orders
                         </button>
                         <button className="px-6 py-3 border border-gray-300 rounded-lg font-semibold hover:bg-gray-50 transition-colors">

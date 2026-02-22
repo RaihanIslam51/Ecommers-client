@@ -4,35 +4,35 @@ const OrderStatusBadge = ({ status }) => {
     const statusConfig = {
         pending: {
             label: 'Pending',
-            bgColor: 'bg-yellow-100',
-            textColor: 'text-yellow-700',
+            bgColor: 'bg-gray-100',
+            textColor: 'text-black',
             icon: '⏳'
         },
         processing: {
             label: 'Processing',
-            bgColor: 'bg-green-100',
-            textColor: 'text-green-700',
+            bgColor: 'bg-gray-100',
+            textColor: 'text-black',
             icon: '⚙️'
         },
         shipped: {
             label: 'Shipped',
-            bgColor: 'bg-purple-100',
-            textColor: 'text-purple-700',
+            bgColor: 'bg-gray-100',
+            textColor: 'text-black',
             icon: '🚚'
         },
         delivered: {
             label: 'Delivered',
-            bgColor: 'bg-green-100',
-            textColor: 'text-green-700',
+            bgColor: 'bg-gray-100',
+            textColor: 'text-black',
             icon: '✅'
         },
         cancelled: {
             label: 'Cancelled',
-            bgColor: 'bg-red-100',
-            textColor: 'text-red-700',
+            bgColor: 'bg-gray-100',
+            textColor: 'text-black',
             icon: '❌'
         }
-    };
+    }; 
 
     const config = statusConfig[status] || statusConfig.pending;
 

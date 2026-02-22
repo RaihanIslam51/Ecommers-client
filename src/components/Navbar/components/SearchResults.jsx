@@ -89,8 +89,8 @@ const SearchResults = ({ query, onClose }) => {
   if (!query || query.trim().length < 2) {
     return (
       <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 p-8 text-center z-50">
-        <FaSearch className="text-4xl text-gray-300 mx-auto mb-3" />
-        <p className="text-gray-500">Type at least 2 characters to search...</p>
+        <FaSearch className="text-4xl text-black mx-auto mb-3" />
+        <p className="text-black">Type at least 2 characters to search...</p>
       </div>
     );
   }
@@ -100,7 +100,7 @@ const SearchResults = ({ query, onClose }) => {
       <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 p-8 z-50">
         <div className="flex items-center justify-center gap-3">
           <div className="w-6 h-6 border-3 border-gray-300 border-t-black rounded-full animate-spin"></div>
-          <p className="text-gray-600">Searching...</p>
+          <p className="text-black">Searching...</p>
         </div>
       </div>
     );
@@ -117,9 +117,9 @@ const SearchResults = ({ query, onClose }) => {
   if (products.length === 0) {
     return (
       <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 p-8 text-center z-50">
-        <FaSearch className="text-4xl text-gray-300 mx-auto mb-3" />
-        <p className="text-gray-600 font-medium mb-1">No products found</p>
-        <p className="text-sm text-gray-500">Try searching with different keywords</p>
+        <FaSearch className="text-4xl text-black mx-auto mb-3" />
+        <p className="text-black font-medium mb-1">No products found</p>
+        <p className="text-sm text-black">Try searching with different keywords</p>
       </div>
     );
   }
@@ -129,15 +129,15 @@ const SearchResults = ({ query, onClose }) => {
       {/* Header */}
       <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
         <div>
-          <h3 className="font-bold text-gray-900">Search Results</h3>
-          <p className="text-sm text-gray-500">{products.length} product{products.length !== 1 ? 's' : ''} found</p>
+          <h3 className="font-bold text-black">Search Results</h3>
+          <p className="text-sm text-black">{products.length} product{products.length !== 1 ? 's' : ''} found</p>
         </div>
         <button 
           onClick={onClose}
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           aria-label="Close search"
         >
-          <MdClose className="text-xl text-gray-600" />
+          <MdClose className="text-xl text-black" />
         </button>
       </div>
 
@@ -171,18 +171,18 @@ const SearchResults = ({ query, onClose }) => {
                 )}
 
                 {/* Quick Actions */}
-                <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={(e) => handleAddToWishlist(product, e)}
                     className={`p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors ${
-                      inWishlist ? 'text-red-500' : 'text-gray-600'
+                      inWishlist ? 'text-red-500' : 'text-black'
                     }`}
                   >
                     <FaHeart className="text-sm" />
                   </button>
                   <button
                     onClick={(e) => handleAddToCart(product, e)}
-                    className="p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors text-gray-600"
+                    className="p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors text-black"
                   >
                     <FaShoppingCart className="text-sm" />
                   </button>
@@ -191,19 +191,19 @@ const SearchResults = ({ query, onClose }) => {
 
               {/* Product Info */}
               <div className="p-4">
-                <h4 className="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm group-hover:text-black">
+                <h4 className="font-semibold text-black mb-1 line-clamp-2 text-sm group-hover:text-black">
                   {product.name}
                 </h4>
                 
                 {/* Category & Brand */}
                 <div className="flex items-center gap-2 mb-2">
                   {product.category && (
-                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
+                    <span className="text-xs text-black bg-gray-100 px-2 py-0.5 rounded">
                       {product.category}
                     </span>
                   )}
                   {product.brand && (
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-black">
                       • {product.brand}
                     </span>
                   )}
@@ -214,7 +214,7 @@ const SearchResults = ({ query, onClose }) => {
                   {[...Array(5)].map((_, i) => (
                     <FaStar key={i} className="text-yellow-400 text-xs" />
                   ))}
-                  <span className="text-xs text-gray-500 ml-1">(4.5)</span>
+                  <span className="text-xs text-black ml-1">(4.5)</span>
                 </div>
 
                 {/* Price */}
@@ -223,7 +223,7 @@ const SearchResults = ({ query, onClose }) => {
                     ${parseFloat(product.price || 0).toFixed(2)}
                   </span>
                   {product.originalPrice && product.originalPrice > product.price && (
-                    <span className="text-sm text-gray-400 line-through">
+                    <span className="text-sm text-black line-through">
                       ${parseFloat(product.originalPrice).toFixed(2)}
                     </span>
                   )}
@@ -231,8 +231,8 @@ const SearchResults = ({ query, onClose }) => {
 
                 {/* Stock */}
                 {product.stock && (
-                  <div className="mt-2 text-xs text-gray-500">
-                    <span className="font-semibold text-green-600">{product.stock}</span> in stock
+                  <div className="mt-2 text-xs text-black">
+                    <span className="font-semibold text-black">{product.stock}</span> in stock
                   </div>
                 )}
               </div>

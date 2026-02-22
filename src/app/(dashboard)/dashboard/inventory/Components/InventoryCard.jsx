@@ -99,19 +99,19 @@ const InventoryCard = ({ item, onEdit, onRestock, onView }) => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => onView(item)}
-            className="flex-1 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors duration-200 text-sm font-medium"
+            className="flex-1 px-3 py-2 bg-green-50 text-black rounded-lg hover:bg-green-100 transition-colors duration-200 text-sm font-medium"
           >
             View
           </button>
           <button
             onClick={() => onRestock(item)}
-            className="flex-1 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors duration-200 text-sm font-medium"
+            className="flex-1 px-3 py-2 bg-green-50 text-black rounded-lg hover:bg-green-100 transition-colors duration-200 text-sm font-medium"
           >
             Restock
           </button>
           <button
             onClick={() => onEdit(item)}
-            className="flex-1 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors duration-200 text-sm font-medium"
+            className="flex-1 px-3 py-2 bg-green-50 text-black rounded-lg hover:bg-green-100 transition-colors duration-200 text-sm font-medium"
           >
             Edit
           </button>

@@ -85,14 +85,14 @@ const CategoryCard = ({
         <div className="mt-4 flex items-center gap-2">
           <button
             onClick={() => onView(category)}
-            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors duration-200"
+            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-50 text-black rounded-lg hover:bg-green-100 transition-colors duration-200"
           >
             <Eye className="w-4 h-4" />
             <span className="text-sm font-medium">View</span>
           </button>
           <button
             onClick={() => onEdit(category)}
-            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors duration-200"
+            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-50 text-black rounded-lg hover:bg-green-100 transition-colors duration-200"
           >
             <Pencil className="w-4 h-4" />
             <span className="text-sm font-medium">Edit</span>

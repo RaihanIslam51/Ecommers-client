@@ -154,19 +154,19 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
                 {/* Header */}
-                <div className="bg-linear-to-r from-green-600 to-green-700 px-6 py-4 flex items-center justify-between">
+                <div className="px-6 py-4 flex items-center justify-between border-b border-gray-200 bg-white">
                     <div>
-                        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                        <h2 className="text-2xl font-bold text-black flex items-center gap-2">
                             📧 Send Email to Customers
                         </h2>
-                        <p className="text-blue-100 text-sm mt-1">
+                        <p className="text-gray-500 text-sm mt-1">
                             Sending to {recipients.length} customer{recipients.length > 1 ? 's' : ''}
                         </p>
                     </div>
                     <button
                         onClick={onClose}
                         disabled={sending}
-                        className="text-white hover:bg-white hover:bg-opacity-20 rounded-lg p-2 transition-colors disabled:opacity-50"
+                        className="text-gray-500 hover:bg-gray-100 rounded-lg p-2 transition-colors disabled:opacity-50"
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -176,22 +176,22 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
 
                 <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
                     {/* Recipients Preview */}
-                    <div className="px-6 py-4 bg-green-50 border-b border-green-100">
-                        <h3 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
+                    <div className="px-6 py-4 bg-gray-50 border-b border-gray-100">
+                        <h3 className="font-semibold text-black mb-2 flex items-center gap-2">
                             <span>👥</span> Recipients ({recipients.length})
                         </h3>
                         <div className="flex flex-wrap gap-2 max-h-20 overflow-y-auto">
                             {recipients.slice(0, 10).map((email, index) => (
                                 <span
                                     key={email}
-                                    className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-sm text-gray-700 border border-green-200"
+                                    className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-sm text-black border border-gray-200"
                                 >
                                     <span className="text-xs">📧</span>
                                     {recipientNames && recipientNames[index] ? recipientNames[index] : email}
                                 </span>
                             ))}
                             {recipients.length > 10 && (
-                                <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 rounded-full text-sm text-green-700 font-semibold">
+                                <span className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700 font-semibold">
                                     +{recipients.length - 10} more
                                 </span>
                             )}
@@ -209,7 +209,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                                     key={index}
                                     onClick={() => applyTemplate(template)}
                                     disabled={sending}
-                                    className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-green-50 hover:border-green-300 transition-colors disabled:opacity-50"
+                                    className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-black hover:bg-gray-100 hover:border-gray-300 transition-colors disabled:opacity-50"
                                 >
                                     {template.name}
                                 </button>
@@ -221,7 +221,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                     <form onSubmit={handleSubmit} className="p-6 space-y-4">
                         {/* Subject */}
                         <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            <label className="block text-sm font-semibold text-black mb-2">
                                 Subject <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -231,14 +231,14 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                                 onChange={handleChange}
                                 disabled={sending}
                                 placeholder="Enter email subject"
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                                 required
                             />
                         </div>
 
                         {/* Message */}
                         <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            <label className="block text-sm font-semibold text-black mb-2">
                                 Message <span className="text-red-500">*</span>
                             </label>
                             <textarea
@@ -248,7 +248,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                                 disabled={sending}
                                 placeholder="Enter your message here..."
                                 rows={10}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed resize-none"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-300 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed resize-none"
                                 required
                             />
                             <p className="text-xs text-gray-500 mt-1">
@@ -257,7 +257,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                         </div>
 
                         {/* Template Option */}
-                        <div className="flex items-center gap-2 p-3 bg-green-50 rounded-lg border border-green-200">
+                        <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
                             <input
                                 type="checkbox"
                                 name="includeTemplate"
@@ -265,9 +265,9 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                                 checked={formData.includeTemplate}
                                 onChange={handleChange}
                                 disabled={sending}
-                                className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                                className="w-4 h-4 text-black border-gray-300 rounded focus:ring-gray-300"
                             />
-                            <label htmlFor="includeTemplate" className="text-sm text-gray-700 cursor-pointer">
+                            <label htmlFor="includeTemplate" className="text-sm text-black cursor-pointer">
                                 <span className="font-semibold">Use professional email template</span>
                                 <span className="text-gray-500 ml-1">(Includes RannarKaj.com branding and styling)</span>
                             </label>
@@ -279,14 +279,14 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                                 type="button"
                                 onClick={onClose}
                                 disabled={sending}
-                                className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex-1 px-6 py-3 bg-gray-100 text-black rounded-lg font-semibold hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
                                 disabled={sending || !formData.subject.trim() || !formData.message.trim()}
-                                className="flex-1 px-6 py-3 bg-linear-to-r from-green-600 to-green-700 text-white rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                className="flex-1 px-6 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
                                 {sending ? (
                                     <>

@@ -96,7 +96,7 @@ const InventoryFilters = ({
               onClick={() => onViewModeChange('grid')}
               className={`p-2 rounded-md transition-all ${
                 viewMode === 'grid' 
-                  ? 'bg-white text-green-600 shadow-sm' 
+                  ? 'bg-white text-black shadow-sm' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
               title="Grid View"
@@ -107,7 +107,7 @@ const InventoryFilters = ({
               onClick={() => onViewModeChange('list')}
               className={`p-2 rounded-md transition-all ${
                 viewMode === 'list' 
-                  ? 'bg-white text-green-600 shadow-sm' 
+                  ? 'bg-white text-black shadow-sm' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
               title="List View"
@@ -118,7 +118,7 @@ const InventoryFilters = ({
               onClick={() => onViewModeChange('chart')}
               className={`p-2 rounded-md transition-all ${
                 viewMode === 'chart' 
-                  ? 'bg-white text-green-600 shadow-sm' 
+                  ? 'bg-white text-black shadow-sm' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
               title="Chart View"

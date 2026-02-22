@@ -297,7 +297,7 @@ const EmailPage = () => {
       {preview && formData.subject && formData.message && (
         <div className="bg-white rounded-xl shadow-lg p-8">
           <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <FaCheckCircle className="text-green-600" />
+            <FaCheckCircle className="text-black" />
             Email Preview
           </h3>
           <div className="border border-gray-200 rounded-lg overflow-hidden">

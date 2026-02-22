@@ -8,8 +8,8 @@ const OrderStats = ({ stats, activeFilter, onFilterChange }) => {
             value: stats?.total || '0',
             subtitle: 'All time',
             icon: '📦',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
+            bgColor: 'bg-gray-100',
+            iconColor: 'text-black',
             filterValue: 'all'
         },
         {
@@ -18,8 +18,8 @@ const OrderStats = ({ stats, activeFilter, onFilterChange }) => {
             value: stats?.today || '0',
             subtitle: 'Last 24 hours',
             icon: '📅',
-            bgColor: 'bg-purple-50',
-            iconColor: 'text-purple-600',
+            bgColor: 'bg-gray-100',
+            iconColor: 'text-black',
             filterValue: 'today'
         },
         {
@@ -28,8 +28,8 @@ const OrderStats = ({ stats, activeFilter, onFilterChange }) => {
             value: stats?.weekly || '0',
             subtitle: 'Last 7 days',
             icon: '📊',
-            bgColor: 'bg-green-50',
-            iconColor: 'text-green-600',
+            bgColor: 'bg-gray-100',
+            iconColor: 'text-black',
             filterValue: 'week'
         },
         {
@@ -38,8 +38,8 @@ const OrderStats = ({ stats, activeFilter, onFilterChange }) => {
             value: stats?.monthly || '0',
             subtitle: 'This month',
             icon: '📈',
-            bgColor: 'bg-orange-50',
-            iconColor: 'text-orange-600',
+            bgColor: 'bg-gray-100',
+            iconColor: 'text-black',
             filterValue: 'month'
         }
     ];
@@ -109,23 +109,23 @@ const OrderStats = ({ stats, activeFilter, onFilterChange }) => {
                             onClick={() => onFilterChange && onFilterChange('dateRange', stat.filterValue)}
                             className={`bg-white rounded-xl shadow-sm border-2 p-6 transition-all duration-300 cursor-pointer ${
                                 isActive 
-                                    ? 'border-green-500 shadow-lg scale-105' 
-                                    : 'border-gray-100 hover:border-green-300 hover:shadow-md'
-                            }`}
+                                    ? 'border-gray-300 shadow-lg scale-105' 
+                                    : 'border-gray-100 hover:border-gray-200 hover:shadow-md'
+                            }`} 
                         >
                             <div className="flex items-center justify-between mb-4">
                                 <div className={`${stat.bgColor} ${stat.iconColor} w-14 h-14 rounded-lg flex items-center justify-center text-2xl shadow-sm`}>
                                     {stat.icon}
                                 </div>
                                 {isActive && (
-                                    <span className="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                    <span className="bg-gray-200 text-black text-xs font-bold px-3 py-1 rounded-full">
                                         ACTIVE
                                     </span>
-                                )}
+                                )} 
                             </div>
-                            <h3 className="text-gray-600 text-sm font-medium mb-1 uppercase tracking-wide">{stat.title}</h3>
-                            <p className="text-3xl font-bold text-gray-800 mb-2">{stat.value}</p>
-                            <p className="text-xs text-gray-500">{stat.subtitle}</p>
+                            <h3 className="text-sm font-medium mb-1 uppercase tracking-wide text-black">{stat.title}</h3>
+                            <p className="text-3xl font-bold text-black mb-2">{stat.value}</p>
+                            <p className="text-xs text-gray-500">{stat.subtitle}</p> 
                         </div>
                     );
                 })}
@@ -142,12 +142,12 @@ const OrderStats = ({ stats, activeFilter, onFilterChange }) => {
                             <div className={`${stat.bgColor} ${stat.iconColor} w-12 h-12 rounded-full flex items-center justify-center text-xl mb-3 shadow-sm`}>
                                 {stat.icon}
                             </div>
-                            <h3 className="text-gray-600 text-xs font-medium mb-2 uppercase tracking-wide">{stat.title}</h3>
-                            <p className="text-2xl font-bold text-gray-800 mb-1">{stat.value}</p>
+                            <h3 className="text-xs font-medium mb-2 uppercase tracking-wide text-black">{stat.title}</h3>
+                            <p className="text-2xl font-bold text-black mb-1">{stat.value}</p>
                             <p className="text-xs text-gray-500">{stat.subtitle}</p>
                         </div>
                     </div>
-                ))}
+                ))} 
             </div>
         </>
     );
