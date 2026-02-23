@@ -20,6 +20,17 @@ const Navbarfirst = () => {
   const { data: categoriesData } = useCategories();
   const categories = categoriesData || [];
 
+  const handleCategoryEnter = () => {
+    if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+    setShowCategoryDropdown(true);
+  };
+
+  const handleCategoryLeave = () => {
+    hideTimeoutRef.current = setTimeout(() => {
+      setShowCategoryDropdown(false);
+    }, 150);
+  };
+
   return (
     <>
       <SupportModal
