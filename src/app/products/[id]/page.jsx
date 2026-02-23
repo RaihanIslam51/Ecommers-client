@@ -343,7 +343,7 @@ const ProductDetailsPage = () => {
     <div className="min-h-screen bg-white text-black">
       {/* Breadcrumb */}
       <div className="border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div className="container mx-auto px-4 py-3">
           <nav className="flex items-center gap-2 text-sm text-gray-500">
             <button onClick={() => router.push('/')} className="hover:text-black transition-colors">Home</button>
             <span>/</span>
@@ -355,7 +355,7 @@ const ProductDetailsPage = () => {
       </div>
 
       {/* Main Product Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="container mx-auto px-4 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
           {/* Left: Images */}
@@ -598,7 +598,7 @@ const ProductDetailsPage = () => {
       {/* Related Products */}
       {relatedProducts.length > 0 && (
         <div className="border-t border-gray-200 bg-gray-50 py-14">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="container mx-auto px-4 ">
             <h2 className="text-2xl font-bold text-black mb-8">Related Products</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
               {relatedProducts.map((relatedProduct) => (

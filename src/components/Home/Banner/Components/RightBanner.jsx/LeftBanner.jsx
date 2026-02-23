@@ -1,8 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import axiosInstance from "@/lib/axios";
+import { useBanners } from "@/context/DataCacheContext";
 
 // ==================== CONSTANTS ====================
 const DEFAULT_BANNER = {
@@ -76,33 +76,12 @@ const DecorativeOrbs = () => null;
  * @returns {JSX.Element} Side banner with image, overlay and CTA
  */
 const LeftBanner = () => {
-  const [banner, setBanner] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchLeftBanner();
-  }, []);
-
-  /**
-   * Fetch left banner data from API
-   */
-  const fetchLeftBanner = async () => {
-    try {
-      setLoading(true);
-      const response = await axiosInstance.get("/banners/position/left");
-      // Server returns: { success: true, message: "...", banners: [...] }
-      if (response.data.success && response.data.banners?.length > 0) {
-        setBanner(response.data.banners[0]);
-      }
-    } catch (error) {
-      console.error("Error fetching left banner:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Use prefetched + cached banners (filter by position 'left')
+  const { data: allBanners, loading } = useBanners();
+  const bannerData = (allBanners || []).find(b => b.position === 'left') || null;
 
   // Use fetched banner or fallback to default
-  const displayBanner = banner || DEFAULT_BANNER;
+  const displayBanner = bannerData || DEFAULT_BANNER;
 
   // Show loading skeleton while fetching
   if (loading) {

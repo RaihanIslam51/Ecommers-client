@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
-import axiosInstance from "@/lib/axios";
+import React from "react";
+import { useBanners } from "@/context/DataCacheContext";
 
 // ==================== CONSTANTS ====================
 const DEFAULT_BANNER = {
@@ -37,23 +37,23 @@ const BannerSkeleton = () => (
 const BannerContent = ({ banner }) => (
   <div className="relative z-10 flex flex-col justify-end h-full px-8 md:px-12 lg:px-16 pb-10 md:pb-14">
     {/* Subtitle tag */}
-    {(banner.subtitle || DEFAULT_BANNER.subtitle) && (
+    {/* {(banner.subtitle || DEFAULT_BANNER.subtitle) && (
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70 mb-3">
         {banner.subtitle || DEFAULT_BANNER.subtitle}
       </p>
-    )}
+    )} */}
 
     {/* Main Heading */}
-    <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 leading-tight tracking-tight">
+    {/* <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 leading-tight tracking-tight">
       {banner.title || DEFAULT_BANNER.title}
-    </h2>
+    </h2> */}
 
     {/* Description */}
-    {(banner.description || DEFAULT_BANNER.description) && (
+    {/* {(banner.description || DEFAULT_BANNER.description) && (
       <p className="text-sm md:text-base text-white/75 mb-7 max-w-md leading-relaxed">
         {banner.description || DEFAULT_BANNER.description}
       </p>
-    )}
+    )} */}
 
     {/* CTA */}
     {(banner.buttonText || DEFAULT_BANNER.buttonText) && (
@@ -80,33 +80,12 @@ const DecorativeElements = () => null;
  * @returns {JSX.Element} Right banner with image, text overlay and CTA
  */
 const RightBanner = () => {
-  const [banner, setBanner] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchRightBanner();
-  }, []);
-
-  /**
-   * Fetch banner data from API
-   */
-  const fetchRightBanner = async () => {
-    try {
-      setLoading(true);
-      const response = await axiosInstance.get("/banners/position/right");
-      // Server returns: { success: true, message: "...", banners: [...] }
-      if (response.data.success && response.data.banners?.length > 0) {
-        setBanner(response.data.banners[0]);
-      }
-    } catch (error) {
-      console.error("Error fetching right banner:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Use prefetched + cached banners (filter by position 'right')
+  const { data: allBanners, loading } = useBanners();
+  const bannerData = (allBanners || []).find(b => b.position === 'right') || null;
 
   // Use fetched banner or fallback to default
-  const displayBanner = banner || DEFAULT_BANNER;
+  const displayBanner = bannerData || DEFAULT_BANNER;
 
   // Show loading skeleton while fetching
   if (loading) {

@@ -60,7 +60,7 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
                 htmlContent: formData.includeTemplate ? undefined : null // Let server use template if true
             };
 
-            const response = await axiosInstance.post('/api/send-email', emailData);
+            const response = await axiosInstance.post('/email/send-email', emailData);
 
             if (response.data.success) {
                 Swal.fire({

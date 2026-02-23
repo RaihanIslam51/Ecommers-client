@@ -1,38 +1,22 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import ProductCard from "./components/Productcard";
 import { ProductCardSkeletonGrid } from "./components/ProductCardSkeleton";
 import Image from "next/image";
-import axiosInstance from "@/lib/axios";
+import { useProducts } from "@/context/DataCacheContext";
 
 const Topsales = () => {
   const router = useRouter();
   const [modalProductId, setModalProductId] = useState(null);
   const [showAll, setShowAll] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  // Fetch products from API
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axiosInstance.get('/products');
-        // Server returns: { success: true, message: "...", products: [...] }
-        const productsData = response.data.products || [];
-        // Filter products to show only those marked for top selling
-        const topSellingProducts = productsData.filter(product => product.showInTopSelling === true);
-        console.log('🔥 Top Selling products:', topSellingProducts.length);
-        setProducts(topSellingProducts);
-      } catch (error) {
-        console.error('Error fetching top selling products:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  // Use prefetched + cached products
+  const { data: allProducts, loading } = useProducts();
+  const products = useMemo(
+    () => (allProducts || []).filter(p => p.showInTopSelling === true),
+    [allProducts]
+  );
 
   const modalProduct = products.find((p) => (p._id || p.id) === modalProductId);
 

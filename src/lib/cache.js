@@ -1,243 +1,247 @@
 /**
- * Global Cache Manager
- * 
- * Provides in-memory caching with TTL (Time To Live) support,
- * cache invalidation, and automatic cleanup.
+ * Global Cache Manager — Memory + localStorage persistence
+ *
+ * Features:
+ *  - In-memory Map for ultra-fast reads
+ *  - localStorage fallback so data survives page refresh
+ *  - Per-entry TTL (Time To Live)
+ *  - Auto cleanup of expired entries every 60 s
+ *  - Pattern-based invalidation
+ *  - Safe server-side rendering (no-op when window is absent)
  */
 
-/* ===== ORIGINAL CacheManager (COMMENTED OUT) ===== */
-// class CacheManager {
-//   constructor() {
-//     this.cache = new Map();
-//     this.timestamps = new Map();
-//     this.defaultTTL = 5 * 60 * 1000; // 5 minutes default
-//     this.cleanupInterval = null;
-//     
-//     // Start automatic cleanup
-//     this.startCleanup();
-//   }
-//
-//   /**
-//    * Generate a cache key from URL and params
-//    */
-//   generateKey(url, params = {}) {
-//     const paramString = Object.keys(params).length > 0 
-//       ? JSON.stringify(params) 
-//       : '';
-//     return `${url}:${paramString}`;
-//   }
-//
-//   /**
-//    * Set cache entry with optional TTL
-//    */
-//   set(key, value, ttl = this.defaultTTL) {
-//     this.cache.set(key, value);
-//     this.timestamps.set(key, {
-//       createdAt: Date.now(),
-//       ttl,
-//     });
-//
-//     if (process.env.NODE_ENV === 'development') {
-//       console.log(`💾 Cache SET: ${key} (TTL: ${ttl}ms)`);
-//     }
-//   }
-//
-//   /**
-//    * Get cache entry if valid
-//    */
-//   get(key) {
-//     if (!this.cache.has(key)) {
-//       return null;
-//     }
-//
-//     const timestamp = this.timestamps.get(key);
-//     if (!timestamp) {
-//       this.cache.delete(key);
-//       return null;
-//     }
-//
-//     const isExpired = Date.now() - timestamp.createdAt > timestamp.ttl;
-//     
-//     if (isExpired) {
-//       this.delete(key);
-//       if (process.env.NODE_ENV === 'development') {
-//         console.log(`⏰ Cache EXPIRED: ${key}`);
-//       }
-//       return null;
-//     }
-//
-//     if (process.env.NODE_ENV === 'development') {
-//       console.log(`✅ Cache HIT: ${key}`);
-//     }
-//     return this.cache.get(key);
-//   }
-//
-//   /**
-//    * Check if cache entry exists and is valid
-//    */
-//   has(key) {
-//     return this.get(key) !== null;
-//   }
-//
-//   /**
-//    * Delete specific cache entry
-//    */
-//   delete(key) {
-//     this.cache.delete(key);
-//     this.timestamps.delete(key);
-//     
-//     if (process.env.NODE_ENV === 'development') {
-//       console.log(`🗑️ Cache DELETE: ${key}`);
-//     }
-//   }
-//
-//   /**
-//    * Clear all cache entries
-//    */
-//   clear() {
-//     this.cache.clear();
-//     this.timestamps.clear();
-//     
-//     if (process.env.NODE_ENV === 'development') {
-//       console.log('🧹 Cache CLEARED');
-//     }
-//   }
-//
-//   /**
-//    * Invalidate cache by pattern (regex or string)
-//    */
-//   invalidatePattern(pattern) {
-//     const regex = typeof pattern === 'string' 
-//       ? new RegExp(pattern) 
-//       : pattern;
-//     
-//     const keysToDelete = [];
-//     
-//     for (const key of this.cache.keys()) {
-//       if (regex.test(key)) {
-//         keysToDelete.push(key);
-//       }
-//     }
-//
-//     keysToDelete.forEach(key => this.delete(key));
-//     
-//     if (process.env.NODE_ENV === 'development') {
-//       console.log(`🔄 Cache INVALIDATED: ${keysToDelete.length} entries matching ${pattern}`);
-//     }
-//     
-//     return keysToDelete.length;
-//   }
-//
-//   /**
-//    * Get cache statistics
-//    */
-//   getStats() {
-//     const now = Date.now();
-//     let validEntries = 0;
-//     let expiredEntries = 0;
-//
-//     for (const [key, timestamp] of this.timestamps.entries()) {
-//       const isExpired = now - timestamp.createdAt > timestamp.ttl;
-//       if (isExpired) {
-//         expiredEntries++;
-//       } else {
-//         validEntries++;
-//       }
-//     }
-//
-//     return {
-//       total: this.cache.size,
-//       valid: validEntries,
-//       expired: expiredEntries,
-//     };
-//   }
-//
-//   /**
-//    * Clean up expired entries
-//    */
-//   cleanup() {
-//     const now = Date.now();
-//     const keysToDelete = [];
-//
-//     for (const [key, timestamp] of this.timestamps.entries()) {
-//       const isExpired = now - timestamp.createdAt > timestamp.ttl;
-//       if (isExpired) {
-//         keysToDelete.push(key);
-//       }
-//     }
-//
-//     keysToDelete.forEach(key => {
-//       this.cache.delete(key);
-//       this.timestamps.delete(key);
-//     });
-//
-//     if (keysToDelete.length > 0 && process.env.NODE_ENV === 'development') {
-//       console.log(`🧼 Cache CLEANUP: Removed ${keysToDelete.length} expired entries`);
-//     }
-//   }
-//
-//   /**
-//    * Start automatic cleanup interval
-//    */
-//   startCleanup() {
-//     if (this.cleanupInterval) return;
-//     
-//     // Run cleanup every minute
-//     this.cleanupInterval = setInterval(() => {
-//       this.cleanup();
-//     }, 60 * 1000);
-//   }
-//
-//   /**
-//    * Stop automatic cleanup
-//    */
-//   stopCleanup() {
-//     if (this.cleanupInterval) {
-//       clearInterval(this.cleanupInterval);
-//       this.cleanupInterval = null;
-//     }
-//   }
-//
-//   /**
-//    * Get all cache keys
-//    */
-//   keys() {
-//     return Array.from(this.cache.keys());
-//   }
-//
-//   /**
-//    * Get cache size
-//    */
-//   size() {
-//     return this.cache.size;
-//   }
-// }
-//
-// // Create singleton instance
-// // const cacheManager = new CacheManager();
-// //
-// // // Export both the instance and the class
-// // export default cacheManager;
-// // export { CacheManager };
+const LS_PREFIX = 'ec_cache_';
 
-// ----- NO-OP CacheManager (caching DISABLED) -----
-class CacheManagerNoOp {
-  constructor() { /* caching disabled */ }
-  generateKey(url, params = {}) { try { return `${url}:${JSON.stringify(params||{})}` } catch(e){ return String(url) } }
-  set(key, value, ttl) { /* no-op */ }
-  get(key) { return null; }
-  has(key) { return false; }
-  delete(key) { /* no-op */ }
-  clear() { /* no-op */ }
-  invalidatePattern() { return 0; }
-  getStats() { return { total: 0, valid: 0, expired: 0 }; }
-  cleanup() { /* no-op */ }
-  startCleanup() { /* no-op */ }
-  stopCleanup() { /* no-op */ }
-  keys() { return []; }
-  size() { return 0; }
+const isClient = () => typeof window !== 'undefined';
+
+class CacheManager {
+  constructor() {
+    /** @type {Map<string, any>} */
+    this.cache = new Map();
+    /** @type {Map<string, { createdAt: number; ttl: number }>} */
+    this.timestamps = new Map();
+    this.defaultTTL = 5 * 60 * 1000; // 5 minutes
+    this._cleanupTimer = null;
+    this._startCleanup();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Key generation
+  // ---------------------------------------------------------------------------
+
+  /** Create a deterministic cache key from endpoint + params */
+  generateKey(url, params = {}) {
+    try {
+      const p = params && Object.keys(params).length ? `:${JSON.stringify(params)}` : '';
+      return `${url}${p}`;
+    } catch {
+      return String(url);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Core operations
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Store a value. Also persists to localStorage for page-reload survival.
+   * @param {string} key
+   * @param {any}    value
+   * @param {number} [ttl] milliseconds
+   */
+  set(key, value, ttl = this.defaultTTL) {
+    const meta = { createdAt: Date.now(), ttl };
+    this.cache.set(key, value);
+    this.timestamps.set(key, meta);
+
+    // Persist to localStorage (skip huge payloads silently)
+    if (isClient()) {
+      try {
+        const entry = JSON.stringify({ value, meta });
+        localStorage.setItem(LS_PREFIX + key, entry);
+      } catch {
+        /* quota exceeded or serialisation error — that's fine */
+      }
+    }
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`💾 Cache SET: ${key} (TTL: ${Math.round(ttl / 1000)}s)`);
+    }
+  }
+
+  /**
+   * Retrieve a value.
+   * Memory-first, then falls back to localStorage, then returns null.
+   * @param {string} key
+   * @returns {any|null}
+   */
+  get(key) {
+    // --- Memory check ---
+    if (this.cache.has(key)) {
+      const meta = this.timestamps.get(key);
+      if (meta && Date.now() - meta.createdAt <= meta.ttl) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`⚡ Cache HIT (memory): ${key}`);
+        }
+        return this.cache.get(key);
+      }
+      // Expired in memory
+      this._deleteMemory(key);
+    }
+
+    // --- localStorage check ---
+    if (isClient()) {
+      try {
+        const raw = localStorage.getItem(LS_PREFIX + key);
+        if (raw) {
+          const { value, meta } = JSON.parse(raw);
+          if (meta && Date.now() - meta.createdAt <= meta.ttl) {
+            // Warm up memory cache
+            this.cache.set(key, value);
+            this.timestamps.set(key, meta);
+            if (process.env.NODE_ENV === 'development') {
+              console.log(`📦 Cache HIT (localStorage): ${key}`);
+            }
+            return value;
+          }
+          // Expired in localStorage too
+          localStorage.removeItem(LS_PREFIX + key);
+        }
+      } catch {
+        /* corrupt entry */
+      }
+    }
+
+    return null;
+  }
+
+  /** @param {string} key @returns {boolean} */
+  has(key) {
+    return this.get(key) !== null;
+  }
+
+  /** @param {string} key */
+  delete(key) {
+    this._deleteMemory(key);
+    if (isClient()) {
+      try { localStorage.removeItem(LS_PREFIX + key); } catch { /* ignore */ }
+    }
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`🗑️ Cache DELETE: ${key}`);
+    }
+  }
+
+  /** Remove all cache entries (memory + localStorage) */
+  clear() {
+    this.cache.clear();
+    this.timestamps.clear();
+    if (isClient()) {
+      try {
+        Object.keys(localStorage)
+          .filter(k => k.startsWith(LS_PREFIX))
+          .forEach(k => localStorage.removeItem(k));
+      } catch { /* ignore */ }
+    }
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🧹 Cache CLEARED');
+    }
+  }
+
+  /**
+   * Invalidate all entries whose key matches a pattern.
+   * @param {string|RegExp} pattern
+   * @returns {number} number of removed entries
+   */
+  invalidatePattern(pattern) {
+    const re = typeof pattern === 'string' ? new RegExp(pattern) : pattern;
+    const toRemove = [];
+
+    for (const key of this.cache.keys()) {
+      if (re.test(key)) toRemove.push(key);
+    }
+    // Also check localStorage keys not yet in memory
+    if (isClient()) {
+      try {
+        Object.keys(localStorage)
+          .filter(k => k.startsWith(LS_PREFIX))
+          .map(k => k.slice(LS_PREFIX.length))
+          .filter(k => re.test(k) && !toRemove.includes(k))
+          .forEach(k => toRemove.push(k));
+      } catch { /* ignore */ }
+    }
+
+    toRemove.forEach(k => this.delete(k));
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`🔄 Cache INVALIDATED: ${toRemove.length} entries matching ${pattern}`);
+    }
+    return toRemove.length;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Stats
+  // ---------------------------------------------------------------------------
+
+  getStats() {
+    const now = Date.now();
+    let valid = 0;
+    let expired = 0;
+    for (const [, meta] of this.timestamps) {
+      (now - meta.createdAt <= meta.ttl ? valid++ : expired++);
+    }
+    return { total: this.cache.size, valid, expired };
+  }
+
+  // ---------------------------------------------------------------------------
+  // Cleanup
+  // ---------------------------------------------------------------------------
+
+  cleanup() {
+    const now = Date.now();
+    const toRemove = [];
+    for (const [key, meta] of this.timestamps) {
+      if (now - meta.createdAt > meta.ttl) toRemove.push(key);
+    }
+    toRemove.forEach(k => this._deleteMemory(k));
+    if (toRemove.length && process.env.NODE_ENV === 'development') {
+      console.log(`🧼 Cache CLEANUP: removed ${toRemove.length} expired entries`);
+    }
+  }
+
+  keys() {
+    return Array.from(this.cache.keys());
+  }
+
+  size() {
+    return this.cache.size;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Internals
+  // ---------------------------------------------------------------------------
+
+  _deleteMemory(key) {
+    this.cache.delete(key);
+    this.timestamps.delete(key);
+  }
+
+  _startCleanup() {
+    if (!isClient()) return;
+    this._cleanupTimer = setInterval(() => this.cleanup(), 60 * 1000);
+    // Don't block process exit in Node environments
+    if (this._cleanupTimer.unref) this._cleanupTimer.unref();
+  }
+
+  stopCleanup() {
+    if (this._cleanupTimer) {
+      clearInterval(this._cleanupTimer);
+      this._cleanupTimer = null;
+    }
+  }
 }
 
-const cacheManager = new CacheManagerNoOp();
+// Singleton
+const cacheManager = new CacheManager();
 
 export default cacheManager;
+export { CacheManager };

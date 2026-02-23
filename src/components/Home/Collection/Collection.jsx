@@ -1,48 +1,19 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ProductCard from "../TopSales/components/Productcard";
 import { ProductCardSkeletonGrid } from "../TopSales/components/ProductCardSkeleton";
 import Image from "next/image";
-import axiosInstance from "@/lib/axios";
+import { useProducts } from "@/context/DataCacheContext";
 import { useRouter } from "next/navigation";
 
 const Collection = () => {
   const router = useRouter();
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [modalProductId, setModalProductId] = useState(null);
   const [showAll, setShowAll] = useState(false);
 
-  // Fetch products from API
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        console.log('🔄 Fetching products from:', axiosInstance.defaults.baseURL);
-        const response = await axiosInstance.get('/products');
-        // Server returns: { success: true, message: "...", products: [...] }
-        const productsData = response.data.products || [];
-        console.log('✅ Products fetched:', productsData.length);
-        setProducts(productsData);
-      } catch (error) {
-        console.error('❌ Error fetching products:', error);
-        console.error('Error details:', {
-          message: error.message,
-          code: error.code,
-          response: error.response?.data,
-          status: error.response?.status
-        });
-        
-        // Show user-friendly error message
-        if (error.code === 'ERR_NETWORK') {
-          console.error('⚠️ Network Error: Cannot connect to server. Is the backend running on port 5000?');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  // Use prefetched + cached products
+  const { data: allProducts, loading } = useProducts();
+  const products = allProducts || [];
 
   const modalProduct = products.find((p) => (p._id || p.id) === modalProductId);
 

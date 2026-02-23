@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import axiosInstance from "@/lib/axios";
+import { useCategories } from "@/context/DataCacheContext";
 import { FaPhoneAlt, FaFire, FaTags, FaStore } from "react-icons/fa";
 import { MdEmail, MdDashboard } from "react-icons/md";
 import { RiCustomerService2Fill } from "react-icons/ri";
@@ -12,29 +12,13 @@ import SupportModal from "./SupportModal";
 
 const Navbarfirst = () => {
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const hideTimeoutRef = React.useRef(null);
   const { data: session } = useSession();
 
-  const handleCategoryEnter = () => {
-    if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
-    setShowCategoryDropdown(true);
-  };
-
-  const handleCategoryLeave = () => {
-    hideTimeoutRef.current = setTimeout(() => setShowCategoryDropdown(false), 150);
-  };
-
-  useEffect(() => {
-    axiosInstance.get('/categories')
-      .then(res => {
-        const data = res.data;
-        // handle both { categories: [...] } and [...]
-        setCategories(Array.isArray(data) ? data : (data.categories || []));
-      })
-      .catch(() => {});
-  }, []);
+  // Use prefetched + cached categories
+  const { data: categoriesData } = useCategories();
+  const categories = categoriesData || [];
 
   return (
     <>

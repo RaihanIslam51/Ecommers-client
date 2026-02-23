@@ -2,33 +2,18 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import axiosInstance from "@/lib/axios";
+import { useCategories } from "@/context/DataCacheContext";
 
 const Category = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const scrollRef = useRef(null);
   const searchParams = useSearchParams();
   const highlightCategory = searchParams.get('highlight');
 
-  const fetchCategories = useCallback(async () => {
-    try {
-      const response = await axiosInstance.get('/categories');
-      if (response.data && response.data.categories) {
-        setCategories(response.data.categories);
-      }
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchCategories();
-  }, [fetchCategories]);
+  // Use prefetched + cached categories
+  const { data: categoriesData, loading } = useCategories();
+  const categories = categoriesData || [];
 
   const checkScrollState = useCallback(() => {
     const el = scrollRef.current;

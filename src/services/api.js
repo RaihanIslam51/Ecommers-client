@@ -72,10 +72,11 @@ export const api = {
   auth: {
     login: (credentials) => axiosInstance.post('/auth/login', credentials),
     signup: (userData) => axiosInstance.post('/auth/signup', userData),
-    logout: () => axiosInstance.post('/auth/logout'),
-    getProfile: () => axiosInstance.get('/auth/profile'),
-    updateProfile: (data) => axiosInstance.put('/auth/profile', data),
-    changePassword: (data) => axiosInstance.put('/auth/change-password', data),
+    // logout is handled client-side via NextAuth signOut()
+    logout: () => Promise.resolve({ data: { success: true } }),
+    getProfile: (userId) => axiosInstance.get(`/auth/profile/${userId}`),
+    updateProfile: (userId, data) => axiosInstance.put(`/auth/profile/${userId}`, data),
+    changePassword: (data) => axiosInstance.post('/auth/change-password', data),
   },
 
   // Dashboard & Analytics
@@ -89,7 +90,9 @@ export const api = {
 
   // Email
   email: {
-    send: (data) => axiosInstance.post('/api/send-email', data),
+    send: (data) => axiosInstance.post('/email/send-email', data),
+    sendToAll: (data) => axiosInstance.post('/email/send-to-all-customers', data),
+    test: () => axiosInstance.get('/email/test'),
   },
 };
 
