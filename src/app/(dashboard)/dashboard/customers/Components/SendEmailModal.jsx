@@ -122,8 +122,8 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
     const templates = [
         {
             name: 'Welcome Message',
-            subject: 'Welcome to RannarKaj.com!',
-            message: 'Dear Customer,\n\nThank you for being a valued customer of RannarKaj.com. We appreciate your business and look forward to serving you.\n\nBest regards,\nThe RannarKaj.com Team'
+            subject: 'Welcome to BDmart.com',
+            message: 'Dear Customer,\n\nThank you for being a valued customer of BDmart.com. We appreciate your business and look forward to serving you.\n\nBest regards,\nThe RannarKaj.com Team'
         },
         {
             name: 'Special Offer',
@@ -133,12 +133,12 @@ const SendEmailModal = ({ onClose, recipients, recipientNames }) => {
         {
             name: 'Order Update',
             subject: 'Update on Your Recent Order',
-            message: 'Dear Customer,\n\nWe wanted to provide you with an update regarding your recent order with RannarKaj.com.\n\nIf you have any questions, please don\'t hesitate to contact us.\n\nBest regards,\nThe RannarKaj.com Team'
+            message: 'Dear Customer,\n\nWe wanted to provide you with an update regarding your recent order with BDmart.com.\n\nIf you have any questions, please don\'t hesitate to contact us.\n\nBest regards,\nThe RannarKaj.com Team'
         },
         {
             name: 'Newsletter',
             subject: 'RannarKaj.com Monthly Newsletter',
-            message: 'Dear Customer,\n\nWelcome to our monthly newsletter! Here\'s what\'s new at RannarKaj.com this month.\n\nStay tuned for more updates and exciting offers!\n\nBest regards,\nThe RannarKaj.com Team'
+            message: 'Dear Customer,\n\nWelcome to our monthly newsletter! Here\'s what\'s new at BDmart.comthis month.\n\nStay tuned for more updates and exciting offers!\n\nBest regards,\nThe RannarKaj.com Team'
         }
     ];
 

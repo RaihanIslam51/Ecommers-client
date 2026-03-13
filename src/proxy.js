@@ -1,7 +1,9 @@
 // proxy.js — Next.js 16+ route protection (replaces deprecated middleware.js)
 import { auth } from "@/auth";
 
-export default auth;
+export default auth((req) => {
+  // Auth middleware is now applied
+});
 
 export const config = {
   matcher: [
@@ -12,6 +14,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - public folder assets
      */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|public|api/auth|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

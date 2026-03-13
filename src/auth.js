@@ -13,34 +13,50 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       async authorize(credentials) {
         try {
           const { email, password } = credentials;
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+          console.log(`🔐 Attempting login for: ${email}`);
 
           // Call your backend API to verify credentials
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/auth/login`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ email, password }),
-            }
-          );
+          const response = await fetch(`${apiUrl}/auth/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          });
+
+          // Check if response is ok and content-type is JSON
+          if (!response.ok) {
+            console.error("❌ Auth failed with status:", response.status, response.statusText);
+            return null;
+          }
+
+          const contentType = response.headers.get("content-type");
+          if (!contentType || !contentType.includes("application/json")) {
+            console.error("❌ Auth endpoint returned non-JSON response:", contentType);
+            const text = await response.text();
+            console.error("Response body:", text.substring(0, 200));
+            return null;
+          }
 
           const data = await response.json();
 
-          if (response.ok && data.success) {
+          if (data.success && data.user) {
+            console.log(`✅ Login successful for: ${email}`);
             // Return user object
             return {
               id: data.user._id,
               email: data.user.email,
               name: data.user.name,
-              role: data.user.role,
+              role: data.user.role || "customer",
             };
           }
 
+          console.error("❌ Login failed:", data.message);
           return null;
         } catch (error) {
-          console.error("Auth error:", error);
+          console.error("❌ Auth error:", error.message);
           return null;
         }
       },
@@ -51,6 +67,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.email = user.email;
+        token.name = user.name;
       }
       return token;
     },

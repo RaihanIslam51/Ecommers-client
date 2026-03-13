@@ -137,7 +137,7 @@ const Banner = () => {
         <BannerSkeleton />
       ) : (
         <div className="w-full mx-auto ">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-1 md:h-[300px] lg:h-[360px] animate-fade-in">
+          <div className="grid pt-2 grid-cols-1 md:grid-cols-3 gap-1 md:h-[300px] lg:h-[360px] animate-fade-in">
             {/* Main Featured Banner — 2/3 width */}
             <div className="col-span-1 md:col-span-2 w-full h-64 md:h-full">
               <RightBanner />
