@@ -16,6 +16,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
           console.log(`🔐 Attempting login for: ${email}`);
+          console.log(`📡 Using API URL: ${apiUrl}`);
 
           // Call your backend API to verify credentials
           const response = await fetch(`${apiUrl}/auth/login`, {
@@ -26,21 +27,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             body: JSON.stringify({ email, password }),
           });
 
-          // Check if response is ok and content-type is JSON
-          if (!response.ok) {
-            console.error("❌ Auth failed with status:", response.status, response.statusText);
-            return null;
-          }
-
           const contentType = response.headers.get("content-type");
-          if (!contentType || !contentType.includes("application/json")) {
-            console.error("❌ Auth endpoint returned non-JSON response:", contentType);
+          const isJson = contentType && contentType.includes("application/json");
+
+          if (!isJson) {
             const text = await response.text();
-            console.error("Response body:", text.substring(0, 200));
-            return null;
+            console.error("❌ Auth endpoint returned non-JSON response:", contentType);
+            console.error("Response status:", response.status);
+            console.error("Response body:", text.substring(0, 500));
+            throw new Error(`Server returned ${response.status}: ${text.substring(0, 200)}`);
           }
 
           const data = await response.json();
+
+          if (!response.ok) {
+            console.error("❌ Auth failed with status:", response.status, data.message);
+            throw new Error(data.message || "Authentication failed");
+          }
 
           if (data.success && data.user) {
             console.log(`✅ Login successful for: ${email}`);

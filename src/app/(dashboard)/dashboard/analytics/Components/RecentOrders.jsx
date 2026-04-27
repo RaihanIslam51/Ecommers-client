@@ -19,33 +19,33 @@ const RecentOrders = ({ orders = [] }) => {
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-            <h3 className="text-lg font-bold text-black mb-6">Recent Orders</h3>
+        <div className="bg-white p-8 border border-gray-200 hover:border-black transition-colors duration-300">
+            <h3 className="text-lg font-light text-black mb-8 tracking-wide">Recent Orders</h3>
             <div className="overflow-x-auto">
                 <table className="w-full">
                     <thead>
-                        <tr className="border-b-2 border-gray-200 bg-gray-50">
-                            <th className="text-left py-4 px-4 text-sm font-bold text-black">Order ID</th>
-                            <th className="text-left py-4 px-4 text-sm font-bold text-black">Customer</th>
-                            <th className="text-left py-4 px-4 text-sm font-bold text-black">Amount</th>
-                            <th className="text-left py-4 px-4 text-sm font-bold text-black">Status</th>
-                            <th className="text-left py-4 px-4 text-sm font-bold text-black">Date</th>
+                        <tr className="border-b border-gray-200">
+                            <th className="text-left py-4 px-4 text-xs font-light text-gray-500 uppercase tracking-widest">Order ID</th>
+                            <th className="text-left py-4 px-4 text-xs font-light text-gray-500 uppercase tracking-widest">Customer</th>
+                            <th className="text-left py-4 px-4 text-xs font-light text-gray-500 uppercase tracking-widest">Amount</th>
+                            <th className="text-left py-4 px-4 text-xs font-light text-gray-500 uppercase tracking-widest">Status</th>
+                            <th className="text-left py-4 px-4 text-xs font-light text-gray-500 uppercase tracking-widest">Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         {orderList.map((order, index) => (
                             <tr key={index} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td className="py-4 px-4 text-sm font-semibold text-black">#{order.id}</td>
-                                <td className="py-4 px-4 text-sm text-gray-700 font-medium">{order.customer}</td>
-                                <td className="py-4 px-4 text-sm font-bold text-black">
+                                <td className="py-5 px-4 text-sm font-light text-black">#{order.id}</td>
+                                <td className="py-5 px-4 text-sm text-gray-600 font-light">{order.customer}</td>
+                                <td className="py-5 px-4 text-sm font-light text-black">
                                     ${typeof order.amount === 'number' ? order.amount.toFixed(2) : '0.00'}
                                 </td>
-                                <td className="py-4 px-4">
-                                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(order.status)}`}>
+                                <td className="py-5 px-4">
+                                    <span className="inline-block px-3 py-1 border border-gray-200 text-xs font-light text-gray-600">
                                         {order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : 'Pending'}
                                     </span>
                                 </td>
-                                <td className="py-4 px-4 text-sm text-gray-600">{formatDate(order.date)}</td>
+                                <td className="py-5 px-4 text-sm text-gray-500 font-light">{formatDate(order.date)}</td>
                             </tr>
                         ))}
                     </tbody>

@@ -294,15 +294,15 @@ const CategoriesPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 via-blue-50 to-purple-50 p-4 md:p-6 lg:p-8">
-      <div className="w-full mx-auto space-y-6">
+    <div className="min-h-screen bg-white p-4 md:p-6 lg:p-8">
+      <div className="w-full mx-auto space-y-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl lg:text-5xl font-light text-black mb-2 tracking-tight">
               Categories Management
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 font-light">
               Organize and manage your product categories
             </p>
           </div>
@@ -311,7 +311,7 @@ const CategoriesPage = () => {
               setSelectedCategory(null);
               setIsAddModalOpen(true);
             }}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/30 transition-all hover:scale-105 font-semibold"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white hover:bg-gray-900 transition-all font-light"
           >
             <Plus className="w-5 h-5" />
             Add Category

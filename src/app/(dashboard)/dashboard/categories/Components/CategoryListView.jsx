@@ -23,10 +23,10 @@ const CategoryListView = ({ categories, onEdit, onDelete, onView, selectedItems 
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+    <div className="bg-white border border-gray-200 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-linear-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+          <thead className="bg-white border-b border-gray-200">
             <tr>
               {onSelectItem && (
                 <th className="px-6 py-4 text-left">
@@ -38,19 +38,19 @@ const CategoryListView = ({ categories, onEdit, onDelete, onView, selectedItems 
                   />
                 </th>
               )}
-              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-light text-gray-600 uppercase tracking-widest">
                 Category
               </th>
-              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-light text-gray-600 uppercase tracking-widest">
                 Description
               </th>
-              <th className="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-4 text-center text-xs font-light text-gray-600 uppercase tracking-widest">
                 Products
               </th>
-              <th className="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-4 text-center text-xs font-light text-gray-600 uppercase tracking-widest">
                 Status
               </th>
-              <th className="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-4 text-center text-xs font-light text-gray-600 uppercase tracking-widest">
                 Actions
               </th>
             </tr>
@@ -98,22 +98,22 @@ const CategoryListView = ({ categories, onEdit, onDelete, onView, selectedItems 
                       )}
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900">{category.name}</p>
-                      <p className="text-xs text-gray-500">ID: {category.id}</p>
+                      <p className="font-light text-black">{category.name}</p>
+                      <p className="text-xs text-gray-500 font-light">ID: {category.id}</p>
                     </div>
                   </div>
                 </td>
 
                 {/* Description */}
                 <td className="px-6 py-4">
-                  <p className="text-sm text-gray-600 line-clamp-2 max-w-xs">
+                  <p className="text-sm text-gray-600 font-light line-clamp-2 max-w-xs">
                     {category.description || 'No description'}
                   </p>
                 </td>
 
                 {/* Product Count */}
                 <td className="px-6 py-4 text-center">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-white border border-gray-200 text-black text-sm font-light">
                     <Package className="w-4 h-4" />
                     {category.productCount || 0}
                   </span>
@@ -121,10 +121,10 @@ const CategoryListView = ({ categories, onEdit, onDelete, onView, selectedItems 
 
                 {/* Status */}
                 <td className="px-6 py-4 text-center">
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                  <span className={`inline-block px-3 py-1 border text-xs font-light uppercase tracking-widest ${
                     category.status === 'active'
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-gray-100 text-gray-600'
+                      ? 'bg-white text-black border-black'
+                      : 'bg-white text-gray-600 border-gray-200'
                   }`}>
                     {category.status === 'active' ? 'Active' : 'Inactive'}
                   </span>
@@ -135,21 +135,21 @@ const CategoryListView = ({ categories, onEdit, onDelete, onView, selectedItems 
                   <div className="flex items-center justify-center gap-2">
                     <button
                       onClick={() => onView(category)}
-                      className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      className="p-2 text-black border border-gray-200 hover:border-black hover:bg-black hover:text-white transition-all"
                       title="View Details"
                     >
                       <Eye className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => onEdit(category)}
-                      className="p-2 text-black hover:bg-green-50 rounded-lg transition-colors"
+                      className="p-2 text-black border border-gray-200 hover:border-black hover:bg-black hover:text-white transition-all"
                       title="Edit"
                     >
                       <Pencil className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => onDelete(category)}
-                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      className="p-2 text-black border border-gray-200 hover:border-black hover:bg-black hover:text-white transition-all"
                       title="Delete"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -167,8 +167,8 @@ const CategoryListView = ({ categories, onEdit, onDelete, onView, selectedItems 
       {categories.length === 0 && (
         <div className="py-16 text-center">
           <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No categories found</h3>
-          <p className="text-gray-500">Try adjusting your filters or add a new category.</p>
+          <h3 className="text-lg font-light text-black mb-2">No categories found</h3>
+          <p className="text-gray-500 font-light">Try adjusting your filters or add a new category.</p>
         </div>
       )}
     </div>

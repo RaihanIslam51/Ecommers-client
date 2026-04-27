@@ -64,7 +64,35 @@ const CustomerSegments = () => {
     };
 
     return (
-        <div></div>
+        <div className="space-y-6">
+            {segments.map((segment, idx) => (
+                <div key={idx} className="bg-white border border-gray-200 hover:border-black p-8 transition-colors duration-300">
+                    <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center gap-4 flex-1">
+                            <div className="text-3xl opacity-60">
+                                {segment.icon}
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-light text-black">{segment.name}</h3>
+                                <p className="text-sm text-gray-500 font-light">{segment.description}</p>
+                            </div>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-3xl font-light text-black">{segment.count}</p>
+                            <p className="text-xs text-gray-500 font-light">{segment.percentage}%</p>
+                        </div>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="w-full bg-gray-200 h-1">
+                        <div 
+                            className="bg-black h-1 transition-all duration-300" 
+                            style={{ width: `${segment.percentage}%` }}
+                        ></div>
+                    </div>
+                </div>
+            ))}
+        </div>
     );
 };
 

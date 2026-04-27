@@ -143,7 +143,7 @@ const EmailPage = () => {
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
+    <div className="p-6 container mx-auto">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">

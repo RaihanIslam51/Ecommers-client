@@ -13,8 +13,8 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
 
   const productId = product._id || product.id;
 
-  const productImage = product.image || 'https://via.placeholder.com/300';
-  const productName = product.name || 'Product Name';
+  const productImage = product.image || "https://via.placeholder.com/300";
+  const productName = product.name || "Product Name";
   const salePrice = product.price || 0;
   const originalPrice = product.originalPrice || 0;
   const stock = product.stock || 0;
@@ -31,12 +31,12 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
     setTimeout(() => {
       addToCart(product);
       Swal.fire({
-        icon: 'success',
-        title: 'Added to Cart!',
+        icon: "success",
+        title: "Added to Cart!",
         timer: 1200,
         showConfirmButton: false,
         toast: true,
-        position: 'top-end',
+        position: "top-end",
       });
       setIsAddingToCart(false);
     }, 400);
@@ -45,116 +45,137 @@ const ProductCard = ({ product, isDimmed, onQuickView, onClick }) => {
   const handleAddToWishlist = (e) => {
     e.stopPropagation();
     if (isInWishlist(productId)) {
-      Swal.fire({ icon: 'info', title: 'Already in Wishlist', timer: 1200, showConfirmButton: false, toast: true, position: 'top-end' });
+      Swal.fire({
+        icon: "info",
+        title: "Already in Wishlist",
+        timer: 1200,
+        showConfirmButton: false,
+        toast: true,
+        position: "top-end",
+      });
     } else {
       addToWishlist(product);
-      Swal.fire({ icon: 'success', title: 'Added to Wishlist!', timer: 1200, showConfirmButton: false, toast: true, position: 'top-end' });
+      Swal.fire({
+        icon: "success",
+        title: "Added to Wishlist!",
+        timer: 1200,
+        showConfirmButton: false,
+        toast: true,
+        position: "top-end",
+      });
     }
   };
 
-  const handleBuyNow = useCallback((e) => {
-    e.stopPropagation();
-    const productData = encodeURIComponent(JSON.stringify(product));
-    router.push(`/quick-checkout?product=${productData}`);
-  }, [product, router]);
+  const handleBuyNow = useCallback(
+    (e) => {
+      e.stopPropagation();
+      const productData = encodeURIComponent(JSON.stringify(product));
+      router.push(`/quick-checkout?product=${productData}`);
+    },
+    [product, router]
+  );
 
   return (
-    <div
-      onClick={onClick}
-      className={`relative group flex flex-col bg-white rounded-xl border border-gray-200 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 ${
-        isDimmed ? "opacity-40 pointer-events-none" : "opacity-100"
-      }`}
-      style={{ height: '320px' }}
-    >
-      {/* ── IMAGE  (75% of card = 240px) ── */}
-      <div className="relative w-full" style={{ flex: '0 0 75%' }}>
+    <>
+      <div
+        onClick={onClick}
+        className={`group relative flex flex-col bg-[#fafaf8] border border-[#e8e6e0] overflow-hidden cursor-pointer h-[360px] transition-all duration-400 ${isDimmed ? "opacity-35 pointer-events-none" : "hover:shadow-[0_12px_40px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 hover:border-[#c8c4ba]"}`}
+      >
+      {/* ── IMAGE ZONE ── */}
+      <div className="relative flex-none h-[72%] overflow-hidden bg-[#f0ede6]">
         <Image
           src={productImage}
           alt={productName}
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-[600ms] cubic-bezier(0.25, 0.46, 0.45, 0.94) group-hover:scale-105"
           sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
 
-      {/* Hover action buttons */}
-        <div className="absolute top-2 right-2 flex flex-col gap-1.5 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
+        {/* Overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/[0.18] to-transparent opacity-0 transition-opacity duration-400 z-5 group-hover:opacity-100" />
+
+        {/* Action icons */}
+        <div className="absolute top-3 right-3 flex flex-col gap-[7px] z-20 opacity-0 translate-x-2.5 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
           <button
             onClick={handleAddToWishlist}
             title="Add to Wishlist"
-            className="w-8 h-8 bg-white text-gray-700 hover:text-red-500 rounded-full shadow border border-gray-200 flex items-center justify-center transition-colors"
+            className={`w-[34px] h-[34px] bg-white/[0.92] backdrop-blur-[6px] border border-black/[0.08] rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 ${isInWishlist(productId) ? "text-[#c0392b]" : "text-[#555] hover:text-[#c0392b] hover:bg-white hover:scale-110"}`}
           >
-            <FaHeart className={`text-xs ${isInWishlist(productId) ? 'text-red-500' : ''}`} />
+            <FaHeart style={{ fontSize: 11 }} />
           </button>
           <button
-            onClick={(e) => { e.stopPropagation(); onQuickView(productId); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onQuickView(productId);
+            }}
             title="Quick View"
-            className="w-8 h-8 bg-white text-gray-700 hover:text-blue-500 rounded-full shadow border border-gray-200 flex items-center justify-center transition-colors"
+            className="w-[34px] h-[34px] bg-white/[0.92] backdrop-blur-[6px] border border-black/[0.08] rounded-full flex items-center justify-center cursor-pointer text-[#555] transition-all duration-200 hover:text-[#2563eb] hover:bg-white hover:scale-110"
           >
-            <FaEye className="text-xs" />
+            <FaEye style={{ fontSize: 11 }} />
           </button>
         </div>
 
         {/* Discount badge */}
         {discountPercent > 0 && (
-          <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-            -{discountPercent}%
+          <span className="absolute top-3 left-3 bg-[#1a1a1a] text-white font-medium text-[10px] tracking-[0.08em] px-[9px] py-[3px] z-10" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            −{discountPercent}%
           </span>
         )}
 
-        {/* Out of stock overlay */}
+        {/* Out of stock */}
         {stock === 0 && (
-          <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
-            <span className="text-xs font-semibold text-gray-500 tracking-widest uppercase">
+          <div className="absolute inset-0 bg-[#fafaf8]/75 backdrop-blur-sm flex items-center justify-center z-15">
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#888] border border-[#ccc] px-[14px] py-[5px] bg-white/80" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               Out of Stock
             </span>
           </div>
         )}
       </div>
 
-      {/* ── INFO  (25% of card = 80px) ── */}
-      <div className="flex flex-col justify-center px-3 py-2 gap-1" style={{ flex: '0 0 25%' }}>
-        {/* Product name */}
-        <p className="text-xs font-semibold text-black line-clamp-1 leading-tight">
+      {/* ── INFO ZONE ── */}
+      <div className="flex-none h-[28%] flex flex-col justify-center px-[14px] py-[10px] pb-3 gap-1.5 border-t border-[#e8e6e0] bg-[#fafaf8]">
+        <p className="font-serif text-[15px] font-medium text-[#1a1a1a] whitespace-nowrap overflow-hidden text-ellipsis leading-[1.3] tracking-[0.01em]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
           {productName}
         </p>
 
-        {/* Price row */}
-        <div className="flex items-center gap-1.5">
-          <span className="text-sm font-bold text-black">
+        <div className="flex items-baseline gap-2">
+          <span className="font-medium text-sm text-[#1a1a1a] tracking-[0.01em]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
             ${salePrice.toFixed(2)}
           </span>
           {originalPrice > salePrice && (
-            <span className="text-xs text-gray-400 line-through">
+            <span className="text-[11px] font-normal text-[#aaa] line-through" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               ${originalPrice.toFixed(2)}
             </span>
           )}
           {discountPercent > 0 && (
-            <span className="ml-auto text-xs font-semibold text-red-500">
-              -{discountPercent}%
+            <span className="text-[10px] font-medium text-[#b94040] ml-auto tracking-[0.04em]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              −{discountPercent}%
             </span>
           )}
         </div>
 
-        {/* Action buttons */}
-        <div className="flex gap-1.5">
+        <div className="flex gap-2 mt-0.5">
           <button
             onClick={handleAddToCart}
             disabled={stock === 0 || isAddingToCart}
-            className="flex-1 py-1 text-xs font-semibold text-black border border-black rounded-md hover:bg-black hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex-1 py-1.5 font-medium text-[10px] tracking-[0.1em] uppercase bg-transparent text-[#1a1a1a] border border-[#1a1a1a] cursor-pointer transition-all duration-250 disabled:opacity-35 disabled:cursor-not-allowed hover:bg-[#1a1a1a] hover:text-[#fafaf8]"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
-            {isAddingToCart ? 'Adding…' : 'Add to Cart'}
+            {isAddingToCart ? "Adding…" : "Add to Cart"}
           </button>
           {stock > 0 && (
             <button
               onClick={handleBuyNow}
-              className="flex-1 py-1 text-xs font-semibold bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+              className="flex-1 py-1.5 font-medium text-[10px] tracking-[0.1em] uppercase bg-[#1a1a1a] text-[#fafaf8] border-none cursor-pointer transition-all duration-250 hover:bg-[#333]"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               Buy Now
             </button>
           )}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

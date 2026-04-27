@@ -51,10 +51,10 @@ const Page = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-[60vh]">
+            <div className="flex items-center justify-center min-h-screen bg-white">
                 <div className="text-center">
                     <Spinner size="lg" />
-                    <p className="mt-4 text-gray-600">Loading analytics data...</p>
+                    <p className="mt-6 text-gray-500 font-light tracking-wide">Loading analytics data...</p>
                 </div>
             </div>
         );
@@ -62,12 +62,12 @@ const Page = () => {
 
     if (!analyticsData) {
         return (
-            <div className="flex items-center justify-center min-h-[60vh]">
+            <div className="flex items-center justify-center min-h-screen bg-white">
                 <div className="text-center">
-                    <p className="text-gray-600">No analytics data available</p>
+                    <p className="text-gray-500 font-light tracking-wide">No analytics data available</p>
                     <button 
                         onClick={fetchAnalyticsData}
-                        className="mt-4 px-4 py-2 border border-gray-200 bg-gray-50 text-black rounded-lg hover:bg-gray-100"
+                        className="mt-8 px-6 py-2 border border-black text-black hover:bg-black hover:text-white transition-all duration-300 font-light tracking-wide"
                     >
                         Retry
                     </button>
@@ -78,88 +78,92 @@ const Page = () => {
 
     return (
         <div className="min-h-screen bg-white text-black antialiased">
-            <div className="container mx-auto py-3">
+            <div className="container mx-auto px-4 py-12 lg:px-8">
                 {/* Page Header */}
-                <div className="mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center ">
+                <div className="mb-16 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6">
                     <div>
-                        <h1 className="text-3xl font-bold text-black">Analytics Dashboard</h1>
-                        <p className="text-sm text-gray-600 mt-2">Track your business performance and insights</p>
+                        <h1 className="text-4xl lg:text-5xl font-light tracking-tight text-black">Analytics</h1>
+                        <p className="text-sm font-light text-gray-500 mt-3 tracking-wide">Business performance overview</p>
                     </div>
                     <button
                         onClick={handleRefresh}
                         disabled={refreshing}
-                        className="px-4 py-2 border border-gray-200 bg-gray-50 text-black rounded-lg hover:bg-gray-100 disabled:opacity-50 flex items-center gap-2"
+                        className="self-start sm:self-auto px-6 py-2 border border-black text-black bg-white hover:bg-black hover:text-white transition-all duration-300 disabled:opacity-50 flex items-center gap-2 font-light tracking-wide"
                     >
                         <span className={refreshing ? 'animate-spin' : ''}>🔄</span>
                         Refresh
                     </button>
                 </div>
 
-            {/* Stats Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <StatsCard 
-                    title="Total Revenue"
-                    value={`$${analyticsData.totalRevenue.toLocaleString()}`}
-                    icon="💰"
-                    trend={analyticsData.revenueTrend >= 0 ? "up" : "down"}
-                    trendValue={`${Math.abs(analyticsData.revenueTrend)}%`}
-                    color="neutral"
-                />
-                <StatsCard 
-                    title="Total Orders"
-                    value={analyticsData.totalOrders.toLocaleString()}
-                    icon="📦"
-                    trend={analyticsData.ordersTrend >= 0 ? "up" : "down"}
-                    trendValue={`${Math.abs(analyticsData.ordersTrend)}%`}
-                    color="neutral"
-                />
-                <StatsCard 
-                    title="Total Customers"
-                    value={analyticsData.totalCustomers.toLocaleString()}
-                    icon="👥"
-                    trend="up"
-                    trendValue="15.3%"
-                    color="neutral"
-                />
-                <StatsCard 
-                    title="Avg. Order Value"
-                    value={`$${analyticsData.avgOrderValue.toFixed(2)}`}
-                    icon="📊"
-                    trend={analyticsData.avgOrderValue > 20 ? "up" : "down"}
-                    trendValue="3.1%"
-                    color="neutral"
-                />
-            </div>
-
-            {/* Charts Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                <SalesChart data={analyticsData.salesTrend} />
-                <RevenueChart data={analyticsData.revenueChartData} />
-            </div>
-
-            {/* Products and Customers Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                <div className="lg:col-span-1">
-                    <TopProducts 
-                        products={analyticsData.topProducts}
-                        categoryData={analyticsData.categoryDistribution}
+                {/* Stats Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                    <StatsCard 
+                        title="Total Revenue"
+                        value={`$${analyticsData.totalRevenue.toLocaleString()}`}
+                        icon="💰"
+                        trend={analyticsData.revenueTrend >= 0 ? "up" : "down"}
+                        trendValue={`${Math.abs(analyticsData.revenueTrend)}%`}
+                        color="neutral"
+                    />
+                    <StatsCard 
+                        title="Total Orders"
+                        value={analyticsData.totalOrders.toLocaleString()}
+                        icon="📦"
+                        trend={analyticsData.ordersTrend >= 0 ? "up" : "down"}
+                        trendValue={`${Math.abs(analyticsData.ordersTrend)}%`}
+                        color="neutral"
+                    />
+                    <StatsCard 
+                        title="Total Customers"
+                        value={analyticsData.totalCustomers.toLocaleString()}
+                        icon="👥"
+                        trend="up"
+                        trendValue="15.3%"
+                        color="neutral"
+                    />
+                    <StatsCard 
+                        title="Avg. Order Value"
+                        value={`$${analyticsData.avgOrderValue.toFixed(2)}`}
+                        icon="📊"
+                        trend={analyticsData.avgOrderValue > 20 ? "up" : "down"}
+                        trendValue="3.1%"
+                        color="neutral"
                     />
                 </div>
-                <div className="lg:col-span-1">
-                    <CustomerStats 
-                        segments={analyticsData.customerSegments}
-                        statusData={analyticsData.orderStatusDistribution}
-                    />
-                </div>
-                <div className="lg:col-span-1">
-                    <ActivityFeed orders={analyticsData.recentOrders} />
-                </div>
-            </div>
 
-            {/* Recent Orders Section */}
-            <div className="mb-8">
-                <RecentOrders orders={analyticsData.recentOrders} />
-            </div>
+                {/* Charts Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                    <div className="border border-gray-200 bg-white p-8 rounded-none hover:border-black transition-colors duration-300">
+                        <SalesChart data={analyticsData.salesTrend} />
+                    </div>
+                    <div className="border border-gray-200 bg-white p-8 rounded-none hover:border-black transition-colors duration-300">
+                        <RevenueChart data={analyticsData.revenueChartData} />
+                    </div>
+                </div>
+
+                {/* Products and Customers Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+                    <div className="border border-gray-200 bg-white rounded-none hover:border-black transition-colors duration-300">
+                        <TopProducts 
+                            products={analyticsData.topProducts}
+                            categoryData={analyticsData.categoryDistribution}
+                        />
+                    </div>
+                    <div className="border border-gray-200 bg-white rounded-none hover:border-black transition-colors duration-300">
+                        <CustomerStats 
+                            segments={analyticsData.customerSegments}
+                            statusData={analyticsData.orderStatusDistribution}
+                        />
+                    </div>
+                    <div className="border border-gray-200 bg-white rounded-none hover:border-black transition-colors duration-300">
+                        <ActivityFeed orders={analyticsData.recentOrders} />
+                    </div>
+                </div>
+
+                {/* Recent Orders Section */}
+                <div className="border border-gray-200 bg-white rounded-none hover:border-black transition-colors duration-300">
+                    <RecentOrders orders={analyticsData.recentOrders} />
+                </div>
             </div>
         </div>
     );

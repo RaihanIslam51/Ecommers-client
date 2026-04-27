@@ -48,10 +48,10 @@ const CustomerTable = ({
     }
 
     return (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+        <div className="bg-white border border-gray-200 overflow-hidden">
             <div className="overflow-x-auto">
                 <table className="w-full">
-                    <thead className="bg-gray-50 border-b border-gray-200">
+                    <thead className="bg-white border-b border-gray-200">
                         <tr>
                             {onSelectCustomer && (
                                 <th className="px-6 py-4 text-left">
@@ -64,36 +64,36 @@ const CustomerTable = ({
                                             }
                                         }}
                                         onChange={(e) => onSelectAll(e.target.checked)}
-                                        className="w-4 h-4 text-black border-gray-300 rounded focus:ring-gray-300 cursor-pointer"
+                                        className="w-4 h-4 text-black border-gray-300 cursor-pointer"
                                         title={isAllSelected ? "Deselect all" : "Select all"}
                                     />
                                 </th>
                             )}
-                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-light text-gray-600 uppercase tracking-widest">
                                 Customer Info
                             </th>
-                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-light text-gray-600 uppercase tracking-widest">
                                 Email Address
                             </th>
-                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-light text-gray-600 uppercase tracking-widest">
                                 Phone Number
                             </th>
-                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-light text-gray-600 uppercase tracking-widest">
                                 Location
                             </th>
-                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-light text-gray-600 uppercase tracking-widest">
                                 Status
                             </th>
-                            <th className="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-center text-xs font-light text-gray-600 uppercase tracking-widest">
                                 Orders
                             </th>
-                            <th className="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-center text-xs font-light text-gray-600 uppercase tracking-widest">
                                 Total Spent
                             </th>
-                            <th className="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-center text-xs font-light text-gray-600 uppercase tracking-widest">
                                 Joined
                             </th>
-                            <th className="px-6 py-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-right text-xs font-light text-gray-600 uppercase tracking-widest">
                                 Actions
                             </th>
                         </tr>
@@ -220,19 +220,19 @@ const CustomerTable = ({
             </div>
 
             {/* Table Footer with Summary */}
-            <div className="bg-gray-50 border-t border-gray-200 px-6 py-4">
+            <div className="bg-white border-t border-gray-200 px-6 py-6">
                 <div className="flex items-center justify-between">
-                    <div className="text-sm text-gray-600">
-                        Showing <span className="font-semibold text-black">{customers.length}</span> customer{customers.length !== 1 ? 's' : ''}
+                    <div className="text-sm text-gray-600 font-light">
+                        Showing <span className="font-light text-black">{customers.length}</span> customer{customers.length !== 1 ? 's' : ''}
                     </div>
-                    <div className="flex items-center gap-6">
-                        <div className="text-sm text-gray-600">
-                            Total Orders: <span className="font-bold text-black">
+                    <div className="flex items-center gap-8">
+                        <div className="text-sm text-gray-600 font-light">
+                            Total Orders: <span className="font-light text-black">
                                 {customers.reduce((sum, c) => sum + c.totalOrders, 0)}
                             </span>
                         </div>
-                        <div className="text-sm text-gray-600">
-                            Total Revenue: <span className="font-bold text-black">
+                        <div className="text-sm text-gray-600 font-light">
+                            Total Revenue: <span className="font-light text-black">
                                 ${customers.reduce((sum, c) => sum + c.totalSpent, 0).toLocaleString()}
                             </span>
                         </div>

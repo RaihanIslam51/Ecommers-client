@@ -88,18 +88,18 @@ const ProductStats = ({ products }) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
       {statCards.map((stat, index) => (
         <div
           key={index}
-          className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-gray-200"
+          className="bg-white p-6 border border-gray-200 hover:border-black transition-colors duration-300"
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
-              <p className="text-2xl font-bold text-black">{stat.value}</p>
+              <p className="text-xs text-gray-500 mb-2 font-light uppercase tracking-widest">{stat.label}</p>
+              <p className="text-3xl font-light text-black">{stat.value}</p>
             </div>
-            <div className={`${stat.bg} ${stat.text} p-3 rounded-full`}>
+            <div className="text-gray-400 opacity-50">
               {stat.icon}
             </div>
           </div>

@@ -8,20 +8,20 @@ import React from "react";
  */
 const ProductCardSkeleton = () => {
   return (
-    <div className="relative w-full bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div className="relative w-full bg-white border border-gray-200 overflow-hidden">
       {/* Shimmer Effect Overlay */}
       <div className="absolute inset-0 -translate-x-full animate-shimmer bg-linear-to-r from-transparent via-white/60 to-transparent z-10" />
       
       {/* Image Skeleton */}
-      <div className="relative w-full aspect-square bg-linear-to-br from-gray-200 via-gray-100 to-gray-200">
+      <div className="relative w-full aspect-square bg-gray-100">
         {/* Badge Skeleton */}
-        <div className="absolute top-3 left-3 w-16 h-6 bg-gray-300/70 rounded-md animate-pulse" />
+        <div className="absolute top-3 left-3 w-16 h-6 bg-gray-300/70 animate-pulse" />
         
         {/* Action Icons Skeleton */}
         <div className="absolute top-3 right-3 flex flex-col gap-2">
-          <div className="w-9 h-9 bg-gray-300/70 rounded-lg animate-pulse" />
-          <div className="w-9 h-9 bg-gray-300/70 rounded-lg animate-pulse animation-delay-100" />
-          <div className="w-9 h-9 bg-gray-300/70 rounded-lg animate-pulse animation-delay-200" />
+          <div className="w-9 h-9 bg-gray-300/70 animate-pulse" />
+          <div className="w-9 h-9 bg-gray-300/70 animate-pulse animation-delay-100" />
+          <div className="w-9 h-9 bg-gray-300/70 animate-pulse animation-delay-200" />
         </div>
       </div>
 
@@ -54,7 +54,7 @@ const ProductCardSkeleton = () => {
         </div>
 
         {/* Add to Cart Button Skeleton */}
-        <div className="h-9 bg-gray-200 rounded-lg animate-pulse animation-delay-200" />
+        <div className="h-9 bg-gray-200 animate-pulse animation-delay-200" />
       </div>
     </div>
   );

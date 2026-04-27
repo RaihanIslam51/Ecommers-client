@@ -166,12 +166,12 @@ const ImageUploader = ({
     <div className="space-y-6">
       {/* Main Product Image */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-xs font-light text-gray-600 mb-4 uppercase tracking-widest">
           Main Product Image
         </label>
-        <div className="flex items-start gap-4">
+        <div className="flex items-start gap-6">
           {mainImage ? (
-            <div className="relative w-40 h-40 border-2 border-gray-300 rounded-lg overflow-hidden">
+            <div className="relative w-40 h-40 border border-gray-300 overflow-hidden">
               <Image
                 src={mainImage}
                 alt="Main product"
@@ -181,7 +181,7 @@ const ImageUploader = ({
               <button
                 type="button"
                 onClick={() => onImageUpload('')}
-                className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                className="absolute top-2 right-2 bg-black text-white p-1 hover:bg-gray-800 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -191,12 +191,12 @@ const ImageUploader = ({
           ) : (
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="w-40 h-40 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-colors"
+              className="w-40 h-40 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer hover:border-black transition-colors"
             >
-              <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              <p className="text-sm text-gray-500 mt-2">Upload Image</p>
+              <p className="text-xs text-gray-500 mt-3 font-light">Upload Image</p>
             </div>
           )}
           <input
@@ -207,14 +207,14 @@ const ImageUploader = ({
             className="hidden"
           />
           <div className="flex-1">
-            <p className="text-sm text-gray-600 mb-2">
+            <p className="text-xs text-gray-600 mb-4 font-light">
               Upload main product image (Max 5MB)
             </p>
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-green-300 transition-colors text-sm"
+              className="px-4 py-2 border border-black bg-white text-black hover:bg-black hover:text-white disabled:opacity-50 transition-all text-xs font-light"
             >
               {uploading ? 'Uploading...' : 'Choose Image'}
             </button>
@@ -224,17 +224,17 @@ const ImageUploader = ({
 
       {/* Additional Images */}
       <div>
-        <div className="flex items-center justify-between mb-2">
-          <label className="block text-sm font-medium text-gray-700">
+        <div className="flex items-center justify-between mb-4">
+          <label className="block text-xs font-light text-gray-600 uppercase tracking-widest">
             Additional Images
           </label>
-          <span className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+          <span className="text-xs text-gray-500 border border-gray-200 px-3 py-1 font-light">
             {additionalImages.length} / 5 images
           </span>
         </div>
-        <div className="grid grid-cols-5 gap-4 mb-4">
+        <div className="grid grid-cols-5 gap-3 mb-6">
           {additionalImages.map((image, index) => (
-            <div key={index} className="relative w-full h-24 border-2 border-gray-300 rounded-lg overflow-hidden">
+            <div key={index} className="relative w-full h-24 border border-gray-300 overflow-hidden">
               <Image
                 src={image}
                 alt={`Product ${index + 1}`}
@@ -244,7 +244,7 @@ const ImageUploader = ({
               <button
                 type="button"
                 onClick={() => onRemoveImage(index)}
-                className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                className="absolute top-1 right-1 bg-black text-white p-1 hover:bg-gray-800 transition-colors"
               >
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -255,9 +255,9 @@ const ImageUploader = ({
           {additionalImages.length < 5 && (
             <div
               onClick={() => multipleFileInputRef.current?.click()}
-              className="w-full h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer hover:border-blue-500 transition-colors"
+              className="w-full h-24 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-black transition-colors"
             >
-              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
             </div>
@@ -276,39 +276,37 @@ const ImageUploader = ({
             type="button"
             onClick={() => multipleFileInputRef.current?.click()}
             disabled={uploading || additionalImages.length >= 5}
-            className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+            className="px-4 py-2 border border-black bg-white text-black hover:bg-black hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all text-xs font-light"
           >
             {uploading ? 'Uploading...' : additionalImages.length >= 5 ? 'Maximum Reached' : `Add Images (${5 - additionalImages.length} slots left)`}
           </button>
           {additionalImages.length >= 5 && (
-            <span className="text-xs text-orange-600 font-medium">
-              ⚠️ Maximum 5 images reached
+            <span className="text-xs text-gray-500 font-light">
+              ⚠️ Maximum reached
             </span>
           )}
         </div>
       </div>
 
-      {/* Upload Progress */}
       {uploading && (
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="w-full bg-gray-200 h-1">
           <div
-            className="bg-green-600 h-2 rounded-full transition-all duration-300"
+            className="bg-black h-1 transition-all duration-300"
             style={{ width: `${uploadProgress}%` }}
           />
         </div>
       )}
 
-      {/* Error Message */}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+        <div className="border border-gray-300 text-gray-600 px-4 py-3 text-sm bg-white font-light">
           {error}
         </div>
       )}
 
       {/* Info */}
-      <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">
-        <p className="font-medium mb-1">Image Upload Tips:</p>
-        <ul className="list-disc list-inside space-y-1 text-xs">
+      <div className="border border-gray-200 text-gray-600 px-4 py-4 text-xs bg-white font-light space-y-1">
+        <p className="font-light mb-2 text-gray-700 uppercase tracking-widest">Image Upload Tips</p>
+        <ul className="list-disc list-inside space-y-1 font-light">
           <li>Upload high-quality images for better product presentation</li>
           <li>Supported formats: JPG, PNG, GIF</li>
           <li>Maximum file size: 5MB per image</li>

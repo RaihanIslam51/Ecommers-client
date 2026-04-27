@@ -4,21 +4,21 @@ import React from 'react';
 
 const ProductFilters = ({ filters, onFilterChange, onReset }) => {
   return (
-    <div className="bg-white text-black rounded-xl shadow-lg p-6 mb-6 border border-gray-100">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-black">Filters</h3>
+    <div className="bg-white text-black p-8 mb-8 border border-gray-200 hover:border-black transition-colors duration-300">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-lg font-light text-black tracking-wide">Filters</h3>
         <button
           onClick={onReset}
-          className="text-sm text-black hover:text-gray-700 font-medium"
+          className="text-xs text-gray-500 hover:text-black font-light tracking-widest uppercase transition-colors"
         >
           Reset All
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Search */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
             Search
           </label>
           <input
@@ -27,20 +27,20 @@ const ProductFilters = ({ filters, onFilterChange, onReset }) => {
             value={filters.search || ''}
             onChange={(e) => onFilterChange('search', e.target.value)}
             placeholder="Search products..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
+            className="w-full px-4 py-2 border border-gray-200 focus:border-black focus:outline-none text-sm font-light transition-colors"
           />
         </div>
 
         {/* Category */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
             Category
           </label>
           <select
             name="category"
             value={filters.category || ''}
             onChange={(e) => onFilterChange('category', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
+            className="w-full px-4 py-2 border border-gray-200 focus:border-black focus:outline-none text-sm font-light transition-colors"
           >
             <option value="">All Categories</option>
             <option value="Electronics">Electronics</option>
@@ -56,14 +56,14 @@ const ProductFilters = ({ filters, onFilterChange, onReset }) => {
 
         {/* Stock Status */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
             Stock Status
           </label>
           <select
             name="stockStatus"
             value={filters.stockStatus || ''}
             onChange={(e) => onFilterChange('stockStatus', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
+            className="w-full px-4 py-2 border border-gray-200 focus:border-black focus:outline-none text-sm font-light transition-colors"
           >
             <option value="">All</option>
             <option value="inStock">In Stock</option>
@@ -74,14 +74,14 @@ const ProductFilters = ({ filters, onFilterChange, onReset }) => {
 
         {/* Sort By */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
             Sort By
           </label>
           <select
             name="sortBy"
             value={filters.sortBy || ''}
             onChange={(e) => onFilterChange('sortBy', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
+            className="w-full px-4 py-2 border border-gray-200 focus:border-black focus:outline-none text-sm font-light transition-colors"
           >
             <option value="">Default</option>
             <option value="name-asc">Name (A-Z)</option>

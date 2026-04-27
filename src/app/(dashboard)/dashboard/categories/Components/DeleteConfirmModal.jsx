@@ -17,41 +17,41 @@ const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, categoryName }) => {
 
       {/* Modal */}
       <div className="flex min-h-full items-center justify-center p-4">
-        <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md">
+        <div className="relative bg-white border border-gray-200 w-full max-w-md">
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="absolute top-4 right-4 p-2 border border-gray-200 hover:border-black hover:bg-black hover:text-white transition-colors"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X className="w-5 h-5" />
           </button>
 
           {/* Content */}
           <div className="p-8 text-center">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <AlertTriangle className="w-8 h-8 text-red-600" />
+            <div className="w-16 h-16 bg-white border border-gray-200 flex items-center justify-center mx-auto mb-4">
+              <AlertTriangle className="w-8 h-8 text-black opacity-60" />
             </div>
 
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <h2 className="text-2xl font-light text-black mb-2 tracking-wide">
               Delete Category?
             </h2>
             
-            <p className="text-gray-600 mb-6">
-              Are you sure you want to delete <span className="font-semibold text-gray-900">&ldquo;{categoryName}&rdquo;</span>? 
+            <p className="text-gray-600 font-light mb-6">
+              Are you sure you want to delete <span className="font-light text-black">&ldquo;{categoryName}&rdquo;</span>? 
               This action cannot be undone and all associated data will be permanently removed.
             </p>
 
             {/* Actions */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 pt-4 border-t border-gray-200">
               <button
                 onClick={onClose}
-                className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
+                className="flex-1 px-6 py-3 border border-gray-200 text-black hover:border-black hover:bg-black hover:text-white transition-all font-light"
               >
                 Cancel
               </button>
               <button
                 onClick={onConfirm}
-                className="flex-1 px-6 py-3 bg-linear-to-r from-red-600 to-rose-600 text-white rounded-lg hover:from-red-700 hover:to-rose-700 font-medium shadow-lg shadow-red-500/30 transition-all"
+                className="flex-1 px-6 py-3 bg-black text-white hover:bg-gray-900 transition-all font-light"
               >
                 Delete
               </button>

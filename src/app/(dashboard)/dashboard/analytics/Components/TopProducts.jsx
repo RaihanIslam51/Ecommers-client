@@ -2,7 +2,7 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
-const COLORS = ['#111827', '#374151', '#6B7280', '#9CA3AF', '#D1D5DB'];
+const COLORS = ['#1f2937', '#4b5563', '#6b7280', '#9ca3af', '#d1d5db'];
 
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -31,12 +31,12 @@ const TopProducts = ({ products = [], categoryData = [] }) => {
     const pieData = categoryData.length > 0 ? categoryData : defaultCategoryData;
 
     return (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-            <h3 className="text-lg font-bold text-black mb-6">Top Products & Categories</h3>
+        <div className="bg-white p-8 border border-gray-200 hover:border-black transition-colors duration-300">
+            <h3 className="text-lg font-light text-black mb-8 tracking-wide">Top Products & Categories</h3>
             
             {/* Pie Chart */}
-            <div className="mb-6">
-                <h4 className="text-sm font-semibold text-gray-600 mb-3">Sales by Category</h4>
+            <div className="mb-8">
+                <h4 className="text-sm font-light text-gray-600 mb-4 tracking-wide">Sales by Category</h4>
                 <ResponsiveContainer width="100%" height={200}>
                     <PieChart>
                         <Pie
@@ -57,14 +57,14 @@ const TopProducts = ({ products = [], categoryData = [] }) => {
                 </ResponsiveContainer>
                 
                 {/* Legend */}
-                <div className="grid grid-cols-2 gap-2 mt-4">
+                <div className="grid grid-cols-2 gap-3 mt-6">
                     {pieData.map((entry, index) => (
                         <div key={index} className="flex items-center gap-2">
                             <div 
-                                className="w-3 h-3 rounded-full" 
+                                className="w-2 h-2" 
                                 style={{ backgroundColor: COLORS[index % COLORS.length] }}
                             ></div>
-                            <span className="text-xs text-gray-600 truncate">{entry.name}</span>
+                            <span className="text-xs text-gray-600 font-light truncate">{entry.name}</span>
                         </div>
                     ))}
                 </div>
@@ -72,21 +72,21 @@ const TopProducts = ({ products = [], categoryData = [] }) => {
 
             {/* Top Products List */}
             <div>
-                <h4 className="text-sm font-semibold text-gray-600 mb-3">Best Sellers</h4>
+                <h4 className="text-sm font-light text-gray-600 mb-4 tracking-wide">Best Sellers</h4>
                 <div className="space-y-3">
                     {topProducts.map((product, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors border border-gray-100">
+                        <div key={index} className="flex items-center justify-between p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors">
                             <div className="flex items-center gap-3 flex-1 min-w-0">
-                                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-100 shrink-0">
-                                    <span className="text-sm font-bold text-black">#{index + 1}</span>
+                                <div className="flex items-center justify-center w-8 h-8 bg-gray-100 shrink-0">
+                                    <span className="text-xs font-light text-black">#{index + 1}</span>
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <h4 className="text-sm font-semibold text-black truncate">{product.name}</h4>
-                                    <p className="text-xs text-gray-500">{product.quantity} sold</p>
+                                    <h4 className="text-sm font-light text-black truncate">{product.name}</h4>
+                                    <p className="text-xs text-gray-500 font-light">{product.quantity} sold</p>
                                 </div>
                             </div>
-                            <div className="text-right ml-2">
-                                <p className="text-sm font-bold text-black">${product.revenue.toLocaleString()}</p>
+                            <div className="text-right ml-4">
+                                <p className="text-sm font-light text-black">${product.revenue.toLocaleString()}</p>
                             </div>
                         </div>
                     ))}

@@ -32,17 +32,17 @@ const RevenueChart = ({ data = [] }) => {
     const avgRevenue = Math.round(totalRevenue / chartData.length);
 
     return (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-            <div className="flex justify-between items-center mb-6">
+        <div className="bg-white p-8 border border-gray-200 hover:border-black transition-colors duration-300">
+            <div className="flex justify-between items-start mb-8">
                 <div>
-                    <h3 className="text-lg font-bold text-black">Weekly Revenue</h3>
-                    <p className="text-sm text-gray-500 mt-1">Last 7 days breakdown</p>
+                    <h3 className="text-lg font-light text-black tracking-wide">Weekly Revenue</h3>
+                    <p className="text-xs text-gray-500 mt-2 font-light">Last 7 days breakdown</p>
                 </div>
                 <div className="text-right">
-                    <p className="text-2xl font-bold text-black">
+                    <p className="text-3xl font-light text-black">
                         ${totalRevenue.toLocaleString()}
                     </p>
-                    <p className="text-xs text-gray-500">Total Revenue</p>
+                    <p className="text-xs text-gray-500 mt-1 font-light">Total Revenue</p>
                 </div>
             </div>
 
@@ -51,19 +51,19 @@ const RevenueChart = ({ data = [] }) => {
                     <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                         <defs>
                             <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#6b7280" stopOpacity={0.9}/>
-                                <stop offset="95%" stopColor="#9CA3AF" stopOpacity={0.8}/>
+                                <stop offset="5%" stopColor="#1f2937" stopOpacity={0.8}/>
+                                <stop offset="95%" stopColor="#4b5563" stopOpacity={0.4}/>
                             </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                        <CartesianGrid strokeDasharray="0" stroke="#f3f4f6" />
                         <XAxis 
                             dataKey="day" 
-                            tick={{ fontSize: 12, fill: '#6b7280' }}
+                            tick={{ fontSize: 12, fill: '#9ca3af' }}
                             tickLine={false}
                             axisLine={{ stroke: '#e5e7eb' }}
                         />
                         <YAxis 
-                            tick={{ fontSize: 12, fill: '#6b7280' }}
+                            tick={{ fontSize: 12, fill: '#9ca3af' }}
                             tickLine={false}
                             axisLine={{ stroke: '#e5e7eb' }}
                         />
@@ -71,25 +71,25 @@ const RevenueChart = ({ data = [] }) => {
                         <Bar 
                             dataKey="revenue" 
                             fill="url(#colorRevenue)" 
-                            radius={[8, 8, 0, 0]}
+                            radius={[0, 0, 0, 0]}
                             maxBarSize={60}
                         />
                     </BarChart>
                 </ResponsiveContainer>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100">
+            <div className="grid grid-cols-2 gap-8 mt-8 pt-8 border-t border-gray-200">
                 <div className="text-center">
-                    <p className="text-2xl font-bold text-black">
+                    <p className="text-3xl font-light text-black">
                         ${avgRevenue.toLocaleString()}
                     </p>
-                    <p className="text-sm text-gray-500 mt-1">Avg Daily Revenue</p>
+                    <p className="text-xs text-gray-500 mt-2 font-light">Avg Daily Revenue</p>
                 </div>
                 <div className="text-center">
-                    <p className="text-2xl font-bold text-black">
+                    <p className="text-3xl font-light text-black">
                         {chartData.length}
                     </p>
-                    <p className="text-sm text-gray-500 mt-1">Days Tracked</p>
+                    <p className="text-xs text-gray-500 mt-2 font-light">Days Tracked</p>
                 </div>
             </div>
         </div>

@@ -1,35 +1,26 @@
 import React from 'react';
 
 const StatsCard = ({ title, value, icon, trend, trendValue, color = "green" }) => {
-    const colorClasses = {
-        blue: "bg-linear-to-br from-blue-500 to-blue-600",
-        green: "bg-linear-to-br from-green-500 to-emerald-600",
-        purple: "bg-linear-to-br from-purple-500 to-purple-600",
-        orange: "bg-linear-to-br from-orange-500 to-orange-600",
-        red: "bg-linear-to-br from-red-500 to-red-600",
-        neutral: "bg-gray-100 text-gray-700"
-    };
-
     return (
-        <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-gray-200">
-            <div className="flex items-center justify-between">
+        <div className="bg-white p-8 border border-gray-200 hover:border-black transition-colors duration-300">
+            <div className="flex items-start justify-between">
                 <div className="flex-1">
-                    <p className="text-sm font-semibold text-black uppercase tracking-wider">
+                    <p className="text-xs font-light text-gray-500 uppercase tracking-widest">
                         {title}
                     </p>
-                    <p className="mt-2 text-3xl font-bold text-black">
+                    <p className="mt-4 text-4xl font-light text-black">
                         {value}
                     </p>
                     {trend && (
-                        <div className="mt-2 flex items-center text-sm">
-                            <span className={`font-semibold ${trend === 'up' ? 'text-black' : 'text-red-600'}`}>
+                        <div className="mt-4 flex items-center gap-2 text-sm">
+                            <span className={`font-light ${trend === 'up' ? 'text-black' : 'text-gray-400'}`}>
                                 {trend === 'up' ? '↗' : '↘'} {trendValue}
                             </span>
-                            <span className="ml-2 text-gray-500">vs last month</span>
+                            <span className="text-gray-400 font-light">vs last month</span>
                         </div>
                     )}
                 </div>
-                <div className={color === 'neutral' ? `${colorClasses[color]} p-4 rounded-full text-gray-700 text-2xl shadow` : `${colorClasses[color]} p-4 rounded-full text-white text-2xl shadow-lg`}>
+                <div className="text-4xl opacity-60">
                     {icon}
                 </div>
             </div>

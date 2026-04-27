@@ -29,20 +29,20 @@ const SalesChart = ({ data = [] }) => {
     const chartData = data.length > 0 ? data : defaultData;
 
     return (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-            <div className="flex justify-between items-center mb-6">
+        <div className="bg-white p-8 border border-gray-200 hover:border-black transition-colors duration-300">
+            <div className="flex justify-between items-start mb-8">
                 <div>
-                    <h3 className="text-lg font-bold text-black">Sales & Orders Trend</h3>
-                    <p className="text-sm text-gray-500 mt-1">Last 30 days performance</p>
+                    <h3 className="text-lg font-light text-black tracking-wide">Sales & Orders Trend</h3>
+                    <p className="text-xs text-gray-500 mt-2 font-light">Last 30 days performance</p>
                 </div>
-                <div className="flex gap-4 text-sm">
+                <div className="flex gap-6 text-sm">
                     <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-                        <span className="text-gray-600">Sales</span>
+                        <div className="w-2 h-2 bg-gray-800"></div>
+                        <span className="text-gray-500 font-light">Sales</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-                        <span className="text-gray-600">Orders</span>
+                        <div className="w-2 h-2 bg-gray-400"></div>
+                        <span className="text-gray-500 font-light">Orders</span>
                     </div>
                 </div>
             </div>
@@ -52,23 +52,23 @@ const SalesChart = ({ data = [] }) => {
                     <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                         <defs>
                             <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#6b7280" stopOpacity={0.25}/>
-                                <stop offset="95%" stopColor="#6b7280" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#1f2937" stopOpacity={0.15}/>
+                                <stop offset="95%" stopColor="#1f2937" stopOpacity={0}/>
                             </linearGradient>
                             <linearGradient id="colorOrders" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#9CA3AF" stopOpacity={0.18}/>
+                                <stop offset="5%" stopColor="#9CA3AF" stopOpacity={0.12}/>
                                 <stop offset="95%" stopColor="#9CA3AF" stopOpacity={0}/>
                             </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                        <CartesianGrid strokeDasharray="0" stroke="#f3f4f6" />
                         <XAxis 
                             dataKey="date" 
-                            tick={{ fontSize: 12, fill: '#6b7280' }}
+                            tick={{ fontSize: 12, fill: '#9ca3af' }}
                             tickLine={false}
                             axisLine={{ stroke: '#e5e7eb' }}
                         />
                         <YAxis 
-                            tick={{ fontSize: 12, fill: '#6b7280' }}
+                            tick={{ fontSize: 12, fill: '#9ca3af' }}
                             tickLine={false}
                             axisLine={{ stroke: '#e5e7eb' }}
                         />
@@ -76,7 +76,7 @@ const SalesChart = ({ data = [] }) => {
                         <Area 
                             type="monotone" 
                             dataKey="sales" 
-                            stroke="#374151" 
+                            stroke="#1f2937" 
                             strokeWidth={2}
                             fillOpacity={1} 
                             fill="url(#colorSales)" 
@@ -84,7 +84,7 @@ const SalesChart = ({ data = [] }) => {
                         <Area 
                             type="monotone" 
                             dataKey="orders" 
-                            stroke="#6B7280" 
+                            stroke="#9CA3AF" 
                             strokeWidth={2}
                             fillOpacity={1} 
                             fill="url(#colorOrders)" 
@@ -93,18 +93,18 @@ const SalesChart = ({ data = [] }) => {
                 </ResponsiveContainer>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100">
+            <div className="grid grid-cols-2 gap-8 mt-8 pt-8 border-t border-gray-200">
                 <div className="text-center">
-                    <p className="text-2xl font-bold text-black">
+                    <p className="text-3xl font-light text-black">
                         ${chartData.reduce((sum, d) => sum + d.sales, 0).toLocaleString()}
                     </p>
-                    <p className="text-sm text-gray-500 mt-1">Total Sales</p>
+                    <p className="text-xs text-gray-500 mt-2 font-light">Total Sales</p>
                 </div>
                 <div className="text-center">
-                    <p className="text-2xl font-bold text-black">
+                    <p className="text-3xl font-light text-black">
                         {chartData.reduce((sum, d) => sum + d.orders, 0)}
                     </p>
-                    <p className="text-sm text-gray-500 mt-1">Total Orders</p>
+                    <p className="text-xs text-gray-500 mt-2 font-light">Total Orders</p>
                 </div>
             </div>
         </div>

@@ -53,25 +53,25 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
 
       {/* Modal */}
       <div className="flex min-h-full items-center justify-center p-4">
-        <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl">
+        <div className="relative bg-white border border-gray-200 w-full max-w-2xl">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-900">
+          <div className="flex items-center justify-between p-8 border-b border-gray-200">
+            <h2 className="text-2xl font-light text-black tracking-wide">
               {editData ? 'Edit Category' : 'Add New Category'}
             </h2>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 border border-gray-200 hover:border-black hover:bg-black hover:text-white transition-colors"
             >
-              <X className="w-5 h-5 text-gray-500" />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          <form onSubmit={handleSubmit} className="p-8 space-y-8">
             {/* Category Name */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
                 Category Name *
               </label>
               <input
@@ -81,13 +81,13 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
                 onChange={handleChange}
                 required
                 placeholder="e.g., Electronics, Fashion, Food"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all"
+                className="w-full px-4 py-3 border border-gray-200 focus:border-black outline-none transition-colors bg-white text-black font-light"
               />
             </div>
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
                 Description
               </label>
               <textarea
@@ -96,18 +96,18 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
                 onChange={handleChange}
                 rows="4"
                 placeholder="Brief description of the category..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all resize-none"
+                className="w-full px-4 py-3 border border-gray-200 focus:border-black outline-none transition-colors bg-white text-black font-light resize-none"
               />
             </div>
 
             {/* Image Upload */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
                 Category Image
               </label>
               <div className="flex items-start gap-4">
                 {/* Preview */}
-                <div className="w-32 h-32 border-2 border-dashed border-gray-300 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center relative">
+                <div className="w-32 h-32 border border-gray-200 overflow-hidden bg-white flex items-center justify-center relative">
                   {imagePreview ? (
                     <Image 
                       src={imagePreview} 
@@ -122,9 +122,9 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
 
                 {/* Upload Button */}
                 <div className="flex-1">
-                  <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-3 bg-green-50 text-black rounded-lg hover:bg-green-100 transition-colors">
+                  <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-3 bg-white border border-gray-200 text-black hover:border-black hover:bg-black hover:text-white transition-all font-light">
                     <Upload className="w-5 h-5" />
-                    <span className="font-medium">Upload Image</span>
+                    <span className="font-light">Upload Image</span>
                     <input
                       type="file"
                       accept="image/*"
@@ -132,7 +132,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
                       className="hidden"
                     />
                   </label>
-                  <p className="text-xs text-gray-500 mt-2">
+                  <p className="text-xs text-gray-500 font-light mt-3">
                     Recommended: 800x800px, Max 2MB
                   </p>
                 </div>
@@ -140,10 +140,10 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
             </div>
 
             {/* Color and Status Row */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-6">
               {/* Color Picker */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
                   Theme Color
                 </label>
                 <div className="flex items-center gap-3">
@@ -152,27 +152,27 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
                     name="color"
                     value={formData.color}
                     onChange={handleChange}
-                    className="w-16 h-12 rounded-lg cursor-pointer border border-gray-300"
+                    className="w-16 h-12 cursor-pointer border border-gray-200"
                   />
                   <input
                     type="text"
                     value={formData.color}
                     onChange={(e) => setFormData(prev => ({ ...prev, color: e.target.value }))}
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                    className="flex-1 px-4 py-3 border border-gray-200 focus:border-black outline-none transition-colors bg-white text-black font-light"
                   />
                 </div>
               </div>
 
               {/* Status */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
                   Status
                 </label>
                 <select
                   name="status"
                   value={formData.status}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none bg-white"
+                  className="w-full px-4 py-3 border border-gray-200 focus:border-black outline-none transition-colors bg-white text-black font-light"
                 >
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
@@ -181,17 +181,17 @@ const AddCategoryModal = ({ isOpen, onClose, onSubmit, editData = null }) => {
             </div>
 
             {/* Actions */}
-            <div className="flex items-center gap-3 pt-4">
+            <div className="flex items-center gap-3 pt-6 border-t border-gray-200">
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
+                className="flex-1 px-6 py-3 border border-gray-200 text-black hover:border-black hover:bg-black hover:text-white transition-all font-light"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="flex-1 px-6 py-3 bg-linear-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 font-medium shadow-lg shadow-green-500/30 transition-all"
+                className="flex-1 px-6 py-3 bg-black text-white hover:bg-gray-900 transition-all font-light"
               >
                 {editData ? 'Update Category' : 'Add Category'}
               </button>

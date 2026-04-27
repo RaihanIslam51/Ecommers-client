@@ -17,8 +17,8 @@ const CategoryCard = ({
   const { name, description, image, productCount, status, color } = category;
 
   return (
-    <div className={`group bg-white rounded-xl border-2 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ${
-      isSelected ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
+    <div className={`group bg-white border overflow-hidden hover:border-black transition-colors duration-300 ${
+      isSelected ? 'border-black ring-1 ring-black' : 'border-gray-200'
     }`}>
       {/* Selection Checkbox */}
       {onSelect && (
@@ -28,13 +28,13 @@ const CategoryCard = ({
             checked={isSelected}
             onChange={onSelect}
             onClick={(e) => e.stopPropagation()}
-            className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer shadow-sm"
+            className="w-5 h-5 border-gray-300 text-black cursor-pointer"
           />
         </div>
       )}
 
       {/* Image Section */}
-      <div className="relative h-48 bg-linear-to-br from-gray-50 to-gray-100 overflow-hidden">
+      <div className="relative h-48 bg-white overflow-hidden">
         {image ? (
           <Image
             src={image} 
@@ -53,10 +53,10 @@ const CategoryCard = ({
         
         {/* Status Badge */}
         <div className="absolute top-3 right-3">
-          <span className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm ${
+          <span className={`px-3 py-1 text-xs font-light uppercase tracking-widest border backdrop-blur-sm ${
             status === 'active' 
-              ? 'bg-green-100/90 text-green-700 border border-green-200' 
-              : 'bg-gray-100/90 text-gray-600 border border-gray-200'
+              ? 'bg-white text-black border-black' 
+              : 'bg-white text-gray-600 border-gray-200'
           }`}>
             {status === 'active' ? 'Active' : 'Inactive'}
           </span>
@@ -65,7 +65,7 @@ const CategoryCard = ({
         {/* Product Count Badge */}
         {!onSelect && (
           <div className="absolute top-3 left-3">
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-600/90 text-white backdrop-blur-sm border border-blue-400">
+            <span className="px-3 py-1 text-xs font-light uppercase tracking-widest bg-black text-white backdrop-blur-sm border border-black">
               {productCount || 0} Products
             </span>
           </div>
@@ -73,33 +73,33 @@ const CategoryCard = ({
       </div>
 
       {/* Content Section */}
-      <div className="p-5">
-        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-1">
+      <div className="p-6 border-t border-gray-200">
+        <h3 className="text-lg font-light text-black mb-2 line-clamp-1 tracking-wide">
           {name}
         </h3>
-        <p className="text-sm text-gray-600 line-clamp-2 min-h-10">
+        <p className="text-sm text-gray-600 font-light line-clamp-2 min-h-10">
           {description || 'No description available'}
         </p>
 
         {/* Action Buttons */}
-        <div className="mt-4 flex items-center gap-2">
+        <div className="mt-6 pt-4 border-t border-gray-200 flex items-center gap-2">
           <button
             onClick={() => onView(category)}
-            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-50 text-black rounded-lg hover:bg-green-100 transition-colors duration-200"
+            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-white border border-gray-200 text-black hover:border-black hover:bg-black hover:text-white transition-all duration-200 font-light text-sm"
           >
             <Eye className="w-4 h-4" />
-            <span className="text-sm font-medium">View</span>
+            <span>View</span>
           </button>
           <button
             onClick={() => onEdit(category)}
-            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-50 text-black rounded-lg hover:bg-green-100 transition-colors duration-200"
+            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-white border border-gray-200 text-black hover:border-black hover:bg-black hover:text-white transition-all duration-200 font-light text-sm"
           >
             <Pencil className="w-4 h-4" />
-            <span className="text-sm font-medium">Edit</span>
+            <span>Edit</span>
           </button>
           <button
             onClick={() => onDelete(category)}
-            className="px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors duration-200"
+            className="px-3 py-2 bg-white border border-gray-200 text-black hover:border-black hover:bg-black hover:text-white transition-all duration-200 font-light"
           >
             <Trash2 className="w-4 h-4" />
           </button>

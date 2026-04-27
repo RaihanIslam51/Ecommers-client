@@ -43,13 +43,13 @@ const CustomerAvatar = ({ name, image, size = 'md' }) => {
 
     if (image) {
         return (
-            <div className={`${sizeClasses[size]} rounded-full overflow-hidden relative`}>
+            <div className={`${sizeClasses[size]} overflow-hidden relative`}>
                 <Image
                     src={image}
                     alt={name}
                     width={sizePixels[size]}
                     height={sizePixels[size]}
-                    className="rounded-full object-cover"
+                    className="object-cover"
                 />
             </div>
         );
@@ -57,7 +57,7 @@ const CustomerAvatar = ({ name, image, size = 'md' }) => {
 
     return (
         <div 
-            className={`${sizeClasses[size]} ${getColorFromName(name)} rounded-full flex items-center justify-center text-black font-semibold`}
+            className={`${sizeClasses[size]} ${getColorFromName(name)} flex items-center justify-center text-black font-light`}
         >
             {getInitials(name)}
         </div>

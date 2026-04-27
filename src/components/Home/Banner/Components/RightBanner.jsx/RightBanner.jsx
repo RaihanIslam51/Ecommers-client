@@ -21,11 +21,11 @@ const DEFAULT_BANNER = {
  * Loading Skeleton for Banner
  */
 const BannerSkeleton = () => (
-  <div className="relative w-full h-64 md:h-full bg-linear-to-br from-gray-100 to-gray-200 rounded-xl overflow-hidden animate-pulse">
+  <div className="relative w-full h-64 md:h-full bg-gradient-to-br from-[#f5f3f0] via-[#fafaf8] to-[#f0ede6] overflow-hidden border border-[#e8e6e0]">
     <div className="absolute inset-0 flex items-center justify-center">
       <div className="relative">
-        <div className="w-16 h-16 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin" />
-        <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-gray-600 rounded-full animate-spin animation-delay-150" />
+        <div className="w-16 h-16 border-4 border-[#e8e6e0] border-t-[#1a1a1a] rounded-full animate-spin" />
+        <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-[#666] rounded-full animate-spin animation-delay-150" />
       </div>
     </div>
   </div>
@@ -35,35 +35,38 @@ const BannerSkeleton = () => (
  * Banner Content Overlay Component
  */
 const BannerContent = ({ banner }) => (
-  <div className="relative z-10 flex flex-col justify-end h-full px-8 md:px-12 lg:px-16 pb-10 md:pb-14">
+  <div className="relative z-10 flex flex-col justify-end h-full px-8 md:px-12 lg:px-16 pb-8 md:pb-12 lg:pb-16">
     {/* Subtitle tag */}
     {/* {(banner.subtitle || DEFAULT_BANNER.subtitle) && (
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70 mb-3">
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 mb-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>
         {banner.subtitle || DEFAULT_BANNER.subtitle}
       </p>
     )} */}
 
     {/* Main Heading */}
-    {/* <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 leading-tight tracking-tight">
-      {banner.title || DEFAULT_BANNER.title}
-    </h2> */}
+    {/* {(banner.title || DEFAULT_BANNER.title) && (
+      <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-5 leading-tight tracking-[-0.02em]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+        {banner.title || DEFAULT_BANNER.title}
+      </h2>
+    )} */}
 
     {/* Description */}
-    {/* {(banner.description || DEFAULT_BANNER.description) && (
-      <p className="text-sm md:text-base text-white/75 mb-7 max-w-md leading-relaxed">
+    {(banner.description || DEFAULT_BANNER.description) && (
+      <p className="text-sm md:text-base text-white/70 mb-8 max-w-lg leading-relaxed" style={{ fontFamily: "'DM Sans', sans-serif" }}>
         {banner.description || DEFAULT_BANNER.description}
       </p>
-    )} */}
+    )}
 
     {/* CTA */}
     {(banner.buttonText || DEFAULT_BANNER.buttonText) && (
       <Link
         href={banner.buttonLink || DEFAULT_BANNER.buttonLink}
-        className="inline-flex items-center gap-2 bg-white text-black px-7 py-3 text-sm font-semibold tracking-wide hover:bg-black hover:text-white transition-colors duration-300 w-max"
+        className="inline-flex items-center gap-3 bg-white text-black px-7 py-3 text-xs font-semibold tracking-[0.1em] uppercase hover:bg-[#1a1a1a] hover:text-white transition-all duration-300 w-max shadow-lg hover:shadow-xl transform hover:scale-105"
+        style={{ fontFamily: "'DM Sans', sans-serif" }}
       >
         <span>{banner.buttonText || DEFAULT_BANNER.buttonText}</span>
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
         </svg>
       </Link>
     )}
@@ -99,12 +102,12 @@ const RightBanner = () => {
         src={displayBanner.image}
         alt={displayBanner.title || "Banner image"}
         fill
-        className="object-cover"
+        className="object-cover transition-transform duration-500 hover:scale-105"
         priority
         sizes="(max-width: 768px) 100vw, 66vw"
       />
-      {/* Gradient overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+      {/* Premium Gradient overlay for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
       <BannerContent banner={displayBanner} />
     </div>
   );

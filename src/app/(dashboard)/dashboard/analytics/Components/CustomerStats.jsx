@@ -2,7 +2,7 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
-const COLORS = ['#10b981', '#059669', '#047857'];
+const COLORS = ['#1f2937', '#4b5563', '#6b7280'];
 
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -31,15 +31,15 @@ const CustomerStats = ({ segments = [], statusData = [] }) => {
     const orderStatus = statusData.length > 0 ? statusData : defaultStatusData;
     const totalCustomers = customerSegments.reduce((sum, s) => sum + s.value, 0);
 
-    const STATUS_COLORS = ['#eab308', '#10b981', '#059669', '#047857', '#ef4444'];
+    const STATUS_COLORS = ['#d1d5db', '#9ca3af', '#6b7280', '#4b5563', '#1f2937'];
 
     return (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-            <h3 className="text-lg font-bold text-gray-800 mb-6">Customer Insights</h3>
+        <div className="bg-white p-8 border border-gray-200 hover:border-black transition-colors duration-300">
+            <h3 className="text-lg font-light text-black mb-8 tracking-wide">Customer Insights</h3>
             
             {/* Customer Segments Pie Chart */}
-            <div className="mb-6">
-                <h4 className="text-sm font-semibold text-gray-600 mb-3">Customer Segments</h4>
+            <div className="mb-8">
+                <h4 className="text-sm font-light text-gray-600 mb-4 tracking-wide">Customer Segments</h4>
                 <ResponsiveContainer width="100%" height={180}>
                     <PieChart>
                         <Pie
@@ -60,23 +60,23 @@ const CustomerStats = ({ segments = [], statusData = [] }) => {
                 </ResponsiveContainer>
                 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-3 gap-2 mt-4">
+                <div className="grid grid-cols-3 gap-2 mt-6">
                     {customerSegments.map((segment, index) => (
-                        <div key={index} className="text-center p-2 rounded-lg bg-gray-50">
+                        <div key={index} className="text-center p-3 border border-gray-200 hover:border-black transition-colors">
                             <div 
-                                className="w-3 h-3 rounded-full mx-auto mb-1" 
+                                className="w-2 h-2 rounded-full mx-auto mb-2" 
                                 style={{ backgroundColor: COLORS[index % COLORS.length] }}
                             ></div>
-                            <p className="text-xs font-semibold text-gray-800">{segment.value}</p>
-                            <p className="text-xs text-gray-500 truncate">{segment.name}</p>
+                            <p className="text-sm font-light text-black">{segment.value}</p>
+                            <p className="text-xs text-gray-500 font-light truncate mt-1">{segment.name}</p>
                         </div>
                     ))}
                 </div>
             </div>
 
             {/* Order Status Distribution */}
-            <div className="mb-4">
-                <h4 className="text-sm font-semibold text-gray-600 mb-3">Order Status</h4>
+            <div className="mb-8">
+                <h4 className="text-sm font-light text-gray-600 mb-4 tracking-wide">Order Status</h4>
                 <ResponsiveContainer width="100%" height={150}>
                     <PieChart>
                         <Pie
@@ -96,31 +96,31 @@ const CustomerStats = ({ segments = [], statusData = [] }) => {
                 </ResponsiveContainer>
                 
                 {/* Legend */}
-                <div className="grid grid-cols-2 gap-2 mt-3">
+                <div className="grid grid-cols-2 gap-3 mt-4">
                     {orderStatus.slice(0, 4).map((status, index) => (
                         <div key={index} className="flex items-center gap-2">
                             <div 
-                                className="w-2 h-2 rounded-full" 
+                                className="w-2 h-2" 
                                 style={{ backgroundColor: STATUS_COLORS[index % STATUS_COLORS.length] }}
                             ></div>
-                            <span className="text-xs text-gray-600 truncate">{status.name}: {status.value}</span>
+                            <span className="text-xs text-gray-600 font-light truncate">{status.name}: {status.value}</span>
                         </div>
                     ))}
                 </div>
             </div>
 
             {/* Summary Stats */}
-            <div className="pt-4 border-t border-gray-100">
-                <div className="grid grid-cols-2 gap-3">
-                    <div className="text-center p-3 bg-green-50 rounded-lg">
-                        <p className="text-2xl font-bold text-black">{totalCustomers}</p>
-                        <p className="text-xs text-gray-600 mt-1">Total Customers</p>
+            <div className="pt-8 border-t border-gray-200">
+                <div className="grid grid-cols-2 gap-6">
+                    <div className="text-center">
+                        <p className="text-3xl font-light text-black">{totalCustomers}</p>
+                        <p className="text-xs text-gray-500 mt-2 font-light">Total Customers</p>
                     </div>
-                    <div className="text-center p-3 bg-emerald-50 rounded-lg">
-                        <p className="text-2xl font-bold text-emerald-600">
+                    <div className="text-center">
+                        <p className="text-3xl font-light text-black">
                             {totalCustomers > 0 ? ((customerSegments.find(s => s.name === 'Regular')?.value || 0) / totalCustomers * 100).toFixed(1) : 0}%
                         </p>
-                        <p className="text-xs text-gray-600 mt-1">Retention Rate</p>
+                        <p className="text-xs text-gray-500 mt-2 font-light">Retention Rate</p>
                     </div>
                 </div>
             </div>

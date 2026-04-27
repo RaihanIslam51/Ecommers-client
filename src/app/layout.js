@@ -22,33 +22,33 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   metadataBase: new URL('https://BDmart.com'),
-  title: "Ecommarce website",
+  title: "BDmart - Fashion & Clothing Store",
   description:
-    "Discover fresh, organic vegetables, healthy food items, and ready-to-cook meal packages at KannerKaj.com. Hygienically prepared meal kits, pre-cut vegetables, and healthy food combos delivered fresh to your doorstep.",
+    "Discover the latest fashion trends, premium clothing, and stylish accessories at BDmart.com. Shop men's, women's, and kids' apparel — from casual wear to formal outfits — delivered fast to your doorstep.",
   keywords: [
-    "fresh vegetables",
-    "organic food",
-    "meal kits",
-    "ready to cook",
-    "healthy food",
-    "pre-cut vegetables",
-    "meal packages",
-    "organic produce",
-    "fresh food delivery",
-    "healthy eating",
-    "vegetable delivery",
-    "meal prep",
+    "fashion",
+    "clothing",
+    "men's fashion",
+    "women's fashion",
+    "kids clothing",
+    "casual wear",
+    "formal wear",
+    "trendy outfits",
+    "online clothing store",
+    "affordable fashion",
+    "apparel",
+    "accessories",
     "BDmart",
-    "fresh food marketplace",
+    "fashion marketplace",
   ],
   authors: [{ name: "BDmart Team" }],
   creator: "BDmart",
   publisher: "BDmart",
   robots: "index, follow",
   openGraph: {
-    title: "BDmart.com - Fresh Vegetables & Healthy Meal Kits",
+    title: "BDmart.com - Fashion & Clothing Store",
     description:
-      "Get fresh, organic vegetables, ready-to-cook meal packages, and healthy food combos delivered fresh. Make healthy cooking easy with hygienically prepared meal kits.",
+      "Shop the latest trends in men's, women's, and kids' fashion. Premium quality clothing and accessories delivered fast. Style made simple with BDmart.",
     url: "https://BDmart.com",
     siteName: "BDmart.com",
     images: [
@@ -56,7 +56,7 @@ export const metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "BDmart.com - Fresh & Healthy Foods",
+        alt: "BDmart.com - Fashion & Clothing Store",
       },
     ],
     locale: "en_US",
@@ -64,8 +64,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BDmart.com - Fresh Vegetables & Healthy Meal Kits",
-    description: "Fresh, organic vegetables and ready-to-cook meal packages delivered to your doorstep",
+    title: "BDmart.com - Fashion & Clothing Store",
+    description: "Trendy clothing and accessories for men, women, and kids — delivered to your doorstep.",
     images: ["/og-image.png"],
   },
 };
@@ -80,7 +80,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-green-50 text-gray-900 font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 font-sans`}
+        suppressHydrationWarning
       >
         <SessionProvider>
           <CartProvider>
@@ -98,7 +99,7 @@ export default function RootLayout({ children }) {
                 {/* ========== MAIN CONTENT AREA ========== */}
                 <main className="flex-1 pt-5 md:pt-26 w-full overflow-hidden">
                   {/* Content Container with Professional Spacing */}
-                  <div className="w-full  mx-auto ">
+                  <div className="w-full mx-auto">
                     {children}
                   </div>
                 </main>

@@ -297,82 +297,82 @@ const BannerManagement = () => {
   const rightBanners = banners.filter(b => b.position === 'right');
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-white p-4 md:p-6 lg:p-8">
       <div className="w-full container mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="bg-white border border-gray-200 p-8 mb-12">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">Banner Management</h1>
-              <p className="text-gray-600">Manage your homepage banners (Left & Right sections)</p>
-              <p className="text-xs text-gray-500 mt-1">
+              <h1 className="text-4xl lg:text-5xl font-light text-black mb-2 tracking-tight">Banner Management</h1>
+              <p className="text-gray-600 font-light">Manage your homepage banners (Left & Right sections)</p>
+              <p className="text-xs text-gray-500 font-light mt-2">
                 📸 Images automatically hosted on ImgBB
               </p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               <button
                 onClick={() => {
                   resetForm();
                   setFormData(prev => ({ ...prev, position: 'left' }));
                   setShowAddModal(true);
                 }}
-                className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                className="flex items-center gap-2 px-6 py-3 bg-black text-white hover:bg-gray-900 transition-all font-light"
               >
                 <FiPlus className="text-xl" />
-                Add Left Banner
+                Left Banner
               </button>
               <button
                 onClick={() => {
                   setFormData(DEFAULT_RIGHT_BANNER);
                   setShowAddModal(true);
                 }}
-                className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                className="flex items-center gap-2 px-6 py-3 bg-black text-white hover:bg-gray-900 transition-all font-light"
               >
                 <FiPlus className="text-xl" />
-                Add Right Banner
+                Right Banner
               </button>
             </div>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white border border-gray-200 hover:border-black p-6 transition-colors">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-blue-600 font-medium">Total Banners</p>
-                  <p className="text-2xl font-bold text-blue-900">{banners.length}</p>
+                  <p className="text-xs text-gray-600 font-light uppercase tracking-widest">Total Banners</p>
+                  <p className="text-3xl font-light text-black mt-2">{banners.length}</p>
                 </div>
-                <FiImage className="text-3xl text-blue-600" />
+                <FiImage className="text-3xl text-black opacity-60" />
               </div>
             </div>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+            <div className="bg-white border border-gray-200 hover:border-black p-6 transition-colors">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-black font-medium">Left Banners</p>
-                  <p className="text-2xl font-bold text-green-900">{leftBanners.length}</p>
+                  <p className="text-xs text-gray-600 font-light uppercase tracking-widest">Left Banners</p>
+                  <p className="text-3xl font-light text-black mt-2">{leftBanners.length}</p>
                 </div>
-                <MdOutlineKeyboardArrowLeft className="text-3xl text-black" />
+                <MdOutlineKeyboardArrowLeft className="text-3xl text-black opacity-60" />
               </div>
             </div>
-            <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+            <div className="bg-white border border-gray-200 hover:border-black p-6 transition-colors">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-purple-600 font-medium">Right Banners</p>
-                  <p className="text-2xl font-bold text-purple-900">{rightBanners.length}</p>
+                  <p className="text-xs text-gray-600 font-light uppercase tracking-widest">Right Banners</p>
+                  <p className="text-3xl font-light text-black mt-2">{rightBanners.length}</p>
                 </div>
-                <MdOutlineKeyboardArrowRight className="text-3xl text-purple-600" />
+                <MdOutlineKeyboardArrowRight className="text-3xl text-black opacity-60" />
               </div>
             </div>
           </div>
         </div>
 
         {/* Tabs */}
-        <div className="bg-white rounded-lg shadow-sm mb-6">
+        <div className="bg-white border border-gray-200 mb-8">
           <div className="border-b border-gray-200">
             <nav className="flex gap-4 px-6" aria-label="Tabs">
               <button
                 onClick={() => setActiveTab('all')}
-                className={`py-4 px-6 border-b-2 font-medium text-sm transition-colors ${
+                className={`py-4 px-6 border-b-2 font-light text-sm transition-colors ${
                   activeTab === 'all'
                     ? 'border-black text-black'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
@@ -382,7 +382,7 @@ const BannerManagement = () => {
               </button>
               <button
                 onClick={() => setActiveTab('left')}
-                className={`py-4 px-6 border-b-2 font-medium text-sm transition-colors ${
+                className={`py-4 px-6 border-b-2 font-light text-sm transition-colors ${
                   activeTab === 'left'
                     ? 'border-black text-black'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
@@ -392,7 +392,7 @@ const BannerManagement = () => {
               </button>
               <button
                 onClick={() => setActiveTab('right')}
-                className={`py-4 px-6 border-b-2 font-medium text-sm transition-colors ${
+                className={`py-4 px-6 border-b-2 font-light text-sm transition-colors ${
                   activeTab === 'right'
                     ? 'border-black text-black'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
@@ -410,10 +410,12 @@ const BannerManagement = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
           </div>
         ) : filteredBanners.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm p-12 text-center">
+          <div className="bg-white border border-gray-200 p-16 text-center">
             <FiImage className="text-6xl text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No Banners Found</h3>
-            <p className="text-gray-600 mb-6">
+            <h3 className="text-xl font-light text-black mb-2">{activeTab === 'all' 
+                ? 'No Banners Found' 
+                : `No ${activeTab} banners found`}</h3>
+            <p className="text-gray-600 font-light mb-6">
               {activeTab === 'all' 
                 ? 'Create your first banner to get started'
                 : `No ${activeTab} banners found. Create one now!`}
@@ -423,16 +425,16 @@ const BannerManagement = () => {
                 resetForm();
                 setShowAddModal(true);
               }}
-              className="inline-flex items-center gap-2 px-6 py-3 text-white rounded-lg hover:bg-gray-800 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-black text-black hover:bg-black hover:text-white transition-all font-light"
             >
               <FiPlus className="text-xl" />
               Add New Banner
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {filteredBanners.map((banner) => (
-              <div key={banner._id} className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div key={banner._id} className="bg-white border border-gray-200 hover:border-black transition-colors overflow-hidden">
                 {/* Banner Preview */}
                 <div className="relative h-48 bg-gray-100">
                   {banner.image ? (
@@ -450,21 +452,21 @@ const BannerManagement = () => {
                   
                   {/* Position Badge */}
                   <div className="absolute top-3 left-3">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    <span className={`px-3 py-1 border text-xs font-light ${
                       banner.position === 'left'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-purple-100 text-purple-800'
+                        ? 'border-black text-black bg-white'
+                        : 'border-black text-black bg-white'
                     }`}>
-                      {banner.position === 'left' ? 'Left Banner' : 'Right Banner'}
+                      {banner.position === 'left' ? 'Left' : 'Right'}
                     </span>
                   </div>
 
                   {/* Active Status */}
                   <div className="absolute top-3 right-3">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    <span className={`px-3 py-1 border text-xs font-light ${
                       banner.isActive
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-gray-100 text-gray-800'
+                        ? 'border-black text-black bg-white'
+                        : 'border-gray-400 text-gray-400 bg-white'
                     }`}>
                       {banner.isActive ? 'Active' : 'Inactive'}
                     </span>
@@ -473,29 +475,29 @@ const BannerManagement = () => {
 
                 {/* Banner Details */}
                 <div className="p-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-1">{banner.title}</h3>
+                  <h3 className="text-lg font-light text-black mb-1">{banner.title}</h3>
                   {banner.subtitle && (
-                    <p className="text-sm text-gray-600 mb-2">{banner.subtitle}</p>
+                    <p className="text-sm text-gray-600 font-light mb-2">{banner.subtitle}</p>
                   )}
                   {banner.description && (
-                    <p className="text-sm text-gray-500 mb-3 line-clamp-2">{banner.description}</p>
+                    <p className="text-sm text-gray-600 font-light mb-3 line-clamp-2">{banner.description}</p>
                   )}
                   
                   {banner.buttonText && (
                     <div className="mb-4">
-                      <span className="text-xs text-gray-500">Button: </span>
-                      <span className="text-sm font-medium text-gray-900">{banner.buttonText}</span>
+                      <span className="text-xs text-gray-500 font-light">Button: </span>
+                      <span className="text-sm font-light text-black">{banner.buttonText}</span>
                     </div>
                   )}
 
                   {/* Actions */}
-                  <div className="flex items-center gap-2 pt-4 border-t border-gray-100">
+                  <div className="flex items-center gap-2 pt-4 border-t border-gray-200">
                     <button
                       onClick={() => handleToggleActive(banner)}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                      className={`flex items-center gap-2 px-4 py-2 border transition-all font-light text-sm ${
                         banner.isActive
-                          ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                          : 'bg-green-100 text-green-700 hover:bg-green-200'
+                          ? 'border-gray-200 text-black hover:border-black hover:bg-black hover:text-white'
+                          : 'border-black text-black hover:bg-black hover:text-white'
                       }`}
                       title={banner.isActive ? 'Deactivate' : 'Activate'}
                     >
@@ -504,14 +506,14 @@ const BannerManagement = () => {
                     </button>
                     <button
                       onClick={() => handleEdit(banner)}
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-black hover:border-black hover:bg-black hover:text-white transition-all font-light text-sm"
                     >
                       <FiEdit2 />
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(banner._id)}
-                      className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors ml-auto"
+                      className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-black hover:border-black hover:bg-black hover:text-white transition-all font-light text-sm ml-auto"
                     >
                       <FiTrash2 />
                       Delete
@@ -526,17 +528,17 @@ const BannerManagement = () => {
 
       {/* Add/Edit Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+          <div className="bg-white border border-gray-200 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 p-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl font-light text-black">
                   {editingBanner ? 'Edit Banner' : 'Add New Banner'}
                 </h2>
-                <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                <span className={`px-4 py-2 border text-sm font-light ${
                   formData.position === 'left' 
-                    ? 'bg-green-100 text-green-700 border-2 border-green-300' 
-                    : 'bg-purple-100 text-purple-700 border-2 border-purple-300'
+                    ? 'border-black text-black bg-white' 
+                    : 'border-black text-black bg-white'
                 }`}>
                   {formData.position === 'left' ? '← Left Banner' : 'Right Banner →'}
                 </span>
@@ -549,14 +551,14 @@ const BannerManagement = () => {
 
               {/* Image Upload */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs text-gray-600 font-light uppercase tracking-widest mb-3">
                   Banner Image *
                 </label>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
+                <div className="border border-gray-200 p-8 text-center hover:border-black transition-colors">
                   {uploadingImage ? (
                     <div className="py-8">
                       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-3"></div>
-                      <p className="text-sm text-gray-600">Uploading to ImgBB...</p>
+                      <p className="text-sm text-gray-600 font-light">Uploading to ImgBB...</p>
                     </div>
                   ) : formData.image ? (
                     <div className="relative">
@@ -568,23 +570,23 @@ const BannerManagement = () => {
                           className="object-contain"
                         />
                       </div>
-                      <p className="text-xs text-black mb-2">✓ Hosted on ImgBB</p>
+                      <p className="text-xs text-black font-light mb-3">✓ Hosted on ImgBB</p>
                       <button
                         type="button"
                         onClick={() => {
                           setFormData(prev => ({ ...prev, image: '' }));
                           setImageFile(null);
                         }}
-                        className="text-sm text-red-600 hover:text-red-700 font-medium"
+                        className="text-sm text-gray-600 hover:text-black font-light transition-colors"
                       >
                         Remove Image
                       </button>
                     </div>
                   ) : (
                     <div>
-                      <FiImage className="text-5xl text-gray-400 mx-auto mb-3" />
+                      <FiImage className="text-5xl text-gray-300 mx-auto mb-3" />
                       <label className="cursor-pointer">
-                        <span className="text-blue-600 hover:text-blue-700 font-medium">
+                        <span className="text-black hover:text-gray-700 font-light transition-colors">
                           Upload to ImgBB
                         </span>
                         <input
@@ -595,8 +597,8 @@ const BannerManagement = () => {
                           disabled={uploadingImage}
                         />
                       </label>
-                      <p className="text-xs text-gray-500 mt-2">PNG, JPG, GIF up to 10MB</p>
-                      <p className="text-xs text-gray-400 mt-1">Images will be automatically uploaded to ImgBB</p>
+                      <p className="text-xs text-gray-500 font-light mt-2">PNG, JPG, GIF up to 10MB</p>
+                      <p className="text-xs text-gray-400 font-light mt-1">Images will be automatically uploaded to ImgBB</p>
                     </div>
                   )}
                 </div>
@@ -607,7 +609,7 @@ const BannerManagement = () => {
                 <>
                   {/* Title */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-xs text-gray-600 font-light uppercase tracking-widest mb-3">
                       Title *
                     </label>
                     <input
@@ -616,14 +618,14 @@ const BannerManagement = () => {
                       value={formData.title}
                       onChange={handleInputChange}
                       placeholder="e.g., Special Offer!"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-200 focus:border-black focus:outline-none font-light"
                       required
                     />
                   </div>
 
                   {/* Subtitle */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-xs text-gray-600 font-light uppercase tracking-widest mb-3">
                       Subtitle
                     </label>
                     <input
@@ -632,13 +634,13 @@ const BannerManagement = () => {
                       value={formData.subtitle}
                       onChange={handleInputChange}
                       placeholder="e.g., Up to 50% Off"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-200 focus:border-black focus:outline-none font-light"
                     />
                   </div>
 
                   {/* Description */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-xs text-gray-600 font-light uppercase tracking-widest mb-3">
                       Description
                     </label>
                     <textarea
@@ -647,14 +649,14 @@ const BannerManagement = () => {
                       onChange={handleInputChange}
                       placeholder="Banner description..."
                       rows="3"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-200 focus:border-black focus:outline-none font-light"
                     />
                   </div>
 
                   {/* Button Text & Link */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-xs text-gray-600 font-light uppercase tracking-widest mb-3">
                         Button Text
                       </label>
                       <input
@@ -663,11 +665,11 @@ const BannerManagement = () => {
                         value={formData.buttonText}
                         onChange={handleInputChange}
                         placeholder="e.g., Shop Now"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 focus:border-black focus:outline-none font-light"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-xs text-gray-600 font-light uppercase tracking-widest mb-3">
                         Button Link
                       </label>
                       <input
@@ -676,7 +678,7 @@ const BannerManagement = () => {
                         value={formData.buttonLink}
                         onChange={handleInputChange}
                         placeholder="e.g., /products"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 focus:border-black focus:outline-none font-light"
                       />
                     </div>
                   </div>
@@ -684,7 +686,7 @@ const BannerManagement = () => {
                   {/* Order & Active Status */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-xs text-gray-600 font-light uppercase tracking-widest mb-3">
                         Display Order
                       </label>
                       <input
@@ -693,23 +695,23 @@ const BannerManagement = () => {
                         value={formData.order}
                         onChange={handleInputChange}
                         min="0"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 focus:border-black focus:outline-none font-light"
                       />
-                      <p className="text-xs text-gray-500 mt-1">Lower numbers appear first</p>
+                      <p className="text-xs text-gray-500 font-light mt-2">Lower numbers appear first</p>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-xs text-gray-600 font-light uppercase tracking-widest mb-3">
                         Status
                       </label>
-                      <label className="flex items-center gap-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                      <label className="flex items-center gap-3 p-4 border border-gray-200 cursor-pointer hover:border-black transition-colors">
                         <input
                           type="checkbox"
                           name="isActive"
                           checked={formData.isActive}
                           onChange={handleInputChange}
-                          className="w-5 h-5 text-black rounded"
+                          className="w-5 h-5 text-black"
                         />
-                        <span className="font-medium">Active (Show on website)</span>
+                        <span className="font-light text-black">Active (Show on website)</span>
                       </label>
                     </div>
                   </div>
@@ -725,14 +727,14 @@ const BannerManagement = () => {
                     resetForm();
                   }}
                   disabled={uploadingImage}
-                  className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 px-6 py-3 border border-gray-200 text-black hover:border-black hover:bg-black hover:text-white transition-all font-light disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={uploadingImage || !formData.image}
-                  className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 px-6 py-3 bg-black text-white hover:bg-gray-900 transition-all font-light disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {uploadingImage ? 'Uploading...' : editingBanner ? 'Update Banner' : 'Create Banner'}
                 </button>

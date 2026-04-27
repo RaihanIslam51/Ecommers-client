@@ -100,29 +100,29 @@ const SupportModal = ({ isOpen, onClose }) => {
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="relative bg-white w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white text-black p-6 rounded-t-2xl border-b border-gray-200">
+        <div className="sticky top-0 bg-white text-black p-8 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold">Customer Support</h2>
-              <p className="text-black text-sm mt-1">আমরা আপনাকে সাহায্য করতে প্রস্তুত</p>
+              <h2 className="text-2xl font-light tracking-wide">Customer Support</h2>
+              <p className="text-gray-500 text-sm mt-2 font-light">আমরা আপনাকে সাহায্য করতে প্রস্তুত</p>
             </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 hover:bg-gray-50 rounded transition-colors"
             >
-              <IoClose size={24} className="text-black" />
+              <IoClose size={24} className="text-gray-600" />
             </button>
           </div>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-8 space-y-6">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-black mb-2">
-              <FaUser className="inline mr-2 text-blue-600" />
+            <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
+              <FaUser className="inline mr-2 text-gray-600" />
               Your Name *
             </label>
             <input
@@ -131,15 +131,15 @@ const SupportModal = ({ isOpen, onClose }) => {
               value={formData.name}
               onChange={handleChange}
               placeholder="আপনার নাম লিখুন"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-black"
+              className="w-full px-4 py-3 border border-gray-200 focus:border-black focus:outline-none transition-colors text-black font-light"
               required
             />
           </div>
 
           {/* Phone */}
           <div>
-            <label className="block text-sm font-medium text-black mb-2">
-              <FaPhone className="inline mr-2 text-black" />
+            <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
+              <FaPhone className="inline mr-2 text-gray-600" />
               Phone Number *
             </label>
             <input
@@ -148,15 +148,15 @@ const SupportModal = ({ isOpen, onClose }) => {
               value={formData.phone}
               onChange={handleChange}
               placeholder="01XXXXXXXXX"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-black"
+              className="w-full px-4 py-3 border border-gray-200 focus:border-black focus:outline-none transition-colors text-black font-light"
               required
             />
           </div>
 
           {/* Email (Optional) */}
           <div>
-            <label className="block text-sm font-medium text-black mb-2">
-              <FaEnvelope className="inline mr-2 text-purple-600" />
+            <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
+              <FaEnvelope className="inline mr-2 text-gray-600" />
               Email (Optional)
             </label>
             <input
@@ -165,21 +165,21 @@ const SupportModal = ({ isOpen, onClose }) => {
               value={formData.email}
               onChange={handleChange}
               placeholder="your@email.com"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-black"
+              className="w-full px-4 py-3 border border-gray-200 focus:border-black focus:outline-none transition-colors text-black font-light"
             />
           </div>
 
           {/* Message Type */}
           <div>
-            <label className="block text-sm font-medium text-black mb-2">
-              <FaCommentDots className="inline mr-2 text-orange-600" />
+            <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
+              <FaCommentDots className="inline mr-2 text-gray-600" />
               Message Type
             </label>
             <select
               name="messageType"
               value={formData.messageType}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-black"
+              className="w-full px-4 py-3 border border-gray-200 focus:border-black focus:outline-none transition-colors text-black font-light"
             >
               <option value="complaint">Complaint (অভিযোগ)</option>
               <option value="inquiry">Inquiry (জিজ্ঞাসা)</option>
@@ -190,7 +190,7 @@ const SupportModal = ({ isOpen, onClose }) => {
 
           {/* Message */}
           <div>
-            <label className="block text-sm font-medium text-black mb-2">
+            <label className="block text-xs font-light text-gray-600 mb-3 uppercase tracking-widest">
               Message *
             </label>
             <textarea
@@ -199,27 +199,27 @@ const SupportModal = ({ isOpen, onClose }) => {
               onChange={handleChange}
               placeholder="আপনার complaint/message বিস্তারিত লিখুন..."
               rows="5"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none text-black"
+              className="w-full px-4 py-3 border border-gray-200 focus:border-black focus:outline-none transition-colors resize-none text-black font-light"
               required
             />
-            <p className="text-xs text-black mt-1">
+            <p className="text-xs text-gray-500 mt-2 font-light">
               {formData.message.length} characters
             </p>
           </div>
 
           {/* Submit Button */}
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-6 py-3 border border-gray-300 text-black rounded-lg hover:bg-gray-50 transition-colors font-medium"
+              className="flex-1 px-6 py-3 border border-gray-200 text-black hover:border-black transition-colors font-light"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-900 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex-1 px-6 py-3 bg-black text-white hover:bg-gray-900 transition-all font-light disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
@@ -237,12 +237,12 @@ const SupportModal = ({ isOpen, onClose }) => {
         </form>
 
         {/* Footer Info */}
-        <div className="px-6 pb-6">
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
-            <p className="text-sm text-black">
-              <strong>📞 Emergency Contact:</strong> +880 1956-486761
+        <div className="px-8 pb-8">
+          <div className="bg-white p-6 border border-gray-200">
+            <p className="text-sm text-black font-light">
+              <strong className="font-light">📞 Emergency Contact:</strong> +880 1956-486761
             </p>
-            <p className="text-sm text-black mt-1">
+            <p className="text-sm text-gray-600 mt-2 font-light">
               আমরা সাধারণত ২৪ ঘণ্টার মধ্যে response দিয়ে থাকি
             </p>
           </div>

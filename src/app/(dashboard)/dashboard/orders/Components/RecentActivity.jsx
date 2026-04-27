@@ -8,9 +8,7 @@ const RecentActivity = () => {
             title: 'New order received',
             description: 'Order #ORD-001 placed by John Doe',
             time: '5 minutes ago',
-            icon: '🛍️',
-            iconBg: 'bg-green-100',
-            iconColor: 'text-black'
+            icon: '🛍️'
         },
         {
             id: 2,
@@ -18,9 +16,7 @@ const RecentActivity = () => {
             title: 'Order shipped',
             description: 'Order #ORD-002 has been shipped',
             time: '1 hour ago',
-            icon: '🚚',
-            iconBg: 'bg-blue-100',
-            iconColor: 'text-blue-600'
+            icon: '🚚'
         },
         {
             id: 3,
@@ -28,9 +24,7 @@ const RecentActivity = () => {
             title: 'Order delivered',
             description: 'Order #ORD-003 delivered successfully',
             time: '2 hours ago',
-            icon: '✅',
-            iconBg: 'bg-purple-100',
-            iconColor: 'text-purple-600'
+            icon: '✅'
         },
         {
             id: 4,
@@ -38,9 +32,7 @@ const RecentActivity = () => {
             title: 'Order cancelled',
             description: 'Order #ORD-004 cancelled by customer',
             time: '3 hours ago',
-            icon: '❌',
-            iconBg: 'bg-red-100',
-            iconColor: 'text-red-600'
+            icon: '❌'
         },
         {
             id: 5,
@@ -48,15 +40,41 @@ const RecentActivity = () => {
             title: 'Payment received',
             description: 'Payment for Order #ORD-005 confirmed',
             time: '4 hours ago',
-            icon: '💰',
-            iconBg: 'bg-yellow-100',
-            iconColor: 'text-yellow-600'
+            icon: '💰'
         }
     ];
 
     return (
-       <div>
-        
+       <div className="bg-white border border-gray-200 p-8">
+           <h2 className="text-2xl font-light text-black mb-6 tracking-wide">Recent Activity</h2>
+           
+           <div className="space-y-0">
+               {activities.map((activity, idx) => (
+                   <div
+                       key={activity.id}
+                       className={`pb-6 pt-6 flex gap-4 ${idx !== activities.length - 1 ? 'border-b border-gray-200' : ''}`}
+                   >
+                       {/* Icon */}
+                       <div className="text-2xl opacity-60 flex-shrink-0">
+                           {activity.icon}
+                       </div>
+
+                       {/* Content */}
+                       <div className="flex-1 min-w-0">
+                           <h3 className="font-light text-black text-sm">{activity.title}</h3>
+                           <p className="text-xs text-gray-600 font-light mt-1">{activity.description}</p>
+                           <p className="text-xs text-gray-400 font-light mt-2">{activity.time}</p>
+                       </div>
+                   </div>
+               ))}
+           </div>
+
+           {/* View All Link */}
+           <div className="mt-6 pt-6 border-t border-gray-200">
+               <button className="text-xs font-light text-black hover:text-gray-600 uppercase tracking-widest transition-colors">
+                   View All Activity →
+               </button>
+           </div>
        </div>
     );
 };

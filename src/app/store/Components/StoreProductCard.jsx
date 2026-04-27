@@ -55,57 +55,75 @@ const StoreProductCard = ({ product, viewType = 'grid' }) => {
   if (viewType === 'list') {
     return (
       <div
-        className="group relative flex flex-col sm:flex-row bg-white border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-300"
+        className="group relative flex flex-col sm:flex-row bg-[#fafaf8] border border-[#e8e6e0] overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.10)] hover:border-[#c8c4ba]"
         onClick={() => router.push(`/products/${productId}`)}
       >
-        <div className="relative w-full sm:w-48 h-48 shrink-0 bg-gray-50">
-          <Image src={productImage} alt={productName} fill className="object-cover" sizes="(max-width: 640px) 100vw, 192px" />
+        <div className="relative w-full sm:w-48 h-48 shrink-0 bg-[#f0ede6] overflow-hidden">
+          <Image 
+            src={productImage} 
+            alt={productName} 
+            fill 
+            className="object-cover transition-transform duration-[600ms] cubic-bezier(0.25, 0.46, 0.45, 0.94) group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, 192px" 
+          />
           {discountPercent > 0 && (
-            <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full z-10">
-              -{discountPercent}%
+            <span className="absolute top-3 left-3 bg-[#1a1a1a] text-white text-[10px] font-medium tracking-[0.08em] px-[9px] py-[3px] z-10" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              −{discountPercent}%
             </span>
           )}
           {stock === 0 && (
-            <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-10">
-              <span className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Out of Stock</span>
+            <div className="absolute inset-0 bg-[#fafaf8]/75 backdrop-blur-sm flex items-center justify-center z-10">
+              <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#888] border border-[#ccc] px-[14px] py-[5px] bg-white/80" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                Out of Stock
+              </span>
             </div>
           )}
         </div>
         <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between">
           <div>
-            <p className="text-xs font-semibold text-black line-clamp-2 leading-snug mb-2">{productName}</p>
-            <p className="text-xs text-gray-500 line-clamp-2 mb-3">{productDescription}</p>
-            <div className="flex items-center gap-1.5">
-              <span className="text-base font-bold text-black">${salePrice.toFixed(2)}</span>
+            <p className="text-[15px] font-medium text-[#1a1a1a] line-clamp-2 leading-[1.3] tracking-[0.01em] mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              {productName}
+            </p>
+            <p className="text-xs text-[#888] line-clamp-2 mb-3">{productDescription}</p>
+            <div className="flex items-baseline gap-2">
+              <span className="text-sm font-medium text-[#1a1a1a] tracking-[0.01em]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                ${salePrice.toFixed(2)}
+              </span>
               {originalPrice > salePrice && (
-                <span className="text-xs text-gray-400 line-through">${originalPrice.toFixed(2)}</span>
+                <span className="text-[11px] text-[#aaa] line-through" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  ${originalPrice.toFixed(2)}
+                </span>
               )}
               {discountPercent > 0 && (
-                <span className="text-xs font-semibold text-red-500">-{discountPercent}%</span>
+                <span className="text-[10px] font-medium text-[#b94040]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  −{discountPercent}%
+                </span>
               )}
             </div>
           </div>
-          <div className="flex gap-1.5 mt-3">
+          <div className="flex gap-2 mt-3">
             <button
               onClick={handleAddToCart}
               disabled={stock === 0 || isAddingToCart}
-              className="flex-1 py-2 text-xs font-semibold text-black border border-black rounded-md hover:bg-black hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex-1 py-1.5 text-[10px] font-medium tracking-[0.1em] uppercase text-[#1a1a1a] border border-[#1a1a1a] rounded-lg transition-all duration-250 disabled:opacity-35 disabled:cursor-not-allowed hover:bg-[#1a1a1a] hover:text-[#fafaf8]"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               {isAddingToCart ? 'Adding…' : 'Add to Cart'}
             </button>
             {stock > 0 && (
               <button
                 onClick={handleBuyNow}
-                className="flex-1 py-2 text-xs font-semibold bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+                className="flex-1 py-1.5 text-[10px] font-medium tracking-[0.1em] uppercase bg-[#1a1a1a] text-[#fafaf8] rounded-lg transition-all duration-250 hover:bg-[#333]"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
               >
                 Buy Now
               </button>
             )}
             <button
               onClick={handleAddToWishlist}
-              className="px-3 py-2 border border-gray-200 rounded-md hover:border-black transition-colors"
+              className="px-3 py-1.5 border border-[#e8e6e0] rounded-lg hover:border-[#1a1a1a] transition-colors"
             >
-              <FaHeart className={`text-xs ${isInWishlist(productId) ? 'text-red-500' : 'text-gray-400'}`} />
+              <FaHeart className={`text-xs transition-colors ${isInWishlist(productId) ? 'text-[#c0392b]' : 'text-[#888]'}`} />
             </button>
           </div>
         </div>
@@ -117,78 +135,95 @@ const StoreProductCard = ({ product, viewType = 'grid' }) => {
   return (
     <div
       onClick={() => router.push(`/products/${productId}`)}
-      className="relative group flex flex-col bg-white rounded-xl border border-gray-200 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
-      style={{ height: '320px' }}
+      className="group relative flex flex-col bg-[#fafaf8] border border-[#e8e6e0] overflow-hidden cursor-pointer h-[360px] transition-all duration-400 hover:shadow-[0_12px_40px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 hover:border-[#c8c4ba]"
     >
-      {/* IMAGE — 75% */}
-      <div className="relative w-full" style={{ flex: '0 0 75%' }}>
+      {/* IMAGE ZONE — 72% */}
+      <div className="relative flex-none h-[72%] overflow-hidden bg-[#f0ede6]">
         <Image
           src={productImage}
           alt={productName}
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-[600ms] cubic-bezier(0.25, 0.46, 0.45, 0.94) group-hover:scale-105"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
 
+        {/* Overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/[0.18] to-transparent opacity-0 transition-opacity duration-400 z-5 group-hover:opacity-100" />
+
         {/* Hover action buttons */}
-        <div className="absolute top-2 right-2 flex flex-col gap-1.5 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
+        <div className="absolute top-3 right-3 flex flex-col gap-[7px] z-20 opacity-0 translate-x-2.5 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
           <button
             onClick={handleAddToWishlist}
             title="Add to Wishlist"
-            className="w-8 h-8 bg-white text-gray-700 hover:text-red-500 rounded-full shadow border border-gray-200 flex items-center justify-center transition-colors"
+            className={`w-[34px] h-[34px] bg-white/[0.92] backdrop-blur-[6px] border border-black/[0.08] rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 ${isInWishlist(productId) ? "text-[#c0392b]" : "text-[#555] hover:text-[#c0392b] hover:bg-white hover:scale-110"}`}
           >
-            <FaHeart className={`text-xs ${isInWishlist(productId) ? 'text-red-500' : ''}`} />
+            <FaHeart style={{ fontSize: 11 }} />
           </button>
           <button
-            onClick={(e) => { e.stopPropagation(); router.push(`/products/${productId}`); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(`/products/${productId}`);
+            }}
             title="View Product"
-            className="w-8 h-8 bg-white text-gray-700 hover:text-blue-500 rounded-full shadow border border-gray-200 flex items-center justify-center transition-colors"
+            className="w-[34px] h-[34px] bg-white/[0.92] backdrop-blur-[6px] border border-black/[0.08] rounded-full flex items-center justify-center cursor-pointer text-[#555] transition-all duration-200 hover:text-[#2563eb] hover:bg-white hover:scale-110"
           >
-            <FaEye className="text-xs" />
+            <FaEye style={{ fontSize: 11 }} />
           </button>
         </div>
 
         {/* Discount badge */}
         {discountPercent > 0 && (
-          <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full z-10">
-            -{discountPercent}%
+          <span className="absolute top-3 left-3 bg-[#1a1a1a] text-white font-medium text-[10px] tracking-[0.08em] px-[9px] py-[3px] z-10" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            −{discountPercent}%
           </span>
         )}
 
         {/* Out of stock overlay */}
         {stock === 0 && (
-          <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-10">
-            <span className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Out of Stock</span>
+          <div className="absolute inset-0 bg-[#fafaf8]/75 backdrop-blur-sm flex items-center justify-center z-15">
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#888] border border-[#ccc] px-[14px] py-[5px] bg-white/80" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              Out of Stock
+            </span>
           </div>
         )}
       </div>
 
-      {/* INFO — 25% */}
-      <div className="flex flex-col justify-center px-3 py-2 gap-1" style={{ flex: '0 0 25%' }}>
-        <p className="text-xs font-semibold text-black line-clamp-1 leading-tight">{productName}</p>
+      {/* INFO ZONE — 28% */}
+      <div className="flex-none h-[28%] flex flex-col justify-center px-[14px] py-[10px] pb-3 gap-1.5 border-t border-[#e8e6e0] bg-[#fafaf8]">
+        <p className="font-serif text-[15px] font-medium text-[#1a1a1a] whitespace-nowrap overflow-hidden text-ellipsis leading-[1.3] tracking-[0.01em]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+          {productName}
+        </p>
 
-        <div className="flex items-center gap-1.5">
-          <span className="text-sm font-bold text-black">${salePrice.toFixed(2)}</span>
+        <div className="flex items-baseline gap-2">
+          <span className="font-medium text-sm text-[#1a1a1a] tracking-[0.01em]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            ${salePrice.toFixed(2)}
+          </span>
           {originalPrice > salePrice && (
-            <span className="text-xs text-gray-400 line-through">${originalPrice.toFixed(2)}</span>
+            <span className="text-[11px] font-normal text-[#aaa] line-through" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              ${originalPrice.toFixed(2)}
+            </span>
           )}
           {discountPercent > 0 && (
-            <span className="ml-auto text-xs font-semibold text-red-500">-{discountPercent}%</span>
+            <span className="text-[10px] font-medium text-[#b94040] ml-auto tracking-[0.04em]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              −{discountPercent}%
+            </span>
           )}
         </div>
 
-        <div className="flex gap-1.5">
+        <div className="flex gap-2 mt-0.5">
           <button
             onClick={handleAddToCart}
             disabled={stock === 0 || isAddingToCart}
-            className="flex-1 py-1 text-xs font-semibold text-black border border-black rounded-md hover:bg-black hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex-1 py-1.5 font-medium text-[10px] tracking-[0.1em] uppercase bg-transparent text-[#1a1a1a] border border-[#1a1a1a] cursor-pointer transition-all duration-250 disabled:opacity-35 disabled:cursor-not-allowed hover:bg-[#1a1a1a] hover:text-[#fafaf8]"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
-            {isAddingToCart ? 'Adding…' : 'Add to Cart'}
+            {isAddingToCart ? "Adding…" : "Add to Cart"}
           </button>
           {stock > 0 && (
             <button
               onClick={handleBuyNow}
-              className="flex-1 py-1 text-xs font-semibold bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+              className="flex-1 py-1.5 font-medium text-[10px] tracking-[0.1em] uppercase bg-[#1a1a1a] text-[#fafaf8] border-none cursor-pointer transition-all duration-250 hover:bg-[#333]"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               Buy Now
             </button>

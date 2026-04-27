@@ -240,39 +240,39 @@ const ProductsPage = () => {
 
   return (
     <div className="min-h-screen bg-white text-black antialiased">
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-12">
       {/* Alert Notification */}
       {alert.show && (
         <div className="fixed top-4 right-4 z-50 animate-slide-in">
           <div
-            className={`px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 ${
+            className={`px-6 py-4 flex items-center gap-3 border ${
               alert.type === 'success'
-                ? 'bg-green-500 text-white'
-                : 'bg-red-500 text-white'
+                ? 'border-green-300 bg-white text-black'
+                : 'border-gray-300 bg-white text-black'
             }`}
           >
             {alert.type === 'success' ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             )}
-            <span className="font-medium">{alert.message}</span>
+            <span className="font-light text-sm">{alert.message}</span>
           </div>
         </div>
       )}
 
       <div className="w-full">
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-2">
+        <div className="mb-12">
+          <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-black">Products Management</h1>
-              <p className="text-gray-600 mt-1">Manage your product inventory</p>
+              <h1 className="text-4xl lg:text-5xl font-light text-black tracking-tight">Products</h1>
+              <p className="text-sm text-gray-500 mt-3 font-light">Manage your product inventory</p>
             </div>
-            <button onClick={handleAddProduct} className="px-6 py-3 border border-gray-200 bg-white text-black rounded-lg flex items-center gap-2 transition-colors shadow-sm hover:bg-gray-50">
+            <button onClick={handleAddProduct} className="px-6 py-2 border border-black bg-white text-black hover:bg-black hover:text-white transition-all duration-300 flex items-center gap-2 font-light">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
@@ -286,9 +286,9 @@ const ProductsPage = () => {
 
         {showForm && (
           <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6">
-                <h2 className="text-2xl font-bold text-black mb-6">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
+            <div className="bg-white max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-8">
+                <h2 className="text-2xl font-light text-black mb-8 tracking-wide">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
                 <ProductForm 
                   product={editingProduct} 
                   onSubmit={handleSubmitProduct} 
@@ -315,13 +315,13 @@ const ProductsPage = () => {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow p-12 text-center">
-            <svg className="w-24 h-24 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-white p-16 text-center border border-gray-200">
+            <svg className="w-24 h-24 mx-auto text-gray-300 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
             </svg>
-            <h3 className="text-xl font-semibold text-black mb-2">No Products Found</h3>
-            <p className="text-gray-600 mb-4">{filters.search || filters.category || filters.stockStatus ? 'Try adjusting your filters' : 'Start by adding your first product'}</p>
-            <button onClick={handleAddProduct} className="px-6 py-2 border border-gray-300 bg-white text-black rounded-lg hover:bg-gray-50 transition-colors">Add Product</button>
+            <h3 className="text-lg font-light text-black mb-3 tracking-wide">No Products Found</h3>
+            <p className="text-gray-500 mb-8 font-light text-sm">{filters.search || filters.category || filters.stockStatus ? 'Try adjusting your filters' : 'Start by adding your first product'}</p>
+            <button onClick={handleAddProduct} className="px-6 py-2 border border-black bg-white text-black hover:bg-black hover:text-white transition-all duration-300 font-light">Add Product</button>
           </div>
         )}
       </div>

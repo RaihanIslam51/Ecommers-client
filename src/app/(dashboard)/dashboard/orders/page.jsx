@@ -201,16 +201,16 @@ const OrdersPage = () => {
         <div className="min-h-screen bg-white text-black antialiased">
             <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
             {/* Page Header */}
-            <div className="mb-8">
-                <div className="flex items-center justify-between mb-4">
+            <div className="mb-12">
+                <div className="flex items-center justify-between mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                        <h1 className="text-4xl lg:text-5xl font-light text-black mb-3 tracking-tight">
                             Order Management
                         </h1>
-                        <p className="text-gray-600 flex items-center gap-2">
+                        <p className="text-gray-600 font-light flex items-center gap-2">
                             Manage and track all your orders in one place
                             {filters.dateRange !== 'all' && (
-                                <span className="inline-flex items-center gap-1 bg-gray-100 text-black px-3 py-1 rounded-full text-xs font-semibold">
+                                <span className="inline-flex items-center gap-2 bg-white border border-gray-200 text-black px-4 py-2 text-xs font-light uppercase tracking-widest">
                                     <span>📅</span>
                                     {filters.dateRange === 'today' && 'Today\'s Orders'}
                                     {filters.dateRange === 'week' && 'This Week\'s Orders'}
@@ -221,7 +221,7 @@ const OrdersPage = () => {
                     </div>
                     <button
                         onClick={fetchOrders}
-                        className="px-6 py-3 border border-gray-200 bg-white text-black rounded-xl hover:bg-gray-50 transition-all duration-300 shadow-sm font-semibold flex items-center gap-2"
+                        className="px-6 py-3 border border-gray-200 bg-white text-black hover:border-black hover:bg-black hover:text-white transition-all duration-300 font-light flex items-center gap-2"
                     >
                         <span className="text-xl">🔄</span>
                         Refresh Orders
@@ -240,7 +240,7 @@ const OrdersPage = () => {
             <QuickActions onRefresh={fetchOrders} />
 
             {/* Orders Section - Full Width */}
-            <div className="space-y-6">
+            <div className="space-y-8">
                 {/* Filters */}
                 <OrderFilters
                     filters={filters}
@@ -250,12 +250,12 @@ const OrdersPage = () => {
 
                 {/* Empty State Message */}
                 {!loading && filteredOrders.length === 0 && (
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
-                        <div className="text-6xl mb-4">📦</div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    <div className="bg-white border border-gray-200 p-16 text-center">
+                        <div className="text-6xl mb-4 opacity-40">📦</div>
+                        <h3 className="text-2xl font-light text-black mb-3 tracking-wide">
                             No orders found
                         </h3>
-                        <p className="text-gray-600 mb-4">
+                        <p className="text-gray-600 mb-6 font-light">
                             {filters.dateRange === 'today' && "No orders have been placed today."}
                             {filters.dateRange === 'week' && "No orders have been placed this week."}
                             {filters.dateRange === 'month' && "No orders have been placed this month."}
@@ -265,7 +265,7 @@ const OrdersPage = () => {
                         {filters.dateRange !== 'all' && (
                             <button
                                 onClick={() => handleFilterChange('dateRange', 'all')}
-                                className="px-6 py-3 border border-gray-300 bg-white text-black rounded-lg hover:bg-gray-50 transition-colors"
+                                className="px-6 py-3 border border-gray-200 bg-white text-black hover:border-black hover:bg-black hover:text-white transition-all duration-300 font-light"
                             >
                                 View All Orders
                             </button>

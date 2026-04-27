@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 const Collection = () => {
   const router = useRouter();
   const [modalProductId, setModalProductId] = useState(null);
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(true); // Default: show all products
 
   // Use prefetched + cached products
   const { data: allProducts, loading } = useProducts();
@@ -44,19 +44,18 @@ const Collection = () => {
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 md:mb-10 lg:mb-12">
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-1 h-8 md:h-10 bg-green-600 rounded-full"></div>
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black">All Collections</h2>
+                  <h2 className="text-4xl lg:text-5xl font-light text-black tracking-tight">All Collections</h2>
                 </div>
-                <p className="text-sm md:text-base text-gray-600 ml-4 lg:ml-5">Discover our ready-to-cook meal kits and healthy food combos</p>
+                <p className="text-sm md:text-base text-gray-600 font-light ml-0 lg:ml-0">Discover our ready-to-cook meal kits and healthy food combos</p>
               </div>
 
               <div className="flex items-center gap-3">
-                <span className="hidden sm:inline-block text-sm text-gray-500">
+                <span className="hidden sm:inline-block text-sm text-gray-500 font-light">
                   {displayedProducts.length} of {products.length} items
                 </span>
                 <button
                   onClick={() => setShowAll(!showAll)}
-                  className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 text-sm font-semibold text-black border border-green-300 rounded-lg hover:border-green-600 hover:bg-green-50 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 text-sm font-light text-black border border-gray-200 hover:border-black hover:bg-black hover:text-white transition-all duration-200"
                   disabled={products.length <= 24}
                 >
                 <span>{showAll ? 'Show Less' : 'Show More'}</span>
@@ -103,10 +102,10 @@ const Collection = () => {
       {/* Quick View Modal */}
       {modalProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4 animate-fade-in">
-          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-4xl relative shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 animate-slide-up">
+          <div className="bg-white p-6 md:p-8 w-full max-w-4xl relative shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 animate-slide-up border border-gray-200">
             {/* Close Button */}
             <button
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-green-100 hover:bg-green-600 hover:text-white text-black transition-all duration-200 z-10"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center border border-gray-200 hover:border-black hover:bg-black hover:text-white text-black transition-all duration-200 z-10"
               onClick={() => setModalProductId(null)}
               aria-label="Close quick view"
             >
@@ -116,7 +115,7 @@ const Collection = () => {
             </button>
 
             {/* Left: Image preview */}
-            <div className="w-full h-64 md:h-full bg-gray-50 rounded-xl overflow-hidden relative border border-gray-200">
+            <div className="w-full h-64 md:h-full bg-gray-50 overflow-hidden relative border border-gray-200">
               <Image 
                 src={modalProduct.image} 
                 alt={modalProduct.name} 
@@ -128,52 +127,52 @@ const Collection = () => {
             {/* Right: Details */}
             <div className="flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl md:text-3xl font-bold text-black mb-2">
+                <h3 className="text-2xl md:text-3xl font-light text-black mb-2 tracking-tight">
                   {modalProduct.name}
                 </h3>
-                <p className="text-sm text-gray-600 mb-4">{modalProduct.description}</p>
+                <p className="text-sm text-gray-600 mb-4 font-light">{modalProduct.description}</p>
 
                 {/* Rating */}
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex items-center gap-0.5">
                     {[...Array(5)].map((_, i) => (
-                      <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <svg key={i} className="w-4 h-4 text-gray-400 fill-current" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
                     ))}
                   </div>
-                  <span className="text-sm text-gray-600">(4.5)</span>
+                  <span className="text-sm text-gray-600 font-light">(4.5)</span>
                 </div>
 
                 {/* Pricing */}
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="text-3xl font-bold text-black">
+                  <span className="text-3xl font-light text-black">
                     ${modalProduct.price}
                   </span>
                   {modalProduct.originalPrice && (
-                    <span className="text-lg text-gray-400 line-through">
+                    <span className="text-lg text-gray-400 line-through font-light">
                       ${modalProduct.originalPrice}
                     </span>
                   )}
                 </div>
 
                 {/* Stock */}
-                <div className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full mb-4">
-                  <span className="text-sm text-gray-700">
-                    <span className="font-bold text-black">{modalProduct.stock}</span> in stock
+                <div className="inline-flex items-center px-3 py-1 bg-gray-100 border border-gray-200 mb-4">
+                  <span className="text-sm text-gray-700 font-light">
+                    <span className="font-light text-black">{modalProduct.stock}</span> in stock
                   </span>
                 </div>
 
                 {/* Category & Brand */}
                 <div className="flex gap-4 mb-4">
                   <div>
-                    <span className="text-xs text-gray-500">Category:</span>
-                    <p className="font-semibold text-black">{modalProduct.category}</p>
+                    <span className="text-xs text-gray-500 font-light">Category:</span>
+                    <p className="font-light text-black">{modalProduct.category}</p>
                   </div>
                   {modalProduct.brand && (
                     <div>
-                      <span className="text-xs text-gray-500">Brand:</span>
-                      <p className="font-semibold text-black">{modalProduct.brand}</p>
+                      <span className="text-xs text-gray-500 font-light">Brand:</span>
+                      <p className="font-light text-black">{modalProduct.brand}</p>
                     </div>
                   )}
                 </div>
@@ -183,15 +182,15 @@ const Collection = () => {
               <div className="mt-6 flex flex-col gap-3">
                 <button 
                   onClick={() => router.push(`/products/${modalProduct._id || modalProduct.id}`)}
-                  className="w-full px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-200"
+                  className="w-full px-6 py-3 bg-black text-white font-light hover:bg-gray-900 transition-colors duration-200"
                 >
                   View Details
                 </button>
                 <div className="flex items-center gap-3">
-                  <button className="flex-1 px-6 py-3 border border-black text-black font-semibold rounded-lg hover:bg-black hover:text-white transition-all duration-200">
+                  <button className="flex-1 px-6 py-3 border border-black text-black font-light hover:bg-black hover:text-white transition-all duration-200">
                     Add to Cart
                   </button>
-                  <button className="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-black hover:bg-gray-50 transition-all duration-200">
+                  <button className="px-6 py-3 border border-gray-200 text-black hover:border-black hover:bg-black hover:text-white transition-all duration-200 font-light">
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                     </svg>

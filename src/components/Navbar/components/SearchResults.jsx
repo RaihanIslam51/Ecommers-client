@@ -88,19 +88,19 @@ const SearchResults = ({ query, onClose }) => {
 
   if (!query || query.trim().length < 2) {
     return (
-      <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 p-8 text-center z-50">
-        <FaSearch className="text-4xl text-black mx-auto mb-3" />
-        <p className="text-black">Type at least 2 characters to search...</p>
+      <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 p-8 text-center z-50">
+        <FaSearch className="text-4xl text-gray-300 mx-auto mb-3" />
+        <p className="text-gray-600 font-light">Type at least 2 characters to search...</p>
       </div>
     );
   }
 
   if (loading) {
     return (
-      <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 p-8 z-50">
+      <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 p-8 z-50">
         <div className="flex items-center justify-center gap-3">
-          <div className="w-6 h-6 border-3 border-gray-300 border-t-black rounded-full animate-spin"></div>
-          <p className="text-black">Searching...</p>
+          <div className="w-6 h-6 border-2 border-gray-300 border-t-black rounded-full animate-spin"></div>
+          <p className="text-gray-600 font-light">Searching...</p>
         </div>
       </div>
     );
@@ -108,36 +108,36 @@ const SearchResults = ({ query, onClose }) => {
 
   if (error) {
     return (
-      <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 p-8 text-center z-50">
-        <p className="text-red-600">{error}</p>
+      <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 p-8 text-center z-50">
+        <p className="text-gray-600 font-light">{error}</p>
       </div>
     );
   }
 
   if (products.length === 0) {
     return (
-      <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 p-8 text-center z-50">
-        <FaSearch className="text-4xl text-black mx-auto mb-3" />
-        <p className="text-black font-medium mb-1">No products found</p>
-        <p className="text-sm text-black">Try searching with different keywords</p>
+      <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 p-8 text-center z-50">
+        <FaSearch className="text-4xl text-gray-300 mx-auto mb-3" />
+        <p className="text-gray-700 font-light mb-1">No products found</p>
+        <p className="text-sm text-gray-500 font-light">Try searching with different keywords</p>
       </div>
     );
   }
 
   return (
-    <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-2xl border border-gray-200 z-50 max-h-[600px] overflow-y-auto">
+    <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 z-50 max-h-[600px] overflow-y-auto">
       {/* Header */}
       <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
         <div>
-          <h3 className="font-bold text-black">Search Results</h3>
-          <p className="text-sm text-black">{products.length} product{products.length !== 1 ? 's' : ''} found</p>
+          <h3 className="font-light text-black tracking-wide">Search Results</h3>
+          <p className="text-sm text-gray-500 font-light">{products.length} product{products.length !== 1 ? 's' : ''} found</p>
         </div>
         <button 
           onClick={onClose}
-          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          className="p-2 hover:bg-gray-50 rounded transition-colors"
           aria-label="Close search"
         >
-          <MdClose className="text-xl text-black" />
+          <MdClose className="text-xl text-gray-600" />
         </button>
       </div>
 
@@ -152,10 +152,10 @@ const SearchResults = ({ query, onClose }) => {
               key={productId}
               href={`/products/${productId}`}
               onClick={onClose}
-              className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-200"
+              className="group bg-white border border-gray-200 hover:border-black overflow-hidden transition-colors duration-300"
             >
               {/* Product Image */}
-              <div className="relative w-full h-48 bg-gray-100">
+              <div className="relative w-full h-48 bg-gray-50">
                 <Image
                   src={product.image || 'https://via.placeholder.com/300'}
                   alt={product.name || 'Product'}
@@ -165,7 +165,7 @@ const SearchResults = ({ query, onClose }) => {
                 
                 {/* Badge */}
                 {product.badge && (
-                  <span className="absolute top-2 left-2 px-2 py-1 bg-black text-white text-xs font-bold rounded">
+                  <span className="absolute top-2 left-2 px-2 py-1 bg-black text-white text-xs font-light">
                     {product.badge}
                   </span>
                 )}
@@ -174,7 +174,7 @@ const SearchResults = ({ query, onClose }) => {
                   <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={(e) => handleAddToWishlist(product, e)}
-                    className={`p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors ${
+                    className={`p-2 bg-white border border-gray-200 hover:border-black transition-colors ${
                       inWishlist ? 'text-red-500' : 'text-black'
                     }`}
                   >
@@ -182,7 +182,7 @@ const SearchResults = ({ query, onClose }) => {
                   </button>
                   <button
                     onClick={(e) => handleAddToCart(product, e)}
-                    className="p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors text-black"
+                    className="p-2 bg-white border border-gray-200 hover:border-black transition-colors text-black"
                   >
                     <FaShoppingCart className="text-sm" />
                   </button>
@@ -191,19 +191,19 @@ const SearchResults = ({ query, onClose }) => {
 
               {/* Product Info */}
               <div className="p-4">
-                <h4 className="font-semibold text-black mb-1 line-clamp-2 text-sm group-hover:text-black">
+                <h4 className="font-light text-black mb-1 line-clamp-2 text-sm">
                   {product.name}
                 </h4>
                 
                 {/* Category & Brand */}
                 <div className="flex items-center gap-2 mb-2">
                   {product.category && (
-                    <span className="text-xs text-black bg-gray-100 px-2 py-0.5 rounded">
+                    <span className="text-xs text-gray-600 border border-gray-200 px-2 py-0.5 font-light">
                       {product.category}
                     </span>
                   )}
                   {product.brand && (
-                    <span className="text-xs text-black">
+                    <span className="text-xs text-gray-600 font-light">
                       • {product.brand}
                     </span>
                   )}
@@ -214,16 +214,16 @@ const SearchResults = ({ query, onClose }) => {
                   {[...Array(5)].map((_, i) => (
                     <FaStar key={i} className="text-yellow-400 text-xs" />
                   ))}
-                  <span className="text-xs text-black ml-1">(4.5)</span>
+                  <span className="text-xs text-gray-600 font-light ml-1">(4.5)</span>
                 </div>
 
                 {/* Price */}
                 <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold text-black">
+                  <span className="text-lg font-light text-black">
                     ${parseFloat(product.price || 0).toFixed(2)}
                   </span>
                   {product.originalPrice && product.originalPrice > product.price && (
-                    <span className="text-sm text-black line-through">
+                    <span className="text-sm text-gray-400 line-through font-light">
                       ${parseFloat(product.originalPrice).toFixed(2)}
                     </span>
                   )}
@@ -231,8 +231,8 @@ const SearchResults = ({ query, onClose }) => {
 
                 {/* Stock */}
                 {product.stock && (
-                  <div className="mt-2 text-xs text-black">
-                    <span className="font-semibold text-black">{product.stock}</span> in stock
+                  <div className="mt-2 text-xs text-gray-600 font-light">
+                    <span className="text-black">{product.stock}</span> in stock
                   </div>
                 )}
               </div>
@@ -248,7 +248,7 @@ const SearchResults = ({ query, onClose }) => {
             router.push(`/store?search=${encodeURIComponent(query)}`);
             onClose();
           }}
-          className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
+          className="w-full bg-black text-white py-3 font-light hover:bg-gray-900 transition-colors"
         >
           View All Results in Store
         </button>
