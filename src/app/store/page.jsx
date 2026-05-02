@@ -26,7 +26,7 @@ const StorePageContent = memo(() => {
   const [sortBy, setSortBy] = useState('featured');
   const [currentPage, setCurrentPage] = useState(1);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const productsPerPage = 12;
+  const productsPerPage = 50;
 
   const [filters, setFilters] = useState({
     categories: [],
@@ -238,182 +238,178 @@ const StorePageContent = memo(() => {
   );
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header Section */}
-      {/* <div className="bg-white border-b border-gray-100">
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 mb-2">
-            {filters.categories && filters.categories.length > 0 ? filters.categories[0] : 'All Products'}
-          </p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-black tracking-tight">
-            {filters.categories && filters.categories.length > 0
-              ? filters.categories[0]
-              : 'Store'
-            }
-          </h1>
-        </div>
-      </div> */}
-
-      {/* Breadcrumb */}
-      <div className="bg-white border-b border-gray-100">
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5">
-          <nav className="flex items-center space-x-2 text-xs text-gray-400 uppercase tracking-wide">
-            <Link href="/" className="hover:text-black transition-colors">Home</Link>
-            <span>/</span>
-            <Link href="/store" className="hover:text-black transition-colors">Store</Link>
-            {filters.categories && filters.categories.length > 0 && (
-              <>
-                <span>/</span>
-                <span className="text-black font-medium">{filters.categories[0]}</span>
-              </>
-            )}
-          </nav>
-        </div>
-      </div>
-
-      {/* Search Bar */}
-      <div className="bg-white border-b border-gray-100 sticky top-0 z-40">
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <div className="relative max-w-2xl mx-auto sm:mx-0">
-            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base" />
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-10 py-2.5 border border-gray-200 bg-gray-50 focus:bg-white focus:border-black focus:outline-none transition-colors text-sm text-black placeholder-gray-400"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black p-0.5"
-              >
-                <FiX className="text-base" />
-              </button>
-            )}
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Fixed Header Section */}
+      <div className="shrink-0">
+        {/* Breadcrumb */}
+        {/* <div className="bg-white border-b border-gray-100">
+          <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5">
+            <nav className="flex items-center space-x-2 text-xs text-gray-400 uppercase tracking-wide">
+              <Link href="/" className="hover:text-black transition-colors">Home</Link>
+              <span>/</span>
+              <Link href="/store" className="hover:text-black transition-colors">Store</Link>
+              {filters.categories && filters.categories.length > 0 && (
+                <>
+                  <span>/</span>
+                  <span className="text-black font-medium">{filters.categories[0]}</span>
+                </>
+              )}
+            </nav>
           </div>
-        </div>
-      </div>
+        </div> */}
 
-      {/* Main Content */}
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-          {/* Filter Sidebar */}
-          <div className="w-full lg:w-64 lg:shrink-0">
-            <div className="hidden lg:block">
-              <FilterSidebar
-                filters={filters}
-                onFilterChange={handleFilterChange}
-                categories={categories}
-                onClearAll={handleClearAllFilters}
-                isMobileOpen={false}
+        {/* Search Bar */}
+        {/* <div className="bg-white border-b border-gray-100">
+          <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div className="relative max-w-2xl mx-auto sm:mx-0">
+              <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base" />
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-11 pr-10 py-2.5 border border-gray-200 bg-gray-50 focus:bg-white focus:border-black focus:outline-none transition-colors text-sm text-black placeholder-gray-400"
               />
-            </div>
-          </div>
-
-          {/* Mobile Filter Sidebar */}
-          {isMobileFilterOpen && (
-            <div className="fixed inset-0 z-50 lg:hidden">
-              <FilterSidebar
-                filters={filters}
-                onFilterChange={handleFilterChange}
-                categories={categories}
-                onClearAll={handleClearAllFilters}
-                isMobileOpen={isMobileFilterOpen}
-                onCloseMobile={() => setIsMobileFilterOpen(false)}
-              />
-            </div>
-          )}
-
-          {/* Products Section */}
-          <div className="flex-1 min-w-0">
-            {/* Toolbar */}
-            <ProductToolbar
-              totalProducts={filteredProducts.length}
-              currentView={currentView}
-              onViewChange={setCurrentView}
-              sortBy={sortBy}
-              onSortChange={setSortBy}
-              onFilterToggle={() => setIsMobileFilterOpen(true)}
-              filters={filters}
-            />
-
-            {/* Active Filters */}
-            <ActiveFilters
-              filters={filters}
-              onRemoveFilter={handleRemoveFilter}
-              onClearAll={handleClearAllFilters}
-            />
-
-            {/* Products Grid/List */}
-            {loading ? (
-              <StoreProductCardSkeletonGrid count={12} viewType={currentView} />
-            ) : filteredProducts.length === 0 ? (
-              <div className="text-center py-12 sm:py-20 px-4">
-                <div className="text-5xl mb-4">—</div>
-                <h3 className="text-xl font-bold text-black mb-2 uppercase tracking-wide">
-                  No Products Found
-                </h3>
-                <p className="text-gray-500 text-sm mb-6 max-w-md mx-auto">
-                  Try adjusting your filters or search query
-                </p>
+              {searchQuery && (
                 <button
-                  onClick={handleClearAllFilters}
-                  className="px-8 py-3 bg-black text-white text-sm font-semibold uppercase tracking-widest hover:bg-gray-800 transition-colors"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black p-0.5"
                 >
-                  Clear All Filters
+                  <FiX className="text-base" />
                 </button>
-              </div>
-            ) : (
-              <>
-                <div className={`
-                  ${currentView === 'grid'
-                    ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4'
-                    : 'flex flex-col gap-3 sm:gap-4'
-                  } p-0 py-4
-                `}>
-                  {currentProducts.map((product) => (
-                    <StoreProductCard
-                      key={product._id || product.id}
-                      product={product}
-                      viewType={currentView}
-                    />
-                  ))}
-                </div>
+              )}
+            </div>
+          </div>
+        </div> */}
+      </div>
 
-                {/* Pagination */}
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={setCurrentPage}
-                />
-              </>
-            )}
+      {/* Main Content Area */}
+      <div className="flex-1 overflow-hidden flex flex-col lg:flex-row gap-0 lg:gap-8">
+        {/* Fixed Filter Sidebar - Desktop Only */}
+        <div className="hidden lg:block lg:w-64 lg:shrink-0 lg:overflow-y-auto lg:border-r lg:border-gray-100">
+          <div className="p-6">
+            <FilterSidebar
+              filters={filters}
+              onFilterChange={handleFilterChange}
+              categories={categories}
+              onClearAll={handleClearAllFilters}
+              isMobileOpen={false}
+            />
           </div>
         </div>
 
-        {/* Mobile Floating Filter Button */}
-        <div className="lg:hidden fixed bottom-6 right-6 z-40">
-          <button
-            onClick={() => setIsMobileFilterOpen(true)}
-            className="w-14 h-14 bg-black text-white shadow-lg hover:bg-gray-900 transition-colors flex items-center justify-center"
-            aria-label="Open filters"
-          >
-            <BsFilterLeft className="text-xl" />
-            {(filters.categories?.length > 0 || filters.priceRange || filters.customPriceRange || filters.productTypes?.length > 0 || filters.availability?.length > 0 || filters.ratings?.length > 0) && (
-              <span className="absolute -top-1 -right-1 bg-black border border-white text-white text-xs w-5 h-5 flex items-center justify-center font-bold">
-                {[
-                  filters.categories?.length || 0,
-                  filters.priceRange ? 1 : 0,
-                  filters.customPriceRange ? 1 : 0,
-                  filters.productTypes?.length || 0,
-                  filters.availability?.length || 0,
-                  filters.ratings?.length || 0
-                ].reduce((a, b) => a + b, 0)}
-              </span>
-            )}
-          </button>
+        {/* Mobile Filter Sidebar */}
+        {isMobileFilterOpen && (
+          <div className="fixed inset-0 z-50 lg:hidden">
+            <FilterSidebar
+              filters={filters}
+              onFilterChange={handleFilterChange}
+              categories={categories}
+              onClearAll={handleClearAllFilters}
+              isMobileOpen={isMobileFilterOpen}
+              onCloseMobile={() => setIsMobileFilterOpen(false)}
+            />
+          </div>
+        )}
+
+        {/* Products Section - Scrollable */}
+        <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
+          {/* Fixed Toolbar */}
+          <div className="shrink-0 bg-white border-b border-gray-100 sticky top-0 z-20">
+            <div className="w-full mx-auto px-4 sm:px-6 lg:px-0">
+              <ProductToolbar
+                totalProducts={filteredProducts.length}
+                currentView={currentView}
+                onViewChange={setCurrentView}
+                sortBy={sortBy}
+                onSortChange={setSortBy}
+                onFilterToggle={() => setIsMobileFilterOpen(true)}
+                filters={filters}
+              />
+
+              {/* Active Filters */}
+              <ActiveFilters
+                filters={filters}
+                onRemoveFilter={handleRemoveFilter}
+                onClearAll={handleClearAllFilters}
+              />
+            </div>
+          </div>
+
+          {/* Scrollable Products Grid/List */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                {loading ? (
+                  <StoreProductCardSkeletonGrid count={12} viewType={currentView} />
+                ) : filteredProducts.length === 0 ? (
+                  <div className="text-center py-12 sm:py-20 px-4">
+                    <div className="text-5xl mb-4">—</div>
+                    <h3 className="text-xl font-bold text-black mb-2 uppercase tracking-wide">
+                      No Products Found
+                    </h3>
+                    <p className="text-gray-500 text-sm mb-6 max-w-md mx-auto">
+                      Try adjusting your filters or search query
+                    </p>
+                    <button
+                      onClick={handleClearAllFilters}
+                      className="px-8 py-3 bg-black text-white text-sm font-semibold uppercase tracking-widest hover:bg-gray-800 transition-colors"
+                    >
+                      Clear All Filters
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <div className={`
+                      ${currentView === 'grid'
+                        ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4'
+                        : 'flex flex-col gap-3 sm:gap-4'
+                      }
+                    `}>
+                      {currentProducts.map((product) => (
+                        <StoreProductCard
+                          key={product._id || product.id}
+                          product={product}
+                          viewType={currentView}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Pagination */}
+                    <div className="mt-8">
+                      <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                      />
+                    </div>
+                  </>
+                )}
+            </div>
+          </div>
         </div>
+      </div>
+
+      {/* Mobile Floating Filter Button */}
+      <div className="lg:hidden fixed bottom-6 right-6 z-40">
+        <button
+          onClick={() => setIsMobileFilterOpen(true)}
+          className="w-14 h-14 bg-black text-white shadow-lg hover:bg-gray-900 transition-colors flex items-center justify-center"
+          aria-label="Open filters"
+        >
+          <BsFilterLeft className="text-xl" />
+          {(filters.categories?.length > 0 || filters.priceRange || filters.customPriceRange || filters.productTypes?.length > 0 || filters.availability?.length > 0 || filters.ratings?.length > 0) && (
+            <span className="absolute -top-1 -right-1 bg-black border border-white text-white text-xs w-5 h-5 flex items-center justify-center font-bold">
+              {[
+                filters.categories?.length || 0,
+                filters.priceRange ? 1 : 0,
+                filters.customPriceRange ? 1 : 0,
+                filters.productTypes?.length || 0,
+                filters.availability?.length || 0,
+                filters.ratings?.length || 0
+              ].reduce((a, b) => a + b, 0)}
+            </span>
+          )}
+        </button>
       </div>
     </div>
   );

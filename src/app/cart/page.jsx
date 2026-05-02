@@ -18,6 +18,7 @@ const CartPage = () => {
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [shippingOption, setShippingOption] = useState('inside'); // 'inside' or 'outside'
 
   // Prevent hydration mismatch by ensuring client-side rendering
   React.useLayoutEffect(() => {
@@ -93,9 +94,9 @@ const CartPage = () => {
   };
 
   const subtotal = getCartTotal();
-  const shipping = subtotal > 500 ? 0 : 50; // Free shipping over $500
-  const tax = subtotal * 0.05; // 5% tax
-  const total = subtotal + shipping + tax;
+  const shipping = shippingOption === 'inside' ? 70 : 130; // Inside Dhaka: 70, Outside Dhaka: 130
+  const tax = 0; // No tax
+  const total = subtotal + shipping;
 
   const handleProceedToCheckout = () => {
     setIsCheckingOut(true);
@@ -110,9 +111,9 @@ const CartPage = () => {
     try {
       // Calculate total
       const subtotal = getCartTotal();
-      const shipping = subtotal > 0 ? 50 : 0;
-      const tax = subtotal * 0.1;
-      const total = subtotal + shipping + tax;
+      const shipping = formData.shippingOption === 'inside' ? 70 : 130;
+      const tax = 0; // No tax
+      const total = subtotal + shipping;
 
       // Prepare order data
       const orderData = {
@@ -177,7 +178,7 @@ const CartPage = () => {
             </p>
             <Link 
               href="/store"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white hover:bg-gray-800 duration-200 font-light uppercase tracking-wider text-sm"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-400 text-white hover:bg-gray-300 duration-200 font-light uppercase tracking-wider text-sm"
             >
               <FaShoppingBag />
               Continue Shopping
@@ -319,15 +320,34 @@ const CartPage = () => {
                   <span className="text-xs font-light text-gray-600 uppercase tracking-widest">Subtotal ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})</span>
                   <span className="font-light text-black">${subtotal.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-xs font-light text-gray-600 uppercase tracking-widest">Shipping</span>
-                  <span className="font-light text-black">
-                    {shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-xs font-light text-gray-600 uppercase tracking-widest">Tax (5%)</span>
-                  <span className="font-light text-black">${tax.toFixed(2)}</span>
+                <div className="space-y-3">
+                  <span className="text-xs font-light text-gray-600 uppercase tracking-widest">Shipping Option</span>
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-3 p-3 border border-gray-200 cursor-pointer hover:border-black transition-colors">
+                      <input
+                        type="radio"
+                        name="shipping"
+                        value="inside"
+                        checked={shippingOption === 'inside'}
+                        onChange={(e) => setShippingOption(e.target.value)}
+                        className="w-4 h-4 cursor-pointer"
+                      />
+                      <span className="flex-1 text-sm font-light text-black">Inside Dhaka</span>
+                      <span className="font-light text-black">৳70</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-3 border border-gray-200 cursor-pointer hover:border-black transition-colors">
+                      <input
+                        type="radio"
+                        name="shipping"
+                        value="outside"
+                        checked={shippingOption === 'outside'}
+                        onChange={(e) => setShippingOption(e.target.value)}
+                        className="w-4 h-4 cursor-pointer"
+                      />
+                      <span className="flex-1 text-sm font-light text-black">Outside Dhaka</span>
+                      <span className="font-light text-black">৳130</span>
+                    </label>
+                  </div>
                 </div>
 
                 <div className="border-t border-gray-200 pt-4">
@@ -362,16 +382,7 @@ const CartPage = () => {
                 Continue Shopping
               </Link>
 
-              {/* Shipping Info */}
-              {subtotal < 500 && (
-                <div className="mt-6 p-4 bg-white border border-gray-200">
-                  <p className="text-xs text-gray-600 font-light uppercase tracking-widest">
-                    <span className="font-light">Free shipping</span> on orders over $500!
-                    <br />
-                    Add ${(500 - subtotal).toFixed(2)} more to qualify.
-                  </p>
-                </div>
-              )}
+
 
               {/* Clear Cart Mobile */}
               <button
@@ -392,6 +403,7 @@ const CartPage = () => {
           cartItems={cartItems}
           subtotal={subtotal}
           shipping={shipping}
+          shippingOption={shippingOption}
           tax={tax}
           total={total}
           onClose={() => setShowCheckoutModal(false)}
@@ -404,7 +416,7 @@ const CartPage = () => {
 };
 
 // Checkout Modal Component
-const CheckoutModal = ({ cartItems, subtotal, shipping, tax, total, onClose, onSubmit, session }) => {
+const CheckoutModal = ({ cartItems, subtotal, shipping, shippingOption, tax, total, onClose, onSubmit, session }) => {
   const [formData, setFormData] = useState({
     fullName: session?.user?.name || '',
     email: session?.user?.email || '',
@@ -427,7 +439,7 @@ const CheckoutModal = ({ cartItems, subtotal, shipping, tax, total, onClose, onS
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await onSubmit(formData);
+    await onSubmit({ ...formData, shippingOption });
     setLoading(false);
   };
 
@@ -609,14 +621,8 @@ const CheckoutModal = ({ cartItems, subtotal, shipping, tax, total, onClose, onS
                   <span className="font-light text-black">${subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-xs font-light text-gray-600 uppercase tracking-widest">Shipping</span>
-                  <span className="font-light text-black">
-                    {shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-xs font-light text-gray-600 uppercase tracking-widest">Tax (5%)</span>
-                  <span className="font-light text-black">${tax.toFixed(2)}</span>
+                  <span className="text-xs font-light text-gray-600 uppercase tracking-widest">Shipping ({shippingOption === 'inside' ? 'Inside Dhaka' : 'Outside Dhaka'})</span>
+                  <span className="font-light text-black">৳{shipping}</span>
                 </div>
                 <div className="border-t border-gray-200 pt-4">
                   <div className="flex justify-between items-center">

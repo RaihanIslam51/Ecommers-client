@@ -41,7 +41,7 @@ const Collection = () => {
         ) : (
           <>
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 md:mb-10 lg:mb-12">
+            <div className="hidden lg:flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 md:mb-10 lg:mb-12">
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <h2 className="text-4xl lg:text-5xl font-light text-black tracking-tight">All Collections</h2>

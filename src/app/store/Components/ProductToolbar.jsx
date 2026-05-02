@@ -24,16 +24,16 @@ const ProductToolbar = ({
 
   return (
     <div className="bg-white border-b border-gray-100 sticky top-0 z-30">
-      <div className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+      <div className=" sm:px-6 lg:px-8 py-3 sm:py-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           {/* Left Section - Product Count & Filter Button */}
-          <div className="flex items-center justify-between sm:justify-start gap-4">
+          <div className="flex items-center pr-0 justify-between sm:justify-start gap-4">
             {/* Mobile Filter Toggle - Enhanced */}
             <button
               onClick={onFilterToggle}
-              className="lg:hidden flex items-center gap-2 px-4 py-2 bg-black text-white text-sm font-semibold uppercase tracking-widest hover:bg-gray-900 transition-colors"
+              className="lg:hidden flex items-center mt-3  gap-2 px-3 py-1.5 bg-black text-white text-sm font-semibold uppercase tracking-widest hover:bg-gray-900 transition-colors"
             >
-              <BsFilterLeft className="text-base" />
+              <BsFilterLeft className=" text-base" />
               <span>Filters</span>
               {(filters.categories?.length > 0 || filters.priceRange || filters.customPriceRange || filters.productTypes?.length > 0 || filters.availability?.length > 0 || filters.ratings?.length > 0) && (
                 <span className="bg-white text-black text-xs w-5 h-5 flex items-center justify-center font-bold">
@@ -50,16 +50,16 @@ const ProductToolbar = ({
             </button>
 
             {/* Product Count */}
-            <div className="text-sm sm:text-base text-gray-600">
-              <span className="font-semibold text-gray-900">{totalProducts}</span> Products Found
-            </div>
+           <div className="text-sm sm:text-base pt-4 sm:pt-0 text-gray-600">
+  <span className="font-semibold text-gray-900">{totalProducts}</span> Products Found
+</div>
           </div>
 
           {/* Right Section - View Toggle & Sort */}
           <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-4">
-            {/* Sort Dropdown */}
-            <div className="flex items-center gap-2">
-              <label htmlFor="sort" className="text-sm text-gray-600 hidden sm:block">
+            {/* Sort Dropdown - Desktop Only */}
+            <div className="hidden md:flex items-center gap-2">
+              <label htmlFor="sort" className="text-sm text-gray-600">
                 Sort by:
               </label>
               <select

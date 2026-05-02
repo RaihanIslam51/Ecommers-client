@@ -6,22 +6,22 @@ import { BsFilterLeft } from 'react-icons/bs';
 
 // FilterSection component - moved outside to avoid recreation on render
 const FilterSection = ({ title, sectionKey, expandedSections, toggleSection, children }) => (
-  <div className="border-b border-gray-200 pb-4 mb-4">
+  <div className="border-b border-gray-200 pb-2 mb-2 lg:pb-4 lg:mb-4">
     <button
       onClick={() => toggleSection(sectionKey)}
-      className="flex items-center justify-between w-full py-2 text-left"
+      className="flex items-center justify-between w-full py-1.5 lg:py-2 text-left"
     >
-      <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+      <h3 className="text-xs lg:text-sm font-semibold text-gray-900 uppercase tracking-wide">
         {title}
       </h3>
       {expandedSections[sectionKey] ? (
-        <FiChevronUp className="text-gray-500" />
+        <FiChevronUp className="text-gray-500 text-sm" />
       ) : (
-        <FiChevronDown className="text-gray-500" />
+        <FiChevronDown className="text-gray-500 text-sm" />
       )}
     </button>
     {expandedSections[sectionKey] && (
-      <div className="mt-3 space-y-2">
+      <div className="mt-1.5 lg:mt-3 space-y-1 lg:space-y-2">
         {children}
       </div>
     )}
@@ -38,10 +38,10 @@ const FilterSidebar = ({
 }) => {
   const [expandedSections, setExpandedSections] = useState({
     category: true,
-    price: true,
-    availability: true,
-    rating: true,
-    productType: true
+    price: false,
+    availability: false,
+    rating: false,
+    productType: false
   });
 
   const toggleSection = (section) => {
@@ -65,31 +65,32 @@ const FilterSidebar = ({
 
   return (
     <div className={`
-      ${isMobileOpen ? 'fixed inset-0 z-50 bg-white overflow-y-auto animate-in slide-in-from-left duration-300' : 'hidden lg:block'}
+      ${isMobileOpen ? 'fixed insert-0 left-0 right-0 h-1/2 z-50 bg-white overflow-y-auto animate-in slide-in-from-left duration-300' : 'hidden lg:block'}
       lg:sticky lg:top-4 lg:h-fit
     `}>
       {/* Mobile Header */}
       {isMobileOpen && (
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <BsFilterLeft className="text-black text-lg" />
-            <h2 className="text-sm font-bold uppercase tracking-widest text-black">Filters</h2>
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-2.5 lg:p-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 lg:gap-3">
+            <BsFilterLeft className="text-black text-base lg:text-lg" />
+            <h2 className="text-xs lg:text-sm font-bold uppercase tracking-widest text-black">Filters</h2>
           </div>
           <button
             onClick={onCloseMobile}
-            className="p-1.5 hover:bg-gray-100 transition-colors"
+            className="p-1 hover:bg-gray-100 transition-colors"
           >
-            <FiX className="text-lg text-black" />
+            <FiX className="text-base lg:text-lg text-black" />
           </button>
         </div>
       )}
 
-      <div className="p-4 lg:p-0">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-black hidden lg:block">Filters</h2>
+      <div className="p-2.5 lg:p-0">
+        <div className="flex items-center justify-between mb-2 lg:mb-6">
+
+          
           <button
             onClick={onClearAll}
-            className="text-xs font-semibold uppercase tracking-widest text-gray-400 hover:text-black transition-colors"
+            className="text-[10px] lg:text-xs pt-2 lg:pt-4 font-semibold uppercase tracking-widest text-gray-400 hover:text-black transition-colors"
           >
             Clear All
           </button>
@@ -102,11 +103,11 @@ const FilterSidebar = ({
           expandedSections={expandedSections}
           toggleSection={toggleSection}
         >
-          <div className="space-y-2 max-h-48 overflow-y-auto">
+          <div className="space-y-1 lg:space-y-2 max-h-48 overflow-y-auto">
             {categories.map((category) => (
               <label
                 key={category._id || category.name}
-                className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                className="flex items-center space-x-2 lg:space-x-3 cursor-pointer hover:bg-gray-50 p-1.5 lg:p-2 rounded"
               >
                 <input
                   type="checkbox"
@@ -117,9 +118,9 @@ const FilterSidebar = ({
                       : (filters.categories || []).filter(c => c !== category.name);
                     onFilterChange({ categories: newCategories });
                   }}
-                  className="w-4 h-4 accent-black border-gray-300 rounded"
+                  className="w-3.5 lg:w-4 h-3.5 lg:h-4 accent-black border-gray-300 rounded"
                 />
-                <span className="text-sm text-gray-700 flex items-center gap-2">
+                <span className="text-xs lg:text-sm text-gray-700 flex items-center gap-1 lg:gap-2">
                   {category.icon && <span>{category.icon}</span>}
                   {category.name}
                   {category.productCount > 0 && (
@@ -138,11 +139,11 @@ const FilterSidebar = ({
           expandedSections={expandedSections}
           toggleSection={toggleSection}
         >
-          <div className="space-y-2">
+          <div className="space-y-1 lg:space-y-2">
             {priceRanges.map((range) => (
               <label
                 key={range.label}
-                className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                className="flex items-center space-x-2 lg:space-x-3 cursor-pointer hover:bg-gray-50 p-1.5 lg:p-2 rounded"
               >
                 <input
                   type="radio"
@@ -156,15 +157,15 @@ const FilterSidebar = ({
                       priceRange: { min: range.min, max: range.max }
                     });
                   }}
-                  className="w-4 h-4 accent-black border-gray-300"
+                  className="w-3.5 lg:w-4 h-3.5 lg:h-4 accent-black border-gray-300"
                 />
-                <span className="text-sm text-gray-700">{range.label}</span>
+                <span className="text-xs lg:text-sm text-gray-700">{range.label}</span>
               </label>
             ))}
           </div>
           {/* Custom Price Range */}
-          <div className="mt-4 pt-4 border-t border-gray-200">
-            <div className="flex items-center gap-2">
+          <div className="mt-2 lg:mt-4 pt-2 lg:pt-4 border-t border-gray-200">
+            <div className="flex items-center gap-1.5 lg:gap-2">
               <input
                 type="number"
                 placeholder="Min"
@@ -177,9 +178,9 @@ const FilterSidebar = ({
                     }
                   });
                 }}
-                className="w-full px-3 py-2 border border-gray-200 text-sm focus:border-black focus:outline-none transition-colors bg-gray-50 text-black"
+                className="w-full px-2 lg:px-3 py-1.5 lg:py-2 border border-gray-200 text-xs lg:text-sm focus:border-black focus:outline-none transition-colors bg-gray-50 text-black"
               />
-              <span className="text-gray-500">-</span>
+              <span className="text-gray-500 text-xs">-</span>
               <input
                 type="number"
                 placeholder="Max"
@@ -192,7 +193,7 @@ const FilterSidebar = ({
                     }
                   });
                 }}
-                className="w-full px-3 py-2 border border-gray-200 text-sm focus:border-black focus:outline-none transition-colors bg-gray-50 text-black"
+                className="w-full px-2 lg:px-3 py-1.5 lg:py-2 border border-gray-200 text-xs lg:text-sm focus:border-black focus:outline-none transition-colors bg-gray-50 text-black"
               />
             </div>
           </div>
@@ -205,11 +206,11 @@ const FilterSidebar = ({
           expandedSections={expandedSections}
           toggleSection={toggleSection}
         >
-          <div className="space-y-2">
+          <div className="space-y-1 lg:space-y-2">
             {productTypes.map((type) => (
               <label
                 key={type}
-                className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                className="flex items-center space-x-2 lg:space-x-3 cursor-pointer hover:bg-gray-50 p-1.5 lg:p-2 rounded"
               >
                 <input
                   type="checkbox"
@@ -220,9 +221,9 @@ const FilterSidebar = ({
                       : (filters.productTypes || []).filter(t => t !== type);
                     onFilterChange({ productTypes: newTypes });
                   }}
-                  className="w-4 h-4 accent-black border-gray-300 rounded"
+                  className="w-3.5 lg:w-4 h-3.5 lg:h-4 accent-black border-gray-300 rounded"
                 />
-                <span className="text-sm text-gray-700">{type}</span>
+                <span className="text-xs lg:text-sm text-gray-700">{type}</span>
               </label>
             ))}
           </div>
@@ -235,11 +236,11 @@ const FilterSidebar = ({
           expandedSections={expandedSections}
           toggleSection={toggleSection}
         >
-          <div className="space-y-2">
+          <div className="space-y-1 lg:space-y-2">
             {availabilityOptions.map((option) => (
               <label
                 key={option}
-                className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                className="flex items-center space-x-2 lg:space-x-3 cursor-pointer hover:bg-gray-50 p-1.5 lg:p-2 rounded"
               >
                 <input
                   type="checkbox"
@@ -250,9 +251,9 @@ const FilterSidebar = ({
                       : (filters.availability || []).filter(a => a !== option);
                     onFilterChange({ availability: newAvailability });
                   }}
-                  className="w-4 h-4 accent-black border-gray-300 rounded"
+                  className="w-3.5 lg:w-4 h-3.5 lg:h-4 accent-black border-gray-300 rounded"
                 />
-                <span className="text-sm text-gray-700">{option}</span>
+                <span className="text-xs lg:text-sm text-gray-700">{option}</span>
               </label>
             ))}
           </div>
@@ -265,11 +266,11 @@ const FilterSidebar = ({
           expandedSections={expandedSections}
           toggleSection={toggleSection}
         >
-          <div className="space-y-2">
+          <div className="space-y-1 lg:space-y-2">
             {[4, 3, 2, 1].map((rating) => (
               <label
                 key={rating}
-                className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                className="flex items-center space-x-2 lg:space-x-3 cursor-pointer hover:bg-gray-50 p-1.5 lg:p-2 rounded"
               >
                 <input
                   type="checkbox"
@@ -280,13 +281,13 @@ const FilterSidebar = ({
                       : (filters.ratings || []).filter(r => r !== rating);
                     onFilterChange({ ratings: newRatings });
                   }}
-                  className="w-4 h-4 accent-black border-gray-300 rounded"
+                  className="w-3.5 lg:w-4 h-3.5 lg:h-4 accent-black border-gray-300 rounded"
                 />
-                <span className="flex items-center gap-1 text-sm">
+                <span className="flex items-center gap-0.5 lg:gap-1 text-xs lg:text-sm">
                   {[...Array(5)].map((_, i) => (
                     <FaStar
                       key={i}
-                      className={`text-xs ${
+                      className={`text-[0.5rem] lg:text-xs ${
                         i < rating ? 'text-yellow-400' : 'text-gray-300'
                       }`}
                     />
@@ -301,10 +302,10 @@ const FilterSidebar = ({
 
       {/* Mobile Apply Button */}
       {isMobileOpen && (
-        <div className="sticky bottom-0 bg-white border-t border-gray-100 p-4">
+        <div className="sticky bottom-0 bg-white border-t border-gray-100 p-2.5 lg:p-4">
           <button
             onClick={onCloseMobile}
-            className="w-full bg-black text-white py-3 font-semibold text-sm uppercase tracking-widest hover:bg-gray-900 transition-colors"
+            className="w-full bg-black text-white py-2 lg:py-3 font-semibold text-xs lg:text-sm uppercase tracking-widest hover:bg-gray-900 transition-colors"
           >
             Apply Filters
           </button>
